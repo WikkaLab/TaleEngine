@@ -14,17 +14,17 @@
             <ul class='nav navbar-nav'>
                 <li [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
                     <a [routerLink]='["/"]' (click)='collapse()'>
-                        <span class='glyphicon glyphicon-home'></span> Home
+                        <span class='glyphicon glyphicon-home'></span> News
                     </a>
                 </li>
                 <li [routerLinkActive]='["link-active"]'>
-                    <a [routerLink]='["/counter"]' (click)='collapse()'>
-                        <span class='glyphicon glyphicon-education'></span> Counter
+                    <a [routerLink]='["/activities"]' (click)='collapse()'>
+                        <span class='glyphicon glyphicon-th-list'></span> Activities
                     </a>
                 </li>
                 <li [routerLinkActive]='["link-active"]'>
-                    <a [routerLink]='["/fetch-data"]' (click)='collapse()'>
-                        <span class='glyphicon glyphicon-th-list'></span> Fetch data
+                    <a [routerLink]='["/favs"]' (click)='collapse()'>
+                        <span class='glyphicon glyphicon-star'></span> Favourites
                     </a>
                 </li>
             </ul>
