@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="DomainServices\" />
+    <Folder Include="Mappers\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TaleEngine.Data.Contracts\TaleEngine.Data.Contracts.csproj" />
+    <ProjectReference Include="..\TaleEngine.Bussiness.Contracts\TaleEngine.Bussiness.Contracts.csproj" />
+  </ItemGroup>
+</Project>
