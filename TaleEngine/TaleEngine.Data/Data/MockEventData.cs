@@ -12,7 +12,7 @@ namespace TaleEngine.Data.Data
             {
                 new Event
                 {
-                    Id = Guid.NewGuid(),
+                    Id = 1,
                     Title = "The ultimate event"
                 }
             };

@@ -7,9 +7,16 @@ namespace TaleEngine.Data.Repositories
 {
     public class EventRepository : IEventRepository
     {
+        private readonly List<Event> _events; 
+
+        public EventRepository()
+        {
+            _events = MockEventData.MockEvents();
+        }
+
         public List<Event> GetAllEvents()
         {
-            return MockEventData.MockEvents();
+            return _events;
         }
     }
 }
