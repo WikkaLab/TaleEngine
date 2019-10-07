@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
@@ -8,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using TaleEngine.Application.Contracts.Services;
 using TaleEngine.Application.Services;
 using TaleEngine.Bussiness.Contracts;
+using TaleEngine.Bussiness.Contracts.DomainServices;
 using TaleEngine.Bussiness.DomainServices;
 using TaleEngine.Data.Contracts.Repositories;
 using TaleEngine.Data.Repositories;
@@ -30,8 +30,13 @@ namespace TaleEngine
 
             services.AddTransient<IEventService, EventService>();
             services.AddTransient<IEventDomainService, EventDomainService>();
+            services.AddTransient<IActivityService, ActivityService>();
+            services.AddTransient<IActivityDomainService, ActivityDomainService>();
 
             services.AddTransient<IEventRepository, EventRepository>();
+            services.AddTransient<IActivityRepository, ActivityRepository>();
+            services.AddTransient<IActivityStatusRepository, ActivityStatusRepository>();
+            services.AddTransient<IActivityTypeRepository, ActivityTypeRepository>();
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>

@@ -3,11 +3,6 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Folder Include="DomainServices\" />
-    <Folder Include="Dtos\" />
-  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TaleEngine.Data.Contracts\TaleEngine.Data.Contracts.csproj" />
   </ItemGroup>

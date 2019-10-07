@@ -3,10 +3,6 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Folder Include="Services\" />
-  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TaleEngine.Application.Contracts\TaleEngine.Application.Contracts.csproj" />
     <ProjectReference Include="..\TaleEngine.Bussiness.Contracts\TaleEngine.Bussiness.Contracts.csproj" />
