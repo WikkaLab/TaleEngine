@@ -1,17 +1,17 @@
 import { Component, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { EventModel } from '../models/event-model';
+import { ActivityModel } from '../models/activity-model';
 
 @Component({
   selector: 'app-fetch-data',
   templateUrl: './fetch-data.component.html'
 })
 export class FetchDataComponent {
-  public events: EventModel[];
+    public activities: ActivityModel[];
 
-  constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
-    http.get<EventModel[]>(baseUrl + 'api/Event/GetEvents').subscribe(result => {
-      this.events = result;
+    constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
+        http.get<ActivityModel[]>(baseUrl + 'api/Activity/GetActivities').subscribe(result => {
+      this.activities = result;
     }, error => console.error(error));
   }
 }

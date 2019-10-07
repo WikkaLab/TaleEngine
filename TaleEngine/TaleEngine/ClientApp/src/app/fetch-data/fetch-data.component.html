@@ -1,18 +1,22 @@
-<h1>Weather forecast</h1>
+<h1>Activity list</h1>
 
-<p>This component demonstrates fetching data from the server.</p>
+<p>Activities in the event</p>
 
-<p *ngIf="!events"><em>Loading...</em></p>
+<p *ngIf="!activities"><em>Loading...</em></p>
 
-<table class='table' *ngIf="events">
+<table class='table' *ngIf="activities">
     <thead>
         <tr>
             <th>Title</th>
+            <th>Description</th>
+            <th>Places</th>
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let ev of events">
-            <td>{{ ev.title }}</td>
+        <tr *ngFor="let act of activities">
+            <td>{{ act.title }}</td>
+            <td>{{ act.description }}</td>
+            <td>{{ act.places }}</td>
         </tr>
     </tbody>
 </table>
