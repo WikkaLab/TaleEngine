@@ -12,7 +12,6 @@ namespace TaleEngine.Data.Data
             {
                 new Event
                 {
-                    Id = 1,
                     Title = "The ultimate event"
                 }
             };

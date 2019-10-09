@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using TaleEngine.Application.Contracts.Services;
@@ -9,6 +10,8 @@ using TaleEngine.Application.Services;
 using TaleEngine.Bussiness.Contracts;
 using TaleEngine.Bussiness.Contracts.DomainServices;
 using TaleEngine.Bussiness.DomainServices;
+using TaleEngine.Data;
+using TaleEngine.Data.Contracts;
 using TaleEngine.Data.Contracts.Repositories;
 using TaleEngine.Data.Repositories;
 
@@ -27,6 +30,11 @@ namespace TaleEngine
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            services.AddDbContext<DatabaseContext>(item =>
+                item.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddTransient<IDatabaseContext, DatabaseContext>();
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
 
             services.AddTransient<IEventService, EventService>();
             services.AddTransient<IEventDomainService, EventDomainService>();
@@ -48,6 +56,13 @@ namespace TaleEngine
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            var builder = new ConfigurationBuilder()
+               .AddJsonFile("appsettings.json")
+               .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
+               .AddEnvironmentVariables();
+
+            builder.Build();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
