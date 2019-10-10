@@ -1,22 +1,49 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using TaleEngine.Data.Contracts;
 using TaleEngine.Data.Contracts.Entities;
 using TaleEngine.Data.Contracts.Repositories;
-using TaleEngine.Data.Data;
 
 namespace TaleEngine.Data.Repositories
 {
     public class EventRepository : IEventRepository
     {
-        private readonly List<Event> _events; 
+        private readonly IDatabaseContext _context;
 
-        public EventRepository()
+        public EventRepository(IDatabaseContext context)
         {
-            _events = MockEventData.MockEvents();
+            _context = context;
         }
 
-        public List<Event> GetAllEvents()
+        public void Delete(int entityId)
         {
-            return _events;
+            throw new System.NotImplementedException();
+        }
+
+        public IEnumerable<Event> GetAll()
+        {
+            return _context.Events.ToList();
+        }
+
+        public Event GetById(int entityId)
+        {
+            return _context.Events
+                .FirstOrDefault(ev => ev.Id == entityId);
+        }
+
+        public void Insert(Event entity)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void Save()
+        {
+            _context.SaveChanges();
+        }
+
+        public void Update(Event entity)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

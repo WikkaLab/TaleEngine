@@ -1,10 +1,9 @@
-﻿using System.Collections.Generic;
-using TaleEngine.Data.Contracts.Entities;
+﻿using TaleEngine.Data.Contracts.Entities;
 
 namespace TaleEngine.Data.Contracts.Repositories
 {
-    public interface IEventRepository
+    public interface IEventRepository : IGenericRepository<Event>
     {
-        List<Event> GetAllEvents();
+
     }
 }

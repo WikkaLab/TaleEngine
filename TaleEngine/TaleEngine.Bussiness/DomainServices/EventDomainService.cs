@@ -19,7 +19,7 @@ namespace TaleEngine.Bussiness.DomainServices
 
         public List<EventDto> GetEventsNoFilter()
         {
-            var events = _eventRepository.GetAllEvents();
+            var events = _eventRepository.GetAll();
 
             var eventDtos = new List<EventDto>();
 

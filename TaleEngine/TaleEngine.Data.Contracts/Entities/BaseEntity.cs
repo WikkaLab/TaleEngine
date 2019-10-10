@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace TaleEngine.Data.Contracts.Entities
@@ -13,5 +14,19 @@ namespace TaleEngine.Data.Contracts.Entities
 
         public DateTime? CreateDateTime { get; set; }
         public DateTime? LastModificationDateTime { get; set; }
+
+        public void SetAudit(EntityState state)
+        {
+            var now = DateTime.UtcNow;
+            if (state == EntityState.Added)
+            {
+                if (CreateDateTime == default(DateTime))
+                {
+                    CreateDateTime = now;
+                }
+            }
+
+            LastModificationDateTime = now;
+        }
     }
 }

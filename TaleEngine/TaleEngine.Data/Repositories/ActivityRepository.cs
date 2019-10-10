@@ -11,24 +11,47 @@ namespace TaleEngine.Data.Repositories
     {
         private readonly IDatabaseContext _context;
 
-        //private readonly List<Activity> _activities;
-
         public ActivityRepository(IDatabaseContext context)
         {
-            //_activities = MockActivityData.GetActivities();
             _context = context;
         }
 
+        public void Delete(int entityId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Activity> GetAll()
+        {
+            return _context.Activities.ToList();
+        }
+
+        public Activity GetById(int entityId)
+        {
+            return _context.Activities
+                .FirstOrDefault(a => a.Id == entityId);
+        }
+
+        public void Insert(Activity entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Save()
+        {
+            _context.SaveChanges();
+        }
+
+        public void Update(Activity entity)
+        {
+            throw new NotImplementedException();
+        }
+        
         public List<Activity> GetEventActivities(int eventId)
         {
             return _context.Activities
-                //.Where(a => a.EventId == eventId)
+                .Where(a => a.EventId == eventId)
                 .ToList();
-        }
-
-        public Activity GetSelectedActivity(int activityId)
-        {
-            return _context.Activities.FirstOrDefault(a => a.Id == activityId);
         }
     }
 }

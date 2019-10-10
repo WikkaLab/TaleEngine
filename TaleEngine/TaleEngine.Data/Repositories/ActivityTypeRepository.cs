@@ -1,22 +1,49 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using TaleEngine.Data.Contracts;
 using TaleEngine.Data.Contracts.Entities;
 using TaleEngine.Data.Contracts.Repositories;
-using TaleEngine.Data.Data;
 
 namespace TaleEngine.Data.Repositories
 {
     public class ActivityTypeRepository : IActivityTypeRepository
     {
-        private readonly List<ActivityType> _activityTypes;
+        private readonly IDatabaseContext _context;
 
-        public ActivityTypeRepository()
+        public ActivityTypeRepository(IDatabaseContext context)
         {
-            _activityTypes = MockActivityTypeData.GetActivityTypes();
+            _context = context;
         }
 
-        public List<ActivityType> GetActivityTypes()
+        public void Delete(int entityId)
         {
-            return _activityTypes;
+            throw new System.NotImplementedException();
+        }
+
+        public IEnumerable<ActivityType> GetAll()
+        {
+            return _context.ActivityTypes.ToList();
+        }
+
+        public ActivityType GetById(int entityId)
+        {
+            return _context.ActivityTypes
+                .FirstOrDefault(aT => aT.Id == entityId);
+        }
+
+        public void Insert(ActivityType entity)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void Save()
+        {
+            _context.SaveChanges();
+        }
+
+        public void Update(ActivityType entity)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

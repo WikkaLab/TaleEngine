@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using TaleEngine.Data.Contracts;
 using TaleEngine.Data.Contracts.Entities;
 using TaleEngine.Data.Data;
@@ -22,6 +23,20 @@ namespace TaleEngine.Data
                    .Build();
                 optionsBuilder.UseSqlServer(configuration.GetConnectionString("DefaultConnection")).EnableSensitiveDataLogging();
             }
+        }
+
+        public override int SaveChanges()
+        {
+            var modifiedEntites = ChangeTracker.Entries()
+                .Where(x => x.State == EntityState.Added || x.State == EntityState.Modified);
+
+            modifiedEntites.ToList().ForEach(x =>
+            {
+                var entity = x.Entity as BaseEntity;
+                entity?.SetAudit(x.State);
+            });
+
+            return base.SaveChanges();
         }
 
         public DbSet<Event> Events { get; set; }
