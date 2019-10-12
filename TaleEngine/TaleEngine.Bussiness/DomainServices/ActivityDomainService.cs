@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using TaleEngine.Bussiness.Contracts.DomainServices;
 using TaleEngine.Bussiness.Contracts.Dtos;
 using TaleEngine.Bussiness.Mappers;
@@ -26,6 +27,55 @@ namespace TaleEngine.Bussiness.DomainServices
             }
 
             return activityDtos;
+        }
+
+        public int DeleteActivity(int activityId)
+        {
+            try
+            {
+                _activityRepository.Delete(activityId);
+                _activityRepository.Save();
+            }
+            catch (Exception)
+            {
+                return 0;
+            }
+
+            return 1;
+        }
+
+        public int CreateActivity(ActivityDto activityDto)
+        {
+            var activity = ActivityMapper.Map(activityDto);
+
+            try
+            {
+                _activityRepository.Insert(activity);
+                _activityRepository.Save();
+            }
+            catch (Exception)
+            {
+                return 0;
+            }
+
+            return 1;
+        }
+
+        public int UpdateActivity(ActivityDto activityDto)
+        {
+            var activity = ActivityMapper.Map(activityDto);
+
+            try
+            {
+                _activityRepository.Update(activity);
+                _activityRepository.Save();
+            }
+            catch (Exception)
+            {
+                return 0;
+            }
+
+            return 1;
         }
     }
 }

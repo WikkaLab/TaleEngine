@@ -18,5 +18,20 @@ namespace TaleEngine.Application.Services
         {
             return _activityDomainService.GetActivitiesOfEvent();
         }
+
+        public int DeleteActivity(int activityId)
+        {
+            return _activityDomainService.DeleteActivity(activityId);
+        }
+
+        public int CreateActivity(ActivityDto activityDto)
+        {
+            return _activityDomainService.CreateActivity(activityDto);
+        }
+
+        public int UpdateActivity(ActivityDto activityDto)
+        {
+            return _activityDomainService.UpdateActivity(activityDto);
+        }
     }
 }

@@ -8,5 +8,8 @@ namespace TaleEngine.Bussiness.Contracts.DomainServices
     public interface IActivityDomainService
     {
         List<ActivityDto> GetActivitiesOfEvent();
+        int DeleteActivity(int activityId);
+        int CreateActivity(ActivityDto activityDto);
+        int UpdateActivity(ActivityDto activityDto);
     }
 }

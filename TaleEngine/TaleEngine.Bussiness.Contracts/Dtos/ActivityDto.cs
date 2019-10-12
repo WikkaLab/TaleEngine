@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace TaleEngine.Bussiness.Contracts.Dtos
+﻿namespace TaleEngine.Bussiness.Contracts.Dtos
 {
     public class ActivityDto
     {

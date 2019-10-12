@@ -34,7 +34,7 @@ namespace TaleEngine.Data.Repositories
 
         public void Insert(Activity entity)
         {
-            throw new NotImplementedException();
+            _context.Activities.Add(entity);
         }
 
         public void Save()
@@ -44,7 +44,7 @@ namespace TaleEngine.Data.Repositories
 
         public void Update(Activity entity)
         {
-            throw new NotImplementedException();
+            _context.Activities.Update(entity);
         }
         
         public List<Activity> GetEventActivities(int eventId)
