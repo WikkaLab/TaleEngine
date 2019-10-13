@@ -2,6 +2,12 @@
 
 <p>Activities in the event</p>
 
+<button type="button"
+        class="btn btn-primary"
+        (click)="createActivity()">
+  Create new activity
+</button>
+
 <p *ngIf="!activities"><em>Loading...</em></p>
 
 <table class='table' *ngIf="activities">

@@ -1,17 +1,44 @@
 import { Component, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ActivityModel } from '../models/activity-model';
+import { ActivityDto } from '../models/activity-dto';
+import { HttpHelper } from '../../cross/helpers/http';
 
 @Component({
   selector: 'app-fetch-data',
   templateUrl: './fetch-data.component.html'
 })
 export class FetchDataComponent {
-    public activities: ActivityModel[];
+    public activities: ActivityDto[];
+
+    httpClient: HttpClient;
+    baseUrl: string;
 
     constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
-        http.get<ActivityModel[]>(baseUrl + 'api/Activity/GetActivities').subscribe(result => {
-      this.activities = result;
-    }, error => console.error(error));
-  }
+        this.httpClient = http;
+        this.baseUrl = baseUrl;
+
+        this.httpClient.get<ActivityDto[]>(this.baseUrl + 'api/Activity/GetActivities').subscribe(result => {
+          this.activities = result;
+        }, error => console.error(error));
+    }
+
+    createActivity() {
+        var activityDto: ActivityDto = new ActivityDto("A title", "Some lines", 3);
+
+        this.httpClient.post<ActivityDto>(this.baseUrl + 'api/Activity/CreateActivity',
+            JSON.stringify(activityDto),
+            HttpHelper.JsonHeaderOptions)
+            .subscribe((result) => {
+              console.log(result);
+            }, error => console.error(error));
+    }
+
+    deleteActivity() {
+        var activityId = 12;
+
+        this.httpClient.delete<number>(this.baseUrl + 'api/Activity/DeleteActivity/' + activityId)
+            .subscribe((result) => {
+                console.log(result);
+            }, error => console.error(error));
+    }
 }
