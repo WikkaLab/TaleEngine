@@ -26,7 +26,7 @@ namespace TaleEngine.Controllers
             return Ok(result);
         }
 
-        [HttpDelete("[action]")]
+        [HttpDelete("[action]/{activityId}")]
         public IActionResult DeleteActivity(int activityId)
         {
             var authorized = false;
@@ -41,7 +41,7 @@ namespace TaleEngine.Controllers
         }
 
         [HttpPost("[action]")]
-        public IActionResult CreateActivity(ActivityDto activityDto)
+        public IActionResult CreateActivity([FromBody] ActivityDto activityDto)
         {
             var authorized = false;
 
@@ -55,7 +55,7 @@ namespace TaleEngine.Controllers
         }
 
         [HttpPut("[action]")]
-        public IActionResult UpdateActivity(ActivityDto activityDto)
+        public IActionResult UpdateActivity([FromBody] ActivityDto activityDto)
         {
             var authorized = false;
 

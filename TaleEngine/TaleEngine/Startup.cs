@@ -31,6 +31,20 @@ namespace TaleEngine
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
+            services.AddSwaggerGen(config =>
+            {
+                config.SwaggerDoc("v1", new Swashbuckle.AspNetCore.Swagger.Info
+                {
+                    Title = "TaleEngine API v0.1",
+                    Contact = new Swashbuckle.AspNetCore.Swagger.Contact
+                    {
+                        Name = "Elena G",
+                        Email = "elena.guzbla@gmail.com",
+                        Url = "https://beelzenef.github.io"
+                    }
+                });
+            });
+
             services.AddDbContext<DatabaseContext>(item =>
                 item.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddTransient<IDatabaseContext, DatabaseContext>();
@@ -60,6 +74,12 @@ namespace TaleEngine
                .AddJsonFile("appsettings.json")
                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                .AddEnvironmentVariables();
+
+            app.UseSwagger();
+            app.UseSwaggerUI(opt =>
+            {
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "API"));
+            });
 
             builder.Build();
 
