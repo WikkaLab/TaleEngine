@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections.Generic;
 
 namespace TaleEngine.Data.Contracts.Entities
 {
@@ -16,9 +16,14 @@ namespace TaleEngine.Data.Contracts.Entities
         public int TypeId { get; set; }
         public ActivityType Type { get; set; }
 
-        public Guid CreatorId { get; set; }
+        public int EditionId { get; set; }
+        public Edition Edition { get; set; }
 
-        public int EventId { get; set; }
-        public Event Event { get; set; }
+        public List<UserToActivityOperation> UsersOperations { get; set; }
+
+        public List<UserToActivityPlay> UsersPlay { get; set; }
+        public List<UserToActivityFav> UsersFav { get; set; }
+        public List<UserToActivityCreate> UsersCreate { get; set; }
+
     }
 }

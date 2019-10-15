@@ -6,6 +6,9 @@ namespace TaleEngine.Data.Contracts.Entities
     {
         public string Title { get; set; }
 
-        public List<Activity> Activities { get; set; }
+        public List<Edition> Editions { get; set; }
+
+
+        public List<User> RegisteredUsers { get; set; }
     }
 }

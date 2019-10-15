@@ -7,11 +7,12 @@
   <ItemGroup>
     <Compile Remove="Migrations\20191009133340_initial.cs" />
     <Compile Remove="Migrations\20191009133340_initial.Designer.cs" />
+    <Compile Remove="Migrations\20191015113501_TaleEngineStructure.cs" />
+    <Compile Remove="Migrations\20191015113501_TaleEngineStructure.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Repositories\" />
-    <Folder Include="Data\" />
   </ItemGroup>
 
   <ItemGroup>

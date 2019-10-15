@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using TaleEngine.Data.Contracts.Entities;
 
 namespace TaleEngine.Data.Data
 {
-    public static class MockEventData
+    public static class InitialEventData
     {
-        public static List<Event> MockEvents()
+        public static List<Event> GetEventsType()
         {
             return new List<Event>
             {

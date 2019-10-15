@@ -2,13 +2,12 @@
 
 namespace TaleEngine.Data.Contracts.Entities
 {
-    public class ActivityStatus : BaseEntity
+    public class Permission : BaseEntity
     {
         public string Name { get; set; }
         public string Abbr { get; set; }
         public string Description { get; set; }
 
-
-        public List<Activity> Activities { get; set; }
+        public List<RoleToPermission> Roles { get; set; }
     }
 }

@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using TaleEngine.Data.Contracts.Entities;
 
 namespace TaleEngine.Data.Data
 {
-    public static class MockActivityData
+    public static class InitialActivityData
     {
         public static List<Activity> GetActivities()
         {

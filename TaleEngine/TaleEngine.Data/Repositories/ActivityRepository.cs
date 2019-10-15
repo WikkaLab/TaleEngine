@@ -47,10 +47,10 @@ namespace TaleEngine.Data.Repositories
             _context.Activities.Update(entity);
         }
         
-        public List<Activity> GetEventActivities(int eventId)
+        public List<Activity> GetEventActivities(int editionId)
         {
             return _context.Activities
-                .Where(a => a.EventId == eventId)
+                .Where(a => a.EditionId == editionId)
                 .ToList();
         }
     }
