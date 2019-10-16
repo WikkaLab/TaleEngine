@@ -81,6 +81,10 @@ namespace TaleEngine.Data
                 .HasForeignKey(a => a.EditionId)
                 .OnDelete(DeleteBehavior.Restrict);
             builder.Entity<Activity>()
+                .HasOne(a => a.TimeSlot)
+                .WithMany(tS => tS.Activities)
+                .HasForeignKey(a => a.TimeSlotId);
+            builder.Entity<Activity>()
                 .HasOne(a => a.Status)
                 .WithMany(aS => aS.Activities)
                 .HasForeignKey(a => a.StatusId);

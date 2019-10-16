@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace TaleEngine.Data.Contracts.Entities
 {
@@ -18,6 +19,13 @@ namespace TaleEngine.Data.Contracts.Entities
 
         public int EditionId { get; set; }
         public Edition Edition { get; set; }
+
+        public int? TimeSlotId { get; set; }
+        public TimeSlot TimeSlot { get; set; }
+
+        public DateTime PublicationDate { get; set; }
+        public DateTime StartDateTime { get; set; }
+        public DateTime EndDateTime { get; set; }
 
         public List<UserToActivityOperation> UsersOperations { get; set; }
 
