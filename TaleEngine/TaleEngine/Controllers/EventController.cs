@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using TaleEngine.Application.Contracts.Services;
 using TaleEngine.Bussiness.Contracts.Dtos;
@@ -16,9 +17,19 @@ namespace TaleEngine.Controllers
         }
 
         [HttpGet("[action]")]
-        public IList<EventDto> GetEvents()
+        public IActionResult GetEvents()
         {
-            return _eventService.GetAllEvents();
+            var result = _eventService.GetAllEvents();
+
+            return Ok(result);
+        }
+
+        [HttpGet("[action]")]
+        public IActionResult GetEvent(int eventId)
+        {
+            var result =  _eventService.GetEvent(eventId);
+
+            return Ok(result);
         }
     }
 }

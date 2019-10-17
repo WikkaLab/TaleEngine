@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using TaleEngine.Bussiness.Contracts;
 using TaleEngine.Bussiness.Contracts.Dtos;
-using TaleEngine.Bussiness.Dtos;
 using TaleEngine.Bussiness.Dtos.Mappers;
 using TaleEngine.Data.Contracts.Repositories;
 
@@ -29,6 +27,15 @@ namespace TaleEngine.Bussiness.DomainServices
             }
 
             return eventDtos;
+        }
+
+        public EventDto GetEvent(int eventId)
+        {
+            var ev = _eventRepository.GetById(eventId);
+
+            var result = EventMapper.Map(ev);
+
+            return result;
         }
     }
 }
