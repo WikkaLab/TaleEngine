@@ -6,5 +6,6 @@ namespace TaleEngine.Bussiness.Contracts
     public interface IEventDomainService
     {
         List<EventDto> GetEventsNoFilter();
+        EventDto GetEvent(int eventId);
     }
 }

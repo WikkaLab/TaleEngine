@@ -18,5 +18,10 @@ namespace TaleEngine.Application.Services
         {
             return _eventDomainService.GetEventsNoFilter();
         }
+
+        public EventDto GetEvent(int eventId)
+        {
+            return _eventDomainService.GetEvent(eventId);    
+        }
     }
 }
