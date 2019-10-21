@@ -211,6 +211,9 @@ namespace TaleEngine.Data
                 .HasData(InitialActivityStatusData.GetActivityStatuses().ToArray());
             builder.Entity<ActivityStatus>()
                 .ToTable("ActivityStatus");
+
+            builder.Entity<TimeSlot>()
+                .HasData(InitialTimeSlotData.GetTimeSlotData().ToArray());
         }
     }
 }

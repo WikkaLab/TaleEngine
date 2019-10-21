@@ -1,6 +1,7 @@
 ﻿using System;
 using TaleEngine.Data.Contracts;
 using TaleEngine.Data.Contracts.Repositories;
+using TaleEngine.Data.Repositories;
 
 namespace TaleEngine.Data
 {
@@ -11,11 +12,18 @@ namespace TaleEngine.Data
         public UnitOfWork(IDatabaseContext databaseContext)
         {
             _context = databaseContext ?? throw new ArgumentNullException(nameof(databaseContext));
+
+            EventRepository = new EventRepository(_context);
+            EditionRepository = new EditionRepository(_context);
+            ActivityRepository = new ActivityRepository(_context);
+            ActivityStatusRepository = new ActivityStatusRepository(_context);
+            ActivityTypeRepository = new ActivityTypeRepository(_context);
         }
 
-        public IEventRepository EventRepository { get; set; }
-        public IActivityRepository ActitivyRepository { get; set; }
+        public IEventRepository EventRepository { get; }
+        public IActivityRepository ActivityRepository { get; set; }
         public IActivityStatusRepository ActivityStatusRepository { get; set; }
         public IActivityTypeRepository ActivityTypeRepository { get; set; }
+        public IEditionRepository EditionRepository { get; set; }
     }
 }

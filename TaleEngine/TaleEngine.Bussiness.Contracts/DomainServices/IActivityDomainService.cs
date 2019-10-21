@@ -9,7 +9,7 @@ namespace TaleEngine.Bussiness.Contracts.DomainServices
     {
         List<ActivityDto> GetActivitiesOfEvent();
         int DeleteActivity(int activityId);
-        int CreateActivity(ActivityDto activityDto);
+        int CreateActivity(int editionId, ActivityDto activityDto);
         int UpdateActivity(ActivityDto activityDto);
     }
 }

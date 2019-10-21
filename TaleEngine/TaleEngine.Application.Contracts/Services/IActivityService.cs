@@ -7,7 +7,7 @@ namespace TaleEngine.Application.Contracts.Services
     {
         List<ActivityDto> GetActivities();
         int DeleteActivity(int activityId);
-        int CreateActivity(ActivityDto activityDto);
+        int CreateActivity(int editionId, ActivityDto activityDto);
         int UpdateActivity(ActivityDto activityDto);
     }
 }

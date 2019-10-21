@@ -11,7 +11,13 @@ namespace TaleEngine.Bussiness.Mappers
             {
                 Title = activity.Title,
                 Description = activity.Description,
-                Places = activity.Places
+                Places = activity.Places,
+                ActivityEnd = activity.EndDateTime,
+                ActivityStart = activity.StartDateTime,
+                StatusId = activity.StatusId,
+                TypeId = activity.TypeId,
+                Image = activity.Image,
+                TimeSlotId = activity.TimeSlotId ?? 0
             };
         }
 
@@ -21,7 +27,13 @@ namespace TaleEngine.Bussiness.Mappers
             {
                 Title = activityDto.Title,
                 Description = activityDto.Description,
-                Places = activityDto.Places
+                Places = activityDto.Places,
+                Image = activityDto.Image,
+                TypeId = activityDto.TypeId,
+                StatusId = activityDto.StatusId,
+                EndDateTime = activityDto.ActivityEnd.ToUniversalTime(),
+                StartDateTime = activityDto.ActivityStart.ToUniversalTime(),
+                TimeSlotId = activityDto.TimeSlotId,
             };
         }
     }

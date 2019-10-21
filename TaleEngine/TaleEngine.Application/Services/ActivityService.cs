@@ -24,9 +24,9 @@ namespace TaleEngine.Application.Services
             return _activityDomainService.DeleteActivity(activityId);
         }
 
-        public int CreateActivity(ActivityDto activityDto)
+        public int CreateActivity(int editionId, ActivityDto activityDto)
         {
-            return _activityDomainService.CreateActivity(activityDto);
+            return _activityDomainService.CreateActivity(editionId, activityDto);
         }
 
         public int UpdateActivity(ActivityDto activityDto)

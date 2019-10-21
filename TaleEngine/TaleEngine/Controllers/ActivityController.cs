@@ -41,16 +41,18 @@ namespace TaleEngine.Controllers
         }
 
         [HttpPost("[action]")]
-        public IActionResult CreateActivity([FromBody] ActivityDto activityDto)
+        public IActionResult CreateActivity(int editionId,
+            string userId,
+            [FromBody] ActivityDto activityDto)
         {
-            var authorized = false;
+            var authorized = true;
 
             if (!authorized)
             {
                 return NoContent();
             }
 
-            var result = _activityService.CreateActivity(activityDto);
+            var result = _activityService.CreateActivity(editionId, activityDto);
             return Ok(result);
         }
 

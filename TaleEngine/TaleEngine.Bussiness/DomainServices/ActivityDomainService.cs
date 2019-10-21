@@ -2,22 +2,24 @@
 using System.Collections.Generic;
 using TaleEngine.Bussiness.Contracts.DomainServices;
 using TaleEngine.Bussiness.Contracts.Dtos;
+using TaleEngine.Bussiness.Enums;
 using TaleEngine.Bussiness.Mappers;
-using TaleEngine.Data.Contracts.Repositories;
+using TaleEngine.Data.Contracts;
 
 namespace TaleEngine.Bussiness.DomainServices
 {
     public class ActivityDomainService : IActivityDomainService
     {
-        private readonly IActivityRepository _activityRepository;
-        public ActivityDomainService(IActivityRepository activityRepository)
+        private readonly IUnitOfWork _unitOfWork;
+
+        public ActivityDomainService(IUnitOfWork unitOfWork)
         {
-            _activityRepository = activityRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public List<ActivityDto> GetActivitiesOfEvent()
         {
-            var activities = _activityRepository.GetEventActivities(1);
+            var activities = _unitOfWork.ActivityRepository.GetEventActivities(1);
 
             var activityDtos = new List<ActivityDto>();
 
@@ -33,8 +35,8 @@ namespace TaleEngine.Bussiness.DomainServices
         {
             try
             {
-                _activityRepository.Delete(activityId);
-                _activityRepository.Save();
+                _unitOfWork.ActivityRepository.Delete(activityId);
+                _unitOfWork.ActivityRepository.Save();
             }
             catch (Exception)
             {
@@ -44,16 +46,33 @@ namespace TaleEngine.Bussiness.DomainServices
             return 1;
         }
 
-        public int CreateActivity(ActivityDto activityDto)
+        public int CreateActivity(int editionId, ActivityDto activityDto)
         {
             var activity = ActivityMapper.Map(activityDto);
 
+            var edition = _unitOfWork.EditionRepository.GetById(editionId);
+
+            if (edition == null)
+            {
+                return 0;
+            }
+
+            activity.EditionId = editionId;
+
+            var inReviewStatus = _unitOfWork.ActivityStatusRepository
+                .GetById((int)ActivityStatusEnum.REV);
+            activity.Status = inReviewStatus;
+
+            activity.LastModificationDateTime = DateTime.Now;
+
+            // Add logging
+
             try
             {
-                _activityRepository.Insert(activity);
-                _activityRepository.Save();
+                _unitOfWork.ActivityRepository.Insert(activity);
+                _unitOfWork.ActivityRepository.Save();
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return 0;
             }
@@ -67,8 +86,8 @@ namespace TaleEngine.Bussiness.DomainServices
 
             try
             {
-                _activityRepository.Update(activity);
-                _activityRepository.Save();
+                _unitOfWork.ActivityRepository.Update(activity);
+                _unitOfWork.ActivityRepository.Save();
             }
             catch (Exception)
             {
