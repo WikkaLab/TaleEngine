@@ -33,7 +33,7 @@ namespace TaleEngine.Bussiness.Mappers
                 StatusId = activityDto.StatusId,
                 EndDateTime = activityDto.ActivityEnd.ToUniversalTime(),
                 StartDateTime = activityDto.ActivityStart.ToUniversalTime(),
-                TimeSlotId = activityDto.TimeSlotId,
+                TimeSlotId = activityDto.TimeSlotId
             };
         }
     }
