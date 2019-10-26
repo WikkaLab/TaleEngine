@@ -10,6 +10,7 @@ namespace TaleEngine.Data.Contracts
         DbSet<ActivityType> ActivityTypes { get; set; }
         DbSet<ActivityStatus> ActivityStatuses { get; set; }
         DbSet<Edition> Editions { get; set; }
+        DbSet<TimeSlot> TimeSlot { get; set; }
 
         int SaveChanges();
     }

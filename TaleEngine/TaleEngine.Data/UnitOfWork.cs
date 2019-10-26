@@ -18,6 +18,7 @@ namespace TaleEngine.Data
             ActivityRepository = new ActivityRepository(_context);
             ActivityStatusRepository = new ActivityStatusRepository(_context);
             ActivityTypeRepository = new ActivityTypeRepository(_context);
+            TimeSlotRepository = new TimeSlotRepository(_context);
         }
 
         public IEventRepository EventRepository { get; }
@@ -25,5 +26,6 @@ namespace TaleEngine.Data
         public IActivityStatusRepository ActivityStatusRepository { get; set; }
         public IActivityTypeRepository ActivityTypeRepository { get; set; }
         public IEditionRepository EditionRepository { get; set; }
+        public ITimeSlotRepository TimeSlotRepository { get; set; }
     }
 }

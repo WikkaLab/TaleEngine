@@ -52,6 +52,7 @@ namespace TaleEngine.Data
         public DbSet<UserToActivityFav> UserToActivityFavs { get; set; }
         public DbSet<UserToActivityOperation> UserToActivityOperations { get; set; }
         public DbSet<UserToActivityPlay> UserToActivityPlays { get; set; }
+        public DbSet<TimeSlot> TimeSlot { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
