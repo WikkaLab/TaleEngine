@@ -53,12 +53,11 @@ namespace TaleEngine
             services.AddTransient<IEventService, EventService>();
             services.AddTransient<IEventDomainService, EventDomainService>();
             services.AddTransient<IActivityService, ActivityService>();
+            services.AddTransient<IActivityTypeService, ActivityTypeService>();
+            services.AddTransient<IActivityTypeDomainService, ActivityTypeDomainService>();
             services.AddTransient<IActivityDomainService, ActivityDomainService>();
-
-            services.AddTransient<IEventRepository, EventRepository>();
-            services.AddTransient<IActivityRepository, ActivityRepository>();
-            services.AddTransient<IActivityStatusRepository, ActivityStatusRepository>();
-            services.AddTransient<IActivityTypeRepository, ActivityTypeRepository>();
+            services.AddTransient<ITimeSlotService, TimeSlotService>();
+            services.AddTransient<ITimeSlotDomainService, TimeSlotDomainService>();
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
