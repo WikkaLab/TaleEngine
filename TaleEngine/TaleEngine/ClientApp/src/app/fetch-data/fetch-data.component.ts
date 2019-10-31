@@ -22,17 +22,6 @@ export class FetchDataComponent {
         }, error => console.error(error));
     }
 
-    createActivity() {
-        var activityDto: ActivityDto = new ActivityDto("A title", "Some lines", 3);
-
-        this.httpClient.post<ActivityDto>(this.baseUrl + 'api/Activity/CreateActivity',
-            JSON.stringify(activityDto),
-            HttpHelper.JsonHeaderOptions)
-            .subscribe((result) => {
-              console.log(result);
-            }, error => console.error(error));
-    }
-
     deleteActivity() {
         var activityId = 12;
 
