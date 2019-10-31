@@ -11,28 +11,33 @@
         </div>
         <div class='clearfix'></div>
         <div class='navbar-collapse collapse' [ngClass]='{ "in": isExpanded }'>
-            <ul class='nav navbar-nav'>
-                <li [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
-                    <select [(ngModel)]="selectedEvent" (ngModelChange)="onEventSelection($event)">
-                        <option [value]="ev.id" *ngFor="let ev of events">{{ev.title}}</option>
-                    </select>
-                </li>
-                <li [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
-                    <a [routerLink]='["/"]' (click)='collapse()'>
-                        <span class='glyphicon glyphicon-home'></span> News
-                    </a>
-                </li>
-                <li [routerLinkActive]='["link-active"]'>
-                    <a [routerLink]='["/fetch-data"]' (click)='collapse()'>
-                        <span class='glyphicon glyphicon-th-list'></span> Activities
-                    </a>
-                </li>
-                <li [routerLinkActive]='["link-active"]'>
-                    <a [routerLink]='["/favs"]' (click)='collapse()'>
-                        <span class='glyphicon glyphicon-star'></span> Favourites
-                    </a>
-                </li>
-            </ul>
+          <ul class='nav navbar-nav'>
+            <li [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
+              <select [(ngModel)]="selectedEvent" (ngModelChange)="onEventSelection($event)">
+                <option [value]="ev.id" *ngFor="let ev of events">{{ev.title}}</option>
+              </select>
+            </li>
+            <li [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
+              <a [routerLink]='["/"]' (click)='collapse()'>
+                <span class='glyphicon glyphicon-home'></span> News
+              </a>
+            </li>
+            <li [routerLinkActive]='["link-active"]'>
+              <a [routerLink]='["/fetch-data"]' (click)='collapse()'>
+                <span class='glyphicon glyphicon-th-list'></span> Activities
+              </a>
+            </li>
+            <li [routerLinkActive]='["link-active"]'>
+              <a [routerLink]='["/counter"]' (click)='collapse()'>
+                <span class='glyphicon glyphicon-star'></span> Favourites
+              </a>
+            </li>
+            <li [routerLinkActive]='["link-active"]'>
+              <a [routerLink]='["/new-activity"]' (click)='collapse()'>
+                <span class='glyphicon glyphicon-plus'></span> New activity
+              </a>
+            </li>
+          </ul>
         </div>
     </div>
 </div>

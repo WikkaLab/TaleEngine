@@ -48,22 +48,19 @@ namespace TaleEngine.Bussiness.DomainServices
 
         public int CreateActivity(int editionId, ActivityDto activityDto)
         {
-            var activity = ActivityMapper.Map(activityDto);
+            var isValidData = ValidateNewActivityData(activityDto, editionId);
 
-            var edition = _unitOfWork.EditionRepository.GetById(editionId);
-
-            if (edition == null)
+            if (!isValidData)
             {
                 return 0;
             }
 
+            var status = _unitOfWork.ActivityStatusRepository.GetById((int)ActivityStatusEnum.PEN);
+            activityDto.StatusId = status.Id;
+
+            var activity = ActivityMapper.Map(activityDto);
             activity.EditionId = editionId;
-
-            var inReviewStatus = _unitOfWork.ActivityStatusRepository
-                .GetById((int)ActivityStatusEnum.REV);
-            activity.Status = inReviewStatus;
-
-            activity.LastModificationDateTime = DateTime.Now;
+            activity.CreateDateTime = DateTime.Now;
 
             // Add logging
 
@@ -79,7 +76,7 @@ namespace TaleEngine.Bussiness.DomainServices
 
             return 1;
         }
-
+        
         public int UpdateActivity(ActivityDto activityDto)
         {
             var activity = ActivityMapper.Map(activityDto);
@@ -95,6 +92,34 @@ namespace TaleEngine.Bussiness.DomainServices
             }
 
             return 1;
+        }
+
+        private bool ValidateNewActivityData(ActivityDto dto, int editionId)
+        {
+            var edition = _unitOfWork.EditionRepository.GetById(editionId);
+            if (edition == null)
+            {
+                return false;
+            }
+
+            if (dto.Places <= 0)
+            {
+                return false;
+            }
+
+            var type = _unitOfWork.ActivityTypeRepository.GetById(dto.TypeId);
+            if (type == null)
+            {
+                return false;
+            }
+
+            var timeSlot = _unitOfWork.TimeSlotRepository.GetById(dto.TimeSlotId);
+            if (timeSlot == null)
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

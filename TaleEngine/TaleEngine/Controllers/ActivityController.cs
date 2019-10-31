@@ -40,10 +40,8 @@ namespace TaleEngine.Controllers
             return Ok(result);
         }
 
-        [HttpPost("[action]")]
-        public IActionResult CreateActivity(int editionId,
-            string userId,
-            [FromBody] ActivityDto activityDto)
+        [HttpPost("[action]/{editionId}")]
+        public IActionResult CreateActivity(int editionId, [FromBody] ActivityDto activityDto)
         {
             var authorized = true;
 

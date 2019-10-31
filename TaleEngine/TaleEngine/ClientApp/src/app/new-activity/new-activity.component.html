@@ -1,0 +1,68 @@
+<h1>Add a new activity</h1>
+
+<div class="form-group">
+  <label>Title</label>
+  <input class="form-control" placeholder="Activity title" [(ngModel)]="activityDto.title">
+</div>
+<div class="form-group">
+  <label>Description</label>
+  <textarea class="form-control" rows="3" [(ngModel)]="activityDto.description"></textarea>
+</div>
+<div class="form-group">
+  <label>Image</label>
+  <input class="form-control" placeholder="Image URL" [(ngModel)]="activityDto.image">
+</div>
+<div class="form-group">
+  <label>Places</label>
+  <input class="form-control" type="number" [(ngModel)]="activityDto.places">
+</div>
+<table width="100%" padding="10px">
+  <tr>
+    <td>
+      <div class="form-group">
+        <label>Time slot</label>
+        <select [(ngModel)]="selectedSlot" class="form-control">
+          <option [value]="ts.id" *ngFor="let ts of timeSlots">{{ts.name}}</option>
+        </select>
+      </div>
+    </td>
+    <td>
+      <div class="form-group">
+        <label>Type</label>
+        <select [(ngModel)]="selectedType" class="form-control">
+          <option [value]="tp.id" *ngFor="let tp of activityTypes">{{tp.name}}</option>
+        </select>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label>Activity start</label>
+      <div class='input-group date' id='datetimepicker1'>
+        <input type='date' class="form-control" />
+        <span class="input-group-addon">
+          <span class="glyphicon glyphicon-calendar"></span>
+        </span>
+        <input type='time' class="form-control" />
+        <span class="input-group-addon">
+          <span class="glyphicon glyphicon-time"></span>
+        </span>
+      </div>
+    </td>
+    <td>
+      <label>Activity end</label>
+      <div class='input-group date' id='datetimepicker1'>
+        <input type='date' class="form-control" />
+        <span class="input-group-addon">
+          <span class="glyphicon glyphicon-calendar"></span>
+        </span>
+        <input type='time' class="form-control" />
+        <span class="input-group-addon">
+          <span class="glyphicon glyphicon-time"></span>
+        </span>
+      </div>
+    </td>
+  </tr>
+</table>
+
+<button (click)="addActivity()">Send activity</button>
