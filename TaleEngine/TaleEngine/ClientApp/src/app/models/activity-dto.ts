@@ -6,22 +6,22 @@ export class ActivityDto {
 
     timeSlotId: number;
 
-    //activityStart: Date;
-    //activityEnd: Date;
+    activityStart: string;
+    activityEnd: string;
 
     typeId: number;
     statusId: number;
 
 
     constructor(title: string, description: string, places: number, image: string,
-        typeId: number, timeSlotId: number, activityStart: Date, activityEnd: Date,
+        typeId: number, timeSlotId: number, activityStart: string, activityEnd: string,
         statusId: number) {
         this.title = title;
         this.description = description;
         this.places = places;
 
-        //this.activityStart = activityStart;
-        //this.activityEnd = activityEnd;
+        this.activityStart = activityStart;
+        this.activityEnd = activityEnd;
 
         this.typeId = typeId;
         this.timeSlotId = timeSlotId

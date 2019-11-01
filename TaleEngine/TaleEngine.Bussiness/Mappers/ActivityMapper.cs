@@ -1,5 +1,4 @@
-﻿using System;
-using TaleEngine.Bussiness.Contracts.Dtos;
+﻿using TaleEngine.Bussiness.Contracts.Dtos;
 using TaleEngine.Data.Contracts.Entities;
 
 namespace TaleEngine.Bussiness.Mappers
@@ -13,8 +12,8 @@ namespace TaleEngine.Bussiness.Mappers
                 Title = activity.Title,
                 Description = activity.Description,
                 Places = activity.Places,
-                //ActivityEnd = activity.EndDateTime,
-                //ActivityStart = activity.StartDateTime,
+                ActivityEnd = activity.EndDateTime,
+                ActivityStart = activity.StartDateTime,
                 StatusId = activity.StatusId,
                 TypeId = activity.TypeId,
                 Image = activity.Image,
@@ -32,8 +31,8 @@ namespace TaleEngine.Bussiness.Mappers
                 Image = activityDto.Image,
                 TypeId = activityDto.TypeId,
                 StatusId = activityDto.StatusId,
-                EndDateTime = DateTime.Now,// activityDto.ActivityEnd.ToUniversalTime(),
-                StartDateTime = DateTime.Now,// activityDto.ActivityStart.ToUniversalTime(),
+                EndDateTime = activityDto.ActivityEnd.ToUniversalTime(),
+                StartDateTime = activityDto.ActivityStart.ToUniversalTime(),
                 TimeSlotId = activityDto.TimeSlotId
             };
         }

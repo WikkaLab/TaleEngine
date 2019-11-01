@@ -11,8 +11,8 @@ namespace TaleEngine.Bussiness.Contracts.Dtos
 
         public int TimeSlotId { get; set; }
 
-        //public DateTime ActivityStart { get; set; }
-        //public DateTime ActivityEnd { get; set; }
+        public DateTime ActivityStart { get; set; }
+        public DateTime ActivityEnd { get; set; }
 
         public int TypeId { get; set; }
         public int StatusId { get; set; }
