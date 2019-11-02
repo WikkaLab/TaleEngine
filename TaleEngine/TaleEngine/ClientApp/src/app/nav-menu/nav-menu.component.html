@@ -13,9 +13,14 @@
         <div class='navbar-collapse collapse' [ngClass]='{ "in": isExpanded }'>
           <ul class='nav navbar-nav'>
             <li [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
-              <select [(ngModel)]="selectedEvent" (ngModelChange)="onEventSelection($event)">
-                <option [value]="ev.id" *ngFor="let ev of events">{{ev.title}}</option>
-              </select>
+              <div class="form-group">
+                <label style="color: white">Event</label>
+                <select [(ngModel)]="selectedEvent"
+                        (ngModelChange)="onEventSelection($event)"
+                        class="form-control">
+                  <option [value]="ev.id" *ngFor="let ev of events">{{ev.title}}</option>
+                </select>
+              </div>
             </li>
             <li [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
               <a [routerLink]='["/"]' (click)='collapse()'>
