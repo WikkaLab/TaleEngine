@@ -14,10 +14,10 @@ namespace TaleEngine.Controllers
             _activityService = activityService;
         }
 
-        [HttpGet("[action]")]
-        public IActionResult GetActivities()
+        [HttpGet("[action]/{editionId}")]
+        public IActionResult GetActivities(int editionId)
         {
-            var result = _activityService.GetActivities();
+            var result = _activityService.GetActivities(editionId);
 
             if (result == null || result.Count == 0)
             {

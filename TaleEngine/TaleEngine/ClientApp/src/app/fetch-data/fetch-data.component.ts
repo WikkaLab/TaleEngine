@@ -17,9 +17,12 @@ export class FetchDataComponent {
         this.httpClient = http;
         this.baseUrl = baseUrl;
 
-        this.httpClient.get<ActivityDto[]>(this.baseUrl + 'api/Activity/GetActivities').subscribe(result => {
-          this.activities = result;
-        }, error => console.error(error));
+        var editionId = 3;
+
+        this.httpClient.get<ActivityDto[]>(this.baseUrl + 'api/Activity/GetActivities/' + editionId)
+            .subscribe(result => {
+              this.activities = result;
+            }, error => console.error(error));
     }
 
     deleteActivity() {

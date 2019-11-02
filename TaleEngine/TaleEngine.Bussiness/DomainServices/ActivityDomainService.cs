@@ -17,9 +17,10 @@ namespace TaleEngine.Bussiness.DomainServices
             _unitOfWork = unitOfWork;
         }
 
-        public List<ActivityDto> GetActivitiesOfEvent()
+        public List<ActivityDto> GetActivitiesOfEvent(int editionId)
         {
-            var activities = _unitOfWork.ActivityRepository.GetEventActivities(1);
+            var activities = _unitOfWork.ActivityRepository
+                .GetEventActivities(editionId);
 
             var activityDtos = new List<ActivityDto>();
 

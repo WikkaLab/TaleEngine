@@ -14,9 +14,9 @@ namespace TaleEngine.Application.Services
             _activityDomainService = activityDomainService;
         }
 
-        public List<ActivityDto> GetActivities()
+        public List<ActivityDto> GetActivities(int editionId)
         {
-            return _activityDomainService.GetActivitiesOfEvent();
+            return _activityDomainService.GetActivitiesOfEvent(editionId);
         }
 
         public int DeleteActivity(int activityId)

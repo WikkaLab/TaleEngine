@@ -7,7 +7,7 @@ namespace TaleEngine.Bussiness.Contracts.DomainServices
 {
     public interface IActivityDomainService
     {
-        List<ActivityDto> GetActivitiesOfEvent();
+        List<ActivityDto> GetActivitiesOfEvent(int editionId);
         int DeleteActivity(int activityId);
         int CreateActivity(int editionId, ActivityDto activityDto);
         int UpdateActivity(ActivityDto activityDto);
