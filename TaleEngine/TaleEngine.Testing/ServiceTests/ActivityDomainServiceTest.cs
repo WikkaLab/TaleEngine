@@ -40,7 +40,9 @@ namespace TaleEngine.Testing
         [Test]
         public void GetAllActivities()
         {
-            var result = _activityService.GetActivitiesOfEvent();
+            int editionId = 3;
+
+            var result = _activityService.GetActivitiesOfEvent(editionId);
 
             Assert.IsNotNull(result, "GetActivities() results null");
             Assert.IsTrue(result.Count == 2, "GetActivities() is not 2");

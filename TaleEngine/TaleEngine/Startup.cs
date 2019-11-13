@@ -12,8 +12,6 @@ using TaleEngine.Bussiness.Contracts.DomainServices;
 using TaleEngine.Bussiness.DomainServices;
 using TaleEngine.Data;
 using TaleEngine.Data.Contracts;
-using TaleEngine.Data.Contracts.Repositories;
-using TaleEngine.Data.Repositories;
 
 namespace TaleEngine
 {
@@ -58,6 +56,8 @@ namespace TaleEngine
             services.AddTransient<IActivityDomainService, ActivityDomainService>();
             services.AddTransient<ITimeSlotService, TimeSlotService>();
             services.AddTransient<ITimeSlotDomainService, TimeSlotDomainService>();
+            services.AddTransient<IEditionService, EditionService>();
+            services.AddTransient<IEditionDomainService, EditionDomainService>();
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
