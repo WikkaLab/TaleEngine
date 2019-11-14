@@ -42,7 +42,7 @@ namespace TaleEngine.Testing
         {
             int editionId = 3;
 
-            var result = _activityService.GetActivitiesOfEvent(editionId);
+            var result = _activityService.GetActiveActivities(editionId);
 
             Assert.IsNotNull(result, "GetActivities() results null");
             Assert.IsTrue(result.Count == 2, "GetActivities() is not 2");

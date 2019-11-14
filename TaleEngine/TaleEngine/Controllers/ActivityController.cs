@@ -17,7 +17,7 @@ namespace TaleEngine.Controllers
         [HttpGet("[action]/{editionId}")]
         public IActionResult GetActivities(int editionId)
         {
-            var result = _activityService.GetActivities(editionId);
+            var result = _activityService.GetActiveActivities(editionId);
 
             if (result == null || result.Count == 0)
             {
