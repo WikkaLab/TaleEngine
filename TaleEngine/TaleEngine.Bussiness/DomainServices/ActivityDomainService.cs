@@ -32,6 +32,29 @@ namespace TaleEngine.Bussiness.DomainServices
             return activityDtos;
         }
 
+        public List<ActivityDto> GetPendingActivities(int editionId)
+        {
+            var pendingStatus = _unitOfWork.ActivityStatusRepository
+                .GetById((int)ActivityStatusEnum.PEN);
+
+            if (pendingStatus == null)
+            {
+                return null;
+            }
+
+            var activities = _unitOfWork.ActivityRepository
+                .GetActivitiesByStatus(editionId, pendingStatus.Id);
+
+            var activityDtos = new List<ActivityDto>();
+
+            foreach (var act in activities)
+            {
+                activityDtos.Add(ActivityMapper.Map(act));
+            }
+
+            return activityDtos;
+        }
+
         public int DeleteActivity(int activityId)
         {
             try

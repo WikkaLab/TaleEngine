@@ -19,6 +19,11 @@ namespace TaleEngine.Application.Services
             return _activityDomainService.GetActivitiesOfEvent(editionId);
         }
 
+        public List<ActivityDto> GetPendingActivities(int editionId)
+        {
+            return _activityDomainService.GetPendingActivities(editionId);
+        }
+
         public int DeleteActivity(int activityId)
         {
             return _activityDomainService.DeleteActivity(activityId);

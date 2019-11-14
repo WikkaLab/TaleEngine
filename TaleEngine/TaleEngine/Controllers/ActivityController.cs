@@ -26,6 +26,19 @@ namespace TaleEngine.Controllers
             return Ok(result);
         }
 
+        [HttpGet("[action]/{editionId}")]
+        public IActionResult GetPendingActivities(int editionId)
+        {
+            var result = _activityService.GetPendingActivities(editionId);
+
+            if (result == null || result.Count == 0)
+            {
+                return NoContent();
+            }
+
+            return Ok(result);
+        }
+
         [HttpDelete("[action]/{activityId}")]
         public IActionResult DeleteActivity(int activityId)
         {

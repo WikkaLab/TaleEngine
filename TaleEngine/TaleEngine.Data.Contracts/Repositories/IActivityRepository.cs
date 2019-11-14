@@ -6,5 +6,6 @@ namespace TaleEngine.Data.Contracts.Repositories
     public interface IActivityRepository : IGenericRepository<Activity>
     {
         List<Activity> GetEventActivities(int eventId);
+        List<Activity> GetActivitiesByStatus(int edition, int status);
     }
 }

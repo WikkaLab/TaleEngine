@@ -53,5 +53,12 @@ namespace TaleEngine.Data.Repositories
                 .Where(a => a.EditionId == editionId)
                 .ToList();
         }
+
+        public List<Activity> GetActivitiesByStatus(int edition, int status)
+        {
+            return _context.Activities
+                .Where(a => a.EditionId == edition && a.StatusId == status)
+                .ToList();
+        }
     }
 }
