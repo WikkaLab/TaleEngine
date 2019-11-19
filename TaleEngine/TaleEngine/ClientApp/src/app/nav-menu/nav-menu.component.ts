@@ -16,9 +16,13 @@ export class NavMenuComponent {
     httpClient: HttpClient;
     baseUrl: string;
 
+    canManage: boolean;
+
     constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
         this.httpClient = http;
         this.baseUrl = baseUrl;
+
+        this.canManage = true;
 
         this.httpClient.get<EventModel[]>(this.baseUrl + 'api/Event/GetEvents').subscribe((result: EventModel[]) => {
             this.events = result;

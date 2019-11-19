@@ -10,6 +10,7 @@ import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { NewActivityComponent } from './new-activity/new-activity.component';
+import { ManagementActivitiesComponent } from './management/management-activities/management-activities.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { NewActivityComponent } from './new-activity/new-activity.component';
     HomeComponent,
     CounterComponent,
     FetchDataComponent,
-    NewActivityComponent
+    NewActivityComponent,
+    ManagementActivitiesComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -28,8 +30,8 @@ import { NewActivityComponent } from './new-activity/new-activity.component';
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
-      { path: 'new-activity', component: NewActivityComponent }
-
+      { path: 'new-activity', component: NewActivityComponent },
+      { path: 'management-activities', component: ManagementActivitiesComponent }
     ])
   ],
   providers: [],
