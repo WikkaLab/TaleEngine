@@ -17,10 +17,41 @@ namespace TaleEngine.Bussiness.DomainServices
             _unitOfWork = unitOfWork;
         }
 
-        public List<ActivityDto> GetActivitiesOfEvent(int editionId)
+        public List<ActivityDto> GetActiveActivities(int editionId)
         {
+            var activeStatus = _unitOfWork.ActivityStatusRepository
+                .GetById((int)ActivityStatusEnum.ACT);
+
+            if (activeStatus == null)
+            {
+                return null;
+            }
+
             var activities = _unitOfWork.ActivityRepository
-                .GetEventActivities(editionId);
+                .GetActivitiesByStatus(editionId, activeStatus.Id);
+
+            var activityDtos = new List<ActivityDto>();
+
+            foreach (var act in activities)
+            {
+                activityDtos.Add(ActivityMapper.Map(act));
+            }
+
+            return activityDtos;
+        }
+
+        public List<ActivityDto> GetPendingActivities(int editionId)
+        {
+            var pendingStatus = _unitOfWork.ActivityStatusRepository
+                .GetById((int)ActivityStatusEnum.PEN);
+
+            if (pendingStatus == null)
+            {
+                return null;
+            }
+
+            var activities = _unitOfWork.ActivityRepository
+                .GetActivitiesByStatus(editionId, pendingStatus.Id);
 
             var activityDtos = new List<ActivityDto>();
 
@@ -121,6 +152,31 @@ namespace TaleEngine.Bussiness.DomainServices
             }
 
             return true;
+        }
+
+        public int ChangeActivityStatus(int activityId, int statusId)
+        {
+            var status = _unitOfWork.ActivityStatusRepository.GetById(statusId);
+            var activity = _unitOfWork.ActivityRepository.GetById(activityId);
+
+            if (status == null || activity == null)
+            {
+                return 0;
+            }
+
+            activity.StatusId = status.Id;
+
+            try
+            {
+                _unitOfWork.ActivityRepository.Update(activity);
+                _unitOfWork.ActivityRepository.Save();
+            }
+            catch (Exception e)
+            {
+                return 0;
+            }
+
+            return 1;
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TaleEngine.Application.Contracts.Services;
 using TaleEngine.Bussiness.Contracts.Dtos;
+using TaleEngine.Bussiness.Contracts.Dtos.Requests;
 
 namespace TaleEngine.Controllers
 {
@@ -17,12 +18,25 @@ namespace TaleEngine.Controllers
         [HttpGet("[action]/{editionId}")]
         public IActionResult GetActivities(int editionId)
         {
-            var result = _activityService.GetActivities(editionId);
+            var result = _activityService.GetActiveActivities(editionId);
 
             if (result == null || result.Count == 0)
             {
                 return NoContent();
             }
+            return Ok(result);
+        }
+
+        [HttpGet("[action]/{editionId}")]
+        public IActionResult GetPendingActivities(int editionId)
+        {
+            var result = _activityService.GetPendingActivities(editionId);
+
+            if (result == null || result.Count == 0)
+            {
+                return NoContent();
+            }
+
             return Ok(result);
         }
 
@@ -51,6 +65,14 @@ namespace TaleEngine.Controllers
             }
 
             var result = _activityService.CreateActivity(editionId, activityDto);
+            return Ok(result);
+        }
+
+        [HttpPut("[action]")]
+        public IActionResult ChangeActivityStatus([FromBody] ActivityChangeStatusDto activtyChangeStatusDto)
+        {
+            var result = _activityService.ChangeActivityStatus(activtyChangeStatusDto);
+
             return Ok(result);
         }
 

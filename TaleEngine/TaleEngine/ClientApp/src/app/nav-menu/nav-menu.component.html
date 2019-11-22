@@ -12,6 +12,12 @@
         <div class='clearfix'></div>
         <div class='navbar-collapse collapse' [ngClass]='{ "in": isExpanded }'>
           <ul class='nav navbar-nav'>
+            <li [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'
+                *ngIf="canManage">
+              <a [routerLink]='["/management-activities"]' (click)='collapse()'>
+                <span class='glyphicon glyphicon-cog'></span> Management
+              </a>
+            </li>
             <li [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
               <div class="form-group">
                 <label style="color: white">Event</label>

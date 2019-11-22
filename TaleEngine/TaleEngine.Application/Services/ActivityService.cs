@@ -2,6 +2,7 @@
 using TaleEngine.Application.Contracts.Services;
 using TaleEngine.Bussiness.Contracts.DomainServices;
 using TaleEngine.Bussiness.Contracts.Dtos;
+using TaleEngine.Bussiness.Contracts.Dtos.Requests;
 
 namespace TaleEngine.Application.Services
 {
@@ -14,9 +15,14 @@ namespace TaleEngine.Application.Services
             _activityDomainService = activityDomainService;
         }
 
-        public List<ActivityDto> GetActivities(int editionId)
+        public List<ActivityDto> GetActiveActivities(int editionId)
         {
-            return _activityDomainService.GetActivitiesOfEvent(editionId);
+            return _activityDomainService.GetActiveActivities(editionId);
+        }
+
+        public List<ActivityDto> GetPendingActivities(int editionId)
+        {
+            return _activityDomainService.GetPendingActivities(editionId);
         }
 
         public int DeleteActivity(int activityId)
@@ -32,6 +38,12 @@ namespace TaleEngine.Application.Services
         public int UpdateActivity(ActivityDto activityDto)
         {
             return _activityDomainService.UpdateActivity(activityDto);
+        }
+
+        public int ChangeActivityStatus(ActivityChangeStatusDto activityChangeStatusDto)
+        {
+            return _activityDomainService
+                .ChangeActivityStatus(activityChangeStatusDto.ActivityId, activityChangeStatusDto.StatusId);
         }
     }
 }
