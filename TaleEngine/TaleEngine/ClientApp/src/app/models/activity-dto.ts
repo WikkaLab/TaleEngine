@@ -1,4 +1,6 @@
 export class ActivityDto {
+    id: number;
+
     title: string;
     description: string;
     places: number;
@@ -13,9 +15,11 @@ export class ActivityDto {
     statusId: number;
 
 
-    constructor(title: string, description: string, places: number, image: string,
+    constructor(id: number, title: string, description: string, places: number, image: string,
         typeId: number, timeSlotId: number, activityStart: string, activityEnd: string,
         statusId: number) {
+        this.id = id;
+
         this.title = title;
         this.description = description;
         this.places = places;
