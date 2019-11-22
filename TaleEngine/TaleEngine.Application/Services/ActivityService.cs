@@ -2,6 +2,7 @@
 using TaleEngine.Application.Contracts.Services;
 using TaleEngine.Bussiness.Contracts.DomainServices;
 using TaleEngine.Bussiness.Contracts.Dtos;
+using TaleEngine.Bussiness.Contracts.Dtos.Requests;
 
 namespace TaleEngine.Application.Services
 {
@@ -37,6 +38,12 @@ namespace TaleEngine.Application.Services
         public int UpdateActivity(ActivityDto activityDto)
         {
             return _activityDomainService.UpdateActivity(activityDto);
+        }
+
+        public int ChangeActivityStatus(ActivityChangeStatusDto activityChangeStatusDto)
+        {
+            return _activityDomainService
+                .ChangeActivityStatus(activityChangeStatusDto.ActivityId, activityChangeStatusDto.StatusId);
         }
     }
 }

@@ -10,6 +10,7 @@ namespace TaleEngine.Bussiness.Mappers
         {
             return new ActivityDto
             {
+                Id = activity.Id,
                 Title = activity.Title,
                 Description = activity.Description,
                 Places = activity.Places,
@@ -26,6 +27,7 @@ namespace TaleEngine.Bussiness.Mappers
         {
             return new Activity
             {
+                Id = activityDto.Id,
                 Title = activityDto.Title,
                 Description = activityDto.Description,
                 Places = activityDto.Places,

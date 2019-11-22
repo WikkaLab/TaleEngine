@@ -29,7 +29,7 @@ export class NewActivityComponent {
 
         this.editionId = 3;
 
-        this.activityDto = new ActivityDto("", "", 0, "", 0, 0, "", "", 0);
+        this.activityDto = new ActivityDto(0, "", "", 0, "", 0, 0, "", "", 0);
 
         this.httpClient.get<ActivityTypeModel[]>(this.baseUrl + 'api/ActivityType/GetActivityTypes').subscribe(result => {
             this.activityTypes = result;

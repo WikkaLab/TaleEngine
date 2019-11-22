@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TaleEngine.Application.Contracts.Services;
 using TaleEngine.Bussiness.Contracts.Dtos;
+using TaleEngine.Bussiness.Contracts.Dtos.Requests;
 
 namespace TaleEngine.Controllers
 {
@@ -64,6 +65,14 @@ namespace TaleEngine.Controllers
             }
 
             var result = _activityService.CreateActivity(editionId, activityDto);
+            return Ok(result);
+        }
+
+        [HttpPut("[action]")]
+        public IActionResult ChangeActivityStatus([FromBody] ActivityChangeStatusDto activtyChangeStatusDto)
+        {
+            var result = _activityService.ChangeActivityStatus(activtyChangeStatusDto);
+
             return Ok(result);
         }
 

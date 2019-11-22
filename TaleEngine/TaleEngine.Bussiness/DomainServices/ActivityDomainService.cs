@@ -153,5 +153,30 @@ namespace TaleEngine.Bussiness.DomainServices
 
             return true;
         }
+
+        public int ChangeActivityStatus(int activityId, int statusId)
+        {
+            var status = _unitOfWork.ActivityStatusRepository.GetById(statusId);
+            var activity = _unitOfWork.ActivityRepository.GetById(activityId);
+
+            if (status == null || activity == null)
+            {
+                return 0;
+            }
+
+            activity.StatusId = status.Id;
+
+            try
+            {
+                _unitOfWork.ActivityRepository.Update(activity);
+                _unitOfWork.ActivityRepository.Save();
+            }
+            catch (Exception e)
+            {
+                return 0;
+            }
+
+            return 1;
+        }
     }
 }

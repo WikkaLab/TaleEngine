@@ -12,5 +12,7 @@ namespace TaleEngine.Bussiness.Contracts.DomainServices
         int DeleteActivity(int activityId);
         int CreateActivity(int editionId, ActivityDto activityDto);
         int UpdateActivity(ActivityDto activityDto);
+
+        int ChangeActivityStatus(int activityId, int statusId);
     }
 }
