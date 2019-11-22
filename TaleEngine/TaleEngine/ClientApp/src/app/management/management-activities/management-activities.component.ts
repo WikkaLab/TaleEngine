@@ -2,6 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivityDto } from '../../models/activity-dto';
 import { HttpHelper } from '../../../cross/helpers/http';
+import { ActivityChangeStatusDto } from '../../models/activity-change-status-dto';
 
 @Component({
     selector: 'app-management-activities',
@@ -13,12 +14,18 @@ export class ManagementActivitiesComponent {
     httpClient: HttpClient;
     baseUrl: string;
 
+    editionId: number;
+
     constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
         this.httpClient = http;
         this.baseUrl = baseUrl;
 
-        var editionId = 3;
+        this.editionId = 3;
 
+        this.loadActivities(this.editionId);
+    }
+
+    loadActivities(editionId: number) {
         this.httpClient.get<ActivityDto[]>(this.baseUrl + 'api/Activity/GetPendingActivities/' + editionId)
             .subscribe(result => {
                 this.activities = result;
@@ -26,11 +33,25 @@ export class ManagementActivitiesComponent {
     }
 
     setActivityActive(activityId: number) {
-        //this.httpClient.put<number>(this.baseUrl + 'api/Activity/SetActivityActive')
-        console.log(activityId);
+        var activeStatus = ActivityStatusEnum.ACT;
+
+        this.changeActivityStatus(activityId, activeStatus);  
     }
 
     setActivityReview(activityId: number) {
-        console.log(activityId);
+        var reviewStatus = ActivityStatusEnum.REV;
+
+        this.changeActivityStatus(activityId, reviewStatus);
+    }
+
+    changeActivityStatus(activityId: number, statusId: number) {
+        var activityChangeStatusRequest = new ActivityChangeStatusDto(activityId, statusId);
+
+        this.httpClient.put<number>(this.baseUrl + 'api/Activity/ChangeActivityStatus',
+            JSON.stringify(activityChangeStatusRequest),
+            HttpHelper.JsonHeaderOptions)
+            .subscribe((result) => {
+                this.loadActivities(this.editionId);
+            }, error => console.error(error));
     }
 }
