@@ -1,7 +1,6 @@
-import { Component, Inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Component } from '@angular/core';
 import { ActivityDto } from '../models/activity-dto';
-import { HttpHelper } from '../../cross/helpers/http';
+import { ActivityService } from '../../services/activity-service';
 
 @Component({
   selector: 'app-fetch-data',
@@ -10,16 +9,14 @@ import { HttpHelper } from '../../cross/helpers/http';
 export class FetchDataComponent {
     public activities: ActivityDto[];
 
-    httpClient: HttpClient;
-    baseUrl: string;
+    activityService: ActivityService;
 
-    constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
-        this.httpClient = http;
-        this.baseUrl = baseUrl;
+    constructor(activityService: ActivityService) {
+        this.activityService = activityService;
 
         var editionId = 3;
 
-        this.httpClient.get<ActivityDto[]>(this.baseUrl + 'api/Activity/GetActivities/' + editionId)
+        this.activityService.getActiveActivities(editionId)
             .subscribe(result => {
               this.activities = result;
             }, error => console.error(error));
@@ -28,7 +25,7 @@ export class FetchDataComponent {
     deleteActivity() {
         var activityId = 12;
 
-        this.httpClient.delete<number>(this.baseUrl + 'api/Activity/DeleteActivity/' + activityId)
+        this.activityService.deleteActivity(activityId)
             .subscribe((result) => {
                 console.log(result);
             }, error => console.error(error));

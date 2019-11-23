@@ -11,6 +11,10 @@ import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { NewActivityComponent } from './new-activity/new-activity.component';
 import { ManagementActivitiesComponent } from './management/management-activities/management-activities.component';
+import { ActivityService } from '../services/activity-service';
+import { ActivityTypesService } from '../services/activity-types-service';
+import { TimeSlotsService } from '../services/time-slots-service';
+import { EventsService } from '../services/event-service';
 
 @NgModule({
   declarations: [
@@ -33,8 +37,8 @@ import { ManagementActivitiesComponent } from './management/management-activitie
       { path: 'new-activity', component: NewActivityComponent },
       { path: 'management-activities', component: ManagementActivitiesComponent }
     ])
-  ],
-  providers: [],
+    ],
+    providers: [ActivityService, ActivityTypesService, TimeSlotsService, EventsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

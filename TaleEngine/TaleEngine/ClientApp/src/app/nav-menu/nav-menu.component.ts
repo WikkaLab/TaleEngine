@@ -1,7 +1,6 @@
 import { Component, Inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { HttpHelper } from '../../cross/helpers/http';
 import { EventModel } from '../models/event-model';
+import { EventsService } from '../../services/event-service';
 
 @Component({
   selector: 'app-nav-menu',
@@ -13,18 +12,16 @@ export class NavMenuComponent {
     events: EventModel[];
     selectedEvent: EventModel;
 
-    httpClient: HttpClient;
-    baseUrl: string;
+    eventService: EventsService;
 
     canManage: boolean;
 
-    constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
-        this.httpClient = http;
-        this.baseUrl = baseUrl;
+    constructor(eventService: EventsService) {
+        this.eventService = eventService;
 
         this.canManage = true;
 
-        this.httpClient.get<EventModel[]>(this.baseUrl + 'api/Event/GetEvents').subscribe((result: EventModel[]) => {
+        this.eventService.getEvents().subscribe((result: EventModel[]) => {
             this.events = result;
         }, error => console.error(error));
     }
