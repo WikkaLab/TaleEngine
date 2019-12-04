@@ -19,6 +19,8 @@ namespace TaleEngine.Testing.Repositories
                 .Returns(MockData.GetActivity);
             _activityRepository.Setup(m => m.GetEventActivities(It.IsAny<int>()))
                 .Returns(MockData.GetActivityList);
+            _activityRepository.Setup(m => m.GetActivitiesByStatus(It.IsAny<int>(), It.IsAny<int>()))
+                .Returns(MockData.GetActivityList);
         }
     }
 }
