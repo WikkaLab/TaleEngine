@@ -8,6 +8,7 @@ namespace TaleEngine.Application.Contracts.Services
     {
         List<ActivityDto> GetActiveActivities(int editionId);
         List<ActivityDto> GetPendingActivities(int editionId);
+        List<ActivityDto> GetActiveActivitiesFiltered(ActivityFilterRequest activityFilterRequest);
         int DeleteActivity(int activityId);
         int CreateActivity(int editionId, ActivityDto activityDto);
         int UpdateActivity(ActivityDto activityDto);

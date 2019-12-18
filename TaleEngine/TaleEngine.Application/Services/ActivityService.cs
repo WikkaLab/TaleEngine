@@ -25,6 +25,14 @@ namespace TaleEngine.Application.Services
             return _activityDomainService.GetPendingActivities(editionId);
         }
 
+        public List<ActivityDto> GetActiveActivitiesFiltered(ActivityFilterRequest activityFilterRequest)
+        {
+            return _activityDomainService
+                .GetActiveActivitiesFiltered(activityFilterRequest.TypeId,
+                activityFilterRequest.EditionId,
+                activityFilterRequest.Title);
+        }
+
         public int DeleteActivity(int activityId)
         {
             return _activityDomainService.DeleteActivity(activityId);
@@ -45,5 +53,7 @@ namespace TaleEngine.Application.Services
             return _activityDomainService
                 .ChangeActivityStatus(activityChangeStatusDto.ActivityId, activityChangeStatusDto.StatusId);
         }
+
+        
     }
 }

@@ -7,5 +7,6 @@ namespace TaleEngine.Data.Contracts.Repositories
     {
         List<Activity> GetEventActivities(int eventId);
         List<Activity> GetActivitiesByStatus(int edition, int status);
+        List<Activity> GetActiveActivitiesFiltered(int status, int type, int edition, string title);
     }
 }
