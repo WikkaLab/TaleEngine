@@ -178,5 +178,31 @@ namespace TaleEngine.Bussiness.DomainServices
 
             return 1;
         }
+
+        public List<ActivityDto> GetActiveActivitiesFiltered(int type, int edition, string title)
+        {
+            var activeStatus = _unitOfWork.ActivityStatusRepository
+                .GetById((int)ActivityStatusEnum.ACT);
+
+            var currentEdition = _unitOfWork.EditionRepository
+                .GetById(edition);
+
+            if (currentEdition == null || activeStatus == null)
+            {
+                return null;
+            }
+
+            var activities = _unitOfWork.ActivityRepository
+                .GetActiveActivitiesFiltered(activeStatus.Id, type, currentEdition.Id, title);
+             
+            var activityDtos = new List<ActivityDto>();
+
+            foreach (var act in activities)
+            {
+                activityDtos.Add(ActivityMapper.Map(act));
+            }
+
+            return activityDtos;
+        }
     }
 }

@@ -40,6 +40,19 @@ namespace TaleEngine.Controllers
             return Ok(result);
         }
 
+        [HttpPut("[action]")]
+        public IActionResult GetActivitiesFiltered([FromBody] ActivityFilterRequest activityFilterRequest)
+        {
+            var result = _activityService.GetActiveActivitiesFiltered(activityFilterRequest);
+
+            if (result == null || result.Count == 0)
+            {
+                return NoContent();
+            }
+
+            return Ok(result);
+        }
+
         [HttpDelete("[action]/{activityId}")]
         public IActionResult DeleteActivity(int activityId)
         {
