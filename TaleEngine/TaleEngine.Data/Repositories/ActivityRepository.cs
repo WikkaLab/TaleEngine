@@ -61,7 +61,7 @@ namespace TaleEngine.Data.Repositories
                 .ToList();
         }
 
-        public List<Activity> GetActiveActivitiesFiltered(int status, int type, int edition, string title)
+        public List<Activity> GetActiveActivitiesFiltered(int status, int type, int edition, string title, int skipByPagination)
         {
             var query = _context.Activities.Select(a => a).Where(a => a.EditionId == edition);
 
@@ -78,7 +78,7 @@ namespace TaleEngine.Data.Repositories
                 query = query.Where(a => a.Title.Contains(title));
             }
 
-            return query.ToList();
+            return query.Skip(skipByPagination).ToList();
         }
     }
 }

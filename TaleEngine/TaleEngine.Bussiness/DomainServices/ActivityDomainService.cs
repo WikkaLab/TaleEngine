@@ -179,8 +179,11 @@ namespace TaleEngine.Bussiness.DomainServices
             return 1;
         }
 
-        public List<ActivityDto> GetActiveActivitiesFiltered(int type, int edition, string title)
+        public List<ActivityDto> GetActiveActivitiesFiltered(int type, int edition, 
+            string title, int currentPage)
         {
+            int activitiesPerPage = 10;
+
             var activeStatus = _unitOfWork.ActivityStatusRepository
                 .GetById((int)ActivityStatusEnum.ACT);
 
@@ -192,8 +195,11 @@ namespace TaleEngine.Bussiness.DomainServices
                 return null;
             }
 
+            int skipByPagination = currentPage * activitiesPerPage;
+
             var activities = _unitOfWork.ActivityRepository
-                .GetActiveActivitiesFiltered(activeStatus.Id, type, currentEdition.Id, title);
+                .GetActiveActivitiesFiltered(activeStatus.Id, type, currentEdition.Id, 
+                    title, skipByPagination);
              
             var activityDtos = new List<ActivityDto>();
 

@@ -30,7 +30,8 @@ namespace TaleEngine.Application.Services
             return _activityDomainService
                 .GetActiveActivitiesFiltered(activityFilterRequest.TypeId,
                 activityFilterRequest.EditionId,
-                activityFilterRequest.Title);
+                activityFilterRequest.Title,
+                activityFilterRequest.CurrentPage);
         }
 
         public int DeleteActivity(int activityId)
