@@ -45,7 +45,7 @@ namespace TaleEngine.Controllers
         {
             var result = _activityService.GetActiveActivitiesFiltered(activityFilterRequest);
 
-            if (result == null || result.Count == 0)
+            if (result == null)
             {
                 return NoContent();
             }

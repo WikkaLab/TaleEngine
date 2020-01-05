@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using TaleEngine.Bussiness.Contracts.DomainServices;
 using TaleEngine.Bussiness.Contracts.Dtos;
+using TaleEngine.Bussiness.Contracts.Dtos.Results;
 using TaleEngine.Bussiness.Enums;
 using TaleEngine.Bussiness.Mappers;
 using TaleEngine.Data.Contracts;
@@ -179,7 +180,7 @@ namespace TaleEngine.Bussiness.DomainServices
             return 1;
         }
 
-        public List<ActivityDto> GetActiveActivitiesFiltered(int type, int edition, 
+        public ActivityFilteredResult GetActiveActivitiesFiltered(int type, int edition, 
             string title, int currentPage)
         {
             int activitiesPerPage = 10;
@@ -195,7 +196,7 @@ namespace TaleEngine.Bussiness.DomainServices
                 return null;
             }
 
-            int skipByPagination = currentPage * activitiesPerPage;
+            int skipByPagination = (currentPage - 1) * activitiesPerPage;
 
             var activities = _unitOfWork.ActivityRepository
                 .GetActiveActivitiesFiltered(activeStatus.Id, type, currentEdition.Id, 
@@ -208,7 +209,20 @@ namespace TaleEngine.Bussiness.DomainServices
                 activityDtos.Add(ActivityMapper.Map(act));
             }
 
-            return activityDtos;
+            int totalActivities = _unitOfWork.ActivityRepository
+                .GetTotalActivities(activeStatus.Id, type, currentEdition.Id, title);
+
+            double actsPerPage = totalActivities / activitiesPerPage;
+            var totalPages = (int)Math.Ceiling(actsPerPage);
+
+            var result = new ActivityFilteredResult
+            {
+                Activities = activityDtos,
+                CurrentPage = currentPage,
+                TotalPages = totalPages
+            };
+
+            return result;
         }
     }
 }

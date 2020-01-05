@@ -63,8 +63,21 @@ namespace TaleEngine.Data.Repositories
 
         public List<Activity> GetActiveActivitiesFiltered(int status, int type, int edition, string title, int skipByPagination)
         {
-            var query = _context.Activities.Select(a => a).Where(a => a.EditionId == edition);
+            var query = GetActiveActivitiesWithFilter(status, type, edition, title);
 
+            return query.Skip(skipByPagination).ToList();
+        }
+
+        public int GetTotalActivities(int status, int type, int edition, string title)
+        {
+            var query = GetActiveActivitiesWithFilter(status, type, edition, title);
+
+            return query.ToList().Count;
+        }
+
+        private IQueryable<Activity> GetActiveActivitiesWithFilter(int status, int type, int edition, string title)
+        {
+            var query = _context.Activities.Select(a => a).Where(a => a.EditionId == edition);
             if (status != 0)
             {
                 query = query.Where(a => a.StatusId == status);
@@ -78,7 +91,7 @@ namespace TaleEngine.Data.Repositories
                 query = query.Where(a => a.Title.Contains(title));
             }
 
-            return query.Skip(skipByPagination).ToList();
+            return query;
         }
     }
 }
