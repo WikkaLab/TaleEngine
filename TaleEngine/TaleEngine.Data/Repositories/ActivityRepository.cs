@@ -61,11 +61,12 @@ namespace TaleEngine.Data.Repositories
                 .ToList();
         }
 
-        public List<Activity> GetActiveActivitiesFiltered(int status, int type, int edition, string title, int skipByPagination)
+        public List<Activity> GetActiveActivitiesFiltered(int status, int type, int edition,
+            string title, int skipByPagination, int activitiesPerPage)
         {
             var query = GetActiveActivitiesWithFilter(status, type, edition, title);
 
-            return query.Skip(skipByPagination).ToList();
+            return query.Skip(skipByPagination).Take(activitiesPerPage).ToList();
         }
 
         public int GetTotalActivities(int status, int type, int edition, string title)
