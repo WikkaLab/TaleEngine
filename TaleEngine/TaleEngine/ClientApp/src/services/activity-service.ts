@@ -3,6 +3,8 @@ import { ActivityDto } from "../app/models/activity-dto";
 import { HttpHelper } from "../cross/helpers/http";
 import { HttpClient } from '@angular/common/http';
 import { ActivityChangeStatusDto } from "../app/models/activity-change-status-dto";
+import { ActivityFilterRequest } from "../app/models/requests/activity-filter-request";
+import { ActivityFilteredResult } from "../app/models/activity-filtered-result";
 
 @Injectable()
 export class ActivityService {
@@ -22,6 +24,12 @@ export class ActivityService {
 
     public getActiveActivities(editionId: number) {
         return this.httpClient.get<ActivityDto[]>(this.baseUrl + 'api/Activity/GetActivities/' + editionId);
+    }
+
+    public getActiveFilteredActivities(activityFilterRequest: ActivityFilterRequest) {
+        return this.httpClient.put<ActivityFilteredResult>(this.baseUrl + 'api/Activity/GetActivitiesFiltered',
+            JSON.stringify(activityFilterRequest),
+            HttpHelper.JsonHeaderOptions);
     }
 
     public deleteActivity(activityId: number) {
