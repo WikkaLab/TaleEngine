@@ -15,6 +15,7 @@ import { ActivityService } from '../services/activity-service';
 import { ActivityTypesService } from '../services/activity-types-service';
 import { TimeSlotsService } from '../services/time-slots-service';
 import { EventsService } from '../services/event-service';
+import { ActivityFilterComponent } from './activity-filter/activity-filter.component';
 import { ActivityStatusService } from '../services/activity-status-service';
 
 @NgModule({
@@ -25,7 +26,8 @@ import { ActivityStatusService } from '../services/activity-status-service';
     CounterComponent,
     FetchDataComponent,
     NewActivityComponent,
-    ManagementActivitiesComponent
+    ManagementActivitiesComponent,
+    ActivityFilterComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
