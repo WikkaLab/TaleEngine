@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { ActivityDto } from '../models/activity-dto';
 import { ActivityService } from '../../services/activity-service';
+import { ActivityFilterRequest } from '../models/requests/activity-filter-request';
+import { ActivityFilteredResult } from '../models/activity-filtered-result';
 
 @Component({
   selector: 'app-fetch-data',
@@ -11,14 +13,28 @@ export class FetchDataComponent {
 
     activityService: ActivityService;
 
+    pageNumber: number = 1;
+    editionId: number = 3;
+
+    totalPages: number = 0;
+
+    activityFilterRequest: ActivityFilterRequest;
+
+    activityFilterResult: ActivityFilteredResult;
+
     constructor(activityService: ActivityService) {
         this.activityService = activityService;
 
-        var editionId = 3;
+      this.activityFilterRequest = new ActivityFilterRequest();
+      this.activityFilterRequest.currentPage = this.pageNumber;
+      this.activityFilterRequest.editionId = this.editionId;
 
-        this.activityService.getActiveActivities(editionId)
-            .subscribe(result => {
-              this.activities = result;
+
+      this.activityService.getActiveFilteredActivities(this.activityFilterRequest)
+        .subscribe(result => {
+          this.activities = result.activities;
+          this.totalPages = result.totalPages;
+          this.pageNumber = result.currentPage;
             }, error => console.error(error));
     }
 
@@ -29,5 +45,13 @@ export class FetchDataComponent {
             .subscribe((result) => {
                 console.log(result);
             }, error => console.error(error));
+    }
+
+    nextPage() {
+
+    }
+
+    prevPage() {
+
     }
 }

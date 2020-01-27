@@ -8,6 +8,8 @@
   Create new activity
 </button>
 
+<app-activity-filter></app-activity-filter>
+
 <p *ngIf="!activities"><em>Loading...</em></p>
 
 <table class='table' *ngIf="activities">
@@ -26,3 +28,19 @@
         </tr>
     </tbody>
 </table>
+
+<button type="button"
+        class="btn-primary"
+        disabled="disabled"
+        (click)="prevPage()">
+  Previous page
+</button>
+<label>
+        {{ pageNumber }}
+</label>
+<button type="button"
+        class="btn-primary"
+        disabled="disabled"
+        (click)="nextPage()">
+  Next page
+</button>
