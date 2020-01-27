@@ -196,7 +196,7 @@ namespace TaleEngine.Bussiness.DomainServices
                 return null;
             }
 
-            int skipByPagination =  currentPage * activitiesPerPage;
+            int skipByPagination =  (currentPage - 1) * activitiesPerPage;
 
             var activities = _unitOfWork.ActivityRepository
                 .GetActiveActivitiesFiltered(activeStatus.Id, type, currentEdition.Id, 
