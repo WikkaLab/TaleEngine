@@ -30,17 +30,17 @@
 </table>
 
 <button type="button"
-        class="btn-primary"
-        disabled="disabled"
+        class="btn btn-primary"
+        *ngIf="prevPageExists"
         (click)="prevPage()">
   Previous page
 </button>
 <label>
-        {{ pageNumber }}
+       [ {{ pageNumber }} ]
 </label>
 <button type="button"
-        class="btn-primary"
-        disabled="disabled"
+        class="btn btn-primary"
+        *ngIf="nextPageExists"
         (click)="nextPage()">
   Next page
 </button>

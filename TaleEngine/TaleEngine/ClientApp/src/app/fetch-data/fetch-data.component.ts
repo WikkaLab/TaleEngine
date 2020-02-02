@@ -22,6 +22,9 @@ export class FetchDataComponent {
 
     activityFilterResult: ActivityFilteredResult;
 
+    nextPageExists: boolean;
+    prevPageExists: boolean;
+
     constructor(activityService: ActivityService) {
         this.activityService = activityService;
 
@@ -29,13 +32,7 @@ export class FetchDataComponent {
       this.activityFilterRequest.currentPage = this.pageNumber;
       this.activityFilterRequest.editionId = this.editionId;
 
-
-      this.activityService.getActiveFilteredActivities(this.activityFilterRequest)
-        .subscribe(result => {
-          this.activities = result.activities;
-          this.totalPages = result.totalPages;
-          this.pageNumber = result.currentPage;
-            }, error => console.error(error));
+      this.getActivitiesFiltered();
     }
 
     deleteActivity() {
@@ -47,11 +44,40 @@ export class FetchDataComponent {
             }, error => console.error(error));
     }
 
-    nextPage() {
+  getActivitiesFiltered() {
+    this.activityService.getActiveFilteredActivities(this.activityFilterRequest)
+      .subscribe(result => {
+        this.activities = result.activities;
+        this.totalPages = result.totalPages;
+        this.pageNumber = result.currentPage;
 
-    }
+        this.checkPageButtons();
 
-    prevPage() {
+      }, error => console.error(error));
+  }
 
-    }
+  nextPage() {
+    this.activityFilterRequest.currentPage = this.pageNumber + 1;
+
+    this.getActivitiesFiltered();
+  }
+
+  prevPage() {
+    this.activityFilterRequest.currentPage = this.pageNumber - 1;
+
+    this.getActivitiesFiltered();
+  }
+
+  checkPageButtons() {
+    this.checkPrevPageExists();
+    this.checkNextPageExists();
+  }
+
+  checkPrevPageExists() {
+    this.nextPageExists = this.pageNumber != this.totalPages;
+  }
+
+  checkNextPageExists() {
+    this.prevPageExists = this.pageNumber > 1;
+  }
 }
