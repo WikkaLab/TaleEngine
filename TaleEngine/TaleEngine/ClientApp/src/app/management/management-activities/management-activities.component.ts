@@ -1,8 +1,7 @@
-import { Component, Inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Component } from '@angular/core';
 import { ActivityDto } from '../../models/activity-dto';
-import { HttpHelper } from '../../../cross/helpers/http';
 import { ActivityChangeStatusDto } from '../../models/activity-change-status-dto';
+import { ActivityService } from '../../../services/activity-service';
 
 @Component({
     selector: 'app-management-activities',
@@ -11,14 +10,12 @@ import { ActivityChangeStatusDto } from '../../models/activity-change-status-dto
 export class ManagementActivitiesComponent {
     public activities: ActivityDto[];
 
-    httpClient: HttpClient;
-    baseUrl: string;
+    activityService: ActivityService;
 
     editionId: number;
 
-    constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
-        this.httpClient = http;
-        this.baseUrl = baseUrl;
+    constructor(activityService: ActivityService) {
+        this.activityService = activityService;
 
         this.editionId = 3;
 
@@ -26,7 +23,7 @@ export class ManagementActivitiesComponent {
     }
 
     loadActivities(editionId: number) {
-        this.httpClient.get<ActivityDto[]>(this.baseUrl + 'api/Activity/GetPendingActivities/' + editionId)
+        this.activityService.getPendingActivities(editionId)
             .subscribe(result => {
                 this.activities = result;
             }, error => console.error(error));
@@ -47,9 +44,7 @@ export class ManagementActivitiesComponent {
     changeActivityStatus(activityId: number, statusId: number) {
         var activityChangeStatusRequest = new ActivityChangeStatusDto(activityId, statusId);
 
-        this.httpClient.put<number>(this.baseUrl + 'api/Activity/ChangeActivityStatus',
-            JSON.stringify(activityChangeStatusRequest),
-            HttpHelper.JsonHeaderOptions)
+        this.activityService.changeActivityStatus(activityChangeStatusRequest)
             .subscribe((result) => {
                 this.loadActivities(this.editionId);
             }, error => console.error(error));

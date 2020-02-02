@@ -1,7 +1,8 @@
-import { Component, Inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Component } from '@angular/core';
 import { ActivityDto } from '../models/activity-dto';
-import { HttpHelper } from '../../cross/helpers/http';
+import { ActivityService } from '../../services/activity-service';
+import { ActivityFilterRequest } from '../models/requests/activity-filter-request';
+import { ActivityFilteredResult } from '../models/activity-filtered-result';
 
 @Component({
   selector: 'app-fetch-data',
@@ -10,27 +11,73 @@ import { HttpHelper } from '../../cross/helpers/http';
 export class FetchDataComponent {
     public activities: ActivityDto[];
 
-    httpClient: HttpClient;
-    baseUrl: string;
+    activityService: ActivityService;
 
-    constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
-        this.httpClient = http;
-        this.baseUrl = baseUrl;
+    pageNumber: number = 1;
+    editionId: number = 3;
 
-        var editionId = 3;
+    totalPages: number = 0;
 
-        this.httpClient.get<ActivityDto[]>(this.baseUrl + 'api/Activity/GetActivities/' + editionId)
-            .subscribe(result => {
-              this.activities = result;
-            }, error => console.error(error));
+    activityFilterRequest: ActivityFilterRequest;
+
+    activityFilterResult: ActivityFilteredResult;
+
+    nextPageExists: boolean;
+    prevPageExists: boolean;
+
+    constructor(activityService: ActivityService) {
+        this.activityService = activityService;
+
+      this.activityFilterRequest = new ActivityFilterRequest();
+      this.activityFilterRequest.currentPage = this.pageNumber;
+      this.activityFilterRequest.editionId = this.editionId;
+
+      this.getActivitiesFiltered();
     }
 
     deleteActivity() {
         var activityId = 12;
 
-        this.httpClient.delete<number>(this.baseUrl + 'api/Activity/DeleteActivity/' + activityId)
+        this.activityService.deleteActivity(activityId)
             .subscribe((result) => {
                 console.log(result);
             }, error => console.error(error));
     }
+
+  getActivitiesFiltered() {
+    this.activityService.getActiveFilteredActivities(this.activityFilterRequest)
+      .subscribe(result => {
+        this.activities = result.activities;
+        this.totalPages = result.totalPages;
+        this.pageNumber = result.currentPage;
+
+        this.checkPageButtons();
+
+      }, error => console.error(error));
+  }
+
+  nextPage() {
+    this.activityFilterRequest.currentPage = this.pageNumber + 1;
+
+    this.getActivitiesFiltered();
+  }
+
+  prevPage() {
+    this.activityFilterRequest.currentPage = this.pageNumber - 1;
+
+    this.getActivitiesFiltered();
+  }
+
+  checkPageButtons() {
+    this.checkPrevPageExists();
+    this.checkNextPageExists();
+  }
+
+  checkPrevPageExists() {
+    this.nextPageExists = this.pageNumber != this.totalPages;
+  }
+
+  checkNextPageExists() {
+    this.prevPageExists = this.pageNumber > 1;
+  }
 }

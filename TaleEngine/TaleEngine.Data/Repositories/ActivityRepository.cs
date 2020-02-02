@@ -60,5 +60,39 @@ namespace TaleEngine.Data.Repositories
                 .Where(a => a.EditionId == edition && a.StatusId == status)
                 .ToList();
         }
+
+        public List<Activity> GetActiveActivitiesFiltered(int status, int type, int edition,
+            string title, int skipByPagination, int activitiesPerPage)
+        {
+            var query = GetActiveActivitiesWithFilter(status, type, edition, title);
+
+            return query.Skip(skipByPagination).Take(activitiesPerPage).ToList();
+        }
+
+        public int GetTotalActivities(int status, int type, int edition, string title)
+        {
+            var query = GetActiveActivitiesWithFilter(status, type, edition, title);
+
+            return query.ToList().Count;
+        }
+
+        private IQueryable<Activity> GetActiveActivitiesWithFilter(int status, int type, int edition, string title)
+        {
+            var query = _context.Activities.Select(a => a).Where(a => a.EditionId == edition);
+            if (status != 0)
+            {
+                query = query.Where(a => a.StatusId == status);
+            }
+            if (type != 0)
+            {
+                query = query.Where(a => a.TypeId == type);
+            }
+            if (!string.IsNullOrEmpty(title))
+            {
+                query = query.Where(a => a.Title.Contains(title));
+            }
+
+            return query;
+        }
     }
 }

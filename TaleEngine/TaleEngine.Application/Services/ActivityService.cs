@@ -3,6 +3,7 @@ using TaleEngine.Application.Contracts.Services;
 using TaleEngine.Bussiness.Contracts.DomainServices;
 using TaleEngine.Bussiness.Contracts.Dtos;
 using TaleEngine.Bussiness.Contracts.Dtos.Requests;
+using TaleEngine.Bussiness.Contracts.Dtos.Results;
 
 namespace TaleEngine.Application.Services
 {
@@ -25,6 +26,15 @@ namespace TaleEngine.Application.Services
             return _activityDomainService.GetPendingActivities(editionId);
         }
 
+        public ActivityFilteredResult GetActiveActivitiesFiltered(ActivityFilterRequest activityFilterRequest)
+        {
+            return _activityDomainService
+                .GetActiveActivitiesFiltered(activityFilterRequest.TypeId,
+                activityFilterRequest.EditionId,
+                activityFilterRequest.Title,
+                activityFilterRequest.CurrentPage);
+        }
+
         public int DeleteActivity(int activityId)
         {
             return _activityDomainService.DeleteActivity(activityId);
@@ -45,5 +55,7 @@ namespace TaleEngine.Application.Services
             return _activityDomainService
                 .ChangeActivityStatus(activityChangeStatusDto.ActivityId, activityChangeStatusDto.StatusId);
         }
+
+        
     }
 }
