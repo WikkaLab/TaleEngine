@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using TaleEngine.Application.Contracts.Dtos;
 using TaleEngine.Application.Contracts.Dtos.Requests;
 using TaleEngine.Application.Contracts.Services;
@@ -16,6 +16,9 @@ namespace TaleEngine.Controllers
         }
 
         [HttpGet("[action]/{editionId}")]
+        [ProducesResponseType(typeof(List<ActivityDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [Produces("application/json")]
         public IActionResult GetActivities(int editionId)
         {
             var result = _activityService.GetActiveActivities(editionId);
@@ -28,6 +31,10 @@ namespace TaleEngine.Controllers
         }
 
         [HttpGet("[action]/{editionId}")]
+        [HttpGet("[action]/{editionId}")]
+        [ProducesResponseType(typeof(List<ActivityDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [Produces("application/json")]
         public IActionResult GetPendingActivities(int editionId)
         {
             var result = _activityService.GetPendingActivities(editionId);
@@ -41,6 +48,10 @@ namespace TaleEngine.Controllers
         }
 
         [HttpPut("[action]")]
+        [HttpGet("[action]/{editionId}")]
+        [ProducesResponseType(typeof(ActivityFilteredResult), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [Produces("application/json")]
         public IActionResult GetActivitiesFiltered([FromBody] ActivityFilterRequest activityFilterRequest)
         {
             var result = _activityService.GetActiveActivitiesFiltered(activityFilterRequest);
@@ -54,6 +65,9 @@ namespace TaleEngine.Controllers
         }
 
         [HttpDelete("[action]/{activityId}")]
+        [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Produces("application/json")]
         public IActionResult DeleteActivity(int activityId)
         {
             var authorized = false;
@@ -68,13 +82,16 @@ namespace TaleEngine.Controllers
         }
 
         [HttpPost("[action]/{editionId}")]
+        [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Produces("application/json")]
         public IActionResult CreateActivity(int editionId, [FromBody] ActivityDto activityDto)
         {
             var authorized = true;
 
             if (!authorized)
             {
-                return NoContent();
+                return Unauthorized();
             }
 
             var result = _activityService.CreateActivity(editionId, activityDto);
@@ -82,6 +99,8 @@ namespace TaleEngine.Controllers
         }
 
         [HttpPut("[action]")]
+        [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
+        [Produces("application/json")]
         public IActionResult ChangeActivityStatus([FromBody] ActivityChangeStatusDto activtyChangeStatusDto)
         {
             var result = _activityService.ChangeActivityStatus(activtyChangeStatusDto);
@@ -90,6 +109,8 @@ namespace TaleEngine.Controllers
         }
 
         [HttpPut("[action]")]
+        [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
+        [Produces("application/json")]
         public IActionResult UpdateActivity([FromBody] ActivityDto activityDto)
         {
             var authorized = false;
