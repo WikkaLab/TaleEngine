@@ -1,4 +1,4 @@
-﻿namespace TaleEngine.Bussiness.Contracts.Dtos.Requests
+﻿namespace TaleEngine.Application.Contracts.Dtos.Requests
 {
     public class ActivityFilterRequest
     {

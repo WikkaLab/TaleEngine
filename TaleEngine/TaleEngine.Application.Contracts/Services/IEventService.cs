@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using TaleEngine.Bussiness.Contracts.Dtos;
+﻿using System.Collections.Generic;
+using TaleEngine.Application.Contracts.Dtos;
 
 namespace TaleEngine.Application.Contracts.Services
 {

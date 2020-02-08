@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using TaleEngine.Application.Contracts.Dtos;
+using TaleEngine.Application.Contracts.Dtos.Requests;
 using TaleEngine.Application.Contracts.Services;
-using TaleEngine.Bussiness.Contracts.Dtos;
-using TaleEngine.Bussiness.Contracts.Dtos.Requests;
 
 namespace TaleEngine.Controllers
 {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TaleEngine.Bussiness.Contracts.Dtos
+namespace TaleEngine.Application.Contracts.Dtos
 {
     public class TimeSlotDto
     {

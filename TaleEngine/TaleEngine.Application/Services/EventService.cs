@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using TaleEngine.Application.Contracts.Services;
 using TaleEngine.Bussiness.Contracts;
-using TaleEngine.Bussiness.Contracts.Dtos;
+using TaleEngine.Application.Contracts.Dtos;
+using TaleEngine.Application.Mappers;
 
 namespace TaleEngine.Application.Services
 {
@@ -16,12 +17,23 @@ namespace TaleEngine.Application.Services
 
         public List<EventDto> GetAllEvents()
         {
-            return _eventDomainService.GetEventsNoFilter();
+            var events = _eventDomainService.GetEventsNoFilter();
+
+            var result = new List<EventDto>();
+
+            foreach (var ev in events)
+            {
+                result.Add(EventMapper.Map(ev));
+            }
+
+            return result;
         }
 
         public EventDto GetEvent(int eventId)
         {
-            return _eventDomainService.GetEvent(eventId);    
+            var selectedEvent = _eventDomainService.GetEvent(eventId);
+
+            return EventMapper.Map(selectedEvent);
         }
     }
 }

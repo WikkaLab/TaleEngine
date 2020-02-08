@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using TaleEngine.Bussiness.Contracts;
-using TaleEngine.Bussiness.Contracts.Dtos;
+using TaleEngine.Bussiness.Contracts.Models;
 using TaleEngine.Bussiness.Dtos.Mappers;
 using TaleEngine.Data.Contracts;
 
@@ -15,11 +15,11 @@ namespace TaleEngine.Bussiness.DomainServices
             _unitOfWork = unitOfWork;
         }
 
-        public List<EventDto> GetEventsNoFilter()
+        public List<EventModel> GetEventsNoFilter()
         {
             var events = _unitOfWork.EventRepository.GetAll();
 
-            var eventDtos = new List<EventDto>();
+            var eventDtos = new List<EventModel>();
 
             foreach (var ev in events)
             {
@@ -29,7 +29,7 @@ namespace TaleEngine.Bussiness.DomainServices
             return eventDtos;
         }
 
-        public EventDto GetEvent(int eventId)
+        public EventModel GetEvent(int eventId)
         {
             var ev = _unitOfWork.EventRepository.GetById(eventId);
 

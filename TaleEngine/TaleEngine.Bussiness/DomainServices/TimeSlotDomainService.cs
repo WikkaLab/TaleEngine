@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using TaleEngine.Bussiness.Contracts.DomainServices;
-using TaleEngine.Bussiness.Contracts.Dtos;
+using TaleEngine.Bussiness.Contracts.Models;
 using TaleEngine.Bussiness.Mappers;
 using TaleEngine.Data.Contracts;
 
@@ -15,11 +15,11 @@ namespace TaleEngine.Bussiness.DomainServices
             _unitOfWork = unitOfWork;
         }
 
-        public List<TimeSlotDto> GetAllTimeSlots()
+        public List<TimeSlotModel> GetAllTimeSlots()
         {
             var timeslots = _unitOfWork.TimeSlotRepository.GetAll();
 
-            var timeslotDtos = new List<TimeSlotDto>();
+            var timeslotDtos = new List<TimeSlotModel>();
 
             foreach (var type in timeslots)
             {

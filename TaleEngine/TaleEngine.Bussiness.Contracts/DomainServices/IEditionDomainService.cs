@@ -1,9 +1,9 @@
-﻿using TaleEngine.Bussiness.Contracts.Dtos;
+﻿using TaleEngine.Bussiness.Contracts.Models;
 
 namespace TaleEngine.Bussiness.Contracts.DomainServices
 {
     public interface IEditionDomainService
     {
-        EditionDaysDto GetEditionDays(int editionId);
+        EditionDaysModel GetEditionDays(int editionId);
     }
 }

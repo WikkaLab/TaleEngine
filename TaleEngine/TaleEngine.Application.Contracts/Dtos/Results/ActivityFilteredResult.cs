@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace TaleEngine.Bussiness.Contracts.Dtos.Results
+namespace TaleEngine.Application.Contracts.Dtos.Results
 {
     public class ActivityFilteredResult
     {
