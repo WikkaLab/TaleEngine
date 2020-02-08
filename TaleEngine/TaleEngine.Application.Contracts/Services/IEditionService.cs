@@ -1,4 +1,4 @@
-﻿using TaleEngine.Bussiness.Contracts.Dtos;
+﻿using TaleEngine.Application.Contracts.Dtos;
 
 namespace TaleEngine.Application.Contracts.Services
 {

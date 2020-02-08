@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using TaleEngine.Bussiness.Contracts.DomainServices;
-using TaleEngine.Bussiness.Contracts.Dtos;
+using TaleEngine.Bussiness.Contracts.Models;
 using TaleEngine.Data.Contracts;
 
 namespace TaleEngine.Bussiness.DomainServices
@@ -15,7 +15,7 @@ namespace TaleEngine.Bussiness.DomainServices
             _unitOfWork = unitOfWork;
         }
 
-        public EditionDaysDto GetEditionDays(int editionId)
+        public EditionDaysModel GetEditionDays(int editionId)
         {
             var edition = _unitOfWork.EditionRepository.GetById(editionId);
 
@@ -26,7 +26,7 @@ namespace TaleEngine.Bussiness.DomainServices
 
             var editionDays = GetAllDaysFromRange(edition.DateInit, edition.DateEnd);
 
-            var editionDaysDto = new EditionDaysDto
+            var editionDaysDto = new EditionDaysModel
             {
                 EditionDays = editionDays
             };

@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using TaleEngine.Application.Contracts.Services;
 using TaleEngine.Bussiness.Contracts.DomainServices;
-using TaleEngine.Bussiness.Contracts.Dtos;
+using TaleEngine.Application.Contracts.Dtos;
+using TaleEngine.Application.Mappers;
 
 namespace TaleEngine.Application.Services
 {
@@ -16,7 +17,16 @@ namespace TaleEngine.Application.Services
 
         public List<TimeSlotDto> GetTimeSlots()
         {
-            return _timeSlotDomainService.GetAllTimeSlots();
+            var timeSlots = _timeSlotDomainService.GetAllTimeSlots();
+
+            var result = new List<TimeSlotDto>();
+
+            foreach (var slot in timeSlots)
+            {
+                result.Add(TimeSlotMapper.Map(slot));
+            }
+
+            return result;
         }
     }
 }

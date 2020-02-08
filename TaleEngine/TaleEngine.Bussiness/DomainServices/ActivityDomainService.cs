@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using TaleEngine.Bussiness.Contracts.DomainServices;
-using TaleEngine.Bussiness.Contracts.Dtos;
-using TaleEngine.Bussiness.Contracts.Dtos.Results;
+using TaleEngine.Bussiness.Contracts.Models.Results;
+using TaleEngine.Bussiness.Contracts.Models;
 using TaleEngine.Bussiness.Enums;
 using TaleEngine.Bussiness.Mappers;
 using TaleEngine.Data.Contracts;
@@ -18,7 +18,7 @@ namespace TaleEngine.Bussiness.DomainServices
             _unitOfWork = unitOfWork;
         }
 
-        public List<ActivityDto> GetActiveActivities(int editionId)
+        public List<ActivityModel> GetActiveActivities(int editionId)
         {
             var activeStatus = _unitOfWork.ActivityStatusRepository
                 .GetById((int)ActivityStatusEnum.ACT);
@@ -31,17 +31,17 @@ namespace TaleEngine.Bussiness.DomainServices
             var activities = _unitOfWork.ActivityRepository
                 .GetActivitiesByStatus(editionId, activeStatus.Id);
 
-            var activityDtos = new List<ActivityDto>();
+            var models = new List<ActivityModel>();
 
             foreach (var act in activities)
             {
-                activityDtos.Add(ActivityMapper.Map(act));
+                models.Add(ActivityMapper.Map(act));
             }
 
-            return activityDtos;
+            return models;
         }
 
-        public List<ActivityDto> GetPendingActivities(int editionId)
+        public List<ActivityModel> GetPendingActivities(int editionId)
         {
             var pendingStatus = _unitOfWork.ActivityStatusRepository
                 .GetById((int)ActivityStatusEnum.PEN);
@@ -54,14 +54,14 @@ namespace TaleEngine.Bussiness.DomainServices
             var activities = _unitOfWork.ActivityRepository
                 .GetActivitiesByStatus(editionId, pendingStatus.Id);
 
-            var activityDtos = new List<ActivityDto>();
+            var models = new List<ActivityModel>();
 
             foreach (var act in activities)
             {
-                activityDtos.Add(ActivityMapper.Map(act));
+                models.Add(ActivityMapper.Map(act));
             }
 
-            return activityDtos;
+            return models;
         }
 
         public int DeleteActivity(int activityId)
@@ -79,9 +79,9 @@ namespace TaleEngine.Bussiness.DomainServices
             return 1;
         }
 
-        public int CreateActivity(int editionId, ActivityDto activityDto)
+        public int CreateActivity(int editionId, ActivityModel activityModel)
         {
-            var isValidData = ValidateNewActivityData(activityDto, editionId);
+            var isValidData = ValidateNewActivityData(activityModel, editionId);
 
             if (!isValidData)
             {
@@ -89,9 +89,9 @@ namespace TaleEngine.Bussiness.DomainServices
             }
 
             var status = _unitOfWork.ActivityStatusRepository.GetById((int)ActivityStatusEnum.PEN);
-            activityDto.StatusId = status.Id;
+            activityModel.StatusId = status.Id;
 
-            var activity = ActivityMapper.Map(activityDto);
+            var activity = ActivityMapper.Map(activityModel);
             activity.EditionId = editionId;
             activity.CreateDateTime = DateTime.Now;
 
@@ -110,9 +110,9 @@ namespace TaleEngine.Bussiness.DomainServices
             return 1;
         }
         
-        public int UpdateActivity(ActivityDto activityDto)
+        public int UpdateActivity(ActivityModel activityModel)
         {
-            var activity = ActivityMapper.Map(activityDto);
+            var activity = ActivityMapper.Map(activityModel);
 
             try
             {
@@ -127,7 +127,7 @@ namespace TaleEngine.Bussiness.DomainServices
             return 1;
         }
 
-        private bool ValidateNewActivityData(ActivityDto dto, int editionId)
+        private bool ValidateNewActivityData(ActivityModel model, int editionId)
         {
             var edition = _unitOfWork.EditionRepository.GetById(editionId);
             if (edition == null)
@@ -135,18 +135,18 @@ namespace TaleEngine.Bussiness.DomainServices
                 return false;
             }
 
-            if (dto.Places <= 0)
+            if (model.Places <= 0)
             {
                 return false;
             }
 
-            var type = _unitOfWork.ActivityTypeRepository.GetById(dto.TypeId);
+            var type = _unitOfWork.ActivityTypeRepository.GetById(model.TypeId);
             if (type == null)
             {
                 return false;
             }
 
-            var timeSlot = _unitOfWork.TimeSlotRepository.GetById(dto.TimeSlotId);
+            var timeSlot = _unitOfWork.TimeSlotRepository.GetById(model.TimeSlotId.Value);
             if (timeSlot == null)
             {
                 return false;
@@ -180,7 +180,7 @@ namespace TaleEngine.Bussiness.DomainServices
             return 1;
         }
 
-        public ActivityFilteredResult GetActiveActivitiesFiltered(int type, int edition, 
+        public ActivityFilteredResultModel GetActiveActivitiesFiltered(int type, int edition, 
             string title, int currentPage)
         {
             int activitiesPerPage = 10;
@@ -202,11 +202,11 @@ namespace TaleEngine.Bussiness.DomainServices
                 .GetActiveActivitiesFiltered(activeStatus.Id, type, currentEdition.Id, 
                     title, skipByPagination, activitiesPerPage);
              
-            var activityDtos = new List<ActivityDto>();
+            var models = new List<ActivityModel>();
 
             foreach (var act in activities)
             {
-                activityDtos.Add(ActivityMapper.Map(act));
+                models.Add(ActivityMapper.Map(act));
             }
 
             int totalActivities = _unitOfWork.ActivityRepository
@@ -215,9 +215,9 @@ namespace TaleEngine.Bussiness.DomainServices
             double actsPerPage = totalActivities / activitiesPerPage;
             var totalPages = (int)Math.Ceiling(actsPerPage);
 
-            var result = new ActivityFilteredResult
+            var result = new ActivityFilteredResultModel
             {
-                Activities = activityDtos,
+                Activities = models,
                 CurrentPage = currentPage,
                 TotalPages = totalPages
             };

@@ -1,8 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using TaleEngine.Application.Contracts.Services;
-using TaleEngine.Bussiness.Contracts.Dtos;
 
 namespace TaleEngine.Controllers
 {

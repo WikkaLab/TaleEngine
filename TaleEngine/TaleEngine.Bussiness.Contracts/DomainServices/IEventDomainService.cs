@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
-using TaleEngine.Bussiness.Contracts.Dtos;
+using TaleEngine.Bussiness.Contracts.Models;
 
 namespace TaleEngine.Bussiness.Contracts
 {
     public interface IEventDomainService
     {
-        List<EventDto> GetEventsNoFilter();
-        EventDto GetEvent(int eventId);
+        List<EventModel> GetEventsNoFilter();
+        EventModel GetEvent(int eventId);
     }
 }

@@ -23,4 +23,7 @@
   <ItemGroup>
     <ProjectReference Include="..\TaleEngine.Data.Contracts\TaleEngine.Data.Contracts.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Mappers\" />
+  </ItemGroup>
 </Project>
