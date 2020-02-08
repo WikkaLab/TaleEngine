@@ -1,6 +1,8 @@
-﻿namespace TaleEngine.Bussiness.Contracts.Dtos
+﻿using System;
+
+namespace TaleEngine.Bussiness.Contracts.Models
 {
-    public class ActivityDto
+    public class ActivityModel
     {
         public int Id { get; set; }
 
@@ -9,13 +11,14 @@
         public int Places { get; set; }
         public string Image { get; set; }
 
-        public int TimeSlotId { get; set; }
+        public int? TimeSlotId { get; set; }
 
         public string ActivityStart { get; set; }
         public string ActivityEnd { get; set; }
 
         public int TypeId { get; set; }
         public int StatusId { get; set; }
-
+        public DateTime? EndDateTime { get; set; }
+        public DateTime? StartDateTime { get; set; }
     }
 }

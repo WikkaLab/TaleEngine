@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using TaleEngine.Bussiness.Contracts.DomainServices;
-using TaleEngine.Bussiness.Contracts.Dtos;
+using TaleEngine.Bussiness.Contracts.Models;
 using TaleEngine.Bussiness.Mappers;
 using TaleEngine.Data.Contracts;
 
@@ -15,11 +15,11 @@ namespace TaleEngine.Bussiness.DomainServices
             _unitOfWork = unitOfWork;
         }
 
-        public List<ActivityStatusDto> GetAllActivityStatuses()
+        public List<ActivityStatusModel> GetAllActivityStatuses()
         {
             var allStatuses = _unitOfWork.ActivityStatusRepository.GetAll();
 
-            var activityStatusDtos = new List<ActivityStatusDto>();
+            var activityStatusDtos = new List<ActivityStatusModel>();
 
             foreach (var status in allStatuses)
             {

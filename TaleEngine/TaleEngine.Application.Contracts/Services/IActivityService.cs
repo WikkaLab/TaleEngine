@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using TaleEngine.Bussiness.Contracts.Dtos;
-using TaleEngine.Bussiness.Contracts.Dtos.Requests;
-using TaleEngine.Bussiness.Contracts.Dtos.Results;
+using TaleEngine.Application.Contracts.Dtos;
+using TaleEngine.Application.Contracts.Dtos.Requests;
+using TaleEngine.Application.Contracts.Dtos.Results;
 
 namespace TaleEngine.Application.Contracts.Services
 {

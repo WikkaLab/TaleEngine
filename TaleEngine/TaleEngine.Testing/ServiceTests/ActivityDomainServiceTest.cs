@@ -1,6 +1,6 @@
 using NUnit.Framework;
 using TaleEngine.Bussiness.Contracts.DomainServices;
-using TaleEngine.Bussiness.Contracts.Dtos;
+using TaleEngine.Bussiness.Contracts.Models;
 using TaleEngine.Bussiness.DomainServices;
 
 namespace TaleEngine.Testing
@@ -22,7 +22,7 @@ namespace TaleEngine.Testing
         public void CreateActivityTest()
         {
             var editionId = 1;
-            var activityDto = new ActivityDto
+            var activityDto = new ActivityModel
             {
                 Title = "Title",
                 Description = "Description",

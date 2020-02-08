@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using TaleEngine.Bussiness.Contracts.Dtos;
+using TaleEngine.Application.Contracts.Dtos;
 using TaleEngine.Data.Contracts.Entities;
 
 namespace TaleEngine.Testing

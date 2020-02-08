@@ -1,6 +1,7 @@
 ﻿using TaleEngine.Application.Contracts.Services;
 using TaleEngine.Bussiness.Contracts.DomainServices;
-using TaleEngine.Bussiness.Contracts.Dtos;
+using TaleEngine.Application.Contracts.Dtos;
+using TaleEngine.Application.Mappers;
 
 namespace TaleEngine.Application.Services
 {
@@ -15,7 +16,9 @@ namespace TaleEngine.Application.Services
 
         public EditionDaysDto GetEditionDays(int editionId)
         {
-            return _editionDomainService.GetEditionDays(editionId);
+            var editionDays = _editionDomainService.GetEditionDays(editionId);
+
+            return EditionDaysMapper.Map(editionDays);
         }
     }
 }

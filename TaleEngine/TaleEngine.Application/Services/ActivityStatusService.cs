@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using TaleEngine.Application.Contracts.Services;
 using TaleEngine.Bussiness.Contracts.DomainServices;
-using TaleEngine.Bussiness.Contracts.Dtos;
+using TaleEngine.Application.Contracts.Dtos;
+using TaleEngine.Application.Mappers;
 
 namespace TaleEngine.Application.Services
 {
@@ -16,7 +17,16 @@ namespace TaleEngine.Application.Services
 
         public List<ActivityStatusDto> GetActivityStatuses()
         {
-            return _activityStatusDomainService.GetAllActivityStatuses();
+            var actStatuses = _activityStatusDomainService.GetAllActivityStatuses();
+
+            var result = new List<ActivityStatusDto>();
+
+            foreach (var aS in actStatuses)
+            {
+                result.Add(ActivityStatusMapper.Map(aS));
+            }
+
+            return result;
         }
     }
 }

@@ -1,25 +1,25 @@
-﻿using TaleEngine.Bussiness.Contracts.Dtos;
+﻿using TaleEngine.Bussiness.Contracts.Models;
 using TaleEngine.Data.Contracts.Entities;
 
 namespace TaleEngine.Bussiness.Mappers
 {
     public static class ActivityTypeMapper
     {
-        public static ActivityTypeDto Map(ActivityType activityType)
-        {
-            return new ActivityTypeDto
-            {
-                Id = activityType.Id,
-                Name = activityType.Name
-            };
-        }
-
-        public static ActivityType Map(ActivityTypeDto activityTypeDto)
+        public static ActivityType Map(ActivityTypeModel activityTypeModel)
         {
             return new ActivityType
             {
-                Id = activityTypeDto.Id,
-                Name = activityTypeDto.Name
+                Id = activityTypeModel.Id,
+                Name = activityTypeModel.Name
+            };
+        }
+
+        public static ActivityTypeModel Map(ActivityType activityType)
+        {
+            return new ActivityTypeModel
+            {
+                Id = activityType.Id,
+                Name = activityType.Name
             };
         }
     }
