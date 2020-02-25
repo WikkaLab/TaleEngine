@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.OpenApi.Models;
+using System;
 using TaleEngine.Application.Contracts.Services;
 using TaleEngine.Application.Services;
 using TaleEngine.Bussiness.Contracts;
@@ -31,14 +33,14 @@ namespace TaleEngine
 
             services.AddSwaggerGen(config =>
             {
-                config.SwaggerDoc("v1", new Swashbuckle.AspNetCore.Swagger.Info
+                config.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Title = "TaleEngine API v0.1",
-                    Contact = new Swashbuckle.AspNetCore.Swagger.Contact
+                    Contact = new OpenApiContact
                     {
                         Name = "Elena G",
                         Email = "elena.guzbla@gmail.com",
-                        Url = "https://beelzenef.github.io"
+                        Url = new Uri("https://beelzenef.github.io")
                     }
                 });
             });
@@ -79,7 +81,7 @@ namespace TaleEngine
             app.UseSwagger();
             app.UseSwaggerUI(opt =>
             {
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "API"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "TaleEngine API v1"));
             });
 
             builder.Build();
