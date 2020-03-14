@@ -9,6 +9,8 @@ namespace TaleEngine.Application.Mappers
     {
         public static ActivityFilteredResult Map(ActivityFilteredResultModel model)
         {
+            if (model == null) return null;
+
             var mappedActivities = new List<ActivityDto>();
 
             foreach (var act in model.Activities)

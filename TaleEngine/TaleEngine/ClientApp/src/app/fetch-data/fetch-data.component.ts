@@ -25,47 +25,31 @@ export class FetchDataComponent {
     nextPageExists: boolean;
     prevPageExists: boolean;
 
-    constructor(activityService: ActivityService) {
-        this.activityService = activityService;
+  //deleteActivity() {
+  //  var activityId = 12;
 
-      this.activityFilterRequest = new ActivityFilterRequest();
-      this.activityFilterRequest.currentPage = this.pageNumber;
-      this.activityFilterRequest.editionId = this.editionId;
+  //  this.activityService.deleteActivity(activityId)
+  //    .subscribe((result) => {
+  //      console.log(result);
+  //    }, error => console.error(error));
+  //}
 
-      this.getActivitiesFiltered();
-    }
+  onActivityFilterResult(activityFilterResult: ActivityFilteredResult) {
+    console.log("Getting results...");
 
-    deleteActivity() {
-        var activityId = 12;
+    this.activities = activityFilterResult.activities;
+    this.totalPages = activityFilterResult.totalPages;
+    this.pageNumber = activityFilterResult.currentPage;
 
-        this.activityService.deleteActivity(activityId)
-            .subscribe((result) => {
-                console.log(result);
-            }, error => console.error(error));
-    }
-
-  getActivitiesFiltered() {
-    this.activityService.getActiveFilteredActivities(this.activityFilterRequest)
-      .subscribe(result => {
-        this.activities = result.activities;
-        this.totalPages = result.totalPages;
-        this.pageNumber = result.currentPage;
-
-        this.checkPageButtons();
-
-      }, error => console.error(error));
+    this.checkPageButtons();
   }
 
   nextPage() {
     this.activityFilterRequest.currentPage = this.pageNumber + 1;
-
-    this.getActivitiesFiltered();
   }
 
   prevPage() {
     this.activityFilterRequest.currentPage = this.pageNumber - 1;
-
-    this.getActivitiesFiltered();
   }
 
   checkPageButtons() {
