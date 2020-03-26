@@ -17,6 +17,7 @@ import { TimeSlotsService } from '../services/time-slots-service';
 import { EventsService } from '../services/event-service';
 import { ActivityFilterComponent } from './activity-filter/activity-filter.component';
 import { ActivityStatusService } from '../services/activity-status-service';
+import { EventManagerService } from '../services/event-manager-service';
 
 @NgModule({
   declarations: [
@@ -40,8 +41,8 @@ import { ActivityStatusService } from '../services/activity-status-service';
       { path: 'new-activity', component: NewActivityComponent },
       { path: 'management-activities', component: ManagementActivitiesComponent }
     ])
-    ],
-    providers: [ActivityService, ActivityTypesService, TimeSlotsService, EventsService, ActivityStatusService],
+  ],
+  providers: [ActivityService, ActivityTypesService, TimeSlotsService, EventsService, ActivityStatusService, EventManagerService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -3,6 +3,7 @@ import { ActivityDto } from '../models/activity-dto';
 import { ActivityService } from '../../services/activity-service';
 import { ActivityFilterRequest } from '../models/requests/activity-filter-request';
 import { ActivityFilteredResult } from '../models/activity-filtered-result';
+import { EventManagerService } from '../../services/event-manager-service';
 
 @Component({
   selector: 'app-fetch-data',
@@ -11,7 +12,8 @@ import { ActivityFilteredResult } from '../models/activity-filtered-result';
 export class FetchDataComponent {
     public activities: ActivityDto[];
 
-    activityService: ActivityService;
+  activityService: ActivityService;
+  eventManager: EventManagerService;
 
     pageNumber: number = 1;
     editionId: number = 3;
@@ -25,8 +27,9 @@ export class FetchDataComponent {
     nextPageExists: boolean;
     prevPageExists: boolean;
 
-    constructor(activityService: ActivityService) {
-        this.activityService = activityService;
+  constructor(activityService: ActivityService, eventManager: EventManagerService) {
+    this.activityService = activityService;
+    this.eventManager = eventManager;
 
       this.activityFilterRequest = new ActivityFilterRequest();
       this.activityFilterRequest.currentPage = this.pageNumber;

@@ -18,6 +18,7 @@ namespace TaleEngine.Bussiness.Dtos.Mappers
         {
             return new EventModel
             {
+                Id = eventEntity.Id,
                 Title = eventEntity.Title
             };
         }

@@ -1,6 +1,7 @@
-import { Component, Inject } from '@angular/core';
-import { EventModel } from '../models/event-model';
+import { Component, Output } from '@angular/core';
 import { EventsService } from '../../services/event-service';
+import { EventManagerService } from '../../services/event-manager-service';
+import { EventModel } from '../models/event-model';
 
 @Component({
   selector: 'app-nav-menu',
@@ -13,22 +14,24 @@ export class NavMenuComponent {
     selectedEvent: EventModel;
 
     eventService: EventsService;
+    eventManager: EventManagerService;
 
-    canManage: boolean;
+  canManage: boolean;
 
-    constructor(eventService: EventsService) {
-        this.eventService = eventService;
-
+    constructor(eventService: EventsService, eventManager: EventManagerService) {
+      this.eventService = eventService;
+      this.eventManager = eventManager;
         this.canManage = true;
 
         this.eventService.getEvents().subscribe((result: EventModel[]) => {
-            this.events = result;
+          this.events = result;
         }, error => console.error(error));
     }
 
-    onEventSelection(selectedValue) {
-        this.getEventActivities(selectedValue);
-    }
+  onEventSelection(selectedEvent) {
+    this.getEventActivities(selectedEvent);
+    this.eventManager.selectEvent(selectedEvent);
+  }
 
     getEventActivities(selectedEventId) {
         console.log("Getting activities of event " + selectedEventId);
