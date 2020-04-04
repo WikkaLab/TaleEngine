@@ -1,7 +1,7 @@
 ﻿using TaleEngine.Bussiness.Contracts.Models;
 using TaleEngine.Data.Contracts.Entities;
 
-namespace TaleEngine.Bussiness.Dtos.Mappers
+namespace TaleEngine.Bussiness.Mappers
 {
     public static class EventMapper
     {
