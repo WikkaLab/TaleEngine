@@ -26,7 +26,7 @@ export class NavMenuComponent {
   }
 
   onEventSelection(selectedEvent) {
-    this.getEventActivities(selectedEvent);
+    //this.getEventActivities(selectedEvent);
     this.eventService.selectEvent(selectedEvent);
   }
 

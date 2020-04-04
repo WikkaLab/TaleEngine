@@ -7,6 +7,7 @@ import { ActivityStatusModel } from '../models/activitystatus-model';
 import { ActivityService } from '../../services/activity-service';
 import { ActivityFilterRequest } from '../models/requests/activity-filter-request';
 import { ActivityFilteredResult } from '../models/activity-filtered-result';
+import { EventsService } from '../../services/event-service';
 
 @Component({
   selector: 'app-activity-filter',
@@ -14,14 +15,15 @@ import { ActivityFilteredResult } from '../models/activity-filtered-result';
 })
 export class ActivityFilterComponent {
 
-    activityTypes: ActivityTypeModel[];
-    activityStatuses: ActivityStatusModel[];
+  activityTypes: ActivityTypeModel[];
+  activityStatuses: ActivityStatusModel[];
 
-    selectedType: ActivityTypeModel;
-    selectedStatus: ActivityStatusModel; 
+  selectedType: ActivityTypeModel;
+  selectedStatus: ActivityStatusModel;
 
-    activityTypesService: ActivityTypesService;
+  activityTypesService: ActivityTypesService;
   activityStatusService: ActivityStatusService;
+  eventService: EventsService;
 
   titleToSearch: string;
 
@@ -34,11 +36,17 @@ export class ActivityFilterComponent {
 
   @Output() activityFilterResult = new EventEmitter<ActivityFilteredResult>();
 
-  constructor(activityStatusService: ActivityStatusService, activityTypeService: ActivityTypesService, activityService: ActivityService) {
+  constructor(activityStatusService: ActivityStatusService,
+    activityTypeService: ActivityTypesService,
+    activityService: ActivityService,
+    eventService: EventsService) {
     this.activityTypesService = activityTypeService;
     this.activityStatusService = activityStatusService;
+    this.eventService = eventService;
 
     this.activityService = activityService;
+
+    this.getEdition();
 
     this.activityTypesService.getActivityTypes().subscribe(result => {
       this.activityTypes = result;
@@ -46,7 +54,16 @@ export class ActivityFilterComponent {
     this.activityStatusService.getActivityStatus().subscribe(result => {
       this.activityStatuses = result;
     });
-    this.searchActivities();
+    //this.searchActivities();
+  }
+
+  getEdition() {
+    this.eventService.getCurrentOrLastEditionOfEvent()
+      .subscribe(result => {
+        this.editionId = result
+      },
+        error => console.error(error)
+      );
   }
 
   searchActivities() {
@@ -64,7 +81,7 @@ export class ActivityFilterComponent {
           this.activityFilterResult.emit(result);
         }
       }, error => console.error(error));
-    }
+  }
 
   onStatusSelection(status: number) {
     //this.activityFilterRequest.stat = status;
