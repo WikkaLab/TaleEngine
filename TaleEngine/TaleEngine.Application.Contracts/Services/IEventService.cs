@@ -8,5 +8,6 @@ namespace TaleEngine.Application.Contracts.Services
         List<EventDto> GetAllEvents();
 
         EventDto GetEvent(int eventId);
+        int GetCurrentOrLastEdition(int selectedEvent);
     }
 }

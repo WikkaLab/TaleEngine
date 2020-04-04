@@ -1,6 +1,6 @@
-import { Component, Inject } from '@angular/core';
-import { EventModel } from '../models/event-model';
+import { Component, Output } from '@angular/core';
 import { EventsService } from '../../services/event-service';
+import { EventModel } from '../models/event-model';
 
 @Component({
   selector: 'app-nav-menu',
@@ -9,38 +9,38 @@ import { EventsService } from '../../services/event-service';
 })
 export class NavMenuComponent {
 
-    events: EventModel[];
-    selectedEvent: EventModel;
+  events: EventModel[];
+  selectedEvent: EventModel;
 
-    eventService: EventsService;
+  eventService: EventsService;
 
-    canManage: boolean;
+  canManage: boolean;
 
-    constructor(eventService: EventsService) {
-        this.eventService = eventService;
+  constructor(eventService: EventsService) {
+    this.eventService = eventService;
+    this.canManage = true;
 
-        this.canManage = true;
+    this.eventService.getEvents().subscribe((result: EventModel[]) => {
+      this.events = result;
+    }, error => console.error(error));
+  }
 
-        this.eventService.getEvents().subscribe((result: EventModel[]) => {
-            this.events = result;
-        }, error => console.error(error));
-    }
+  onEventSelection(selectedEvent) {
+    this.getEventActivities(selectedEvent);
+    this.eventService.selectEvent(selectedEvent);
+  }
 
-    onEventSelection(selectedValue) {
-        this.getEventActivities(selectedValue);
-    }
+  getEventActivities(selectedEventId) {
+    console.log("Getting activities of event " + selectedEventId);
+  }
 
-    getEventActivities(selectedEventId) {
-        console.log("Getting activities of event " + selectedEventId);
-    }
+  isExpanded = false;
 
-    isExpanded = false;
+  collapse() {
+    this.isExpanded = false;
+  }
 
-    collapse() {
-      this.isExpanded = false;
-    }
-
-    toggle() {
-      this.isExpanded = !this.isExpanded;
-    }
+  toggle() {
+    this.isExpanded = !this.isExpanded;
+  }
 }

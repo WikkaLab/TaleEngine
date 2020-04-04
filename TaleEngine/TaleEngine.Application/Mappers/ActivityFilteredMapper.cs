@@ -13,6 +13,11 @@ namespace TaleEngine.Application.Mappers
 
             var mappedActivities = new List<ActivityDto>();
 
+            if (model == null || model.Activities == null)
+            {
+                return null;
+            }
+
             foreach (var act in model.Activities)
             {
                 mappedActivities.Add(ActivityMapper.Map(act));

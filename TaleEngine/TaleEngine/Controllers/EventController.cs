@@ -28,5 +28,13 @@ namespace TaleEngine.Controllers
 
             return Ok(result);
         }
+
+        [HttpGet("[action]/{selectedEvent}")]
+        public IActionResult GetCurrentOrLastEdition(int selectedEvent)
+        {
+            var result = _eventService.GetCurrentOrLastEdition(selectedEvent);
+
+            return Ok(result);
+        }
     }
 }

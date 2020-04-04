@@ -11,7 +11,7 @@ import { ActivityFilteredResult } from '../models/activity-filtered-result';
 export class FetchDataComponent {
     public activities: ActivityDto[];
 
-    activityService: ActivityService;
+  activityService: ActivityService;
 
     pageNumber: number = 1;
     editionId: number = 3;
@@ -24,9 +24,6 @@ export class FetchDataComponent {
 
     nextPageExists: boolean;
     prevPageExists: boolean;
-
-  //deleteActivity() {
-  //  var activityId = 12;
 
   //  this.activityService.deleteActivity(activityId)
   //    .subscribe((result) => {
