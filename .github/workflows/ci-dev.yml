@@ -25,7 +25,9 @@ jobs:
         node-version: 12.8
     - name: npm dependencies
       run: npm install     
-    - name: Build
+    - name: Change to Angular directory
+      working-directory: ./ClientApp
+    - name: Build Angular app
       run: npm run build -- --prod
    
    # .NET Core build + testing
