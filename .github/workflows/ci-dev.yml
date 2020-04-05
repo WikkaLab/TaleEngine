@@ -2,14 +2,18 @@ name: Build Angular + .NET Core app (+ .NET tests)
 
 on:
   push:
-    branches: [ dev ]
+    branches:
+      - master 
+      - dev
   pull_request:
-    branches: [ dev ]
+    branches: 
+      - master
+      - dev
 
 jobs:
   build:
 
-    runs-on: [windows-latest]
+    runs-on: windows-latest
 
     steps:
     - uses: actions/checkout@v2
