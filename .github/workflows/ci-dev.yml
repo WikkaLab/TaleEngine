@@ -23,11 +23,13 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: 12.8
+    - name: PWD
+      run: pwd
+    - name: Change directory
+      run: cd /home/runner/work/TaleEngine/TaleEngine/ClientApp
     - name: npm dependencies
-      working-directory: /home/runner/work/TaleEngine/TaleEngine/ClientApp
       run: npm install         
     - name: Build Angular app
-      working-directory: /home/runner/work/TaleEngine/TaleEngine/ClientApp
       run: npm run build -- --prod
    
    # .NET Core build + testing
