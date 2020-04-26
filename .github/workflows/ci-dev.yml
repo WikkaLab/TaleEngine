@@ -23,10 +23,8 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: 12.8
-    - name: PWD
-      run: pwd
     - name: Change directory
-      run: cd /home/runner/work/TaleEngine/TaleEngine/ClientApp
+      run: cd ./ClientApp
     - name: npm dependencies
       run: npm install         
     - name: Build Angular app
