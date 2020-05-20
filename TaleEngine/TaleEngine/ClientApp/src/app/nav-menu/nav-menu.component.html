@@ -24,7 +24,8 @@
                 <select [(ngModel)]="selectedEvent"
                         (ngModelChange)="onEventSelection($event)"
                         class="form-control">
-                  <option [value]="ev.id" *ngFor="let ev of events">{{ev.title}}</option>
+                  <option [value]="ev.id"
+                          *ngFor="let ev of events">{{ev.title}}</option>
                 </select>
               </div>
             </li>

@@ -8,7 +8,9 @@
   Create new activity
 </button>
 
-<app-activity-filter></app-activity-filter>
+<app-activity-filter [editionId]="editionId"
+                     [pageNumber]="pageNumber"
+                     (activityFilterResult)="onActivityFilterResult($event)"></app-activity-filter>
 
 <p *ngIf="!activities"><em>Loading...</em></p>
 

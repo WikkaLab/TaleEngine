@@ -5,5 +5,6 @@ namespace TaleEngine.Application.Contracts.Services
     public interface IEditionService
     {
         EditionDaysDto GetEditionDays(int editionId);
+        int GetCurrentOrLastEdition(int selectedEvent);
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using TaleEngine.Bussiness.Contracts.DomainServices;
 using TaleEngine.Bussiness.Contracts.Models;
+using TaleEngine.Bussiness.Mappers;
 using TaleEngine.Data.Contracts;
 
 namespace TaleEngine.Bussiness.DomainServices
@@ -34,6 +35,18 @@ namespace TaleEngine.Bussiness.DomainServices
             return editionDaysDto;
         }
 
+        public EditionModel GetLastOrCurrentEdition(int ofEvent)
+        {
+            var edition = _unitOfWork.EditionRepository.GetLastEditionInEvent(ofEvent);
+
+            if (edition != null)
+            {
+                return EditionMapper.Map(edition);
+            }
+
+            return null;
+        }
+
         private List<DateTime> GetAllDaysFromRange(DateTime init, DateTime end)
         {
             List<DateTime> days = new List<DateTime>();
@@ -47,5 +60,6 @@ namespace TaleEngine.Bussiness.DomainServices
 
             return days;
         }
+
     }
 }

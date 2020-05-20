@@ -1,38 +1,39 @@
 <table width="100%">
   <tr class="align-middle">
     <td>
-        <input class="form-control mr-sm-2" type="search"
-               placeholder="Title" aria-label="Title">
+      <input class="form-control mr-sm-2" type="search"
+             [(ngModel)]="titleToSearch"
+             placeholder="Title" aria-label="Title">
     </td>
     <td>
-        <div class="form-group">
-          <label style="color: white">Types</label>
-          <select (ngModelChange)="onTypeSelection($event)"
-                  [(ngModel)]="selectedType"
-                  class="form-control">
-            <option [value]="typ.id"
-                    *ngFor="let typ of activityTypes">
-              {{typ.name}}
-            </option>
-          </select>
-        </div>
-     </td>
+      <div class="form-group">
+        <label style="color: white">Types</label>
+        <select (ngModelChange)="onTypeSelection($event)"
+                [(ngModel)]="selectedType"
+                class="form-control">
+          <option [value]="typ.id"
+                  *ngFor="let typ of activityTypes">
+            {{typ.name}}
+          </option>
+        </select>
+      </div>
+    </td>
 
-      <td>
-        <div class="form-group">
-          <label style="color: white">Status</label>
-          <select (ngModelChange)="onStatusSelection($event)"
-                  [(ngModel)]="selectedStatus"
-                  class="form-control">
-            <option [value]="st.id"
-                    *ngFor="let st of activityStatuses">
-              {{st.name}}
-            </option>
-          </select>
-        </div>
-      </td>
-      <td>
-        <button class="btn btn-outline-success my-2 my-sm-0" (click)="searchActivities()">Search</button>
-      </td>
+    <td>
+      <div class="form-group">
+        <label style="color: white">Status</label>
+        <select (ngModelChange)="onStatusSelection($event)"
+                [(ngModel)]="selectedStatus"
+                class="form-control">
+          <option [value]="st.id"
+                  *ngFor="let st of activityStatuses">
+            {{st.name}}
+          </option>
+        </select>
+      </div>
+    </td>
+    <td>
+      <button class="btn btn-outline-success my-2 my-sm-0" (click)="searchActivities()">Search</button>
+    </td>
   </tr>
 </table>
