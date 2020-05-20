@@ -11,7 +11,7 @@ import { ActivityFilteredResult } from '../models/activity-filtered-result';
 export class FetchDataComponent {
     public activities: ActivityDto[];
 
-    activityService: ActivityService;
+  activityService: ActivityService;
 
     pageNumber: number = 1;
     editionId: number = 3;
@@ -25,47 +25,28 @@ export class FetchDataComponent {
     nextPageExists: boolean;
     prevPageExists: boolean;
 
-    constructor(activityService: ActivityService) {
-        this.activityService = activityService;
+  //  this.activityService.deleteActivity(activityId)
+  //    .subscribe((result) => {
+  //      console.log(result);
+  //    }, error => console.error(error));
+  //}
 
-      this.activityFilterRequest = new ActivityFilterRequest();
-      this.activityFilterRequest.currentPage = this.pageNumber;
-      this.activityFilterRequest.editionId = this.editionId;
+  onActivityFilterResult(activityFilterResult: ActivityFilteredResult) {
+    console.log("Getting results...");
 
-      this.getActivitiesFiltered();
-    }
+    this.activities = activityFilterResult.activities;
+    this.totalPages = activityFilterResult.totalPages;
+    this.pageNumber = activityFilterResult.currentPage;
 
-    deleteActivity() {
-        var activityId = 12;
-
-        this.activityService.deleteActivity(activityId)
-            .subscribe((result) => {
-                console.log(result);
-            }, error => console.error(error));
-    }
-
-  getActivitiesFiltered() {
-    this.activityService.getActiveFilteredActivities(this.activityFilterRequest)
-      .subscribe(result => {
-        this.activities = result.activities;
-        this.totalPages = result.totalPages;
-        this.pageNumber = result.currentPage;
-
-        this.checkPageButtons();
-
-      }, error => console.error(error));
+    this.checkPageButtons();
   }
 
   nextPage() {
     this.activityFilterRequest.currentPage = this.pageNumber + 1;
-
-    this.getActivitiesFiltered();
   }
 
   prevPage() {
     this.activityFilterRequest.currentPage = this.pageNumber - 1;
-
-    this.getActivitiesFiltered();
   }
 
   checkPageButtons() {

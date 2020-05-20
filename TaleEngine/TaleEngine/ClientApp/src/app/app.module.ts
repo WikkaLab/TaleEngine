@@ -40,8 +40,8 @@ import { ActivityStatusService } from '../services/activity-status-service';
       { path: 'new-activity', component: NewActivityComponent },
       { path: 'management-activities', component: ManagementActivitiesComponent }
     ])
-    ],
-    providers: [ActivityService, ActivityTypesService, TimeSlotsService, EventsService, ActivityStatusService],
+  ],
+  providers: [ActivityService, ActivityTypesService, TimeSlotsService, EventsService, ActivityStatusService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

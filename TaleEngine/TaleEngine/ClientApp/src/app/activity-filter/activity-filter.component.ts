@@ -1,9 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output, Input } from '@angular/core';
 import { ActivityTypesService } from '../../services/activity-types-service';
 import { ActivityStatusService } from '../../services/activity-status-service';
 
 import { ActivityTypeModel } from '../models/activitytype-model';
 import { ActivityStatusModel } from '../models/activitystatus-model';
+import { ActivityService } from '../../services/activity-service';
+import { ActivityFilterRequest } from '../models/requests/activity-filter-request';
+import { ActivityFilteredResult } from '../models/activity-filtered-result';
+import { EventsService } from '../../services/event-service';
 
 @Component({
   selector: 'app-activity-filter',
@@ -11,39 +15,80 @@ import { ActivityStatusModel } from '../models/activitystatus-model';
 })
 export class ActivityFilterComponent {
 
-    activityTypes: ActivityTypeModel[];
-    activityStatuses: ActivityStatusModel[];
+  activityTypes: ActivityTypeModel[];
+  activityStatuses: ActivityStatusModel[];
 
-    selectedType: ActivityTypeModel;
-    selectedStatus: ActivityStatusModel; 
+  selectedType: ActivityTypeModel;
+  selectedStatus: ActivityStatusModel;
 
-    activityTypesService: ActivityTypesService;
-    activityStatusService: ActivityStatusService;
+  activityTypesService: ActivityTypesService;
+  activityStatusService: ActivityStatusService;
+  eventService: EventsService;
 
-    constructor(activityStatusService: ActivityStatusService, activityTypeService: ActivityTypesService) {
-        this.activityTypesService = activityTypeService;
-        this.activityStatusService = activityStatusService;
+  titleToSearch: string;
 
+  activityService: ActivityService;
 
-        this.activityTypesService.getActivityTypes().subscribe(result => {
-            this.activityTypes = result;
-        });
-        this.activityStatusService.getActivityStatus().subscribe(result => {
-            this.activityStatuses = result;
-        });
+  activityFilterRequest: ActivityFilterRequest;
 
-    }
+  @Input() pageNumber: number;
+  @Input() editionId: number;
 
-    searchActivities() {
-        console.log('start search');
-    }
+  @Output() activityFilterResult = new EventEmitter<ActivityFilteredResult>();
 
-    onStatusSelection(status: number) {
-        console.log('selected status: ' + status);
-    }
+  constructor(activityStatusService: ActivityStatusService,
+    activityTypeService: ActivityTypesService,
+    activityService: ActivityService,
+    eventService: EventsService) {
+    this.activityTypesService = activityTypeService;
+    this.activityStatusService = activityStatusService;
+    this.eventService = eventService;
 
-    onTypeSelection(type: number) {
-        console.log('selected type: ' + type);
-    }
+    this.activityService = activityService;
+
+    this.getEdition();
+
+    this.activityTypesService.getActivityTypes().subscribe(result => {
+      this.activityTypes = result;
+    });
+    this.activityStatusService.getActivityStatus().subscribe(result => {
+      this.activityStatuses = result;
+    });
+    //this.searchActivities();
+  }
+
+  getEdition() {
+    this.eventService.getCurrentOrLastEditionOfEvent()
+      .subscribe(result => {
+        this.editionId = result
+      },
+        error => console.error(error)
+      );
+  }
+
+  searchActivities() {
+    console.log("Searching...");
+
+    this.activityFilterRequest = new ActivityFilterRequest();
+    this.activityFilterRequest.currentPage = this.pageNumber;
+    this.activityFilterRequest.editionId = this.editionId;
+    this.activityFilterRequest.title = this.titleToSearch;
+    this.activityFilterRequest.typeId = this.selectedType ? this.selectedType.id : 0;
+
+    this.activityService.getActiveFilteredActivities(this.activityFilterRequest)
+      .subscribe(result => {
+        if (result) {
+          this.activityFilterResult.emit(result);
+        }
+      }, error => console.error(error));
+  }
+
+  onStatusSelection(status: number) {
+    //this.activityFilterRequest.stat = status;
+  }
+
+  onTypeSelection(type: number) {
+    this.activityFilterRequest.typeId = type;
+  }
 
 }

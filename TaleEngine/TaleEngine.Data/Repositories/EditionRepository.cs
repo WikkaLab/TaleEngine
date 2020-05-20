@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using TaleEngine.Data.Contracts;
 using TaleEngine.Data.Contracts.Entities;
 using TaleEngine.Data.Contracts.Repositories;
@@ -30,6 +29,11 @@ namespace TaleEngine.Data.Repositories
         public Edition GetById(int entityId)
         {
             return _context.Editions.FirstOrDefault(ed => ed.Id == entityId);
+        }
+
+        public Edition GetLastEditionInEvent(int ofEvent)
+        {
+            return _context.Editions.FirstOrDefault(ed => ed.EventId == ofEvent);
         }
 
         public void Insert(Edition entity)

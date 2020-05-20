@@ -14,6 +14,18 @@ namespace TaleEngine.Application.Services
             _editionDomainService = editionDomainService;
         }
 
+        public int GetCurrentOrLastEdition(int selectedEvent)
+        {
+            var lastOrCurrentEdition = _editionDomainService.GetLastOrCurrentEdition(selectedEvent);
+
+            if (lastOrCurrentEdition != null)
+            {
+                return lastOrCurrentEdition.Id;
+            }
+
+            return 0;
+        }
+
         public EditionDaysDto GetEditionDays(int editionId)
         {
             var editionDays = _editionDomainService.GetEditionDays(editionId);
