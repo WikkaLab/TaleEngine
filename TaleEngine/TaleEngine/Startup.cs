@@ -47,7 +47,7 @@ namespace TaleEngine
 
             services.AddDbContext<DatabaseContext>(item =>
                 item.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddTransient<IDatabaseContext, DatabaseContext>();
+            services.AddDbContext<IDatabaseContext, DatabaseContext>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
 
             services.AddTransient<IEventService, EventService>();
