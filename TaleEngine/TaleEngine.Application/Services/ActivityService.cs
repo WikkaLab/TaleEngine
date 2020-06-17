@@ -81,6 +81,22 @@ namespace TaleEngine.Application.Services
                 .ChangeActivityStatus(activityChangeStatusDto.ActivityId, activityChangeStatusDto.StatusId);
         }
 
-        
+        public List<ActivityDto> GetLastThreeActivities(int editionId)
+        {
+            var activities = _activityDomainService.GetLastThreeActivities(editionId);
+
+            if (activities == null || activities.Count == 0)
+            {
+                return null;
+            }
+
+            var dtos = new List<ActivityDto>();
+            foreach (var act in activities)
+            {
+                dtos.Add(ActivityMapper.Map(act));
+            }
+
+            return dtos;
+        }
     }
 }

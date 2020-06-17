@@ -69,6 +69,13 @@ namespace TaleEngine.Data.Repositories
             return query.Skip(skipByPagination).Take(activitiesPerPage).ToList();
         }
 
+        public List<Activity> GetLastThreeActivities(int status, int edition, int numberOfActivities)
+        {
+            var query = GetActiveActivitiesWithFilter(status, 0, edition, null);
+            
+            return query.OrderByDescending(a => a.CreateDateTime).Take(numberOfActivities).ToList();
+        }
+
         public int GetTotalActivities(int status, int type, int edition, string title)
         {
             var query = GetActiveActivitiesWithFilter(status, type, edition, title);
