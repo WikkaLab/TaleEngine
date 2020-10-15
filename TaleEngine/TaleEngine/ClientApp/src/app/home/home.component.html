@@ -1,6 +1,12 @@
 <h1>Welcome!</h1>
 
 <p>No edition of your favorite event (yet!)</p>
+
+<p *ngIf="!lastActivities"><em>Loading...</em></p>
+
+<div *ngIf="lastActivities">
+  <p *ngFor="let act of lastActivities">{{ act.title }} </p>
+</div>
 <div style="position: relative; width: 600px; height: 500px;">    
   <div style="position: absolute; bottom: 5px;">
       <p>Event powered by TaleEngine - Coded with ☕ by Elena G (Beelzenef)</p>

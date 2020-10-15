@@ -8,41 +8,45 @@ import { ActivityFilteredResult } from "../app/models/activity-filtered-result";
 
 @Injectable()
 export class ActivityService {
-    httpClient: HttpClient;
-    baseUrl: string;
+  httpClient: HttpClient;
+  baseUrl: string;
 
-    constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
-        this.httpClient = http;
-        this.baseUrl = baseUrl;
-    }
+  constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
+    this.httpClient = http;
+    this.baseUrl = baseUrl;
+  }
 
-    public createActivity(activityDto: ActivityDto, editionId: number) {
-        return this.httpClient.post<ActivityDto>(this.baseUrl + 'api/Activity/CreateActivity/' + editionId,
-            JSON.stringify(activityDto),
-            HttpHelper.JsonHeaderOptions);
-    }
+  public createActivity(activityDto: ActivityDto, editionId: number) {
+    return this.httpClient.post<ActivityDto>(this.baseUrl + 'api/Activity/CreateActivity/' + editionId,
+      JSON.stringify(activityDto),
+      HttpHelper.JsonHeaderOptions);
+  }
 
-    public getActiveActivities(editionId: number) {
-        return this.httpClient.get<ActivityDto[]>(this.baseUrl + 'api/Activity/GetActivities/' + editionId);
-    }
+  public getActiveActivities(editionId: number) {
+    return this.httpClient.get<ActivityDto[]>(this.baseUrl + 'api/Activity/GetActivities/' + editionId);
+  }
 
-    public getActiveFilteredActivities(activityFilterRequest: ActivityFilterRequest) {
-        return this.httpClient.put<ActivityFilteredResult>(this.baseUrl + 'api/Activity/GetActivitiesFiltered',
-            JSON.stringify(activityFilterRequest),
-            HttpHelper.JsonHeaderOptions);
-    }
+  public getThreeLastActiveActivities(editionId: number) {
+    return this.httpClient.get<ActivityDto[]>(this.baseUrl + 'api/Activity/GetLastThreeActivies/' + editionId);
+  }
 
-    public deleteActivity(activityId: number) {
-        return this.httpClient.delete<number>(this.baseUrl + 'api/Activity/DeleteActivity/' + activityId);
-    }
+  public getActiveFilteredActivities(activityFilterRequest: ActivityFilterRequest) {
+    return this.httpClient.put<ActivityFilteredResult>(this.baseUrl + 'api/Activity/GetActivitiesFiltered',
+      JSON.stringify(activityFilterRequest),
+      HttpHelper.JsonHeaderOptions);
+  }
 
-    public changeActivityStatus(activityChangeStatusRequest: ActivityChangeStatusDto) {
-        return this.httpClient.put<number>(this.baseUrl + 'api/Activity/ChangeActivityStatus',
-            JSON.stringify(activityChangeStatusRequest),
-            HttpHelper.JsonHeaderOptions);
-    }
+  public deleteActivity(activityId: number) {
+    return this.httpClient.delete<number>(this.baseUrl + 'api/Activity/DeleteActivity/' + activityId);
+  }
 
-    public getPendingActivities(editionId: number) {
-        return this.httpClient.get<ActivityDto[]>(this.baseUrl + 'api/Activity/GetPendingActivities/' + editionId);
-    }
+  public changeActivityStatus(activityChangeStatusRequest: ActivityChangeStatusDto) {
+    return this.httpClient.put<number>(this.baseUrl + 'api/Activity/ChangeActivityStatus',
+      JSON.stringify(activityChangeStatusRequest),
+      HttpHelper.JsonHeaderOptions);
+  }
+
+  public getPendingActivities(editionId: number) {
+    return this.httpClient.get<ActivityDto[]>(this.baseUrl + 'api/Activity/GetPendingActivities/' + editionId);
+  }
 }
