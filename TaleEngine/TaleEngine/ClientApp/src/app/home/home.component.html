@@ -1,12 +1,31 @@
 <h1>Welcome!</h1>
 
-<p>No edition of your favorite event (yet!)</p>
+<!--<p>No edition of your favorite event (yet!)</p>-->
 
 <p *ngIf="!lastActivities"><em>Loading...</em></p>
 
 <div *ngIf="lastActivities">
-  <p *ngFor="let act of lastActivities">{{ act.title }} </p>
+  <table class="table table-dark">
+    <thead>
+      <tr>
+        <th rowspan="3" scope="col">Last activities added</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="col">Title</th>
+        <th scope="col">Description</th>
+        <th scope="col">Places</th>
+      </tr>
+      <tr *ngFor="let act of lastActivities">
+        <td>{{ act.title }}</td>
+        <td>{{ act.description }}</td>
+        <td>{{ act.places }}</td>
+      </tr>
+    </tbody>
+  </table>
 </div>
+
 <div style="position: relative; width: 600px; height: 500px;">    
   <div style="position: absolute; bottom: 5px;">
       <p>Event powered by TaleEngine - Coded with ☕ by Elena G (Beelzenef)</p>
