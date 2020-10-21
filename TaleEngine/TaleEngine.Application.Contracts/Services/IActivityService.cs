@@ -15,5 +15,6 @@ namespace TaleEngine.Application.Contracts.Services
         int UpdateActivity(ActivityDto activityDto);
 
         int ChangeActivityStatus(ActivityChangeStatusDto activityChangeStatusDto);
+        List<ActivityDto> GetLastThreeActivities(int editionId);
     }
 }

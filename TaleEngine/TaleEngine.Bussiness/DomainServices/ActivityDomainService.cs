@@ -11,6 +11,8 @@ namespace TaleEngine.Bussiness.DomainServices
 {
     public class ActivityDomainService : IActivityDomainService
     {
+        private const int ACTIVITIESINHOME = 3;
+
         private readonly IUnitOfWork _unitOfWork;
 
         public ActivityDomainService(IUnitOfWork unitOfWork)
@@ -224,5 +226,37 @@ namespace TaleEngine.Bussiness.DomainServices
 
             return result;
         }
+
+        public List<ActivityModel> GetLastThreeActivities(int edition)
+        {
+            var activeStatus = _unitOfWork.ActivityStatusRepository
+                .GetById((int)ActivityStatusEnum.ACT);
+
+            var currentEdition = _unitOfWork.EditionRepository
+                .GetById(edition);
+
+            if (currentEdition == null || activeStatus == null)
+            {
+                return null;
+            }
+
+            var activities = _unitOfWork.ActivityRepository
+                 .GetLastThreeActivities(activeStatus.Id, currentEdition.Id, ACTIVITIESINHOME);
+
+            if (activities == null || activities.Count == 0)
+            {
+                return null;
+            }
+
+            var models = new List<ActivityModel>();
+
+            foreach (var act in activities)
+            {
+                models.Add(ActivityMapper.Map(act));
+            }
+
+            return models;
+        }
+
     }
 }

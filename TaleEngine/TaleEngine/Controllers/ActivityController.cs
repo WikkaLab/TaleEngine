@@ -40,6 +40,19 @@ namespace TaleEngine.Controllers
             return Ok(result);
         }
 
+        [HttpGet("[action]/{editionId}")]
+        public IActionResult GetLastThreeActivies(int editionId)
+        {
+            var result = _activityService.GetLastThreeActivities(editionId);
+
+            if (result == null)
+            {
+                return NoContent();
+            }
+
+            return Ok(result);
+        }
+
         [HttpPut("[action]")]
         public IActionResult GetActivitiesFiltered([FromBody] ActivityFilterRequest activityFilterRequest)
         {
