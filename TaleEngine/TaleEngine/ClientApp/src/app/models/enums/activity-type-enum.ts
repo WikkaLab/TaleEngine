@@ -1,4 +1,4 @@
-const enum ActivityTypeEnum {
+export const enum ActivityTypeEnum {
     TTRPG = 1,
     BG = 2,
     TOU = 3,

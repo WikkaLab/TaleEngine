@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ActivityDto } from '../../models/activity-dto';
 import { ActivityChangeStatusDto } from '../../models/activity-change-status-dto';
 import { ActivityService } from '../../../services/activity-service';
+import { ActivityStatusEnum } from '../../models/enums/activity-status-enum';
 
 @Component({
     selector: 'app-management-activities',
