@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -28,7 +27,7 @@ namespace TaleEngine
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
+            services.AddControllers();
             services.AddCors(c =>
             {
                 c.AddPolicy("AllowAll", options =>
@@ -69,12 +68,6 @@ namespace TaleEngine
             services.AddTransient<IEditionDomainService, EditionDomainService>();
             services.AddTransient<IActivityStatusService, ActivityStatusService>();
             services.AddTransient<IActivityStatusDomainService, ActivityStatusDomainService>();
-
-            // In production, the Angular files will be served from this directory
-            services.AddSpaStaticFiles(configuration =>
-            {
-                configuration.RootPath = "ClientApp/dist";
-            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -105,12 +98,6 @@ namespace TaleEngine
 
             app.UseCors("AllowAll");
             app.UseHttpsRedirection();
-            app.UseStaticFiles();
-            if (!env.IsDevelopment())
-            {
-                app.UseSpaStaticFiles();
-            }
-
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
@@ -118,16 +105,6 @@ namespace TaleEngine
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller}/{action=Index}/{id?}");
-            });
-
-            app.UseSpa(spa =>
-            {
-                spa.Options.SourcePath = "ClientApp";
-
-                if (env.IsDevelopment())
-                {
-                    spa.UseAngularCliServer(npmScript: "start");
-                }
             });
         }
     }
