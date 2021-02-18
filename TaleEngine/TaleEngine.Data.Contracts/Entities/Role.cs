@@ -11,6 +11,6 @@ namespace TaleEngine.Data.Contracts.Entities
 
         public List<User> Users { get; set; }
 
-        public List<RoleToPermission> Permissions { get; set; }
+        public List<Permission> Permissions { get; set; }
     }
 }

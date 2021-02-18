@@ -46,12 +46,7 @@ namespace TaleEngine.Data
         public DbSet<User> Users { get; set; }
         public DbSet<Permission> Permissions { get; set; }
         public DbSet<Role> Roles { get; set; }
-        public DbSet<RoleToPermission> RoleToPermissions { get; set; }
         public DbSet<Edition> Editions { get; set; }
-        public DbSet<UserToActivityCreate> UserToActivityCreates { get; set; }
-        public DbSet<UserToActivityFav> UserToActivityFavs { get; set; }
-        public DbSet<UserToActivityOperation> UserToActivityOperations { get; set; }
-        public DbSet<UserToActivityPlay> UserToActivityPlays { get; set; }
         public DbSet<TimeSlot> TimeSlot { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -108,10 +103,6 @@ namespace TaleEngine.Data
                 .HasOne(u => u.Status)
                 .WithMany(uS => uS.Users)
                 .HasForeignKey(u => u.StatusId);
-            builder.Entity<User>()
-                .HasOne(u => u.Event)
-                .WithMany(ev => ev.RegisteredUsers)
-                .HasForeignKey(u => u.EventId);
 
             builder.Entity<User>()
                 .Property(e => e.Id)
@@ -124,61 +115,6 @@ namespace TaleEngine.Data
             builder.Entity<UserStatus>()
                 .ToTable("UserStatus");
 
-
-            builder.Entity<UserToActivityCreate>()
-                .HasKey(uta => new { uta.UserId, uta.ActivityId });
-            builder.Entity<UserToActivityCreate>()
-                .HasOne(uta => uta.User)
-                .WithMany(u => u.ActivitiesCreate)
-                .HasForeignKey(uta => uta.UserId);
-            builder.Entity<UserToActivityCreate>()
-                .HasOne(uta => uta.Activity)
-                .WithMany(a => a.UsersCreate)
-                .HasForeignKey(uta => uta.ActivityId);
-
-            builder.Entity<UserToActivityCreate>()
-                .ToTable("UserToActivityCreate");
-
-            builder.Entity<UserToActivityFav>()
-                .HasKey(uta => new { uta.UserId, uta.ActivityId });
-            builder.Entity<UserToActivityFav>()
-                .HasOne(uta => uta.User)
-                .WithMany(u => u.ActivitiesFav)
-                .HasForeignKey(uta => uta.UserId);
-            builder.Entity<UserToActivityFav>()
-                .HasOne(uta => uta.Activity)
-                .WithMany(a => a.UsersFav)
-                .HasForeignKey(uta => uta.ActivityId);
-
-            builder.Entity<UserToActivityFav>()
-                .ToTable("UserToActivityFav");
-
-            builder.Entity<UserToActivityOperation>()
-                .HasKey(uta => new { uta.UserId, uta.ActivityId });
-            builder.Entity<UserToActivityOperation>()
-                .HasOne(uta => uta.User)
-                .WithMany(u => u.ActivitiesOperations)
-                .HasForeignKey(uta => uta.UserId);
-            builder.Entity<UserToActivityOperation>()
-                .HasOne(uta => uta.Activity)
-                .WithMany(a => a.UsersOperations)
-                .HasForeignKey(uta => uta.ActivityId);
-            builder.Entity<UserToActivityOperation>()
-                .ToTable("UserToActivityOperation");
-
-            builder.Entity<UserToActivityPlay>()
-                .HasKey(uta => new { uta.UserId, uta.ActivityId });
-            builder.Entity<UserToActivityPlay>()
-                .HasOne(uta => uta.User)
-                .WithMany(u => u.ActivitiesPlay)
-                .HasForeignKey(uta => uta.UserId);
-            builder.Entity<UserToActivityPlay>()
-                .HasOne(uta => uta.Activity)
-                .WithMany(a => a.UsersPlay)
-                .HasForeignKey(uta => uta.ActivityId);
-            builder.Entity<UserToActivityPlay>()
-                .ToTable("UserToActivityPlay");
-
             builder.Entity<Role>()
                 .HasData(InitialRoleData.GetRoleData().ToArray());
             builder.Entity<Role>()
@@ -188,20 +124,6 @@ namespace TaleEngine.Data
                 .HasData(InitialPermissionData.GetPermissionData().ToArray());
             builder.Entity<Permission>()
                 .ToTable("Permission");
-
-            builder.Entity<RoleToPermission>()
-                .HasKey(rTp => new { rTp.RoleId, rTp.PermissionId });
-            builder.Entity<RoleToPermission>()
-                .HasOne(rtp => rtp.Permission)
-                .WithMany(p => p.Roles)
-                .HasForeignKey(rtp => rtp.PermissionId);
-            builder.Entity<RoleToPermission>()
-                .HasOne(rtp => rtp.Role)
-                .WithMany(r => r.Permissions)
-                .HasForeignKey(rtp => rtp.RoleId);
-
-            builder.Entity<RoleToPermission>()
-                .ToTable("RoleToPermission");
 
             builder.Entity<ActivityType>()
                 .HasData(InitialActivityTypeData.GetActivityTypes().ToArray());
