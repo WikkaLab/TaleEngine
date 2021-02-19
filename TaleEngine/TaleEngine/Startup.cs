@@ -68,6 +68,8 @@ namespace TaleEngine
             services.AddTransient<IEditionDomainService, EditionDomainService>();
             services.AddTransient<IActivityStatusService, ActivityStatusService>();
             services.AddTransient<IActivityStatusDomainService, ActivityStatusDomainService>();
+            services.AddTransient<IRoleService, RoleService>();
+            services.AddTransient<IRoleDomainService, RoleDomainService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

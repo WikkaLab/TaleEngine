@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace TaleEngine.Data.Contracts.Entities
+﻿namespace TaleEngine.Data.Contracts.Entities
 {
     public class PermissionValue : BaseEntity
     {
