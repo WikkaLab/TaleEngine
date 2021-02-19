@@ -16,7 +16,6 @@ namespace TaleEngine.Data.Contracts.Entities
         public int StatusId { get; set; }
         public UserStatus Status { get; set; }
 
-
         public List<Activity> ActivitiesPlay { get; set; }
         public List<Activity> ActivitiesFav { get; set; }
         public List<Activity> ActivitiesCreate { get; set; }

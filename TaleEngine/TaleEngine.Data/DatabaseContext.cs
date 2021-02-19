@@ -45,6 +45,8 @@ namespace TaleEngine.Data
         public DbSet<UserStatus> UserStatuses { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Permission> Permissions { get; set; }
+        public DbSet<PermissionValue> PermissionsValue { get; set; }
+        public DbSet<AssignedPermission> AssignedPermissions { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<Edition> Editions { get; set; }
         public DbSet<TimeSlot> TimeSlot { get; set; }
@@ -64,7 +66,6 @@ namespace TaleEngine.Data
                 .HasOne(ed => ed.Event)
                 .WithMany(ev => ev.Editions)
                 .HasForeignKey(ed => ed.EventId);
-
             builder.Entity<Edition>()
                 .Property(e => e.Id)
                 .ValueGeneratedOnAdd();
@@ -88,6 +89,18 @@ namespace TaleEngine.Data
                 .HasOne(a => a.Type)
                 .WithMany(aT => aT.Activities)
                 .HasForeignKey(a => a.TypeId);
+            builder.Entity<Activity>()
+                .HasMany(a => a.UsersCreate)
+                .WithMany(u => u.ActivitiesCreate)
+                .UsingEntity(x => x.ToTable("ActivityCreators"));
+            builder.Entity<Activity>()
+                .HasMany(a => a.UsersFav)
+                .WithMany(u => u.ActivitiesFav)
+                .UsingEntity(x => x.ToTable("FavActivities"));
+            builder.Entity<Activity>()
+                .HasMany(a => a.UsersPlay)
+                .WithMany(u => u.ActivitiesPlay)
+                .UsingEntity(x => x.ToTable("ActivityEnrollments"));
 
             builder.Entity<Activity>()
                 .Property(e => e.Id)
@@ -95,6 +108,11 @@ namespace TaleEngine.Data
             builder.Entity<Activity>()
                 .ToTable("Activity");
 
+            builder.Entity<User>()
+                .Property(e => e.Id)
+                .ValueGeneratedOnAdd();
+            builder.Entity<User>()
+                .ToTable("User");
             builder.Entity<User>()
                 .HasOne(u => u.Role)
                 .WithMany(r => r.Users)
@@ -104,11 +122,16 @@ namespace TaleEngine.Data
                 .WithMany(uS => uS.Users)
                 .HasForeignKey(u => u.StatusId);
 
-            builder.Entity<User>()
-                .Property(e => e.Id)
-                .ValueGeneratedOnAdd();
-            builder.Entity<User>()
-                .ToTable("User");
+            builder.Entity<Role>()
+                .ToTable("Roles");
+            builder.Entity<Role>()
+                .HasMany(r => r.Permissions)
+                .WithMany(p => p.Roles);
+
+            builder.Entity<AssignedPermission>()
+                .HasKey(x => new { x.RoleId, x.PermissionId, x.PermissionValueId });
+
+            // Mock data
 
             builder.Entity<UserStatus>()
                 .HasData(InitialUserStatusData.GetUserStatuses().ToArray());
@@ -124,6 +147,9 @@ namespace TaleEngine.Data
                 .HasData(InitialPermissionData.GetPermissionData().ToArray());
             builder.Entity<Permission>()
                 .ToTable("Permission");
+
+            builder.Entity<PermissionValue>()
+                .ToTable("PermissionValue");
 
             builder.Entity<ActivityType>()
                 .HasData(InitialActivityTypeData.GetActivityTypes().ToArray());
