@@ -24,7 +24,7 @@ namespace TaleEngine.Controllers
         [HttpGet("[action]")]
         public IActionResult GetEvent(int eventId)
         {
-            var result =  _eventService.GetEvent(eventId);
+            var result = _eventService.GetEvent(eventId);
 
             return Ok(result);
         }

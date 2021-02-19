@@ -6,6 +6,6 @@ namespace TaleEngine.Bussiness.Contracts.DomainServices
     {
         EditionDaysModel GetEditionDays(int editionId);
         EditionModel GetLastOrCurrentEdition(int ofEvent);
-       
+
     }
 }

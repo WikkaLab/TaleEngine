@@ -29,7 +29,7 @@ namespace TaleEngine.Testing
                 TypeId = 1
             };
 
-            var result =_activityService.CreateActivity(editionId, activityDto);
+            var result = _activityService.CreateActivity(editionId, activityDto);
 
             //Assert.IsTrue(result == 1, "CreateActivity() is not 1");
         }
@@ -43,5 +43,5 @@ namespace TaleEngine.Testing
             //Assert.IsNotNull(result, "GetActivities() results null");
             //Assert.IsTrue(result.Count == 2, "GetActivities() is not 2");
         }
-    } 
+    }
 }

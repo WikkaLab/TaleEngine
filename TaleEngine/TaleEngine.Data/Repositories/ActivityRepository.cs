@@ -46,7 +46,7 @@ namespace TaleEngine.Data.Repositories
         {
             _context.Activities.Update(entity);
         }
-        
+
         public List<Activity> GetEventActivities(int editionId)
         {
             return _context.Activities
@@ -72,7 +72,7 @@ namespace TaleEngine.Data.Repositories
         public List<Activity> GetLastThreeActivities(int status, int edition, int numberOfActivities)
         {
             var query = GetActiveActivitiesWithFilter(status, 0, edition, null);
-            
+
             return query.OrderByDescending(a => a.CreateDateTime).Take(numberOfActivities).ToList();
         }
 
