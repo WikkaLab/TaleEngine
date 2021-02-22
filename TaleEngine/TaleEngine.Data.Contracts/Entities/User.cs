@@ -10,8 +10,7 @@ namespace TaleEngine.Data.Contracts.Entities
         public string Website { get; set; }
         public string Blog { get; set; }
 
-        public int RoleId { get; set; }
-        public Role Role { get; set; }
+        public List<Role> Roles { get; set; }
 
         public int StatusId { get; set; }
         public UserStatus Status { get; set; }

@@ -114,9 +114,8 @@ namespace TaleEngine.Data
             builder.Entity<User>()
                 .ToTable("User");
             builder.Entity<User>()
-                .HasOne(u => u.Role)
-                .WithMany(r => r.Users)
-                .HasForeignKey(u => u.RoleId);
+                .HasMany(u => u.Roles)
+                .WithMany(r => r.Users);
             builder.Entity<User>()
                 .HasOne(u => u.Status)
                 .WithMany(uS => uS.Users)
@@ -124,14 +123,9 @@ namespace TaleEngine.Data
 
             builder.Entity<Role>()
                 .ToTable("Roles");
-            builder.Entity<Role>()
-                .HasMany(r => r.Permissions)
-                .WithMany(p => p.Roles);
 
             builder.Entity<AssignedPermission>()
                 .HasKey(x => new { x.RoleId, x.PermissionId, x.PermissionValueId });
-
-            // Mock data
 
             builder.Entity<UserStatus>()
                 .HasData(InitialUserStatusData.GetUserStatuses().ToArray());
