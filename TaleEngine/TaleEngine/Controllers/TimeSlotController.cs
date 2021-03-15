@@ -3,6 +3,9 @@ using TaleEngine.Application.Contracts.Services;
 
 namespace TaleEngine.Controllers
 {
+    [ApiController]
+    [ApiVersion("1")]
+    [ApiVersion("2")]
     [Route("api/[controller]")]
     public class TimeSlotController : Controller
     {
@@ -14,6 +17,8 @@ namespace TaleEngine.Controllers
         }
 
         [HttpGet("[action]")]
+        [MapToApiVersion("1")]
+        [MapToApiVersion("2")]
         public IActionResult GetTimeSlots()
         {
             var result = _timeSlotService.GetTimeSlots();

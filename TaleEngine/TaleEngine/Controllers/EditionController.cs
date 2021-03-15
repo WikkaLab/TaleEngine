@@ -3,6 +3,8 @@ using TaleEngine.Application.Contracts.Services;
 
 namespace TaleEngine.Controllers
 {
+    [ApiController]
+    [ApiVersion("1")]
     [Route("api/[controller]")]
     public class EditionController : Controller
     {
@@ -14,6 +16,7 @@ namespace TaleEngine.Controllers
         }
 
         [HttpGet("[action]/{editionId}")]
+        [MapToApiVersion("1")]
         public IActionResult GetEditionDays(int editionId)
         {
             var result = _editionService.GetEditionDays(editionId);

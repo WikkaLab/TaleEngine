@@ -3,6 +3,8 @@ using TaleEngine.Application.Contracts.Services;
 
 namespace TaleEngine.Controllers
 {
+    [ApiController]
+    [ApiVersion("1")]
     [Route("api/[controller]")]
     public class EventController : Controller
     {
@@ -14,6 +16,7 @@ namespace TaleEngine.Controllers
         }
 
         [HttpGet("[action]")]
+        [MapToApiVersion("1")]
         public IActionResult GetEvents()
         {
             var result = _eventService.GetAllEvents();
@@ -22,6 +25,7 @@ namespace TaleEngine.Controllers
         }
 
         [HttpGet("[action]")]
+        [MapToApiVersion("1")]
         public IActionResult GetEvent(int eventId)
         {
             var result = _eventService.GetEvent(eventId);
@@ -30,6 +34,7 @@ namespace TaleEngine.Controllers
         }
 
         [HttpGet("[action]/{selectedEvent}")]
+        [MapToApiVersion("1")]
         public IActionResult GetCurrentOrLastEdition(int selectedEvent)
         {
             var result = _eventService.GetCurrentOrLastEdition(selectedEvent);

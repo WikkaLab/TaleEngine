@@ -11,6 +11,7 @@ namespace TaleEngine.Controllers
     /// Roles management
     /// </summary>
     [ApiController]
+    [ApiVersion("2")]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
@@ -36,6 +37,7 @@ namespace TaleEngine.Controllers
         /// </summary>
         /// <returns>All the roles</returns>
         [HttpGet("[action]")]
+        [MapToApiVersion("2")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public ActionResult<List<RoleDto>> GetAllRoles()
@@ -51,6 +53,7 @@ namespace TaleEngine.Controllers
         /// <param name="roleId">Role identifier</param>
         /// <returns>The selected role with permissions</returns>
         [HttpGet("[action]/{roleId:int}")]
+        [MapToApiVersion("2")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public IActionResult GetRole(int roleId)
