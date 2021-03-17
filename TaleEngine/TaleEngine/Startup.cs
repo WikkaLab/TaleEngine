@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,6 +14,7 @@ using TaleEngine.Bussiness.Contracts.DomainServices;
 using TaleEngine.Bussiness.DomainServices;
 using TaleEngine.Data;
 using TaleEngine.Data.Contracts;
+using TaleEngine.Helpers;
 
 namespace TaleEngine
 {
@@ -27,7 +29,6 @@ namespace TaleEngine
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
             services.AddCors(c =>
             {
                 c.AddPolicy("AllowAll", options =>
@@ -36,12 +37,31 @@ namespace TaleEngine
                            .AllowAnyHeader());
             });
 
+            services.AddApiVersioning(config =>
+            {
+                config.DefaultApiVersion = new ApiVersion(1, 0);
+                config.ReportApiVersions = true;
+                config.AssumeDefaultVersionWhenUnspecified = true;
+                config.UseApiBehavior = false;
+            });
 
             services.AddSwaggerGen(config =>
             {
                 config.SwaggerDoc("v1", new OpenApiInfo
                 {
-                    Title = "TaleEngine API v0.1",
+                    Title = "TaleEngine API v1",
+                    Version = "v1",
+                    Contact = new OpenApiContact
+                    {
+                        Name = "Elena G",
+                        Email = "elena.guzbla@gmail.com",
+                        Url = new Uri("https://beelzenef.github.io")
+                    }
+                });
+                config.SwaggerDoc("v2", new OpenApiInfo
+                {
+                    Title = "TaleEngine API v2",
+                    Version = "v2",
                     Contact = new OpenApiContact
                     {
                         Name = "Elena G",
@@ -68,23 +88,30 @@ namespace TaleEngine
             services.AddTransient<IEditionDomainService, EditionDomainService>();
             services.AddTransient<IActivityStatusService, ActivityStatusService>();
             services.AddTransient<IActivityStatusDomainService, ActivityStatusDomainService>();
+            services.AddTransient<IRoleService, RoleService>();
+            services.AddTransient<IRoleDomainService, RoleDomainService>();
+
+            services.AddControllers(options =>
+            {
+                options.Conventions.Add(new GroupingByNamespaceConvention());
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            var builder = new ConfigurationBuilder()
-               .AddJsonFile("appsettings.json")
-               .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
-               .AddEnvironmentVariables();
+            app.UseRouting();
 
-            app.UseSwagger();
-            app.UseSwaggerUI(opt =>
+            app.UseSwagger(options => options.RouteTemplate = "swagger/{documentName}/swagger.json");
+            app.UseSwaggerUI(options =>
             {
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "TaleEngine API v1"));
+                options.DocumentTitle = "TaleEngine Docs";
+                options.SwaggerEndpoint($"/swagger/v1/swagger.json", $"v1");
+                options.SwaggerEndpoint($"/swagger/v2/swagger.json", $"v2");
             });
+            app.UseEndpoints(endpoints => endpoints.MapControllers());
 
-            builder.Build();
+            app.Build();
 
             if (env.IsDevelopment())
             {
@@ -100,12 +127,7 @@ namespace TaleEngine
             app.UseHttpsRedirection();
             app.UseRouting();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller}/{action=Index}/{id?}");
-            });
+            app.UseEndpoints(endpoints => endpoints.MapControllers());
         }
     }
 }

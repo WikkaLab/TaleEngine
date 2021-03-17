@@ -3,9 +3,10 @@ using TaleEngine.Application.Contracts.Dtos;
 using TaleEngine.Application.Contracts.Dtos.Requests;
 using TaleEngine.Application.Contracts.Services;
 
-namespace TaleEngine.Controllers
+namespace TaleEngine.Controllers.V1
 {
-    [Route("api/[controller]")]
+    [ApiController]
+    [Route("api/v1/[controller]")]
     public class ActivityController : Controller
     {
         private readonly IActivityService _activityService;

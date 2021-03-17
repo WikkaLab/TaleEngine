@@ -10,23 +10,13 @@ namespace TaleEngine.Data.Contracts.Entities
         public string Website { get; set; }
         public string Blog { get; set; }
 
-        //public List<User> Friends { get; set; }
-
-        public int EventId { get; set; }
-        public Event Event { get; set; }
-
-        public int RoleId { get; set; }
-        public Role Role { get; set; }
+        public List<Role> Roles { get; set; }
 
         public int StatusId { get; set; }
         public UserStatus Status { get; set; }
 
-
-        public List<UserToActivityPlay> ActivitiesPlay { get; set; }
-        public List<UserToActivityFav> ActivitiesFav { get; set; }
-        public List<UserToActivityCreate> ActivitiesCreate { get; set; }
-
-        public List<UserToActivityOperation> ActivitiesOperations { get; set; }
-
+        public List<Activity> ActivitiesPlay { get; set; }
+        public List<Activity> ActivitiesFav { get; set; }
+        public List<Activity> ActivitiesCreate { get; set; }
     }
 }

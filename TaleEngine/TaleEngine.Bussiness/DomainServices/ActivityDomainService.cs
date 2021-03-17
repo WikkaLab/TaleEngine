@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using TaleEngine.Bussiness.Contracts.DomainServices;
-using TaleEngine.Bussiness.Contracts.Models.Results;
 using TaleEngine.Bussiness.Contracts.Models;
+using TaleEngine.Bussiness.Contracts.Models.Results;
 using TaleEngine.Bussiness.Enums;
 using TaleEngine.Bussiness.Mappers;
 using TaleEngine.Data.Contracts;
@@ -111,7 +111,7 @@ namespace TaleEngine.Bussiness.DomainServices
 
             return 1;
         }
-        
+
         public int UpdateActivity(ActivityModel activityModel)
         {
             var activity = ActivityMapper.Map(activityModel);
@@ -182,7 +182,7 @@ namespace TaleEngine.Bussiness.DomainServices
             return 1;
         }
 
-        public ActivityFilteredResultModel GetActiveActivitiesFiltered(int type, int edition, 
+        public ActivityFilteredResultModel GetActiveActivitiesFiltered(int type, int edition,
             string title, int currentPage)
         {
             int activitiesPerPage = 10;
@@ -198,12 +198,12 @@ namespace TaleEngine.Bussiness.DomainServices
                 return null;
             }
 
-            int skipByPagination =  (currentPage - 1) * activitiesPerPage;
+            int skipByPagination = (currentPage - 1) * activitiesPerPage;
 
             var activities = _unitOfWork.ActivityRepository
-                .GetActiveActivitiesFiltered(activeStatus.Id, type, currentEdition.Id, 
+                .GetActiveActivitiesFiltered(activeStatus.Id, type, currentEdition.Id,
                     title, skipByPagination, activitiesPerPage);
-             
+
             var models = new List<ActivityModel>();
 
             foreach (var act in activities)

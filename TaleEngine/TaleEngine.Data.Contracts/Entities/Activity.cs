@@ -27,11 +27,9 @@ namespace TaleEngine.Data.Contracts.Entities
         public DateTime? StartDateTime { get; set; }
         public DateTime? EndDateTime { get; set; }
 
-        public List<UserToActivityOperation> UsersOperations { get; set; }
-
-        public List<UserToActivityPlay> UsersPlay { get; set; }
-        public List<UserToActivityFav> UsersFav { get; set; }
-        public List<UserToActivityCreate> UsersCreate { get; set; }
+        public List<User> UsersPlay { get; set; }
+        public List<User> UsersFav { get; set; }
+        public List<User> UsersCreate { get; set; }
 
     }
 }

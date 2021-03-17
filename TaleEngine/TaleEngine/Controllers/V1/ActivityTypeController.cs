@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TaleEngine.Application.Contracts.Services;
 
-namespace TaleEngine.Controllers
+namespace TaleEngine.Controllers.V1
 {
-    [Route("api/[controller]")]
+    [ApiController]
+    [Route("api/v1/[controller]")]
     public class ActivityTypeController : Controller
     {
         private readonly IActivityTypeService _activityTypeService;

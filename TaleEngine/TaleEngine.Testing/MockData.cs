@@ -8,7 +8,8 @@ namespace TaleEngine.Testing
     {
         public static ActivityDto GetActivityDto = new ActivityDto
         {
-            Title = "Title", Description = "Description"
+            Title = "Title",
+            Description = "Description"
         };
 
         public static List<ActivityDto> GetActivityDtoList = new List<ActivityDto>
@@ -18,7 +19,8 @@ namespace TaleEngine.Testing
 
         public static Activity GetActivity = new Activity
         {
-            Title = "Title", Description = "Description"
+            Title = "Title",
+            Description = "Description"
         };
 
         public static List<Activity> GetActivityList = new List<Activity>

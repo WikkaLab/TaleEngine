@@ -7,8 +7,6 @@ namespace TaleEngine.Data.Contracts.Entities
         public string Title { get; set; }
 
         public List<Edition> Editions { get; set; }
-
-
-        public List<User> RegisteredUsers { get; set; }
+        public List<Role> Roles { get; set; }
     }
 }

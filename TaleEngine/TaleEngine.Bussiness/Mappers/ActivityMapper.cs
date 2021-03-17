@@ -38,6 +38,6 @@ namespace TaleEngine.Bussiness.Mappers
                 TimeSlotId = activity.TimeSlotId
             };
         }
-        
+
     }
 }
