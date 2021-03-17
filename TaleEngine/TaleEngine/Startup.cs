@@ -6,10 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using Swashbuckle.AspNetCore.SwaggerGen;
 using System;
-using System.Linq;
-using System.Reflection;
 using TaleEngine.Application.Contracts.Services;
 using TaleEngine.Application.Services;
 using TaleEngine.Bussiness.Contracts;
@@ -32,7 +29,6 @@ namespace TaleEngine
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
             services.AddCors(c =>
             {
                 c.AddPolicy("AllowAll", options =>
@@ -73,17 +69,6 @@ namespace TaleEngine
                         Url = new Uri("https://beelzenef.github.io")
                     }
                 });
-                config.OperationFilter<SwaggerParameterFilters>();
-                config.DocumentFilter<SwaggerVersionMapping>();
-
-                config.DocInclusionPredicate((version, desc) =>
-                {
-                    if (!desc.TryGetMethodInfo(out MethodInfo methodInfo)) return false;
-                    var versions = methodInfo.DeclaringType.GetCustomAttributes(true).OfType<ApiVersionAttribute>().SelectMany(attr => attr.Versions);
-                    var maps = methodInfo.GetCustomAttributes(true).OfType<MapToApiVersionAttribute>().SelectMany(attr => attr.Versions).ToArray();
-                    version = version.Replace("v", "");
-                    return versions.Any(v => v.ToString() == version && maps.Any(v => v.ToString() == version));
-                });
             });
 
             services.AddDbContext<DatabaseContext>(item =>
@@ -106,7 +91,10 @@ namespace TaleEngine
             services.AddTransient<IRoleService, RoleService>();
             services.AddTransient<IRoleDomainService, RoleDomainService>();
 
-            services.AddControllers();
+            services.AddControllers(options =>
+            {
+                options.Conventions.Add(new GroupingByNamespaceConvention());
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

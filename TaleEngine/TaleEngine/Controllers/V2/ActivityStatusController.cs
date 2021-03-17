@@ -1,11 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TaleEngine.Application.Contracts.Services;
 
-namespace TaleEngine.Controllers
+namespace TaleEngine.Controllers.V2
 {
     [ApiController]
-    [ApiVersion("1")]
-    [Route("api/[controller]")]
+    [Route("api/v2/[controller]")]
     public class ActivityStatusController : Controller
     {
         private readonly IActivityStatusService _activityStatusService;
@@ -16,7 +15,6 @@ namespace TaleEngine.Controllers
         }
 
         [HttpGet("[action]")]
-        [MapToApiVersion("1")]
         public IActionResult GetActivityStatuses()
         {
             var result = _activityStatusService.GetActivityStatuses();

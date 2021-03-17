@@ -1,11 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TaleEngine.Application.Contracts.Services;
 
-namespace TaleEngine.Controllers
+namespace TaleEngine.Controllers.V1
 {
     [ApiController]
-    [ApiVersion("1")]
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     public class ActivityTypeController : Controller
     {
         private readonly IActivityTypeService _activityTypeService;
@@ -16,7 +15,6 @@ namespace TaleEngine.Controllers
         }
 
         [HttpGet("[action]")]
-        [MapToApiVersion("1")]
         public IActionResult GetActivityTypes()
         {
             var result = _activityTypeService.GetActivityTypes();
