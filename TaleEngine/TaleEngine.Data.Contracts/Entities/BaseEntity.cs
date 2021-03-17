@@ -9,11 +9,8 @@ namespace TaleEngine.Data.Contracts.Entities
         [Key]
         public int Id { get; set; }
 
-        public Guid? CreateUserId { get; set; }
-        public Guid? LastModificationUserId { get; set; }
-
         public DateTime? CreateDateTime { get; set; }
-        public DateTime? LastModificationDateTime { get; set; }
+        public DateTime? ModificationDate { get; set; }
 
         public void SetAudit(EntityState state)
         {
@@ -26,7 +23,7 @@ namespace TaleEngine.Data.Contracts.Entities
                 }
             }
 
-            LastModificationDateTime = now;
+            ModificationDate = now;
         }
     }
 }
