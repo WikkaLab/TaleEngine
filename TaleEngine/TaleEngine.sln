@@ -16,7 +16,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaleEngine.Bussiness", "Tal
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaleEngine.Bussiness.Contracts", "TaleEngine.Bussiness.Contracts\TaleEngine.Bussiness.Contracts.csproj", "{A3A3704B-A23D-4B2B-8581-17433D6D68A5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaleEngine.Testing", "TaleEngine.Testing\TaleEngine.Testing.csproj", "{82520E4E-84EE-4FEF-A65C-363A5345DFC8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaleEngine.Testing", "TaleEngine.Testing\TaleEngine.Testing.csproj", "{82520E4E-84EE-4FEF-A65C-363A5345DFC8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaleEngine.Data.Testing", "TaleEngine.Data.Testing\TaleEngine.Data.Testing.csproj", "{DE08B5D2-E47D-4335-B234-A7A8326B976C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -56,6 +58,10 @@ Global
 		{82520E4E-84EE-4FEF-A65C-363A5345DFC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{82520E4E-84EE-4FEF-A65C-363A5345DFC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{82520E4E-84EE-4FEF-A65C-363A5345DFC8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE08B5D2-E47D-4335-B234-A7A8326B976C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE08B5D2-E47D-4335-B234-A7A8326B976C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE08B5D2-E47D-4335-B234-A7A8326B976C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE08B5D2-E47D-4335-B234-A7A8326B976C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
