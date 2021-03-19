@@ -12,29 +12,29 @@ using Xunit;
 namespace TaleEngine.Testing.Controllers.V1
 {
     [ExcludeFromCodeCoverage]
-    public class TimeSlotControllerTests
+    public class ActivityStatusControllerTests
     {
         [Fact]
-        public void GetAllTimeSlots_Success()
+        public void GetActivityStatuses_Success()
         {
             // Arrange
-            Mock<ITimeSlotService> serviceMock = new Mock<ITimeSlotService>();
-            List<TimeSlotDto> dto = new()
+            Mock<IActivityStatusService> serviceMock = new();
+            List<ActivityStatusDto> dto = new()
             {
-                new TimeSlotDto
+                new ActivityStatusDto
                 {
                     Id = 1,
-                    Name = "TimeSlotName"
+                    Name = "StatusName"
                 }
             };
 
-            serviceMock.Setup(x => x.GetTimeSlots())
+            serviceMock.Setup(x => x.GetActivityStatuses())
                 .Returns(dto);
 
-            TimeSlotController target = new TimeSlotController(serviceMock.Object);
+            ActivityStatusController target = new(serviceMock.Object);
 
             // Act
-            IActionResult result = target.GetTimeSlots();
+            IActionResult result = target.GetActivityStatuses();
 
             // Assert
             var resultAsObjResult = result as ObjectResult;
@@ -42,23 +42,23 @@ namespace TaleEngine.Testing.Controllers.V1
             result.Should().NotBeNull();
             resultAsObjResult.StatusCode.Should().Be(StatusCodes.Status200OK);
 
-            serviceMock.Verify(x => x.GetTimeSlots(), Times.Once);
+            serviceMock.Verify(x => x.GetActivityStatuses(), Times.Once);
         }
 
         [Fact]
-        public void GetAllTimeSlots_EmptyResult_Success()
+        public void GetActivityStatuses_EmptyResult_Success()
         {
             // Arrange
-            Mock<ITimeSlotService> serviceMock = new Mock<ITimeSlotService>();
-            List<TimeSlotDto> dto = new();
+            Mock<IActivityStatusService> serviceMock = new();
+            List<ActivityStatusDto> dto = new();
 
-            serviceMock.Setup(x => x.GetTimeSlots())
+            serviceMock.Setup(x => x.GetActivityStatuses())
                 .Returns(dto);
 
-            TimeSlotController target = new TimeSlotController(serviceMock.Object);
+            ActivityStatusController target = new(serviceMock.Object);
 
             // Act
-            IActionResult result = target.GetTimeSlots();
+            IActionResult result = target.GetActivityStatuses();
 
             // Assert
             var resultAsObjResult = result as StatusCodeResult;
@@ -66,23 +66,23 @@ namespace TaleEngine.Testing.Controllers.V1
             result.Should().NotBeNull();
             resultAsObjResult.StatusCode.Should().Be(StatusCodes.Status204NoContent);
 
-            serviceMock.Verify(x => x.GetTimeSlots(), Times.Once);
+            serviceMock.Verify(x => x.GetActivityStatuses(), Times.Once);
         }
 
         [Fact]
-        public void GetAllTimeSlots_NullResult_Success()
+        public void GetActivityStatuses_NullResult_Success()
         {
             // Arrange
-            Mock<ITimeSlotService> serviceMock = new Mock<ITimeSlotService>();
-            List<TimeSlotDto> dto = null;
+            Mock<IActivityStatusService> serviceMock = new();
+            List<ActivityStatusDto> dto = null;
 
-            serviceMock.Setup(x => x.GetTimeSlots())
+            serviceMock.Setup(x => x.GetActivityStatuses())
                 .Returns(dto);
 
-            TimeSlotController target = new TimeSlotController(serviceMock.Object);
+            ActivityStatusController target = new(serviceMock.Object);
 
             // Act
-            IActionResult result = target.GetTimeSlots();
+            IActionResult result = target.GetActivityStatuses();
 
             // Assert
             var resultAsObjResult = result as StatusCodeResult;
@@ -90,7 +90,7 @@ namespace TaleEngine.Testing.Controllers.V1
             result.Should().NotBeNull();
             resultAsObjResult.StatusCode.Should().Be(StatusCodes.Status204NoContent);
 
-            serviceMock.Verify(x => x.GetTimeSlots(), Times.Once);
+            serviceMock.Verify(x => x.GetActivityStatuses(), Times.Once);
         }
     }
 }
