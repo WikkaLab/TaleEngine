@@ -23,7 +23,7 @@ namespace TaleEngine.Testing.Controllers.V1
 
             EditionDaysDto dto = new()
             {
-                    EditionDays = new List<DateTime>()
+                EditionDays = new List<DateTime>()
             };
 
             Mock<IEditionService> serviceMock = new();
