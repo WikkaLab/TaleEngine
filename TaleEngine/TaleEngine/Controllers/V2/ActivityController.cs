@@ -46,7 +46,7 @@ namespace TaleEngine.Controllers.V2
         {
             var result = _activityService.GetLastThreeActivities(editionId);
 
-            if (result == null)
+            if (result == null || result.Count == 0)
             {
                 return NoContent();
             }
@@ -70,12 +70,12 @@ namespace TaleEngine.Controllers.V2
         [HttpDelete("[action]/{activityId}")]
         public IActionResult DeleteActivity(int activityId)
         {
-            var authorized = false;
+            //var authorized = false;
 
-            if (!authorized)
-            {
-                return Unauthorized();
-            }
+            //if (!authorized)
+            //{
+            //    return Unauthorized();
+            //}
 
             var result = _activityService.DeleteActivity(activityId);
             return Ok(result);
@@ -84,12 +84,12 @@ namespace TaleEngine.Controllers.V2
         [HttpPost("[action]/{editionId}")]
         public IActionResult CreateActivity(int editionId, [FromBody] ActivityDto activityDto)
         {
-            var authorized = true;
+            //var authorized = true;
 
-            if (!authorized)
-            {
-                return NoContent();
-            }
+            //if (!authorized)
+            //{
+            //    return NoContent();
+            //}
 
             var result = _activityService.CreateActivity(editionId, activityDto);
             return Ok(result);
@@ -106,12 +106,12 @@ namespace TaleEngine.Controllers.V2
         [HttpPut("[action]")]
         public IActionResult UpdateActivity([FromBody] ActivityDto activityDto)
         {
-            var authorized = false;
+            //var authorized = false;
 
-            if (!authorized)
-            {
-                return Unauthorized();
-            }
+            //if (!authorized)
+            //{
+            //    return Unauthorized();
+            //}
 
             var result = _activityService.UpdateActivity(activityDto);
             return Ok(result);
