@@ -1,8 +1,10 @@
 ﻿using Bogus;
+using System.Diagnostics.CodeAnalysis;
 using TaleEngine.Bussiness.Contracts.Models;
 
 namespace TaleEngine.Fakes.Models
 {
+    [ExcludeFromCodeCoverage]
     public class ActivityModelBuilder
     {
         public static ActivityModel BuildActivityModel()

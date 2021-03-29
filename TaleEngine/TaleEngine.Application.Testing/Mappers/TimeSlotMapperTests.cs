@@ -1,4 +1,4 @@
-﻿using FluentAssertions;
+using FluentAssertions;
 using System.Diagnostics.CodeAnalysis;
 using TaleEngine.Application.Mappers;
 using TaleEngine.Fakes.Dtos;
@@ -8,16 +8,16 @@ using Xunit;
 namespace TaleEngine.Application.Testing.Mappers
 {
     [ExcludeFromCodeCoverage]
-    public class ActivityStatusMapperTests
+    public class TimeSlotMapperTests
     {
         [Fact]
-        public void ActivityStatus_DtoToModel()
+        public void TimeSlot_DtoToModel()
         {
             // Arrange
-            var dto = ActivityDtoBuilder.BuildActivityStatusDto();
+            var dto = TimeSlotDtoBuilder.BuildTimeSlotDto();
 
             // Act
-            var result = ActivityStatusMapper.Map(dto);
+            var result = TimeSlotMapper.Map(dto);
 
             // Assert
             result.Id.Should().Be(dto.Id);
@@ -25,13 +25,13 @@ namespace TaleEngine.Application.Testing.Mappers
         }
 
         [Fact]
-        public void ActivityStatus_ModelToDto()
+        public void TimeSlot_ModelToDto()
         {
             // Arrange
-            var model = ActivityModelBuilder.BuildActivityStatusDto();
+            var model = TimeSlotModelBuilder.BuildTimeSlotModel();
 
             // Act
-            var result = ActivityStatusMapper.Map(model);
+            var result = TimeSlotMapper.Map(model);
 
             // Assert
             result.Id.Should().Be(model.Id);
