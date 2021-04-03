@@ -23,12 +23,7 @@ namespace TaleEngine.Application.Services
         {
             var events = _eventDomainService.GetEventsNoFilter();
 
-            var result = new List<EventDto>();
-
-            foreach (var ev in events)
-            {
-                result.Add(EventMapper.Map(ev));
-            }
+            var result = EventMapper.Map(events);
 
             return result;
         }

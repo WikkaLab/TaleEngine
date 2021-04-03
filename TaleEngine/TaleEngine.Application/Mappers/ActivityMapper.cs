@@ -8,6 +8,8 @@ namespace TaleEngine.Application.Mappers
     {
         public static ActivityDto Map(ActivityModel activityModel)
         {
+            if (activityModel == null) return null;
+
             return new ActivityDto
             {
                 Id = activityModel.Id,
@@ -25,6 +27,8 @@ namespace TaleEngine.Application.Mappers
 
         public static ActivityModel Map(ActivityDto activityDto)
         {
+            if (activityDto == null) return null;
+
             return new ActivityModel
             {
                 Id = activityDto.Id,

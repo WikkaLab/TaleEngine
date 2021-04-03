@@ -6,25 +6,27 @@ using TaleEngine.Bussiness.Contracts.Models;
 namespace TaleEngine.Fakes.Models
 {
     [ExcludeFromCodeCoverage]
-    public static class EventModelBuilder
+    public static class EditionModelBuilder
     {
-        public static EventModel BuildEventModel()
+        public static EditionModel BuildEditionModel()
         {
             var faker = new Faker();
 
-            var model = new EventModel
+            var model = new EditionModel
             {
                 Id = faker.Random.Number(),
-                Title = faker.Random.String2(10)
+                EventId = faker.Random.Number(),
+                DateInit = faker.Date.Recent(),
+                DateEnd = faker.Date.Recent()
             };
             return model;
         }
 
-        public static List<EventModel> BuildEventModelList()
+        public static List<EditionModel> BuildEditionModelList()
         {
-            return new List<EventModel>
+            return new List<EditionModel>
             {
-                BuildEventModel()
+                BuildEditionModel()
             };
         }
     }

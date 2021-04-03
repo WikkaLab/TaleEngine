@@ -7,6 +7,8 @@ namespace TaleEngine.Application.Mappers
     {
         public static EditionDaysDto Map(EditionDaysModel editionDays)
         {
+            if (editionDays == null) return null;
+
             var dto = new EditionDaysDto();
             dto.EditionDays.AddRange(editionDays.EditionDays);
 

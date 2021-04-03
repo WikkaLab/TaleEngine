@@ -1,4 +1,5 @@
 ﻿using Bogus;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using TaleEngine.Bussiness.Contracts.Models;
 
@@ -17,6 +18,15 @@ namespace TaleEngine.Fakes.Models
                 Name = faker.Random.String2(10)
             };
             return model;
+        }
+
+        public static List<TimeSlotModel> BuildTimeSlotModelList()
+        {
+            List<TimeSlotModel> list = new List<TimeSlotModel>
+            {
+                BuildTimeSlotModel()
+            };
+            return list;
         }
     }
 }

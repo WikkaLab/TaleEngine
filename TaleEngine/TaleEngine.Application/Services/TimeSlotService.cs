@@ -19,12 +19,7 @@ namespace TaleEngine.Application.Services
         {
             var timeSlots = _timeSlotDomainService.GetAllTimeSlots();
 
-            var result = new List<TimeSlotDto>();
-
-            foreach (var slot in timeSlots)
-            {
-                result.Add(TimeSlotMapper.Map(slot));
-            }
+            var result = TimeSlotMapper.Map(timeSlots);
 
             return result;
         }

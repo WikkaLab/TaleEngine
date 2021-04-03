@@ -1,4 +1,5 @@
 ﻿using Bogus;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using TaleEngine.Bussiness.Contracts.Models;
 
@@ -18,6 +19,14 @@ namespace TaleEngine.Fakes.Models
                 Description = faker.Random.String2(10)
             };
             return model;
+        }
+
+        public static List<RoleModel> BuildRoleModelList()
+        {
+            return new List<RoleModel>
+            {
+                BuildRoleModel()
+            };
         }
     }
 }
