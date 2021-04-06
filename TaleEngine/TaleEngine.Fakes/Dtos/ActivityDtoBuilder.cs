@@ -1,4 +1,5 @@
 ﻿using Bogus;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using TaleEngine.Application.Contracts.Dtos;
 
@@ -27,6 +28,15 @@ namespace TaleEngine.Fakes.Dtos
             return dto;
         }
 
+        public static List<ActivityDto> BuildActivityDtoList()
+        {
+            var list = new List<ActivityDto>
+            {
+                BuildActivityDto()
+            };
+            return list;
+        }
+
         public static ActivityStatusDto BuildActivityStatusDto()
         {
             var faker = new Faker();
@@ -39,6 +49,15 @@ namespace TaleEngine.Fakes.Dtos
             return dto;
         }
 
+        public static List<ActivityStatusDto> BuildActivityStatusDtoList()
+        {
+            var list = new List<ActivityStatusDto>
+            {
+                BuildActivityStatusDto()
+            };
+            return list;
+        }
+
         public static ActivityTypeDto BuildActivityTypeDto()
         {
             var faker = new Faker();
@@ -49,6 +68,15 @@ namespace TaleEngine.Fakes.Dtos
                 Name = faker.Random.String2(10)
             };
             return dto;
+        }
+
+        public static List<ActivityTypeDto> BuildActivityTypeDtoList()
+        {
+            var list = new List<ActivityTypeDto>
+            {
+                BuildActivityTypeDto()
+            };
+            return list;
         }
     }
 }

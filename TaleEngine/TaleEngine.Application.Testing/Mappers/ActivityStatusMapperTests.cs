@@ -28,7 +28,7 @@ namespace TaleEngine.Application.Testing.Mappers
         public void ActivityStatus_ModelToDto()
         {
             // Arrange
-            var model = ActivityModelBuilder.BuildActivityStatusDto();
+            var model = ActivityModelBuilder.BuildActivityStatusModel();
 
             // Act
             var result = ActivityStatusMapper.Map(model);

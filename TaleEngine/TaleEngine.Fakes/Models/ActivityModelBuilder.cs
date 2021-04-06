@@ -1,4 +1,5 @@
 ﻿using Bogus;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using TaleEngine.Bussiness.Contracts.Models;
 
@@ -29,28 +30,55 @@ namespace TaleEngine.Fakes.Models
             return model;
         }
 
-        public static ActivityStatusModel BuildActivityStatusDto()
+        public static List<ActivityModel> BuildActivityModelList()
         {
-            var faker = new Faker();
-
-            var dto = new ActivityStatusModel
+            var list = new List<ActivityModel>
             {
-                Id = faker.Random.Number(),
-                Name = faker.Random.String2(10)
+                BuildActivityModel()
             };
-            return dto;
+            return list;
         }
 
-        public static ActivityTypeModel BuildActivityTypeDto()
+        public static ActivityStatusModel BuildActivityStatusModel()
         {
             var faker = new Faker();
 
-            var dto = new ActivityTypeModel
+            var Model = new ActivityStatusModel
             {
                 Id = faker.Random.Number(),
                 Name = faker.Random.String2(10)
             };
-            return dto;
+            return Model;
+        }
+
+        public static List<ActivityStatusModel> BuildActivityStatusModelList()
+        {
+            var list = new List<ActivityStatusModel>
+            {
+                BuildActivityStatusModel()
+            };
+            return list;
+        }
+
+        public static ActivityTypeModel BuildActivityTypeModel()
+        {
+            var faker = new Faker();
+
+            var Model = new ActivityTypeModel
+            {
+                Id = faker.Random.Number(),
+                Name = faker.Random.String2(10)
+            };
+            return Model;
+        }
+
+        public static List<ActivityTypeModel> BuildActivityTypeModelList()
+        {
+            var list = new List<ActivityTypeModel>
+            {
+                BuildActivityTypeModel()
+            };
+            return list;
         }
     }
 }

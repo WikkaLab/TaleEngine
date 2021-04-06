@@ -28,7 +28,7 @@ namespace TaleEngine.Application.Testing.Mappers
         public void ActivityType_ModelToDto()
         {
             // Arrange
-            var model = ActivityModelBuilder.BuildActivityTypeDto();
+            var model = ActivityModelBuilder.BuildActivityTypeModel();
 
             // Act
             var result = ActivityTypeMapper.Map(model);
