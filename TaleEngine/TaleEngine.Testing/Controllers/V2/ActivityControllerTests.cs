@@ -6,8 +6,10 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using TaleEngine.Application.Contracts.Dtos;
 using TaleEngine.Application.Contracts.Dtos.Requests;
+using TaleEngine.Application.Contracts.Dtos.Results;
 using TaleEngine.Application.Contracts.Services;
 using TaleEngine.Controllers.V2;
+using TaleEngine.Fakes.Dtos;
 using Xunit;
 
 namespace TaleEngine.Testing.Controllers.V2
@@ -327,7 +329,6 @@ namespace TaleEngine.Testing.Controllers.V2
         public void ChangeActivityStatus_Success()
         {
             // Arrange
-            int activityId = 1;
             Mock<IActivityService> serviceMock = new();
             ActivityChangeStatusDto dto = new();
 
@@ -346,6 +347,56 @@ namespace TaleEngine.Testing.Controllers.V2
             resultAsObjResult.StatusCode.Should().Be(StatusCodes.Status200OK);
 
             serviceMock.Verify(x => x.ChangeActivityStatus(dto), Times.Once);
+        }
+
+        [Fact]
+        public void GetActivitiesFiltered_Success()
+        {
+            // Arrange
+            var request = ActivityDtoBuilder.BuildActivityFilterRequest();
+            var modelResult = ActivityDtoBuilder.BuildActivityFilteredResult();
+            Mock<IActivityService> serviceMock = new();
+
+            serviceMock.Setup(x => x.GetActiveActivitiesFiltered(request))
+                    .Returns(modelResult);
+
+            ActivityController target = new(serviceMock.Object);
+
+            // Act
+            IActionResult result = target.GetActivitiesFiltered(request);
+
+            // Assert
+            var resultAsObjResult = result as ObjectResult;
+
+            result.Should().NotBeNull();
+            resultAsObjResult.StatusCode.Should().Be(StatusCodes.Status200OK);
+
+            serviceMock.Verify(x => x.GetActiveActivitiesFiltered(request), Times.Once);
+        }
+
+        [Fact]
+        public void GetActivitiesFiltered_NullResult_Success()
+        {
+            // Arrange
+            var request = ActivityDtoBuilder.BuildActivityFilterRequest();
+            ActivityFilteredResult modelResult = null;
+            Mock<IActivityService> serviceMock = new();
+
+            serviceMock.Setup(x => x.GetActiveActivitiesFiltered(request))
+                    .Returns(modelResult);
+
+            ActivityController target = new(serviceMock.Object);
+
+            // Act
+            IActionResult result = target.GetActivitiesFiltered(request);
+
+            // Assert
+            var resultAsObjResult = result as StatusCodeResult;
+
+            result.Should().NotBeNull();
+            resultAsObjResult.StatusCode.Should().Be(StatusCodes.Status204NoContent);
+
+            serviceMock.Verify(x => x.GetActiveActivitiesFiltered(request), Times.Once);
         }
     }
 }

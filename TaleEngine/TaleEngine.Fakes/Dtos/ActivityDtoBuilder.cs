@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using TaleEngine.Application.Contracts.Dtos;
 using TaleEngine.Application.Contracts.Dtos.Requests;
+using TaleEngine.Application.Contracts.Dtos.Results;
 
 namespace TaleEngine.Fakes.Dtos
 {
@@ -104,6 +105,19 @@ namespace TaleEngine.Fakes.Dtos
                 Title = faker.Random.String2(10)
             };
             return dto;
+        }
+
+        public static ActivityFilteredResult BuildActivityFilteredResult()
+        {
+            var faker = new Faker();
+
+            var result = new ActivityFilteredResult
+            {
+                TotalPages = faker.Random.Number(),
+                CurrentPage = faker.Random.Number(),
+                Activities = BuildActivityDtoList()
+            };
+            return result;
         }
     }
 }
