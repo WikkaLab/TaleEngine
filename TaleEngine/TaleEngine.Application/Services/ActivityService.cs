@@ -21,12 +21,7 @@ namespace TaleEngine.Application.Services
         {
             var activities = _activityDomainService.GetActiveActivities(editionId);
 
-            var result = new List<ActivityDto>();
-
-            foreach (var act in activities)
-            {
-                result.Add(ActivityMapper.Map(act));
-            }
+            var result = ActivityMapper.Map(activities);
 
             return result;
         }
@@ -35,12 +30,7 @@ namespace TaleEngine.Application.Services
         {
             var penActivities = _activityDomainService.GetPendingActivities(editionId);
 
-            var result = new List<ActivityDto>();
-
-            foreach (var act in penActivities)
-            {
-                result.Add(ActivityMapper.Map(act));
-            }
+            var result = ActivityMapper.Map(penActivities);
 
             return result;
         }
@@ -65,7 +55,8 @@ namespace TaleEngine.Application.Services
         {
             var activityModel = ActivityMapper.Map(activityDto);
 
-            return _activityDomainService.CreateActivity(editionId, activityModel);
+            var result = _activityDomainService.CreateActivity(editionId, activityModel);
+            return result;
         }
 
         public int UpdateActivity(ActivityDto activityDto)
@@ -85,16 +76,7 @@ namespace TaleEngine.Application.Services
         {
             var activities = _activityDomainService.GetLastThreeActivities(editionId);
 
-            if (activities == null || activities.Count == 0)
-            {
-                return null;
-            }
-
-            var dtos = new List<ActivityDto>();
-            foreach (var act in activities)
-            {
-                dtos.Add(ActivityMapper.Map(act));
-            }
+            var dtos = ActivityMapper.Map(activities);
 
             return dtos;
         }

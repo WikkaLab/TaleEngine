@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using TaleEngine.Bussiness.Contracts.Models;
+using TaleEngine.Bussiness.Contracts.Models.Results;
 
 namespace TaleEngine.Fakes.Models
 {
@@ -79,6 +80,19 @@ namespace TaleEngine.Fakes.Models
                 BuildActivityTypeModel()
             };
             return list;
+        }
+
+        public static ActivityFilteredResultModel BuildActivityFilteredResultModel()
+        {
+            var faker = new Faker();
+
+            var model = new ActivityFilteredResultModel
+            {
+                TotalPages = faker.Random.Number(),
+                CurrentPage = faker.Random.Number(),
+                Activities = BuildActivityModelList()
+            };
+            return model;
         }
     }
 }

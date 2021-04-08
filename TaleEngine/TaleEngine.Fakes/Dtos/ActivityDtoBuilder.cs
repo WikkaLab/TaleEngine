@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using TaleEngine.Application.Contracts.Dtos;
+using TaleEngine.Application.Contracts.Dtos.Requests;
 
 namespace TaleEngine.Fakes.Dtos
 {
@@ -77,6 +78,32 @@ namespace TaleEngine.Fakes.Dtos
                 BuildActivityTypeDto()
             };
             return list;
+        }
+
+        public static ActivityChangeStatusDto BuildActivityChangeStatusDto()
+        {
+            var faker = new Faker();
+
+            var dto = new ActivityChangeStatusDto
+            {
+                StatusId = faker.Random.Number(),
+                ActivityId = faker.Random.Number()
+            };
+            return dto;
+        }
+
+        public static ActivityFilterRequest BuildActivityFilterRequest()
+        {
+            var faker = new Faker();
+
+            var dto = new ActivityFilterRequest
+            {
+                CurrentPage = faker.Random.Number(),
+                EditionId = faker.Random.Number(),
+                TypeId = faker.Random.Number(),
+                Title = faker.Random.String2(10)
+            };
+            return dto;
         }
     }
 }
