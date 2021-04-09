@@ -1,4 +1,5 @@
 ﻿using Bogus;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using TaleEngine.Bussiness.Contracts.Models;
@@ -14,7 +15,7 @@ namespace TaleEngine.Fakes.Models
 
             var model = new EditionModel
             {
-                Id = faker.Random.Number(),
+                Id = faker.Random.Number(1),
                 EventId = faker.Random.Number(),
                 DateInit = faker.Date.Recent(),
                 DateEnd = faker.Date.Recent()
@@ -28,6 +29,21 @@ namespace TaleEngine.Fakes.Models
             {
                 BuildEditionModel()
             };
+        }
+
+        public static EditionDaysModel BuildEditionDaysModel()
+        {
+            var faker = new Faker();
+
+            var model = new EditionDaysModel
+            {
+                EditionDays = new List<DateTime>
+                {
+                    faker.Date.Recent(),
+                    faker.Date.Recent()
+                }
+            };
+            return model;
         }
     }
 }

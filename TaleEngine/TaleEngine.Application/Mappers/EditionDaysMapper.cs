@@ -10,7 +10,7 @@ namespace TaleEngine.Application.Mappers
             if (editionDays == null) return null;
 
             var dto = new EditionDaysDto();
-            dto.EditionDays.AddRange(editionDays.EditionDays);
+            dto.EditionDays = editionDays.EditionDays;
 
             return dto;
         }
