@@ -28,6 +28,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaleEngine.Fakes", "TaleEng
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaleEngine.Application.Testing", "TaleEngine.Application.Testing\TaleEngine.Application.Testing.csproj", "{EE100298-B48B-4EF6-A3B7-900E7A03199E}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaleEngine.Business.Testing", "TaleEngine.Business.Testing\TaleEngine.Business.Testing.csproj", "{66D44ECB-8B79-47A8-92A2-A77297980C64}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -78,6 +80,10 @@ Global
 		{EE100298-B48B-4EF6-A3B7-900E7A03199E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EE100298-B48B-4EF6-A3B7-900E7A03199E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EE100298-B48B-4EF6-A3B7-900E7A03199E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66D44ECB-8B79-47A8-92A2-A77297980C64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66D44ECB-8B79-47A8-92A2-A77297980C64}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66D44ECB-8B79-47A8-92A2-A77297980C64}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66D44ECB-8B79-47A8-92A2-A77297980C64}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -94,6 +100,7 @@ Global
 		{DE08B5D2-E47D-4335-B234-A7A8326B976C} = {E9708518-5B32-4CEB-9D18-51B91EFC9FD3}
 		{A41A36ED-768C-43DB-B39A-CAD91497323E} = {E9708518-5B32-4CEB-9D18-51B91EFC9FD3}
 		{EE100298-B48B-4EF6-A3B7-900E7A03199E} = {E9708518-5B32-4CEB-9D18-51B91EFC9FD3}
+		{66D44ECB-8B79-47A8-92A2-A77297980C64} = {E9708518-5B32-4CEB-9D18-51B91EFC9FD3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {28F5F255-AAC8-4F3C-9584-ED72C6DEB5FE}

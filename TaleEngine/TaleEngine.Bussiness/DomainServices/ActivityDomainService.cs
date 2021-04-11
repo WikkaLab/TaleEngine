@@ -33,12 +33,7 @@ namespace TaleEngine.Bussiness.DomainServices
             var activities = _unitOfWork.ActivityRepository
                 .GetActivitiesByStatus(editionId, activeStatus.Id);
 
-            var models = new List<ActivityModel>();
-
-            foreach (var act in activities)
-            {
-                models.Add(ActivityMapper.Map(act));
-            }
+            var models = ActivityMapper.Map(activities);
 
             return models;
         }
@@ -56,12 +51,7 @@ namespace TaleEngine.Bussiness.DomainServices
             var activities = _unitOfWork.ActivityRepository
                 .GetActivitiesByStatus(editionId, pendingStatus.Id);
 
-            var models = new List<ActivityModel>();
-
-            foreach (var act in activities)
-            {
-                models.Add(ActivityMapper.Map(act));
-            }
+            var models = ActivityMapper.Map(activities);
 
             return models;
         }
