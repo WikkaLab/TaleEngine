@@ -19,14 +19,14 @@ namespace TaleEngine.Bussiness.DomainServices
         {
             var allStatuses = _unitOfWork.ActivityStatusRepository.GetAll();
 
-            var activityStatusDtos = new List<ActivityStatusModel>();
-
-            foreach (var status in allStatuses)
+            if (allStatuses == null || allStatuses.Count == 0)
             {
-                activityStatusDtos.Add(ActivityStatusMapper.Map(status));
+                return null;
             }
 
-            return activityStatusDtos;
+            var models = ActivityStatusMapper.Map(allStatuses);
+
+            return models;
         }
     }
 }

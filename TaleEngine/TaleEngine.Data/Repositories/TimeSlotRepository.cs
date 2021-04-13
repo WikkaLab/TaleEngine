@@ -21,7 +21,7 @@ namespace TaleEngine.Data.Repositories
             throw new NotImplementedException();
         }
 
-        public IEnumerable<TimeSlot> GetAll()
+        public List<TimeSlot> GetAll()
         {
             return _context.TimeSlot.ToList();
         }

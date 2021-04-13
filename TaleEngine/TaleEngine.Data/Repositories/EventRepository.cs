@@ -20,7 +20,7 @@ namespace TaleEngine.Data.Repositories
             throw new System.NotImplementedException();
         }
 
-        public IEnumerable<Event> GetAll()
+        public List<Event> GetAll()
         {
             return _context.Events.ToList();
         }

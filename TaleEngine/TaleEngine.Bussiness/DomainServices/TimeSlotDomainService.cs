@@ -19,12 +19,12 @@ namespace TaleEngine.Bussiness.DomainServices
         {
             var timeslots = _unitOfWork.TimeSlotRepository.GetAll();
 
-            var timeslotDtos = new List<TimeSlotModel>();
-
-            foreach (var type in timeslots)
+            if (timeslots == null || timeslots.Count == 0)
             {
-                timeslotDtos.Add(TimeSlotMapper.Map(type));
+                return null;
             }
+
+            var timeslotDtos = TimeSlotMapper.Map(timeslots);
 
             return timeslotDtos;
         }

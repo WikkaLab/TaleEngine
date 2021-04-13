@@ -4,7 +4,7 @@ namespace TaleEngine.Data.Contracts
 {
     public interface IGenericRepository<T> where T : class
     {
-        IEnumerable<T> GetAll();
+        List<T> GetAll();
         T GetById(int entityId);
         void Insert(T entity);
         void Update(T entity);

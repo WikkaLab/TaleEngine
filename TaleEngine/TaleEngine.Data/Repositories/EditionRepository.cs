@@ -21,7 +21,7 @@ namespace TaleEngine.Data.Repositories
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Edition> GetAll()
+        public List<Edition> GetAll()
         {
             return _context.Editions.ToList();
         }

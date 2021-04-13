@@ -21,7 +21,7 @@ namespace TaleEngine.Data.Repositories
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Role> GetAll()
+        public List<Role> GetAll()
         {
             return _context.Roles.ToList();
         }

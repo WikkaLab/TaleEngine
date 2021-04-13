@@ -20,7 +20,7 @@ namespace TaleEngine.Data.Repositories
             throw new System.NotImplementedException();
         }
 
-        public IEnumerable<ActivityStatus> GetAll()
+        public List<ActivityStatus> GetAll()
         {
             return _context.ActivityStatuses.ToList();
         }

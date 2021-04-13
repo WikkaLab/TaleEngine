@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using TaleEngine.Bussiness.Contracts.DomainServices;
 using TaleEngine.Bussiness.Contracts.Models;
 using TaleEngine.Bussiness.Mappers;
@@ -20,7 +19,12 @@ namespace TaleEngine.Bussiness.DomainServices
 
         public List<RoleModel> GetAllRoles()
         {
-            List<Role> roles = _unitOfWork.RoleRepository.GetAll().ToList();
+            List<Role> roles = _unitOfWork.RoleRepository.GetAll();
+
+            if (roles == null || roles.Count == 0)
+            {
+                return null;
+            }
 
             List<RoleModel> roleModels = RoleMapper.MapToRoleModels(roles);
             return roleModels;
