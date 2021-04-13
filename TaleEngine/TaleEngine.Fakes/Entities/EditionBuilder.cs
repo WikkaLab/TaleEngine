@@ -1,8 +1,6 @@
 ﻿using Bogus;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using TaleEngine.Bussiness.Contracts.Models;
 using TaleEngine.Data.Contracts.Entities;
 
 namespace TaleEngine.Fakes.Entities

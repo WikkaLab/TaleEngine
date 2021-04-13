@@ -1,11 +1,11 @@
 using FluentAssertions;
 using System.Diagnostics.CodeAnalysis;
-using TaleEngine.Bussiness.Mappers;
 using TaleEngine.Bussiness.Contracts.Models;
+using TaleEngine.Bussiness.Mappers;
+using TaleEngine.Data.Contracts.Entities;
 using TaleEngine.Fakes.Entities;
 using TaleEngine.Fakes.Models;
 using Xunit;
-using TaleEngine.Data.Contracts.Entities;
 
 namespace TaleEngine.Bussiness.Testing.Mappers
 {
