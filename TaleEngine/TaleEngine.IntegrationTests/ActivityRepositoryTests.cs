@@ -1,10 +1,12 @@
-﻿using System.Linq;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using TaleEngine.Data.Repositories;
 using TaleEngine.Fakes.Entities;
 using Xunit;
 
 namespace TaleEngine.IntegrationTests
 {
+    [ExcludeFromCodeCoverage]
     public class ActivityRepositoryTests : DatabaseContextInMemoryDatabase
     {
         private ActivityRepository CreateActivityRepository()

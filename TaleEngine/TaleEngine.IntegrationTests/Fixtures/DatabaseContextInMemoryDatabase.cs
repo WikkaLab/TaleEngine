@@ -1,9 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using System.Diagnostics.CodeAnalysis;
 using TaleEngine.Data;
 
 namespace TaleEngine.IntegrationTests
 {
+    [ExcludeFromCodeCoverage]
     public class DatabaseContextInMemoryDatabase
     {
         protected DatabaseContext _context;
