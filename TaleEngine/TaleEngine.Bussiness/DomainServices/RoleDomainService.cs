@@ -3,23 +3,23 @@ using System.Collections.Generic;
 using TaleEngine.Bussiness.Contracts.DomainServices;
 using TaleEngine.Bussiness.Contracts.Models;
 using TaleEngine.Bussiness.Mappers;
-using TaleEngine.Data.Contracts;
 using TaleEngine.Data.Contracts.Entities;
+using TaleEngine.Data.Contracts.Repositories;
 
 namespace TaleEngine.Bussiness.DomainServices
 {
     public class RoleDomainService : IRoleDomainService
     {
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly IRoleRepository _roleRepository;
 
-        public RoleDomainService(IUnitOfWork unitOfWork)
+        public RoleDomainService(IRoleRepository roleRepository)
         {
-            _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
+            _roleRepository = roleRepository ?? throw new ArgumentNullException(nameof(roleRepository));
         }
 
         public List<RoleModel> GetAllRoles()
         {
-            List<Role> roles = _unitOfWork.RoleRepository.GetAll();
+            List<Role> roles = _roleRepository.GetAll();
 
             if (roles == null || roles.Count == 0)
             {

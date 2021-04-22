@@ -9,11 +9,19 @@ namespace TaleEngine.Data.Repositories
 {
     public class TimeSlotRepository : ITimeSlotRepository
     {
-        private readonly IDatabaseContext _context;
+        private readonly DatabaseContext _context;
 
-        public TimeSlotRepository(IDatabaseContext context)
+        public IUnitOfWork UnitOfWork
         {
-            _context = context;
+            get
+            {
+                return _context;
+            }
+        }
+
+        public TimeSlotRepository(DatabaseContext context)
+        {
+            _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
         public void Delete(int entityId)

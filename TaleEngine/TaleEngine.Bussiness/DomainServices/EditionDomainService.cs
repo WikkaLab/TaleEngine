@@ -3,22 +3,22 @@ using System.Collections.Generic;
 using TaleEngine.Bussiness.Contracts.DomainServices;
 using TaleEngine.Bussiness.Contracts.Models;
 using TaleEngine.Bussiness.Mappers;
-using TaleEngine.Data.Contracts;
+using TaleEngine.Data.Contracts.Repositories;
 
 namespace TaleEngine.Bussiness.DomainServices
 {
     public class EditionDomainService : IEditionDomainService
     {
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly IEditionRepository _editionRepository;
 
-        public EditionDomainService(IUnitOfWork unitOfWork)
+        public EditionDomainService(IEditionRepository editionRepository)
         {
-            _unitOfWork = unitOfWork;
+            _editionRepository = editionRepository ?? throw new ArgumentNullException(nameof(editionRepository));
         }
 
         public EditionDaysModel GetEditionDays(int editionId)
         {
-            var edition = _unitOfWork.EditionRepository.GetById(editionId);
+            var edition = _editionRepository.GetById(editionId);
 
             if (edition == null)
             {
@@ -37,7 +37,7 @@ namespace TaleEngine.Bussiness.DomainServices
 
         public EditionModel GetLastOrCurrentEdition(int ofEvent)
         {
-            var edition = _unitOfWork.EditionRepository.GetLastEditionInEvent(ofEvent);
+            var edition = _editionRepository.GetLastEditionInEvent(ofEvent);
 
             if (edition != null)
             {
@@ -60,6 +60,5 @@ namespace TaleEngine.Bussiness.DomainServices
 
             return days;
         }
-
     }
 }

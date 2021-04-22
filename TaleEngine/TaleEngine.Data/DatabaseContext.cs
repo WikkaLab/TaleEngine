@@ -8,9 +8,11 @@ using TaleEngine.Data.Data;
 
 namespace TaleEngine.Data
 {
-    public class DatabaseContext : DbContext, IDatabaseContext
+    public class DatabaseContext : DbContext, IUnitOfWork
     {
-        public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options) { }
+        public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
+        {
+        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

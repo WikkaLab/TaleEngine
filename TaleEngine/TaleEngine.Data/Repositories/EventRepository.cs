@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using TaleEngine.Data.Contracts;
 using TaleEngine.Data.Contracts.Entities;
@@ -8,11 +9,19 @@ namespace TaleEngine.Data.Repositories
 {
     public class EventRepository : IEventRepository
     {
-        private readonly IDatabaseContext _context;
+        private readonly DatabaseContext _context;
 
-        public EventRepository(IDatabaseContext context)
+        public IUnitOfWork UnitOfWork
         {
-            _context = context;
+            get
+            {
+                return _context;
+            }
+        }
+
+        public EventRepository(DatabaseContext context)
+        {
+            _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
         public void Delete(int entityId)

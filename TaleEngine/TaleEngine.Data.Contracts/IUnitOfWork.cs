@@ -1,15 +1,8 @@
-﻿using TaleEngine.Data.Contracts.Repositories;
+﻿using System;
 
 namespace TaleEngine.Data.Contracts
 {
-    public interface IUnitOfWork
+    public interface IUnitOfWork : IDisposable
     {
-        IEventRepository EventRepository { get; }
-        IActivityRepository ActivityRepository { get; }
-        IActivityStatusRepository ActivityStatusRepository { get; }
-        IActivityTypeRepository ActivityTypeRepository { get; }
-        IEditionRepository EditionRepository { get; }
-        ITimeSlotRepository TimeSlotRepository { get; }
-        IRoleRepository RoleRepository { get; }
     }
 }

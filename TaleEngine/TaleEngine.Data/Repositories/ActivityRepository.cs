@@ -9,11 +9,19 @@ namespace TaleEngine.Data.Repositories
 {
     public class ActivityRepository : IActivityRepository
     {
-        private readonly IDatabaseContext _context;
+        private readonly DatabaseContext _context;
 
-        public ActivityRepository(IDatabaseContext context)
+        public IUnitOfWork UnitOfWork
         {
-            _context = context;
+            get
+            {
+                return _context;
+            }
+        }
+
+        public ActivityRepository(DatabaseContext context)
+        {
+            _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
         public void Delete(int entityId)
