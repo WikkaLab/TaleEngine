@@ -8,7 +8,7 @@ namespace TaleEngine.IntegrationTests.Base
     [ExcludeFromCodeCoverage]
     public class ActivityScenarioBase
     {
-        private const string ApiUrlBase = "api/v2/activity";
+        private const string ApiUrlBase = "api/v3/activity";
 
         public TestServer CreateServer()
         {

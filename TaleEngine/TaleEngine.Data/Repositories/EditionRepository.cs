@@ -1,27 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using TaleEngine.Data.Contracts;
 using TaleEngine.Data.Contracts.Entities;
 using TaleEngine.Data.Contracts.Repositories;
+using TaleEngine.Data.Contracts.SeedWork;
 
 namespace TaleEngine.Data.Repositories
 {
     public class EditionRepository : IEditionRepository
     {
-        private readonly DatabaseContext _context;
+        private readonly TaleEngineContext _dbContext;
 
         public IUnitOfWork UnitOfWork
         {
             get
             {
-                return _context;
+                return _dbContext;
             }
         }
 
-        public EditionRepository(DatabaseContext context)
+        public EditionRepository(TaleEngineContext context)
         {
-            _context = context ?? throw new ArgumentNullException(nameof(context));
+            _dbContext = context ?? throw new ArgumentNullException(nameof(context));
         }
 
         public void Delete(int entityId)
@@ -31,32 +31,32 @@ namespace TaleEngine.Data.Repositories
 
         public List<Edition> GetAll()
         {
-            return _context.Editions.ToList();
+            return _dbContext.Editions.ToList();
         }
 
         public Edition GetById(int entityId)
         {
-            return _context.Editions.FirstOrDefault(ed => ed.Id == entityId);
+            return _dbContext.Editions.FirstOrDefault(ed => ed.Id == entityId);
         }
 
         public Edition GetLastEditionInEvent(int ofEvent)
         {
-            return _context.Editions.FirstOrDefault(ed => ed.EventId == ofEvent);
+            return _dbContext.Editions.FirstOrDefault(ed => ed.EventId == ofEvent);
         }
 
         public void Insert(Edition entity)
         {
-            throw new NotImplementedException();
+            _dbContext.Editions.Add(entity);
         }
 
         public void Save()
         {
-            throw new NotImplementedException();
+            _dbContext.SaveChanges();
         }
 
         public void Update(Edition entity)
         {
-            throw new NotImplementedException();
+            _dbContext.Editions.Update(entity);
         }
     }
 }

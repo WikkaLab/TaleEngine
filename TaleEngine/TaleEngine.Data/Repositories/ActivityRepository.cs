@@ -1,27 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using TaleEngine.Data.Contracts;
 using TaleEngine.Data.Contracts.Entities;
 using TaleEngine.Data.Contracts.Repositories;
+using TaleEngine.Data.Contracts.SeedWork;
 
 namespace TaleEngine.Data.Repositories
 {
     public class ActivityRepository : IActivityRepository
     {
-        private readonly DatabaseContext _context;
+        private readonly TaleEngineContext _dbContext;
 
         public IUnitOfWork UnitOfWork
         {
             get
             {
-                return _context;
+                return _dbContext;
             }
         }
 
-        public ActivityRepository(DatabaseContext context)
+        public ActivityRepository(TaleEngineContext context)
         {
-            _context = context ?? throw new ArgumentNullException(nameof(context));
+            _dbContext = context ?? throw new ArgumentNullException(nameof(context));
         }
 
         public void Delete(int entityId)
@@ -31,40 +31,40 @@ namespace TaleEngine.Data.Repositories
 
         public List<Activity> GetAll()
         {
-            return _context.Activities.ToList();
+            return _dbContext.Activities.ToList();
         }
 
         public Activity GetById(int entityId)
         {
-            return _context.Activities
+            return _dbContext.Activities
                 .FirstOrDefault(a => a.Id == entityId);
         }
 
         public void Insert(Activity entity)
         {
-            _context.Activities.Add(entity);
+            _dbContext.Activities.Add(entity);
         }
 
         public void Save()
         {
-            _context.SaveChanges();
+            _dbContext.SaveChanges();
         }
 
         public void Update(Activity entity)
         {
-            _context.Activities.Update(entity);
+            _dbContext.Activities.Update(entity);
         }
 
         public List<Activity> GetEventActivities(int editionId)
         {
-            return _context.Activities
+            return _dbContext.Activities
                 .Where(a => a.EditionId == editionId)
                 .ToList();
         }
 
         public List<Activity> GetActivitiesByStatus(int edition, int status)
         {
-            return _context.Activities
+            return _dbContext.Activities
                 .Where(a => a.EditionId == edition && a.StatusId == status)
                 .ToList();
         }
@@ -93,7 +93,7 @@ namespace TaleEngine.Data.Repositories
 
         private IQueryable<Activity> GetActiveActivitiesWithFilter(int status, int type, int edition, string title)
         {
-            var query = _context.Activities.Select(a => a).Where(a => a.EditionId == edition);
+            var query = _dbContext.Activities.Select(a => a).Where(a => a.EditionId == edition);
             if (status != 0)
             {
                 query = query.Where(a => a.StatusId == status);

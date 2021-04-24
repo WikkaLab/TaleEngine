@@ -9,7 +9,7 @@ using TaleEngine.Data;
 
 namespace TaleEngine.Data.Migrations
 {
-    [DbContext(typeof(DatabaseContext))]
+    [DbContext(typeof(TaleEngineContext))]
     [Migration("20191015120601_DataStructure")]
     partial class DataStructure
     {

@@ -1,0 +1,14 @@
+version: '3.4'
+
+services:  
+
+  sqldata:
+    image: mcr.microsoft.com/mssql/server:2019-latest 
+
+  ordering-api:
+    image: ${REGISTRY:-eshop}/ordering.api:${PLATFORM:-linux}-${TAG:-latest}
+    build:
+      context: .
+      dockerfile: TaleEngine/Dockerfile
+    depends_on:
+      - sqldata

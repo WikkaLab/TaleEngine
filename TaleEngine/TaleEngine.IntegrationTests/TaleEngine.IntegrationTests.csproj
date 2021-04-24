@@ -6,7 +6,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <Compile Remove="DealerRepositoryTests.cs" />
+		<Compile Remove="DealerRepositoryTests.cs" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -36,7 +36,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\TaleEngine.Fakes\TaleEngine.Fakes.csproj" />
-	  <ProjectReference Include="..\TaleEngine\TaleEngine.csproj" />
+		<ProjectReference Include="..\TaleEngine.Fakes\TaleEngine.Fakes.csproj" />
+		<ProjectReference Include="..\TaleEngine\TaleEngine.csproj" />
 	</ItemGroup>
 </Project>
