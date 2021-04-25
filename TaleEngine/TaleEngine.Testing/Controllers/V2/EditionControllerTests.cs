@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using TaleEngine.Application.Contracts.Dtos;
 using TaleEngine.Application.Contracts.Services;
-using TaleEngine.Controllers.V2;
 using Xunit;
 
 namespace TaleEngine.Testing.Controllers.V2

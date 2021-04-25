@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using TaleEngine.Application.Contracts.Services;
 
-namespace TaleEngine.Controllers.V1
+namespace TaleEngine.API.Controllers.V1
 {
     /// <summary>
     /// Roles management

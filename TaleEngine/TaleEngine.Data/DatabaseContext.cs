@@ -10,7 +10,9 @@ namespace TaleEngine.Data
 {
     public class DatabaseContext : DbContext, IDatabaseContext
     {
-        public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options) { }
+        public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
+        {
+        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -20,7 +22,7 @@ namespace TaleEngine.Data
                    .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
                    .AddJsonFile("appsettings.json")
                    .Build();
-                optionsBuilder.UseSqlServer(configuration.GetConnectionString("DefaultConnection")).EnableSensitiveDataLogging();
+                optionsBuilder.UseSqlServer(configuration["ConnectionString"]).EnableSensitiveDataLogging();
             }
         }
 

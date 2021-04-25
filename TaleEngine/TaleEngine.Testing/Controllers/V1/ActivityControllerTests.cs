@@ -8,7 +8,6 @@ using TaleEngine.Application.Contracts.Dtos;
 using TaleEngine.Application.Contracts.Dtos.Requests;
 using TaleEngine.Application.Contracts.Dtos.Results;
 using TaleEngine.Application.Contracts.Services;
-using TaleEngine.Controllers.V1;
 using TaleEngine.Fakes.Dtos;
 using Xunit;
 
