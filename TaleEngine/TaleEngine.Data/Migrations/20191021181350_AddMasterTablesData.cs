@@ -1,9 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
-using System.Diagnostics.CodeAnalysis;
 
 namespace TaleEngine.Data.Migrations
 {
-    [ExcludeFromCodeCoverage]
     public partial class AddMasterTablesData : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -22,6 +20,7 @@ namespace TaleEngine.Data.Migrations
                 table: "TimeSlot",
                 columns: new[] { "Id", "CreateDateTime", "CreateUserId", "LasModificationUserId", "LastModificationDateTime", "Name" },
                 values: new object[] { 3, null, null, null, null, "NGH" });
+
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using TaleEngine.Bussiness.Contracts.DomainServices;
+using TaleEngine.Bussiness.Contracts;
 using TaleEngine.Bussiness.Contracts.Models;
 using TaleEngine.Bussiness.Mappers;
+using TaleEngine.Data.Contracts;
 using TaleEngine.Data.Contracts.Repositories;
 
 namespace TaleEngine.Bussiness.DomainServices

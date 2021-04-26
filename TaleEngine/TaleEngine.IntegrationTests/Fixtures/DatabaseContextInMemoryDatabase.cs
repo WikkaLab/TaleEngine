@@ -6,18 +6,18 @@ using TaleEngine.Data;
 namespace TaleEngine.IntegrationTests
 {
     [ExcludeFromCodeCoverage]
-    public class TaleEngineContextInMemoryDatabase
+    public class DatabaseContextInMemoryDatabase
     {
-        protected TaleEngineContext _dbContext;
+        protected DatabaseContext _context;
 
-        public TaleEngineContextInMemoryDatabase()
+        public DatabaseContextInMemoryDatabase()
         {
             var options = CreateNewContextOptions();
 
-            _dbContext = new TaleEngineContext(options);
+            _context = new DatabaseContext(options);
         }
 
-        protected static DbContextOptions<TaleEngineContext> CreateNewContextOptions()
+        protected static DbContextOptions<DatabaseContext> CreateNewContextOptions()
         {
             // Create a fresh service provider, and therefore a fresh
             // InMemory database instance.
@@ -27,7 +27,7 @@ namespace TaleEngine.IntegrationTests
 
             // Create a new options instance telling the context to use an
             // InMemory database and the new service provider.
-            var builder = new DbContextOptionsBuilder<TaleEngineContext>();
+            var builder = new DbContextOptionsBuilder<DatabaseContext>();
             builder.UseInMemoryDatabase("TaleEngine")
                    .UseInternalServiceProvider(serviceProvider);
 

@@ -1,27 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using TaleEngine.Data.Contracts;
 using TaleEngine.Data.Contracts.Entities;
 using TaleEngine.Data.Contracts.Repositories;
-using TaleEngine.Data.Contracts.SeedWork;
 
 namespace TaleEngine.Data.Repositories
 {
     public class ActivityStatusRepository : IActivityStatusRepository
     {
-        private readonly TaleEngineContext _dbContext;
+        private readonly DatabaseContext _context;
 
         public IUnitOfWork UnitOfWork
         {
             get
             {
-                return _dbContext;
+                return _context;
             }
         }
 
-        public ActivityStatusRepository(TaleEngineContext context)
+        public ActivityStatusRepository(DatabaseContext context)
         {
-            _dbContext = context ?? throw new ArgumentNullException(nameof(context));
+            _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
         public void Delete(int entityId)
@@ -31,28 +31,28 @@ namespace TaleEngine.Data.Repositories
 
         public List<ActivityStatus> GetAll()
         {
-            return _dbContext.ActivityStatuses.ToList();
+            return _context.ActivityStatuses.ToList();
         }
 
         public ActivityStatus GetById(int entityId)
         {
-            return _dbContext.ActivityStatuses
+            return _context.ActivityStatuses
                 .FirstOrDefault(aS => aS.Id == entityId);
         }
 
         public void Insert(ActivityStatus entity)
         {
-            _dbContext.ActivityStatuses.Add(entity);
+            throw new System.NotImplementedException();
         }
 
         public void Save()
         {
-            _dbContext.SaveChanges();
+            _context.SaveChanges();
         }
 
         public void Update(ActivityStatus entity)
         {
-            _dbContext.ActivityStatuses.Update(entity);
+            throw new System.NotImplementedException();
         }
     }
 }

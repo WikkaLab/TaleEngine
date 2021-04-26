@@ -9,7 +9,7 @@ using TaleEngine.Data;
 
 namespace TaleEngine.Data.Migrations
 {
-    [DbContext(typeof(TaleEngineContext))]
+    [DbContext(typeof(DatabaseContext))]
     [Migration("20210317091148_RemoveFieldsBaseEntity")]
     partial class RemoveFieldsBaseEntity
     {

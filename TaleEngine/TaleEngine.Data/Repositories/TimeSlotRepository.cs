@@ -1,27 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using TaleEngine.Data.Contracts;
 using TaleEngine.Data.Contracts.Entities;
 using TaleEngine.Data.Contracts.Repositories;
-using TaleEngine.Data.Contracts.SeedWork;
 
 namespace TaleEngine.Data.Repositories
 {
     public class TimeSlotRepository : ITimeSlotRepository
     {
-        private readonly TaleEngineContext _dbContext;
+        private readonly DatabaseContext _context;
 
         public IUnitOfWork UnitOfWork
         {
             get
             {
-                return _dbContext;
+                return _context;
             }
         }
 
-        public TimeSlotRepository(TaleEngineContext context)
+        public TimeSlotRepository(DatabaseContext context)
         {
-            _dbContext = context ?? throw new ArgumentNullException(nameof(context));
+            _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
         public void Delete(int entityId)
@@ -31,28 +31,28 @@ namespace TaleEngine.Data.Repositories
 
         public List<TimeSlot> GetAll()
         {
-            return _dbContext.TimeSlot.ToList();
+            return _context.TimeSlot.ToList();
         }
 
         public TimeSlot GetById(int entityId)
         {
-            return _dbContext.TimeSlot
+            return _context.TimeSlot
                 .FirstOrDefault(a => a.Id == entityId);
         }
 
         public void Insert(TimeSlot entity)
         {
-            _dbContext.TimeSlot.Add(entity);
+            _context.TimeSlot.Add(entity);
         }
 
         public void Save()
         {
-            _dbContext.SaveChanges();
+            _context.SaveChanges();
         }
 
         public void Update(TimeSlot entity)
         {
-            _dbContext.TimeSlot.Update(entity);
+            _context.TimeSlot.Update(entity);
         }
     }
 }

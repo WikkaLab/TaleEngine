@@ -1,27 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using TaleEngine.Data.Contracts;
 using TaleEngine.Data.Contracts.Entities;
 using TaleEngine.Data.Contracts.Repositories;
-using TaleEngine.Data.Contracts.SeedWork;
 
 namespace TaleEngine.Data.Repositories
 {
     public class EventRepository : IEventRepository
     {
-        private readonly TaleEngineContext _dbContext;
+        private readonly DatabaseContext _context;
 
         public IUnitOfWork UnitOfWork
         {
             get
             {
-                return _dbContext;
+                return _context;
             }
         }
 
-        public EventRepository(TaleEngineContext context)
+        public EventRepository(DatabaseContext context)
         {
-            _dbContext = context ?? throw new ArgumentNullException(nameof(context));
+            _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
         public void Delete(int entityId)
@@ -31,28 +31,28 @@ namespace TaleEngine.Data.Repositories
 
         public List<Event> GetAll()
         {
-            return _dbContext.Events.ToList();
+            return _context.Events.ToList();
         }
 
         public Event GetById(int entityId)
         {
-            return _dbContext.Events
+            return _context.Events
                 .FirstOrDefault(ev => ev.Id == entityId);
         }
 
         public void Insert(Event entity)
         {
-            _dbContext.Events.Add(entity);
+            throw new System.NotImplementedException();
         }
 
         public void Save()
         {
-            _dbContext.SaveChanges();
+            _context.SaveChanges();
         }
 
         public void Update(Event entity)
         {
-            _dbContext.Events.Update(entity);
+            throw new System.NotImplementedException();
         }
     }
 }

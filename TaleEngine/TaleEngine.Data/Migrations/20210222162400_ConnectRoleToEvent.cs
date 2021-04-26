@@ -1,9 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
-using System.Diagnostics.CodeAnalysis;
 
 namespace TaleEngine.Data.Migrations
 {
-    [ExcludeFromCodeCoverage]
     public partial class ConnectRoleToEvent : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)

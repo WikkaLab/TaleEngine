@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace TaleEngine.Data.Contracts.SeedWork
+namespace TaleEngine.Data.Contracts
 {
     public interface IGenericRepository<T> where T : class
     {

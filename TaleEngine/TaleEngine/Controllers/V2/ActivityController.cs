@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
 using TaleEngine.Application.Contracts.Dtos;
 using TaleEngine.Application.Contracts.Dtos.Requests;
 using TaleEngine.Application.Contracts.Services;
@@ -14,7 +13,7 @@ namespace TaleEngine.Controllers.V2
 
         public ActivityController(IActivityService activityService)
         {
-            _activityService = activityService ?? throw new ArgumentNullException(nameof(activityService));
+            _activityService = activityService;
         }
 
         [HttpGet("[action]/{editionId}")]

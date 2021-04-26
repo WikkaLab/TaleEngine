@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using TaleEngine.Application.Contracts.Dtos;
 using TaleEngine.Application.Contracts.Dtos.Requests;
 using TaleEngine.Application.Contracts.Dtos.Results;
@@ -15,7 +14,7 @@ namespace TaleEngine.Application.Services
 
         public ActivityService(IActivityDomainService activityDomainService)
         {
-            _activityDomainService = activityDomainService ?? throw new ArgumentNullException(nameof(activityDomainService));
+            _activityDomainService = activityDomainService;
         }
 
         public List<ActivityDto> GetActiveActivities(int editionId)

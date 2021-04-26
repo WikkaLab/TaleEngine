@@ -1,27 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using TaleEngine.Data.Contracts;
 using TaleEngine.Data.Contracts.Entities;
 using TaleEngine.Data.Contracts.Repositories;
-using TaleEngine.Data.Contracts.SeedWork;
 
 namespace TaleEngine.Data.Repositories
 {
     public class RoleRepository : IRoleRepository
     {
-        private readonly TaleEngineContext _dbContext;
+        private readonly DatabaseContext _context;
 
         public IUnitOfWork UnitOfWork
         {
             get
             {
-                return _dbContext;
+                return _context;
             }
         }
 
-        public RoleRepository(TaleEngineContext context)
+        public RoleRepository(DatabaseContext context)
         {
-            _dbContext = context ?? throw new ArgumentNullException(nameof(context));
+            _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
         public void Delete(int entityId)
@@ -31,7 +31,7 @@ namespace TaleEngine.Data.Repositories
 
         public List<Role> GetAll()
         {
-            return _dbContext.Roles.ToList();
+            return _context.Roles.ToList();
         }
 
         public Role GetById(int entityId)
@@ -41,17 +41,17 @@ namespace TaleEngine.Data.Repositories
 
         public void Insert(Role entity)
         {
-            _dbContext.Roles.Add(entity);
+            throw new NotImplementedException();
         }
 
         public void Save()
         {
-            _dbContext.SaveChanges();
+            throw new NotImplementedException();
         }
 
         public void Update(Role entity)
         {
-            _dbContext.Roles.Update(entity);
+            throw new NotImplementedException();
         }
     }
 }

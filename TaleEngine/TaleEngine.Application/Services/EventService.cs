@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TaleEngine.Application.Contracts.Dtos;
 using TaleEngine.Application.Contracts.Services;
 using TaleEngine.Application.Mappers;
-using TaleEngine.Bussiness.Contracts.DomainServices;
+using TaleEngine.Bussiness.Contracts;
 
 namespace TaleEngine.Application.Services
 {
