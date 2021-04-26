@@ -1,24 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using TaleEngine.Bussiness.Contracts.DomainServices;
 using TaleEngine.Bussiness.Contracts.Models;
 using TaleEngine.Bussiness.Mappers;
-using TaleEngine.Data.Contracts.Repositories;
+using TaleEngine.Data.Contracts;
 
 namespace TaleEngine.Bussiness.DomainServices
 {
     public class TimeSlotDomainService : ITimeSlotDomainService
     {
-        private readonly ITimeSlotRepository _timeSlotRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public TimeSlotDomainService(ITimeSlotRepository timeSlotRepository)
+        public TimeSlotDomainService(IUnitOfWork unitOfWork)
         {
-            _timeSlotRepository = timeSlotRepository ?? throw new ArgumentNullException(nameof(timeSlotRepository));
+            _unitOfWork = unitOfWork;
         }
 
         public List<TimeSlotModel> GetAllTimeSlots()
         {
-            var timeslots = _timeSlotRepository.GetAll();
+            var timeslots = _unitOfWork.TimeSlotRepository.GetAll();
 
             if (timeslots == null || timeslots.Count == 0)
             {

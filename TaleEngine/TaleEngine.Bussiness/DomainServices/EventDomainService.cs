@@ -1,25 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using TaleEngine.Bussiness.Contracts;
 using TaleEngine.Bussiness.Contracts.Models;
 using TaleEngine.Bussiness.Mappers;
 using TaleEngine.Data.Contracts;
-using TaleEngine.Data.Contracts.Repositories;
 
 namespace TaleEngine.Bussiness.DomainServices
 {
     public class EventDomainService : IEventDomainService
     {
-        private readonly IEventRepository _eventRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public EventDomainService(IEventRepository eventRepository)
+        public EventDomainService(IUnitOfWork unitOfWork)
         {
-            _eventRepository = eventRepository ?? throw new ArgumentNullException(nameof(eventRepository));
+            _unitOfWork = unitOfWork;
         }
 
         public List<EventModel> GetEventsNoFilter()
         {
-            var events = _eventRepository.GetAll();
+            var events = _unitOfWork.EventRepository.GetAll();
 
             var eventDtos = new List<EventModel>();
 
@@ -33,7 +31,7 @@ namespace TaleEngine.Bussiness.DomainServices
 
         public EventModel GetEvent(int eventId)
         {
-            var ev = _eventRepository.GetById(eventId);
+            var ev = _unitOfWork.EventRepository.GetById(eventId);
 
             var result = EventMapper.Map(ev);
 

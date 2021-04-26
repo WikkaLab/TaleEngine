@@ -3,6 +3,7 @@ using Moq;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using TaleEngine.Bussiness.DomainServices;
+using TaleEngine.Data.Contracts;
 using TaleEngine.Data.Contracts.Entities;
 using TaleEngine.Data.Contracts.Repositories;
 using TaleEngine.Fakes.Entities;
@@ -13,17 +14,13 @@ namespace TaleEngine.Business.Testing.Services
     [ExcludeFromCodeCoverage]
     public class RoleDomainServiceTests
     {
-        private readonly Mock<IRoleRepository> _roleRepositoryMock;
+        private Mock<IUnitOfWork> uowMock;
+        private Mock<IRoleRepository> roleRepoMock;
 
         public RoleDomainServiceTests()
         {
-            _roleRepositoryMock = new Mock<IRoleRepository>();
-        }
-
-        private RoleDomainService CreateRoleDomainService()
-        {
-            return new RoleDomainService(
-                _roleRepositoryMock.Object);
+            uowMock = new Mock<IUnitOfWork>();
+            roleRepoMock = new Mock<IRoleRepository>();
         }
 
         [Fact]
@@ -32,10 +29,11 @@ namespace TaleEngine.Business.Testing.Services
             // Arrange
             List<Role> list = RoleBuilder.BuildRoleList();
 
-            _roleRepositoryMock.Setup(x => x.GetAll())
+            roleRepoMock.Setup(x => x.GetAll())
                 .Returns(list);
-
-            var target = CreateRoleDomainService();
+            uowMock.Setup(x => x.RoleRepository)
+                .Returns(roleRepoMock.Object);
+            var target = new RoleDomainService(uowMock.Object);
 
             // Act
             var result = target.GetAllRoles();
@@ -51,10 +49,11 @@ namespace TaleEngine.Business.Testing.Services
             // Arrange
             List<Role> list = null;
 
-            _roleRepositoryMock.Setup(x => x.GetAll())
+            roleRepoMock.Setup(x => x.GetAll())
                 .Returns(list);
-
-            var target = CreateRoleDomainService();
+            uowMock.Setup(x => x.RoleRepository)
+                .Returns(roleRepoMock.Object);
+            var target = new RoleDomainService(uowMock.Object);
 
             // Act
             var result = target.GetAllRoles();
@@ -69,10 +68,11 @@ namespace TaleEngine.Business.Testing.Services
             // Arrange
             List<Role> list = new();
 
-            _roleRepositoryMock.Setup(x => x.GetAll())
+            roleRepoMock.Setup(x => x.GetAll())
                 .Returns(list);
-
-            var target = CreateRoleDomainService();
+            uowMock.Setup(x => x.RoleRepository)
+                .Returns(roleRepoMock.Object);
+            var target = new RoleDomainService(uowMock.Object);
 
             // Act
             var result = target.GetAllRoles();
@@ -82,3 +82,4 @@ namespace TaleEngine.Business.Testing.Services
         }
     }
 }
+

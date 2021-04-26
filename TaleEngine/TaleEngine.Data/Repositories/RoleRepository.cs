@@ -9,17 +9,9 @@ namespace TaleEngine.Data.Repositories
 {
     public class RoleRepository : IRoleRepository
     {
-        private readonly DatabaseContext _context;
+        private IDatabaseContext _context;
 
-        public IUnitOfWork UnitOfWork
-        {
-            get
-            {
-                return _context;
-            }
-        }
-
-        public RoleRepository(DatabaseContext context)
+        public RoleRepository(IDatabaseContext context)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }

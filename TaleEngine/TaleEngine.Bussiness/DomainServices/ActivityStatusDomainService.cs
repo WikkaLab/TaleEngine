@@ -1,24 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using TaleEngine.Bussiness.Contracts.DomainServices;
 using TaleEngine.Bussiness.Contracts.Models;
 using TaleEngine.Bussiness.Mappers;
-using TaleEngine.Data.Contracts.Repositories;
+using TaleEngine.Data.Contracts;
 
 namespace TaleEngine.Bussiness.DomainServices
 {
     public class ActivityStatusDomainService : IActivityStatusDomainService
     {
-        private readonly IActivityStatusRepository _activityStatusRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public ActivityStatusDomainService(IActivityStatusRepository activityStatusRepository)
+        public ActivityStatusDomainService(IUnitOfWork unitOfWork)
         {
-            _activityStatusRepository = activityStatusRepository ?? throw new ArgumentNullException(nameof(activityStatusRepository));
+            _unitOfWork = unitOfWork;
         }
 
         public List<ActivityStatusModel> GetAllActivityStatuses()
         {
-            var allStatuses = _activityStatusRepository.GetAll();
+            var allStatuses = _unitOfWork.ActivityStatusRepository.GetAll();
 
             if (allStatuses == null || allStatuses.Count == 0)
             {

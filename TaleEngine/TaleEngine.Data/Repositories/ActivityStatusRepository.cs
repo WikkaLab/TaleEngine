@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using TaleEngine.Data.Contracts;
 using TaleEngine.Data.Contracts.Entities;
@@ -9,19 +8,11 @@ namespace TaleEngine.Data.Repositories
 {
     public class ActivityStatusRepository : IActivityStatusRepository
     {
-        private readonly DatabaseContext _context;
+        private readonly IDatabaseContext _context;
 
-        public IUnitOfWork UnitOfWork
+        public ActivityStatusRepository(IDatabaseContext context)
         {
-            get
-            {
-                return _context;
-            }
-        }
-
-        public ActivityStatusRepository(DatabaseContext context)
-        {
-            _context = context ?? throw new ArgumentNullException(nameof(context));
+            _context = context;
         }
 
         public void Delete(int entityId)

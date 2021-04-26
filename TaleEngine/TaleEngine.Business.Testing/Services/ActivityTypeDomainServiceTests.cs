@@ -3,6 +3,7 @@ using Moq;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using TaleEngine.Bussiness.DomainServices;
+using TaleEngine.Data.Contracts;
 using TaleEngine.Data.Contracts.Entities;
 using TaleEngine.Data.Contracts.Repositories;
 using TaleEngine.Fakes.Entities;
@@ -13,17 +14,13 @@ namespace TaleEngine.Business.Testing.Services
     [ExcludeFromCodeCoverage]
     public class ActivityTypeDomainServiceTests
     {
-        private readonly Mock<IActivityTypeRepository> _activityTypeRepositoryMock;
+        private Mock<IUnitOfWork> uowMock;
+        private Mock<IActivityTypeRepository> activityTypeRepoMock;
 
         public ActivityTypeDomainServiceTests()
         {
-            _activityTypeRepositoryMock = new Mock<IActivityTypeRepository>();
-        }
-
-        private ActivityTypeDomainService CreateActivityTypeDomainService()
-        {
-            return new ActivityTypeDomainService(
-                _activityTypeRepositoryMock.Object);
+            uowMock = new Mock<IUnitOfWork>();
+            activityTypeRepoMock = new Mock<IActivityTypeRepository>();
         }
 
         [Fact]
@@ -32,10 +29,11 @@ namespace TaleEngine.Business.Testing.Services
             // Arrange
             List<ActivityType> list = ActivityBuilder.BuildActivityTypeList();
 
-            _activityTypeRepositoryMock.Setup(x => x.GetAll())
+            activityTypeRepoMock.Setup(x => x.GetAll())
                 .Returns(list);
-
-            var target = CreateActivityTypeDomainService();
+            uowMock.Setup(x => x.ActivityTypeRepository)
+                .Returns(activityTypeRepoMock.Object);
+            var target = new ActivityTypeDomainService(uowMock.Object);
 
             // Act
             var result = target.GetAllActivityTypes();
@@ -51,10 +49,11 @@ namespace TaleEngine.Business.Testing.Services
             // Arrange
             List<ActivityType> list = null;
 
-            _activityTypeRepositoryMock.Setup(x => x.GetAll())
+            activityTypeRepoMock.Setup(x => x.GetAll())
                 .Returns(list);
-
-            var target = CreateActivityTypeDomainService();
+            uowMock.Setup(x => x.ActivityTypeRepository)
+                .Returns(activityTypeRepoMock.Object);
+            var target = new ActivityTypeDomainService(uowMock.Object);
 
             // Act
             var result = target.GetAllActivityTypes();
@@ -69,10 +68,11 @@ namespace TaleEngine.Business.Testing.Services
             // Arrange
             List<ActivityType> list = new();
 
-            _activityTypeRepositoryMock.Setup(x => x.GetAll())
+            activityTypeRepoMock.Setup(x => x.GetAll())
                 .Returns(list);
-
-            var target = CreateActivityTypeDomainService();
+            uowMock.Setup(x => x.ActivityTypeRepository)
+                .Returns(activityTypeRepoMock.Object);
+            var target = new ActivityTypeDomainService(uowMock.Object);
 
             // Act
             var result = target.GetAllActivityTypes();
@@ -82,3 +82,4 @@ namespace TaleEngine.Business.Testing.Services
         }
     }
 }
+

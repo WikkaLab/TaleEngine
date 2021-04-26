@@ -1,5 +1,3 @@
-using Autofac;
-using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -11,11 +9,11 @@ using Microsoft.OpenApi.Models;
 using System;
 using TaleEngine.Application.Contracts.Services;
 using TaleEngine.Application.Services;
-using TaleEngine.AutofacModules;
 using TaleEngine.Bussiness.Contracts;
 using TaleEngine.Bussiness.Contracts.DomainServices;
 using TaleEngine.Bussiness.DomainServices;
 using TaleEngine.Data;
+using TaleEngine.Data.Contracts;
 using TaleEngine.Helpers;
 
 namespace TaleEngine
@@ -29,7 +27,7 @@ namespace TaleEngine
 
         public IConfiguration Configuration { get; }
 
-        public virtual IServiceProvider ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services)
         {
             services.AddCors(c =>
             {
@@ -73,8 +71,10 @@ namespace TaleEngine
                 });
             });
 
-            services.AddDbContext<DatabaseContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<DatabaseContext>(item =>
+                item.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<IDatabaseContext, DatabaseContext>();
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
 
             services.AddTransient<IEventService, EventService>();
             services.AddTransient<IEventDomainService, EventDomainService>();
@@ -95,15 +95,6 @@ namespace TaleEngine
             {
                 options.Conventions.Add(new GroupingByNamespaceConvention());
             });
-
-            //configure autofac
-
-            var container = new ContainerBuilder();
-            container.Populate(services);
-
-            container.RegisterModule(new ApplicationModule());
-
-            return new AutofacServiceProvider(container.Build());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
