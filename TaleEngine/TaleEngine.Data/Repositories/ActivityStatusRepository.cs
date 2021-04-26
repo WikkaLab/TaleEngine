@@ -33,7 +33,7 @@ namespace TaleEngine.Data.Repositories
 
         public void Insert(ActivityStatus entity)
         {
-            throw new System.NotImplementedException();
+            _context.ActivityStatuses.Add(entity);
         }
 
         public void Save()
@@ -43,7 +43,7 @@ namespace TaleEngine.Data.Repositories
 
         public void Update(ActivityStatus entity)
         {
-            throw new System.NotImplementedException();
+            _context.ActivityStatuses.Update(entity);
         }
     }
 }
