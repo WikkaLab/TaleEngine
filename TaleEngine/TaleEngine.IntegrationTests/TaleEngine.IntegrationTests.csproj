@@ -6,7 +6,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <Compile Remove="DealerRepositoryTests.cs" />
+		<Compile Remove="DealerRepositoryTests.cs" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -21,6 +21,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.AspNetCore.TestHost" Version="5.0.5" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="5.0.5" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="5.0.0" />
 		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.9.1" />
 		<PackageReference Include="xunit" Version="2.4.1" />
@@ -35,6 +36,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\TaleEngine\TaleEngine.csproj" />
+		<ProjectReference Include="..\TaleEngine.Fakes\TaleEngine.Fakes.csproj" />
+		<ProjectReference Include="..\TaleEngine\TaleEngine.csproj" />
 	</ItemGroup>
 </Project>

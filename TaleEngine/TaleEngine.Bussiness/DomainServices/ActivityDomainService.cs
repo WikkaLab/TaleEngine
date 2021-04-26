@@ -94,7 +94,7 @@ namespace TaleEngine.Bussiness.DomainServices
                 _unitOfWork.ActivityRepository.Insert(activity);
                 _unitOfWork.ActivityRepository.Save();
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return 0;
             }
@@ -164,7 +164,7 @@ namespace TaleEngine.Bussiness.DomainServices
                 _unitOfWork.ActivityRepository.Update(activity);
                 _unitOfWork.ActivityRepository.Save();
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return 0;
             }
@@ -237,6 +237,5 @@ namespace TaleEngine.Bussiness.DomainServices
 
             return models;
         }
-
     }
 }
