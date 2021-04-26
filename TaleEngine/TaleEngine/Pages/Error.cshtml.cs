@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 
-namespace TaleEngine.Pages
+namespace TaleEngine.API.Pages
 {
     [ExcludeFromCodeCoverage]
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -1,0 +1,31 @@
+version: '3.4'
+
+services:
+
+  seq:
+    environment:
+      - ACCEPT_EULA=Y
+    ports:
+      - "5340:80"
+
+  sqldata:
+    environment:
+      - SA_PASSWORD=Pass@word
+      - ACCEPT_EULA=Y
+    ports:
+      - "5433:1433"
+    volumes:
+      - taleengine-sqldata:/var/opt/mssql
+
+  taleengine-api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://0.0.0.0:80
+      - ConnectionString=${ESHOP_AZURE_ORDERING_DB:-Server=sqldata;Database=TaleEngine;User Id=sa;Password=Pass@word}
+    ports:
+      - "5102:80"
+      - "9102:81"
+
+volumes:
+  taleengine-sqldata:
+    external: false

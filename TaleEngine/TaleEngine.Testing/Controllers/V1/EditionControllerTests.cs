@@ -5,9 +5,9 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using TaleEngine.API.Controllers.V1;
 using TaleEngine.Application.Contracts.Dtos;
 using TaleEngine.Application.Contracts.Services;
-using TaleEngine.Controllers.V1;
 using Xunit;
 
 namespace TaleEngine.Testing.Controllers.V1

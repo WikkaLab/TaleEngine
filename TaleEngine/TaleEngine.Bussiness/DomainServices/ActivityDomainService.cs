@@ -5,7 +5,7 @@ using TaleEngine.Bussiness.Contracts.Models;
 using TaleEngine.Bussiness.Contracts.Models.Results;
 using TaleEngine.Bussiness.Enums;
 using TaleEngine.Bussiness.Mappers;
-using TaleEngine.Data.Contracts;
+using TaleEngine.Data.Contracts.Repositories;
 
 namespace TaleEngine.Bussiness.DomainServices
 {
@@ -13,16 +13,24 @@ namespace TaleEngine.Bussiness.DomainServices
     {
         private const int ACTIVITIESINHOME = 3;
 
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly IActivityRepository _activityRepository;
+        private readonly IActivityStatusRepository _activityStatusRepository;
+        private readonly IEditionRepository _editionRepository;
+        private readonly IActivityTypeRepository _activityTypeRepository;
+        private readonly ITimeSlotRepository _timeSlotRepository;
 
-        public ActivityDomainService(IUnitOfWork unitOfWork)
+        public ActivityDomainService(IActivityRepository activityRepository, IActivityStatusRepository activityStatusRepository, IActivityTypeRepository activityTypeRepository, IEditionRepository editionRepository, ITimeSlotRepository timeSlotRepository)
         {
-            _unitOfWork = unitOfWork;
+            _activityRepository = activityRepository ?? throw new ArgumentNullException(nameof(activityRepository));
+            _activityStatusRepository = activityStatusRepository ?? throw new ArgumentNullException(nameof(activityStatusRepository));
+            _activityTypeRepository = activityTypeRepository ?? throw new ArgumentNullException(nameof(activityTypeRepository));
+            _editionRepository = editionRepository ?? throw new ArgumentNullException(nameof(editionRepository));
+            _timeSlotRepository = timeSlotRepository ?? throw new ArgumentNullException(nameof(timeSlotRepository));
         }
 
         public List<ActivityModel> GetActiveActivities(int editionId)
         {
-            var activeStatus = _unitOfWork.ActivityStatusRepository
+            var activeStatus = _activityStatusRepository
                 .GetById((int)ActivityStatusEnum.ACT);
 
             if (activeStatus == null)
@@ -30,7 +38,7 @@ namespace TaleEngine.Bussiness.DomainServices
                 return null;
             }
 
-            var activities = _unitOfWork.ActivityRepository
+            var activities = _activityRepository
                 .GetActivitiesByStatus(editionId, activeStatus.Id);
 
             var models = ActivityMapper.Map(activities);
@@ -40,7 +48,7 @@ namespace TaleEngine.Bussiness.DomainServices
 
         public List<ActivityModel> GetPendingActivities(int editionId)
         {
-            var pendingStatus = _unitOfWork.ActivityStatusRepository
+            var pendingStatus = _activityStatusRepository
                 .GetById((int)ActivityStatusEnum.PEN);
 
             if (pendingStatus == null)
@@ -48,7 +56,7 @@ namespace TaleEngine.Bussiness.DomainServices
                 return null;
             }
 
-            var activities = _unitOfWork.ActivityRepository
+            var activities = _activityRepository
                 .GetActivitiesByStatus(editionId, pendingStatus.Id);
 
             var models = ActivityMapper.Map(activities);
@@ -60,8 +68,8 @@ namespace TaleEngine.Bussiness.DomainServices
         {
             try
             {
-                _unitOfWork.ActivityRepository.Delete(activityId);
-                _unitOfWork.ActivityRepository.Save();
+                _activityRepository.Delete(activityId);
+                _activityRepository.Save();
             }
             catch (Exception)
             {
@@ -80,7 +88,7 @@ namespace TaleEngine.Bussiness.DomainServices
                 return 0;
             }
 
-            var status = _unitOfWork.ActivityStatusRepository.GetById((int)ActivityStatusEnum.PEN);
+            var status = _activityStatusRepository.GetById((int)ActivityStatusEnum.PEN);
             activityModel.StatusId = status.Id;
 
             var activity = ActivityMapper.Map(activityModel);
@@ -91,10 +99,10 @@ namespace TaleEngine.Bussiness.DomainServices
 
             try
             {
-                _unitOfWork.ActivityRepository.Insert(activity);
-                _unitOfWork.ActivityRepository.Save();
+                _activityRepository.Insert(activity);
+                _activityRepository.Save();
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return 0;
             }
@@ -108,8 +116,8 @@ namespace TaleEngine.Bussiness.DomainServices
 
             try
             {
-                _unitOfWork.ActivityRepository.Update(activity);
-                _unitOfWork.ActivityRepository.Save();
+                _activityRepository.Update(activity);
+                _activityRepository.Save();
             }
             catch (Exception)
             {
@@ -121,7 +129,7 @@ namespace TaleEngine.Bussiness.DomainServices
 
         private bool ValidateNewActivityData(ActivityModel model, int editionId)
         {
-            var edition = _unitOfWork.EditionRepository.GetById(editionId);
+            var edition = _editionRepository.GetById(editionId);
             if (edition == null)
             {
                 return false;
@@ -132,13 +140,13 @@ namespace TaleEngine.Bussiness.DomainServices
                 return false;
             }
 
-            var type = _unitOfWork.ActivityTypeRepository.GetById(model.TypeId);
+            var type = _activityTypeRepository.GetById(model.TypeId);
             if (type == null)
             {
                 return false;
             }
 
-            var timeSlot = _unitOfWork.TimeSlotRepository.GetById(model.TimeSlotId.Value);
+            var timeSlot = _timeSlotRepository.GetById(model.TimeSlotId.Value);
             if (timeSlot == null)
             {
                 return false;
@@ -149,8 +157,8 @@ namespace TaleEngine.Bussiness.DomainServices
 
         public int ChangeActivityStatus(int activityId, int statusId)
         {
-            var status = _unitOfWork.ActivityStatusRepository.GetById(statusId);
-            var activity = _unitOfWork.ActivityRepository.GetById(activityId);
+            var status = _activityStatusRepository.GetById(statusId);
+            var activity = _activityRepository.GetById(activityId);
 
             if (status == null || activity == null)
             {
@@ -161,10 +169,10 @@ namespace TaleEngine.Bussiness.DomainServices
 
             try
             {
-                _unitOfWork.ActivityRepository.Update(activity);
-                _unitOfWork.ActivityRepository.Save();
+                _activityRepository.Update(activity);
+                _activityRepository.Save();
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return 0;
             }
@@ -177,10 +185,10 @@ namespace TaleEngine.Bussiness.DomainServices
         {
             int activitiesPerPage = 10;
 
-            var activeStatus = _unitOfWork.ActivityStatusRepository
+            var activeStatus = _activityStatusRepository
                 .GetById((int)ActivityStatusEnum.ACT);
 
-            var currentEdition = _unitOfWork.EditionRepository
+            var currentEdition = _editionRepository
                 .GetById(edition);
 
             if (currentEdition == null || activeStatus == null)
@@ -190,13 +198,13 @@ namespace TaleEngine.Bussiness.DomainServices
 
             int skipByPagination = (currentPage - 1) * activitiesPerPage;
 
-            var activities = _unitOfWork.ActivityRepository
+            var activities = _activityRepository
                 .GetActiveActivitiesFiltered(activeStatus.Id, type, currentEdition.Id,
                     title, skipByPagination, activitiesPerPage);
 
             var models = ActivityMapper.Map(activities);
 
-            int totalActivities = _unitOfWork.ActivityRepository
+            int totalActivities = _activityRepository
                 .GetTotalActivities(activeStatus.Id, type, currentEdition.Id, title);
 
             double actsPerPage = totalActivities / activitiesPerPage;
@@ -214,10 +222,10 @@ namespace TaleEngine.Bussiness.DomainServices
 
         public List<ActivityModel> GetLastThreeActivities(int edition)
         {
-            var activeStatus = _unitOfWork.ActivityStatusRepository
+            var activeStatus = _activityStatusRepository
                 .GetById((int)ActivityStatusEnum.ACT);
 
-            var currentEdition = _unitOfWork.EditionRepository
+            var currentEdition = _editionRepository
                 .GetById(edition);
 
             if (currentEdition == null || activeStatus == null)
@@ -225,7 +233,7 @@ namespace TaleEngine.Bussiness.DomainServices
                 return null;
             }
 
-            var activities = _unitOfWork.ActivityRepository
+            var activities = _activityRepository
                  .GetLastThreeActivities(activeStatus.Id, currentEdition.Id, ACTIVITIESINHOME);
 
             if (activities == null || activities.Count == 0)

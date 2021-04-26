@@ -7,7 +7,7 @@ using Xunit;
 namespace TaleEngine.IntegrationTests.Repositories
 {
     [ExcludeFromCodeCoverage]
-    public class TimeSlotRepositoryTests : DatabaseContextInMemoryDatabase
+    public class TimeSlotRepositoryTests : TaleEngineContextInMemoryDatabase
     {
         private TimeSlotRepository CreateTimeSlotRepository()
         {

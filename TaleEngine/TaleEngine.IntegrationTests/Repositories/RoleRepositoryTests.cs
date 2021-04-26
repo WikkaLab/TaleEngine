@@ -7,7 +7,7 @@ using Xunit;
 namespace TaleEngine.IntegrationTests.Repositories
 {
     [ExcludeFromCodeCoverage]
-    public class RoleRepositoryTests : DatabaseContextInMemoryDatabase
+    public class RoleRepositoryTests : TaleEngineContextInMemoryDatabase
     {
         private RoleRepository CreateRoleRepository()
         {

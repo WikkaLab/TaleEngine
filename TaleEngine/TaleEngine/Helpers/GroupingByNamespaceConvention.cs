@@ -2,7 +2,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
-namespace TaleEngine.Helpers
+namespace TaleEngine.API.Helpers
 {
     [ExcludeFromCodeCoverage]
     public class GroupingByNamespaceConvention : IControllerModelConvention

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.TestHost;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.Extensions.Configuration;
+using TaleEngine.API;
 
 namespace TaleEngine.IntegrationTests.Base
 {

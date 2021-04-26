@@ -1,0 +1,17 @@
+version: '3.4'
+
+services:
+
+  seq:
+    image: datalust/seq:latest
+
+  sqldata:
+    image: mcr.microsoft.com/mssql/server:2019-latest 
+
+  taleengine-api:
+    image: ${REGISTRY:-taleengine}/taleengine.api:${PLATFORM:-linux}-${TAG:-latest}
+    build:
+      context: .
+      dockerfile: TaleEngine/Dockerfile
+    depends_on:
+      - sqldata
