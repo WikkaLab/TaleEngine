@@ -1,3 +1,5 @@
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
@@ -6,8 +8,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
 using TaleEngine.API.Extensions;
 using TaleEngine.API.Helpers;
+using TaleEngine.API.Infrastructure.AutofacModules;
 
 namespace TaleEngine.API
 {
@@ -20,7 +24,7 @@ namespace TaleEngine.API
 
         public IConfiguration Configuration { get; }
 
-        public virtual void ConfigureServices(IServiceCollection services)
+        public virtual IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services.AddCors(c =>
             {
@@ -47,6 +51,15 @@ namespace TaleEngine.API
             {
                 options.Conventions.Add(new GroupingByNamespaceConvention());
             });
+
+            //configure autofac
+
+            var container = new ContainerBuilder();
+            container.Populate(services);
+
+            container.RegisterModule(new ApplicationModule());
+
+            return new AutofacServiceProvider(container.Build());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

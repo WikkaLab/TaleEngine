@@ -30,7 +30,7 @@ namespace TaleEngine.API
                 var host = BuildWebHost(configuration, args);
 
                 Log.Information("Applying migrations ({ApplicationContext})...", Program.AppName);
-                host.MigrateDbContext<DatabaseContext>((context, services) =>
+                host.MigrateDbContext<TaleEngineContext>((context, services) =>
                 {
                     var env = services.GetService<IWebHostEnvironment>();
                     var settings = services.GetService<IOptions<TaleEngineSettings>>();

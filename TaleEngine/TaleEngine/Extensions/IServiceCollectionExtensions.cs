@@ -30,7 +30,7 @@ namespace TaleEngine.API.Extensions
 
         public static IServiceCollection AddCustomDbContext(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<DatabaseContext>(options =>
+            services.AddDbContext<TaleEngineContext>(options =>
             {
                 options.UseSqlServer(configuration["ConnectionString"],
                     sqlServerOptionsAction: sqlOptions =>

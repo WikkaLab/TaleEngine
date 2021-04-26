@@ -13,7 +13,7 @@ namespace TaleEngine.API.Infrastructure
 {
     public class TaleEngineContextSeed
     {
-        public async Task SeedAsync(DatabaseContext context, IWebHostEnvironment env, IOptions<TaleEngineSettings> settings, ILogger<TaleEngineContextSeed> logger)
+        public async Task SeedAsync(TaleEngineContext context, IWebHostEnvironment env, IOptions<TaleEngineSettings> settings, ILogger<TaleEngineContextSeed> logger)
         {
             var policy = CreatePolicy(logger, nameof(TaleEngineContextSeed));
 

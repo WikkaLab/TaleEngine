@@ -7,7 +7,7 @@ using Xunit;
 namespace TaleEngine.IntegrationTests.Repositories
 {
     [ExcludeFromCodeCoverage]
-    public class EventRepositoryTests : DatabaseContextInMemoryDatabase
+    public class EventRepositoryTests : TaleEngineContextInMemoryDatabase
     {
         private EventRepository CreateEventRepository()
         {

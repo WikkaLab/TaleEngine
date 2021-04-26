@@ -9,7 +9,7 @@ using Xunit;
 namespace TaleEngine.IntegrationTests.Repositories
 {
     [ExcludeFromCodeCoverage]
-    public class ActivityStatusRepositoryTests : DatabaseContextInMemoryDatabase
+    public class ActivityStatusRepositoryTests : TaleEngineContextInMemoryDatabase
     {
         private ActivityStatusRepository CreateActivityStatusRepository()
         {

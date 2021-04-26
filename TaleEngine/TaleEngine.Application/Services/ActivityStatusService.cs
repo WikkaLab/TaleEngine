@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using TaleEngine.Application.Contracts.Dtos;
 using TaleEngine.Application.Contracts.Services;
 using TaleEngine.Application.Mappers;
@@ -12,7 +13,7 @@ namespace TaleEngine.Application.Services
 
         public ActivityStatusService(IActivityStatusDomainService activityStatusDomainService)
         {
-            _activityStatusDomainService = activityStatusDomainService;
+            _activityStatusDomainService = activityStatusDomainService ?? throw new ArgumentNullException(nameof(activityStatusDomainService));
         }
 
         public List<ActivityStatusDto> GetActivityStatuses()

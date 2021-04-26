@@ -34,7 +34,6 @@ namespace TaleEngine.Application.Mappers
             return activityModels.Select(Map).ToList();
         }
 
-
         public static ActivityModel Map(ActivityDto activityDto)
         {
             if (activityDto == null) return null;
@@ -69,7 +68,7 @@ namespace TaleEngine.Application.Mappers
             {
                 result = DateTime.Parse(date);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 result = null;
             }
