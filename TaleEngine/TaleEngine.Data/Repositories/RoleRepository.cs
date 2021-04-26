@@ -33,17 +33,17 @@ namespace TaleEngine.Data.Repositories
 
         public void Insert(Role entity)
         {
-            throw new NotImplementedException();
+            _context.Roles.Add(entity);
         }
 
         public void Save()
         {
-            throw new NotImplementedException();
+            _context.SaveChanges();
         }
 
         public void Update(Role entity)
         {
-            throw new NotImplementedException();
+            _context.Roles.Update(entity);
         }
     }
 }

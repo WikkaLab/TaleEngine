@@ -1,8 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace TaleEngine.Data.Migrations
 {
+    [ExcludeFromCodeCoverage]
     public partial class ReorganizeEntities : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
