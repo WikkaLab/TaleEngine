@@ -9,11 +9,11 @@ using Microsoft.OpenApi.Models;
 using System;
 using TaleEngine.Application.Contracts.Services;
 using TaleEngine.Application.Services;
-using TaleEngine.Bussiness.Contracts;
 using TaleEngine.Bussiness.Contracts.DomainServices;
 using TaleEngine.Bussiness.DomainServices;
 using TaleEngine.Data;
 using TaleEngine.Data.Contracts;
+using TaleEngine.Extensions;
 using TaleEngine.Helpers;
 
 namespace TaleEngine
@@ -29,13 +29,7 @@ namespace TaleEngine
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors(c =>
-            {
-                c.AddPolicy("AllowAll", options =>
-                    options.AllowAnyOrigin()
-                           .AllowAnyMethod()
-                           .AllowAnyHeader());
-            });
+            services.AddCustomMVC(Configuration);
 
             services.AddApiVersioning(config =>
             {
@@ -100,8 +94,6 @@ namespace TaleEngine
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseRouting();
-
             app.UseSwagger(options => options.RouteTemplate = "swagger/{documentName}/swagger.json");
             app.UseSwaggerUI(options =>
             {
@@ -109,7 +101,6 @@ namespace TaleEngine
                 options.SwaggerEndpoint($"/swagger/v1/swagger.json", $"v1");
                 options.SwaggerEndpoint($"/swagger/v2/swagger.json", $"v2");
             });
-            app.UseEndpoints(endpoints => endpoints.MapControllers());
 
             app.Build();
 
@@ -123,10 +114,8 @@ namespace TaleEngine
                 app.UseHsts();
             }
 
-            app.UseCors("AllowAll");
-            app.UseHttpsRedirection();
             app.UseRouting();
-
+            app.UseCors("CorsPolicy");
             app.UseEndpoints(endpoints => endpoints.MapControllers());
         }
     }
