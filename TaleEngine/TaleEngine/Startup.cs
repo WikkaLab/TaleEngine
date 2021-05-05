@@ -74,7 +74,6 @@ namespace TaleEngine
             });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseSwagger(options => options.RouteTemplate = "swagger/{documentName}/swagger.json");
@@ -103,7 +102,6 @@ namespace TaleEngine
             {
                 endpoints.MapControllers();
                 endpoints.MapBlazorHub();
-                //endpoints.MapFallbackToPage("/_Host");
             });
         }
     }
