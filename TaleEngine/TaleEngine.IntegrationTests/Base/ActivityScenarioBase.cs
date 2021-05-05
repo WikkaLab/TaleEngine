@@ -6,23 +6,9 @@ using Microsoft.Extensions.Configuration;
 namespace TaleEngine.IntegrationTests.Base
 {
     [ExcludeFromCodeCoverage]
-    public class ActivityScenarioBase
+    public class ActivityScenarioBase : TaleEngineScenarioBase
     {
-        private const string ApiUrlBase = "api/v3/activity";
-
-        public TestServer CreateServer()
-        {
-            var hostBuilder = new WebHostBuilder()
-                .ConfigureAppConfiguration(cb =>
-                {
-                    cb.AddJsonFile("appsettings.json", optional: false)
-                    .AddEnvironmentVariables();
-                })
-                .UseEnvironment("IntegrationTest")
-                .UseStartup<Startup>();
-
-            return new TestServer(hostBuilder);
-        }
+        private const string ApiUrlBase = "api/v2/activity";
 
         public static class Get
         {
