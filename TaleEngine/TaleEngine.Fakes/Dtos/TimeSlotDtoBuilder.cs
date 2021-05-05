@@ -1,4 +1,5 @@
 ﻿using Bogus;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using TaleEngine.Application.Contracts.Dtos;
 
@@ -17,6 +18,15 @@ namespace TaleEngine.Fakes.Dtos
                 Name = faker.Random.String2(10)
             };
             return dto;
+        }
+
+        public static List<TimeSlotDto> BuildTimeSlotDtoList()
+        {
+            var list = new List<TimeSlotDto>
+            {
+                BuildTimeSlotDto()
+            };
+            return list;
         }
     }
 }
