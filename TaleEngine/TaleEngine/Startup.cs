@@ -45,29 +45,28 @@ namespace TaleEngine
             services.AddDbContext<IDatabaseContext, DatabaseContext>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
 
-            services.AddTransient<IEventService, EventService>();
-            services.AddTransient<IEventDomainService, EventDomainService>();
-            services.AddTransient<IActivityService, ActivityService>();
-            services.AddTransient<IActivityTypeService, ActivityTypeService>();
-            services.AddTransient<IActivityTypeDomainService, ActivityTypeDomainService>();
-            services.AddTransient<IActivityDomainService, ActivityDomainService>();
-
             if (Configuration.GetValue<bool>("UseCustomizationData"))
             {
+                services.AddTransient<IEventService, EventServiceMock>();
                 services.AddTransient<ITimeSlotService, TimeSlotServiceMock>();
             }
             else
             {
+                services.AddTransient<IEventService, EventService>();
+                services.AddTransient<IEventDomainService, EventDomainService>();
+                services.AddTransient<IActivityService, ActivityService>();
+                services.AddTransient<IActivityTypeService, ActivityTypeService>();
+                services.AddTransient<IActivityTypeDomainService, ActivityTypeDomainService>();
+                services.AddTransient<IActivityDomainService, ActivityDomainService>();
                 services.AddTransient<ITimeSlotService, TimeSlotService>();
+                services.AddTransient<ITimeSlotDomainService, TimeSlotDomainService>();
+                services.AddTransient<IEditionService, EditionService>();
+                services.AddTransient<IEditionDomainService, EditionDomainService>();
+                services.AddTransient<IActivityStatusService, ActivityStatusService>();
+                services.AddTransient<IActivityStatusDomainService, ActivityStatusDomainService>();
+                services.AddTransient<IRoleService, RoleService>();
+                services.AddTransient<IRoleDomainService, RoleDomainService>();
             }
-
-            services.AddTransient<ITimeSlotDomainService, TimeSlotDomainService>();
-            services.AddTransient<IEditionService, EditionService>();
-            services.AddTransient<IEditionDomainService, EditionDomainService>();
-            services.AddTransient<IActivityStatusService, ActivityStatusService>();
-            services.AddTransient<IActivityStatusDomainService, ActivityStatusDomainService>();
-            services.AddTransient<IRoleService, RoleService>();
-            services.AddTransient<IRoleDomainService, RoleDomainService>();
 
             services.AddControllers(options =>
             {

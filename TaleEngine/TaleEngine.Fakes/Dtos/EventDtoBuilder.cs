@@ -1,4 +1,5 @@
 ﻿using Bogus;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using TaleEngine.Application.Contracts.Dtos;
 
@@ -17,6 +18,15 @@ namespace TaleEngine.Fakes.Dtos
                 Title = faker.Random.String2(10)
             };
             return dto;
+        }
+
+        public static List<EventDto> BuildEventDtoList()
+        {
+            var list = new List<EventDto>
+            {
+                BuildEventDto()
+            };
+            return list;
         }
     }
 }
