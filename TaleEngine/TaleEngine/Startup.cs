@@ -1,12 +1,9 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi.Models;
-using System;
 using TaleEngine.Application.Contracts.Services;
 using TaleEngine.Application.Services;
 using TaleEngine.Bussiness.Contracts.DomainServices;
@@ -29,7 +26,10 @@ namespace TaleEngine
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCustomMVC(Configuration);
+            services.AddCustomMVC()
+                .AddCustomDbContext(Configuration)
+                .AddSwaggerGen()
+                .AddCustomConfiguration(Configuration);
 
             services.AddApiVersioning(config =>
             {
@@ -39,34 +39,6 @@ namespace TaleEngine
                 config.UseApiBehavior = false;
             });
 
-            services.AddSwaggerGen(config =>
-            {
-                config.SwaggerDoc("v1", new OpenApiInfo
-                {
-                    Title = "TaleEngine API v1",
-                    Version = "v1",
-                    Contact = new OpenApiContact
-                    {
-                        Name = "Elena G",
-                        Email = "elena.guzbla@gmail.com",
-                        Url = new Uri("https://beelzenef.github.io")
-                    }
-                });
-                config.SwaggerDoc("v2", new OpenApiInfo
-                {
-                    Title = "TaleEngine API v2",
-                    Version = "v2",
-                    Contact = new OpenApiContact
-                    {
-                        Name = "Elena G",
-                        Email = "elena.guzbla@gmail.com",
-                        Url = new Uri("https://beelzenef.github.io")
-                    }
-                });
-            });
-
-            services.AddDbContext<DatabaseContext>(item =>
-                item.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddDbContext<IDatabaseContext, DatabaseContext>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
 
@@ -77,7 +49,7 @@ namespace TaleEngine
             services.AddTransient<IActivityTypeDomainService, ActivityTypeDomainService>();
             services.AddTransient<IActivityDomainService, ActivityDomainService>();
 
-            if (Configuration.GetValue<bool>("UseMockData"))
+            if (Configuration.GetValue<bool>("UseCustomizationData"))
             {
                 services.AddTransient<ITimeSlotService, TimeSlotServiceMock>();
             }

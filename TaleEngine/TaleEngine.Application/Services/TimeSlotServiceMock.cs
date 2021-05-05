@@ -7,10 +7,6 @@ namespace TaleEngine.Application.Services
 {
     public class TimeSlotServiceMock : ITimeSlotService
     {
-        public TimeSlotServiceMock()
-        {
-        }
-
         public List<TimeSlotDto> GetTimeSlots()
         {
             return TimeSlotDtoBuilder.BuildTimeSlotDtoList();
