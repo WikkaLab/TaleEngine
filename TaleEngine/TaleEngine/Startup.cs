@@ -76,7 +76,16 @@ namespace TaleEngine
             services.AddTransient<IActivityTypeService, ActivityTypeService>();
             services.AddTransient<IActivityTypeDomainService, ActivityTypeDomainService>();
             services.AddTransient<IActivityDomainService, ActivityDomainService>();
-            services.AddTransient<ITimeSlotService, TimeSlotService>();
+
+            if (Configuration.GetValue<bool>("UseMockData"))
+            {
+                services.AddTransient<ITimeSlotService, TimeSlotServiceMock>();
+            }
+            else
+            {
+                services.AddTransient<ITimeSlotService, TimeSlotService>();
+            }
+
             services.AddTransient<ITimeSlotDomainService, TimeSlotDomainService>();
             services.AddTransient<IEditionService, EditionService>();
             services.AddTransient<IEditionDomainService, EditionDomainService>();
