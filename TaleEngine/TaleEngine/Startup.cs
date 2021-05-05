@@ -31,6 +31,9 @@ namespace TaleEngine
                 .AddSwaggerGen()
                 .AddCustomConfiguration(Configuration);
 
+            services.AddRazorPages();
+            services.AddServerSideBlazor();
+
             services.AddApiVersioning(config =>
             {
                 config.DefaultApiVersion = new ApiVersion(1, 0);
@@ -97,7 +100,12 @@ namespace TaleEngine
 
             app.UseRouting();
             app.UseCors("CorsPolicy");
-            app.UseEndpoints(endpoints => endpoints.MapControllers());
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+                endpoints.MapBlazorHub();
+                //endpoints.MapFallbackToPage("/_Host");
+            });
         }
     }
 }
