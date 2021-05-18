@@ -67,11 +67,6 @@ namespace TaleEngine
                 services.AddTransient<IRoleService, RoleService>();
                 services.AddTransient<IRoleDomainService, RoleDomainService>();
             }
-
-            services.AddControllers(options =>
-            {
-                options.Conventions.Add(new GroupingByNamespaceConvention());
-            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
