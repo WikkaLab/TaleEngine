@@ -5,7 +5,9 @@ using Microsoft.OpenApi.Models;
 using System;
 using System.Reflection;
 using TaleEngine.Data;
+using TaleEngine.Helpers;
 using TaleEngine.Infrastructure.Filters;
+using TaleEngine.Infrastructure.Middlewares;
 
 namespace TaleEngine.Extensions
 {
@@ -15,6 +17,7 @@ namespace TaleEngine.Extensions
         {
             services.AddControllers(options =>
             {
+                options.Conventions.Add(new GroupingByNamespaceConvention());
                 options.Filters.Add(typeof(HttpGlobalExceptionFilter));
             }).AddNewtonsoftJson();
 
@@ -50,9 +53,9 @@ namespace TaleEngine.Extensions
 
         public static IServiceCollection AddCustomSwagger(this IServiceCollection services)
         {
-            services.AddSwaggerGen(config =>
+            services.AddSwaggerGen(options =>
             {
-                config.SwaggerDoc("v1", new OpenApiInfo
+                options.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Title = "TaleEngine API v1",
                     Version = "v1",
@@ -63,7 +66,7 @@ namespace TaleEngine.Extensions
                         Url = new Uri("https://beelzenef.github.io")
                     }
                 });
-                config.SwaggerDoc("v2", new OpenApiInfo
+                options.SwaggerDoc("v2", new OpenApiInfo
                 {
                     Title = "TaleEngine API v2",
                     Version = "v2",
@@ -74,6 +77,8 @@ namespace TaleEngine.Extensions
                         Url = new Uri("https://beelzenef.github.io")
                     }
                 });
+
+                options.OperationFilter<AuthorizeCheckOperationFilter>();
             });
 
             return services;
