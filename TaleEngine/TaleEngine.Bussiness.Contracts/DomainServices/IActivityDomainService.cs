@@ -11,8 +11,8 @@ namespace TaleEngine.Bussiness.Contracts.DomainServices
         List<ActivityModel> GetLastThreeActivities(int editionId);
         ActivityFilteredResultModel GetActiveActivitiesFiltered(int type, int edition, string title, int currentPage);
         int DeleteActivity(int activityId);
-        int CreateActivity(int editionId, ActivityModel activityDto);
-        int UpdateActivity(ActivityModel activityDto);
+        int CreateActivity(int editionId, ActivityModel activityModel);
+        int UpdateActivity(ActivityModel activityModel);
 
         int ChangeActivityStatus(int activityId, int statusId);
     }

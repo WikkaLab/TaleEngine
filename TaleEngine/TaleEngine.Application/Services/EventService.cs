@@ -4,6 +4,7 @@ using TaleEngine.Application.Contracts.Dtos;
 using TaleEngine.Application.Contracts.Services;
 using TaleEngine.Application.Mappers;
 using TaleEngine.Bussiness.Contracts;
+using TaleEngine.Bussiness.Contracts.DomainServices;
 
 namespace TaleEngine.Application.Services
 {
@@ -23,12 +24,7 @@ namespace TaleEngine.Application.Services
         {
             var events = _eventDomainService.GetEventsNoFilter();
 
-            var result = new List<EventDto>();
-
-            foreach (var ev in events)
-            {
-                result.Add(EventMapper.Map(ev));
-            }
+            var result = EventMapper.Map(events);
 
             return result;
         }
@@ -44,6 +40,5 @@ namespace TaleEngine.Application.Services
             var selectedEvent = _eventDomainService.GetEvent(eventId);
             return EventMapper.Map(selectedEvent);
         }
-
     }
 }

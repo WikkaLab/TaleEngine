@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using TaleEngine.Application.Contracts.Dtos;
 using TaleEngine.Application.Contracts.Services;
 using TaleEngine.Application.Mappers;
@@ -19,11 +18,11 @@ namespace TaleEngine.Application.Services
 
         public List<RoleDto> GetAllRoles()
         {
-            var roleModels = _roleDomainService.GetAllRoles().ToList();
+            var roleModels = _roleDomainService.GetAllRoles();
 
             var dtos = RoleMapper.MapToRoleDtos(roleModels);
-            return dtos;
 
+            return dtos;
         }
     }
 }

@@ -19,14 +19,14 @@ namespace TaleEngine.Bussiness.DomainServices
         {
             var activityTypes = _unitOfWork.ActivityTypeRepository.GetAll();
 
-            var activityTypeDtos = new List<ActivityTypeModel>();
-
-            foreach (var type in activityTypes)
+            if (activityTypes == null || activityTypes.Count == 0)
             {
-                activityTypeDtos.Add(ActivityTypeMapper.Map(type));
+                return null;
             }
 
-            return activityTypeDtos;
+            var models = ActivityTypeMapper.Map(activityTypes);
+
+            return models;
         }
     }
 }

@@ -20,7 +20,7 @@ namespace TaleEngine.Data.Repositories
             throw new System.NotImplementedException();
         }
 
-        public IEnumerable<ActivityType> GetAll()
+        public List<ActivityType> GetAll()
         {
             return _context.ActivityTypes.ToList();
         }
@@ -33,7 +33,7 @@ namespace TaleEngine.Data.Repositories
 
         public void Insert(ActivityType entity)
         {
-            throw new System.NotImplementedException();
+            _context.ActivityTypes.Add(entity);
         }
 
         public void Save()
@@ -43,7 +43,7 @@ namespace TaleEngine.Data.Repositories
 
         public void Update(ActivityType entity)
         {
-            throw new System.NotImplementedException();
+            _context.ActivityTypes.Update(entity);
         }
     }
 }

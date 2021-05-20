@@ -21,7 +21,7 @@ namespace TaleEngine.Data.Repositories
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Edition> GetAll()
+        public List<Edition> GetAll()
         {
             return _context.Editions.ToList();
         }
@@ -38,17 +38,17 @@ namespace TaleEngine.Data.Repositories
 
         public void Insert(Edition entity)
         {
-            throw new NotImplementedException();
+            _context.Editions.Add(entity);
         }
 
         public void Save()
         {
-            throw new NotImplementedException();
+            _context.SaveChanges();
         }
 
         public void Update(Edition entity)
         {
-            throw new NotImplementedException();
+            _context.Editions.Update(entity);
         }
     }
 }

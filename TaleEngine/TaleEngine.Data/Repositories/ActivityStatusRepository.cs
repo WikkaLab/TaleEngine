@@ -20,7 +20,7 @@ namespace TaleEngine.Data.Repositories
             throw new System.NotImplementedException();
         }
 
-        public IEnumerable<ActivityStatus> GetAll()
+        public List<ActivityStatus> GetAll()
         {
             return _context.ActivityStatuses.ToList();
         }
@@ -33,7 +33,7 @@ namespace TaleEngine.Data.Repositories
 
         public void Insert(ActivityStatus entity)
         {
-            throw new System.NotImplementedException();
+            _context.ActivityStatuses.Add(entity);
         }
 
         public void Save()
@@ -43,7 +43,7 @@ namespace TaleEngine.Data.Repositories
 
         public void Update(ActivityStatus entity)
         {
-            throw new System.NotImplementedException();
+            _context.ActivityStatuses.Update(entity);
         }
     }
 }

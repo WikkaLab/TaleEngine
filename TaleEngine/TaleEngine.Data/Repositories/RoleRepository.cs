@@ -21,7 +21,7 @@ namespace TaleEngine.Data.Repositories
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Role> GetAll()
+        public List<Role> GetAll()
         {
             return _context.Roles.ToList();
         }
@@ -33,17 +33,17 @@ namespace TaleEngine.Data.Repositories
 
         public void Insert(Role entity)
         {
-            throw new NotImplementedException();
+            _context.Roles.Add(entity);
         }
 
         public void Save()
         {
-            throw new NotImplementedException();
+            _context.SaveChanges();
         }
 
         public void Update(Role entity)
         {
-            throw new NotImplementedException();
+            _context.Roles.Update(entity);
         }
     }
 }

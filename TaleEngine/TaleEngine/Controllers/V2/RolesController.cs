@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using TaleEngine.Application.Contracts.Dtos;
 using TaleEngine.Application.Contracts.Services;
 
 namespace TaleEngine.Controllers.V2
@@ -38,9 +36,14 @@ namespace TaleEngine.Controllers.V2
         [HttpGet("[action]")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public ActionResult<List<RoleDto>> GetAllRoles()
+        public IActionResult GetAllRoles()
         {
             var result = _roleService.GetAllRoles();
+
+            if (result == null || result.Count == 0)
+            {
+                return NoContent();
+            }
 
             return Ok(result);
         }

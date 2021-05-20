@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc.ApplicationModels;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace TaleEngine.Helpers
 {
+    [ExcludeFromCodeCoverage]
     public class GroupingByNamespaceConvention : IControllerModelConvention
     {
         public void Apply(ControllerModel controller)

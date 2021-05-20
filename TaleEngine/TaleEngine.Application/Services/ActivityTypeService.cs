@@ -19,12 +19,7 @@ namespace TaleEngine.Application.Services
         {
             var actTypes = _activityTypeDomainService.GetAllActivityTypes();
 
-            var result = new List<ActivityTypeDto>();
-
-            foreach (var aT in actTypes)
-            {
-                result.Add(ActivityTypeMapper.Map(aT));
-            }
+            var result = ActivityTypeMapper.Map(actTypes);
 
             return result;
         }

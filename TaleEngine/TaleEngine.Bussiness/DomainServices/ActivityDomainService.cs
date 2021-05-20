@@ -33,12 +33,7 @@ namespace TaleEngine.Bussiness.DomainServices
             var activities = _unitOfWork.ActivityRepository
                 .GetActivitiesByStatus(editionId, activeStatus.Id);
 
-            var models = new List<ActivityModel>();
-
-            foreach (var act in activities)
-            {
-                models.Add(ActivityMapper.Map(act));
-            }
+            var models = ActivityMapper.Map(activities);
 
             return models;
         }
@@ -56,12 +51,7 @@ namespace TaleEngine.Bussiness.DomainServices
             var activities = _unitOfWork.ActivityRepository
                 .GetActivitiesByStatus(editionId, pendingStatus.Id);
 
-            var models = new List<ActivityModel>();
-
-            foreach (var act in activities)
-            {
-                models.Add(ActivityMapper.Map(act));
-            }
+            var models = ActivityMapper.Map(activities);
 
             return models;
         }
@@ -104,7 +94,7 @@ namespace TaleEngine.Bussiness.DomainServices
                 _unitOfWork.ActivityRepository.Insert(activity);
                 _unitOfWork.ActivityRepository.Save();
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return 0;
             }
@@ -174,7 +164,7 @@ namespace TaleEngine.Bussiness.DomainServices
                 _unitOfWork.ActivityRepository.Update(activity);
                 _unitOfWork.ActivityRepository.Save();
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return 0;
             }
@@ -204,12 +194,7 @@ namespace TaleEngine.Bussiness.DomainServices
                 .GetActiveActivitiesFiltered(activeStatus.Id, type, currentEdition.Id,
                     title, skipByPagination, activitiesPerPage);
 
-            var models = new List<ActivityModel>();
-
-            foreach (var act in activities)
-            {
-                models.Add(ActivityMapper.Map(act));
-            }
+            var models = ActivityMapper.Map(activities);
 
             int totalActivities = _unitOfWork.ActivityRepository
                 .GetTotalActivities(activeStatus.Id, type, currentEdition.Id, title);
@@ -248,15 +233,9 @@ namespace TaleEngine.Bussiness.DomainServices
                 return null;
             }
 
-            var models = new List<ActivityModel>();
-
-            foreach (var act in activities)
-            {
-                models.Add(ActivityMapper.Map(act));
-            }
+            var models = ActivityMapper.Map(activities);
 
             return models;
         }
-
     }
 }

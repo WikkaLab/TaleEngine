@@ -19,12 +19,7 @@ namespace TaleEngine.Application.Services
         {
             var actStatuses = _activityStatusDomainService.GetAllActivityStatuses();
 
-            var result = new List<ActivityStatusDto>();
-
-            foreach (var aS in actStatuses)
-            {
-                result.Add(ActivityStatusMapper.Map(aS));
-            }
+            var result = ActivityStatusMapper.Map(actStatuses);
 
             return result;
         }

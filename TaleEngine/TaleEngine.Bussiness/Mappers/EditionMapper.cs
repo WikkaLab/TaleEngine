@@ -7,6 +7,8 @@ namespace TaleEngine.Bussiness.Mappers
     {
         public static Edition Map(EditionModel editionModel)
         {
+            if (editionModel == null) return null;
+
             return new Edition
             {
                 DateEnd = editionModel.DateEnd,
@@ -17,6 +19,8 @@ namespace TaleEngine.Bussiness.Mappers
 
         public static EditionModel Map(Edition editionEntity)
         {
+            if (editionEntity == null) return null;
+
             return new EditionModel
             {
                 Id = editionEntity.Id,
