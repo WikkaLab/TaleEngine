@@ -58,12 +58,12 @@ namespace TaleEngine.Application.Testing.Services
         }
 
         [Fact]
-        public void GetCurrentOrLastEdition_Success()
+        public void GetCurrentOrFutureEdition_Success()
         {
             // Arrange
             int editionId = 1;
             EditionModel model = EditionModelBuilder.BuildEditionModel();
-            serviceMock.Setup(x => x.GetLastOrCurrentEdition(editionId))
+            serviceMock.Setup(x => x.GetFutureOrCurrentEdition(editionId))
                 .Returns(model);
 
             EditionService target = new EditionService(serviceMock.Object);
@@ -72,16 +72,20 @@ namespace TaleEngine.Application.Testing.Services
             var result = target.GetCurrentOrLastEdition(editionId);
 
             // Asert
-            serviceMock.Verify(x => x.GetLastOrCurrentEdition(It.IsAny<int>()), Times.Once);
+            serviceMock.Verify(x => x.GetFutureOrCurrentEdition(It.IsAny<int>()), Times.Once);
         }
 
         [Fact]
-        public void GetCurrentOrLastEdition_EditionIdIsZero_ShouldReturnZero()
+        public void GetCurrentOrFutureEdition_EditionIdIsZero_ShouldReturnZero()
         {
+            // thats why tests are important <3
+            // we will fix next livestream, have a good day and thanks for watching
+            // see u!
+
             // Arrange
             int editionId = 0;
             EditionModel model = null;
-            serviceMock.Setup(x => x.GetLastOrCurrentEdition(editionId))
+            serviceMock.Setup(x => x.GetFutureOrCurrentEdition(editionId))
                 .Returns(model);
 
             EditionService target = new EditionService(serviceMock.Object);
@@ -91,7 +95,7 @@ namespace TaleEngine.Application.Testing.Services
 
             // Asert
             result.Should().Be(0);
-            serviceMock.Verify(x => x.GetLastOrCurrentEdition(It.IsAny<int>()), Times.Once);
+            serviceMock.Verify(x => x.GetFutureOrCurrentEdition(It.IsAny<int>()), Times.Once);
         }
     }
 }
