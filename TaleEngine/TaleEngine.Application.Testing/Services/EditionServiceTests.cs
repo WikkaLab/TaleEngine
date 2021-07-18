@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using Moq;
+using System;
 using System.Diagnostics.CodeAnalysis;
 using TaleEngine.Application.Services;
 using TaleEngine.Bussiness.Contracts.DomainServices;
@@ -10,11 +11,11 @@ using Xunit;
 namespace TaleEngine.Application.Testing.Services
 {
     [ExcludeFromCodeCoverage]
-    public class EditionServiceTEsts
+    public class EditionServiceTests
     {
         private Mock<IEditionDomainService> serviceMock;
 
-        public EditionServiceTEsts()
+        public EditionServiceTests()
         {
             serviceMock = new Mock<IEditionDomainService>();
         }
@@ -78,10 +79,6 @@ namespace TaleEngine.Application.Testing.Services
         [Fact]
         public void GetCurrentOrFutureEdition_EditionIdIsZero_ShouldReturnZero()
         {
-            // thats why tests are important <3
-            // we will fix next livestream, have a good day and thanks for watching
-            // see u!
-
             // Arrange
             int editionId = 0;
             EditionModel model = null;
@@ -91,11 +88,11 @@ namespace TaleEngine.Application.Testing.Services
             EditionService target = new EditionService(serviceMock.Object);
 
             // Act
-            var result = target.GetCurrentOrLastEdition(editionId);
+            Assert.Throws<ArgumentNullException>(() 
+                => target.GetCurrentOrLastEdition(editionId));
 
             // Asert
-            result.Should().Be(0);
-            serviceMock.Verify(x => x.GetFutureOrCurrentEdition(It.IsAny<int>()), Times.Once);
+            serviceMock.Verify(x => x.GetFutureOrCurrentEdition(It.IsAny<int>()), Times.Never);
         }
     }
 }
