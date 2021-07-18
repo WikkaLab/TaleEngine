@@ -16,7 +16,7 @@ namespace TaleEngine.Data.Contracts
         DbSet<AssignedPermission> AssignedPermissions { get; set; }
         DbSet<Role> Roles { get; set; }
         DbSet<Edition> Editions { get; set; }
-        DbSet<TimeSlot> TimeSlot { get; set; }
+        DbSet<TimeSlot> TimeSlots { get; set; }
 
         int SaveChanges();
     }

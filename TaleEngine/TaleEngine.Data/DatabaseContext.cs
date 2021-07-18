@@ -54,7 +54,7 @@ namespace TaleEngine.Data
         public DbSet<AssignedPermission> AssignedPermissions { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<Edition> Editions { get; set; }
-        public DbSet<TimeSlot> TimeSlot { get; set; }
+        public DbSet<TimeSlot> TimeSlots { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

@@ -18,7 +18,9 @@ namespace TaleEngine.Data.Repositories
 
         public void Delete(int entityId)
         {
-            throw new NotImplementedException();
+            var entity = GetById(entityId);
+
+            _context.Activities.Remove(entity);
         }
 
         public List<Activity> GetAll()

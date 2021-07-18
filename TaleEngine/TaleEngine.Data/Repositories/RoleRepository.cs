@@ -18,7 +18,9 @@ namespace TaleEngine.Data.Repositories
 
         public void Delete(int entityId)
         {
-            throw new NotImplementedException();
+            var entity = GetById(entityId);
+
+            _context.Roles.Remove(entity);
         }
 
         public List<Role> GetAll()
@@ -28,7 +30,8 @@ namespace TaleEngine.Data.Repositories
 
         public Role GetById(int entityId)
         {
-            throw new NotImplementedException();
+            return _context.Roles
+                .FirstOrDefault(x => x.Id == entityId);
         }
 
         public void Insert(Role entity)

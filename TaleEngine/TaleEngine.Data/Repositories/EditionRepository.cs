@@ -18,7 +18,9 @@ namespace TaleEngine.Data.Repositories
 
         public void Delete(int entityId)
         {
-            throw new NotImplementedException();
+            var entity = GetById(entityId);
+
+            _context.Editions.Remove(entity);
         }
 
         public List<Edition> GetAll()
@@ -28,7 +30,8 @@ namespace TaleEngine.Data.Repositories
 
         public Edition GetById(int entityId)
         {
-            return _context.Editions.FirstOrDefault(ed => ed.Id == entityId);
+            return _context.Editions
+                .FirstOrDefault(ed => ed.Id == entityId);
         }
 
         public List<Edition> GetEditions(int ofEvent)
