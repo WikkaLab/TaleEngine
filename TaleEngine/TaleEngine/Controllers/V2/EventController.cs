@@ -31,9 +31,9 @@ namespace TaleEngine.Controllers.V2
         }
 
         [HttpGet("[action]/{selectedEvent}")]
-        public IActionResult GetCurrentOrLastEdition(int selectedEvent)
+        public IActionResult GetCurrentOrFutureEdition(int selectedEvent)
         {
-            var result = _eventService.GetCurrentOrLastEdition(selectedEvent);
+            var result = _eventService.GetCurrentOrFutureEdition(selectedEvent);
 
             return Ok(result);
         }

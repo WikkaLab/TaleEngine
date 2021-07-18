@@ -122,7 +122,7 @@ namespace TaleEngine.Application.Testing.Services
         }
 
         [Fact]
-        public void GetCurrentOrLastEdition_Success()
+        public void GetCurrentOrFutureEdition_Success()
         {
             // Arrange
             int eventId = 1;
@@ -135,14 +135,14 @@ namespace TaleEngine.Application.Testing.Services
                 eventServiceMock.Object, editionServiceMock.Object);
 
             // Act
-            var result = service.GetCurrentOrLastEdition(eventId);
+            var result = service.GetCurrentOrFutureEdition(eventId);
 
             // Assert
             result.Should().NotBe(0);
         }
 
         [Fact]
-        public void GetCurrentOrLastEdition_EditionIdIsZero_Success()
+        public void GetCurrentOrFutureEdition_EditionIdIsZero_Success()
         {
             // Arrange
             int eventId = 0;
@@ -155,7 +155,7 @@ namespace TaleEngine.Application.Testing.Services
                 eventServiceMock.Object, editionServiceMock.Object);
 
             // Act
-            var result = service.GetCurrentOrLastEdition(eventId);
+            var result = service.GetCurrentOrFutureEdition(eventId);
 
             // Assert
             result.Should().Be(0);

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TaleEngine.Bussiness.Contracts.DomainServices;
 using TaleEngine.Bussiness.Contracts.Models;
 using TaleEngine.Bussiness.Mappers;
+using System.Linq;
 using TaleEngine.Data.Contracts;
 
 namespace TaleEngine.Bussiness.DomainServices
@@ -35,13 +36,24 @@ namespace TaleEngine.Bussiness.DomainServices
             return editionDaysDto;
         }
 
-        public EditionModel GetLastOrCurrentEdition(int ofEvent)
+        public EditionModel GetFutureOrCurrentEdition(int ofEvent)
         {
-            var edition = _unitOfWork.EditionRepository.GetLastEditionInEvent(ofEvent);
+            if (ofEvent == 0) throw new ArgumentNullException();
 
-            if (edition != null)
+            var editionsOfEvent = _unitOfWork.EditionRepository.GetEditions(ofEvent);
+
+            if (editionsOfEvent == null || editionsOfEvent.Count == 0) return null;
+
+            var futureOrCurrentEdition = editionsOfEvent.Where(ed => ed.DateInit.Date > DateTime.Today).FirstOrDefault();
+
+            if (futureOrCurrentEdition == null)
             {
-                return EditionMapper.Map(edition);
+                futureOrCurrentEdition = _unitOfWork.EditionRepository.GetLastEditionInEvent(ofEvent);
+            }
+
+            if (futureOrCurrentEdition != null)
+            {
+                return EditionMapper.Map(futureOrCurrentEdition);
             }
 
             return null;

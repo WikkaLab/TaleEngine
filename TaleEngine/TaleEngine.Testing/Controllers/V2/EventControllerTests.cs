@@ -73,27 +73,27 @@ namespace TaleEngine.Testing.Controllers.V2
         }
 
         [Fact]
-        public void GetCurrentOrLastEdition_Success()
+        public void GetCurrentOrFutureEdition_Success()
         {
             // Arrange
             int eventId = 1;
             int lastEdition = 2;
 
             Mock<IEventService> serviceMock = new Mock<IEventService>();
-            serviceMock.Setup(x => x.GetCurrentOrLastEdition(eventId))
+            serviceMock.Setup(x => x.GetCurrentOrFutureEdition(eventId))
                 .Returns(lastEdition);
 
             EventController target = new EventController(serviceMock.Object);
 
             // Act
-            var result = target.GetCurrentOrLastEdition(eventId);
+            var result = target.GetCurrentOrFutureEdition(eventId);
 
             // Assert
             ObjectResult resultAsObjResult = result as ObjectResult;
             result.Should().NotBeNull();
             resultAsObjResult.StatusCode.Should().Be(StatusCodes.Status200OK);
 
-            serviceMock.Verify(x => x.GetCurrentOrLastEdition(eventId), Times.Once);
+            serviceMock.Verify(x => x.GetCurrentOrFutureEdition(eventId), Times.Once);
         }
     }
 }

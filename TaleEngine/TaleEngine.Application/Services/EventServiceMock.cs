@@ -15,7 +15,7 @@ namespace TaleEngine.Application.Services
             return EventDtoBuilder.BuildEventDtoList();
         }
 
-        public int GetCurrentOrLastEdition(int selectedEvent)
+        public int GetCurrentOrFutureEdition(int selectedEvent)
         {
             throw new NotImplementedException();
         }

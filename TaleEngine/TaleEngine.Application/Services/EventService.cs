@@ -29,7 +29,7 @@ namespace TaleEngine.Application.Services
             return result;
         }
 
-        public int GetCurrentOrLastEdition(int selectedEvent)
+        public int GetCurrentOrFutureEdition(int selectedEvent)
         {
             int lastOrCurrentEdition = _editionService.GetCurrentOrLastEdition(selectedEvent);
             return lastOrCurrentEdition;

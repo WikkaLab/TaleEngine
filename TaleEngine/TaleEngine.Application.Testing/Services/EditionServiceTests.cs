@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using Moq;
+using System;
 using System.Diagnostics.CodeAnalysis;
 using TaleEngine.Application.Services;
 using TaleEngine.Bussiness.Contracts.DomainServices;
@@ -10,11 +11,11 @@ using Xunit;
 namespace TaleEngine.Application.Testing.Services
 {
     [ExcludeFromCodeCoverage]
-    public class EditionServiceTEsts
+    public class EditionServiceTests
     {
         private Mock<IEditionDomainService> serviceMock;
 
-        public EditionServiceTEsts()
+        public EditionServiceTests()
         {
             serviceMock = new Mock<IEditionDomainService>();
         }
@@ -58,12 +59,12 @@ namespace TaleEngine.Application.Testing.Services
         }
 
         [Fact]
-        public void GetCurrentOrLastEdition_Success()
+        public void GetCurrentOrFutureEdition_Success()
         {
             // Arrange
             int editionId = 1;
             EditionModel model = EditionModelBuilder.BuildEditionModel();
-            serviceMock.Setup(x => x.GetLastOrCurrentEdition(editionId))
+            serviceMock.Setup(x => x.GetFutureOrCurrentEdition(editionId))
                 .Returns(model);
 
             EditionService target = new EditionService(serviceMock.Object);
@@ -72,26 +73,26 @@ namespace TaleEngine.Application.Testing.Services
             var result = target.GetCurrentOrLastEdition(editionId);
 
             // Asert
-            serviceMock.Verify(x => x.GetLastOrCurrentEdition(It.IsAny<int>()), Times.Once);
+            serviceMock.Verify(x => x.GetFutureOrCurrentEdition(It.IsAny<int>()), Times.Once);
         }
 
         [Fact]
-        public void GetCurrentOrLastEdition_EditionIdIsZero_ShouldReturnZero()
+        public void GetCurrentOrFutureEdition_EditionIdIsZero_ShouldReturnZero()
         {
             // Arrange
             int editionId = 0;
             EditionModel model = null;
-            serviceMock.Setup(x => x.GetLastOrCurrentEdition(editionId))
+            serviceMock.Setup(x => x.GetFutureOrCurrentEdition(editionId))
                 .Returns(model);
 
             EditionService target = new EditionService(serviceMock.Object);
 
             // Act
-            var result = target.GetCurrentOrLastEdition(editionId);
+            Assert.Throws<ArgumentNullException>(() 
+                => target.GetCurrentOrLastEdition(editionId));
 
             // Asert
-            result.Should().Be(0);
-            serviceMock.Verify(x => x.GetLastOrCurrentEdition(It.IsAny<int>()), Times.Once);
+            serviceMock.Verify(x => x.GetFutureOrCurrentEdition(It.IsAny<int>()), Times.Never);
         }
     }
 }

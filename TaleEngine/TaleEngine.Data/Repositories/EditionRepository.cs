@@ -31,9 +31,16 @@ namespace TaleEngine.Data.Repositories
             return _context.Editions.FirstOrDefault(ed => ed.Id == entityId);
         }
 
+        public List<Edition> GetEditions(int ofEvent)
+        {
+            return _context.Editions.Where(ed => ed.EventId == ofEvent).ToList();
+        }
+
         public Edition GetLastEditionInEvent(int ofEvent)
         {
-            return _context.Editions.FirstOrDefault(ed => ed.EventId == ofEvent);
+            return _context.Editions
+                .OrderBy(x => x.DateInit)
+                .LastOrDefault(ed => ed.EventId == ofEvent);
         }
 
         public void Insert(Edition entity)

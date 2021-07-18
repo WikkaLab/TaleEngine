@@ -1,4 +1,5 @@
-﻿using TaleEngine.Application.Contracts.Dtos;
+﻿using System;
+using TaleEngine.Application.Contracts.Dtos;
 using TaleEngine.Application.Contracts.Services;
 using TaleEngine.Application.Mappers;
 using TaleEngine.Bussiness.Contracts.DomainServices;
@@ -16,7 +17,9 @@ namespace TaleEngine.Application.Services
 
         public int GetCurrentOrLastEdition(int selectedEvent)
         {
-            var lastOrCurrentEdition = _editionDomainService.GetLastOrCurrentEdition(selectedEvent);
+            if (selectedEvent == 0) throw new ArgumentNullException();
+
+            var lastOrCurrentEdition = _editionDomainService.GetFutureOrCurrentEdition(selectedEvent);
 
             if (lastOrCurrentEdition != null)
             {
