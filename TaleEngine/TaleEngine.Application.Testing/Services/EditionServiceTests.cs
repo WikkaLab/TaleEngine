@@ -88,7 +88,7 @@ namespace TaleEngine.Application.Testing.Services
             EditionService target = new EditionService(serviceMock.Object);
 
             // Act
-            Assert.Throws<ArgumentNullException>(() 
+            Assert.Throws<ArgumentNullException>(()
                 => target.GetCurrentOrLastEdition(editionId));
 
             // Asert

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using TaleEngine.Application.Contracts.Services;
 
 namespace TaleEngine.Controllers.V1
@@ -11,7 +12,7 @@ namespace TaleEngine.Controllers.V1
 
         public ActivityTypeController(IActivityTypeService activityTypeService)
         {
-            _activityTypeService = activityTypeService;
+            _activityTypeService = activityTypeService ?? throw new ArgumentNullException();
         }
 
         [HttpGet("[action]")]
