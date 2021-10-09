@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using TaleEngine.Data.Contracts;
 using TaleEngine.Data.Contracts.Entities;
 using TaleEngine.Data.Contracts.Repositories;
@@ -22,7 +23,7 @@ namespace TaleEngine.Data.Repositories
 
         public List<User> GetAll()
         {
-            throw new NotImplementedException();
+            return _context.Users.ToList();
         }
 
         public User GetById(int entityId)

@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using TaleEngine.Bussiness.Contracts.DomainServices;
+using TaleEngine.Bussiness.Contracts.Models;
+using TaleEngine.Bussiness.Mappers;
 using TaleEngine.Data.Contracts;
 
 namespace TaleEngine.Bussiness.DomainServices.Backoffice
@@ -13,5 +16,12 @@ namespace TaleEngine.Bussiness.DomainServices.Backoffice
             _unitOfWork = unitOfWork ?? throw new ArgumentNullException();
         }
 
+        public List<UserModel> GetAllUsers()
+        {
+            var entities = _unitOfWork.UserRepository.GetAll();
+
+            var result = UserMapper.MapToUserModels(entities);
+            return result;
+        }
     }
 }

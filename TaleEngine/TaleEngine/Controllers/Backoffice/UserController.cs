@@ -14,5 +14,13 @@ namespace TaleEngine.Controllers.Backoffice
         {
             _userService = userService ?? throw new ArgumentNullException();
         }
+
+        [HttpGet("[action]")]
+        public IActionResult GetAllUsers()
+        {
+            var result = _userService.GetAllUsers();
+
+            return Ok(result);
+        }
     }
 }
