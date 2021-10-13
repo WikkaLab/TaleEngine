@@ -17,7 +17,8 @@ namespace TaleEngine.Bussiness.Mappers
                 Name = userModel.Name,
                 Blog = userModel.Blog,
                 Mail = userModel.Mail,
-                Website = userModel.Website
+                Website = userModel.Website,
+                StatusId = userModel.Status
             };
         }
 
@@ -31,7 +32,8 @@ namespace TaleEngine.Bussiness.Mappers
                 Name = userEntity.Name,
                 Website = userEntity.Website,
                 Mail = userEntity.Mail,
-                Blog = userEntity.Blog
+                Blog = userEntity.Blog,
+                Status = userEntity.StatusId
             };
         }
 

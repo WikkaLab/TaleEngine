@@ -7,5 +7,6 @@
         public string Mail { get; set; }
         public string Website { get; set; }
         public string Blog { get; set; }
+        public int Status { get; set; }
     }
 }

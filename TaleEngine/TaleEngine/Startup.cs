@@ -69,6 +69,7 @@ namespace TaleEngine
                 services.AddTransient<IRoleDomainService, RoleDomainService>();
                 services.AddTransient<IUserService, UserService>();
                 services.AddTransient<IUserDomainService, UserDomainService>();
+                services.AddTransient<IUserStatusDomainService, UserStatusDomainService>();
             }
         }
 
