@@ -28,7 +28,8 @@ namespace TaleEngine.Data.Repositories
 
         public User GetById(int entityId)
         {
-            throw new NotImplementedException();
+            return _context.Users
+                .FirstOrDefault(a => a.Id == entityId);
         }
 
         public void Insert(User entity)
@@ -38,12 +39,12 @@ namespace TaleEngine.Data.Repositories
 
         public void Save()
         {
-            throw new NotImplementedException();
+            _context.SaveChanges();
         }
 
         public void Update(User entity)
         {
-            throw new NotImplementedException();
+            _context.Users.Update(entity);
         }
     }
 }
