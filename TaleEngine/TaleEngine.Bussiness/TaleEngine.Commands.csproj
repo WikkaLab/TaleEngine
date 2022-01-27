@@ -16,6 +16,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TaleEngine.Data.Contracts\TaleEngine.Data.Contracts.csproj" />
-    <ProjectReference Include="..\TaleEngine.Bussiness.Contracts\TaleEngine.Bussiness.Contracts.csproj" />
+    <ProjectReference Include="..\TaleEngine.Bussiness.Contracts\TaleEngine.Domain.Contracts.csproj" />
   </ItemGroup>
 </Project>

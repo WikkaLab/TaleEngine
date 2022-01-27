@@ -26,7 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TaleEngine.Bussiness\TaleEngine.Bussiness.csproj" />
+    <ProjectReference Include="..\TaleEngine.Bussiness\TaleEngine.Commands.csproj" />
     <ProjectReference Include="..\TaleEngine.Fakes\TaleEngine.Fakes.csproj" />
   </ItemGroup>
 

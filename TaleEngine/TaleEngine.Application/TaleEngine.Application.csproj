@@ -16,7 +16,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TaleEngine.Application.Contracts\TaleEngine.Application.Contracts.csproj" />
-    <ProjectReference Include="..\TaleEngine.Bussiness.Contracts\TaleEngine.Bussiness.Contracts.csproj" />
+    <ProjectReference Include="..\TaleEngine.Bussiness.Contracts\TaleEngine.Domain.Contracts.csproj" />
     <ProjectReference Include="..\TaleEngine.Fakes\TaleEngine.Fakes.csproj" />
   </ItemGroup>
 </Project>

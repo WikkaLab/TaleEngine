@@ -42,10 +42,10 @@
     <ProjectReference Include="..\TaleEngine.Data\TaleEngine.Data.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
-    <ProjectReference Include="..\TaleEngine.Bussiness.Contracts\TaleEngine.Bussiness.Contracts.csproj">
+    <ProjectReference Include="..\TaleEngine.Bussiness.Contracts\TaleEngine.Domain.Contracts.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
-    <ProjectReference Include="..\TaleEngine.Bussiness\TaleEngine.Bussiness.csproj">
+    <ProjectReference Include="..\TaleEngine.Bussiness\TaleEngine.Commands.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
   </ItemGroup>
