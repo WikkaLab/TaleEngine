@@ -6,12 +6,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using TaleEngine.Application.Contracts.Services;
 using TaleEngine.Application.Services;
+using TaleEngine.Application.Services.Backoffice;
 using TaleEngine.Bussiness.Contracts.DomainServices;
 using TaleEngine.Bussiness.DomainServices;
+using TaleEngine.Bussiness.DomainServices.Backoffice;
 using TaleEngine.Data;
 using TaleEngine.Data.Contracts;
 using TaleEngine.Extensions;
-using TaleEngine.Helpers;
 
 namespace TaleEngine
 {
@@ -66,6 +67,9 @@ namespace TaleEngine
                 services.AddTransient<IActivityStatusDomainService, ActivityStatusDomainService>();
                 services.AddTransient<IRoleService, RoleService>();
                 services.AddTransient<IRoleDomainService, RoleDomainService>();
+                services.AddTransient<IUserService, UserService>();
+                services.AddTransient<IUserDomainService, UserDomainService>();
+                services.AddTransient<IUserStatusDomainService, UserStatusDomainService>();
             }
         }
 

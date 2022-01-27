@@ -24,7 +24,8 @@ namespace TaleEngine.Data
                    .Build();
 
                 optionsBuilder
-                    .UseSqlServer(configuration["ConnectionString"])
+                    .UseSqlServer(configuration["ConnectionString"],
+                        x => x.MigrationsAssembly("TaleEngine.Data"))
                     .EnableSensitiveDataLogging();
             }
         }

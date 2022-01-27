@@ -11,5 +11,7 @@ namespace TaleEngine.Data.Contracts
         IEditionRepository EditionRepository { get; }
         ITimeSlotRepository TimeSlotRepository { get; }
         IRoleRepository RoleRepository { get; }
+        IUserRepository UserRepository { get; }
+        IUserStatusRepository UserStatusRepository { get; }
     }
 }

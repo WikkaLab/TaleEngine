@@ -3,7 +3,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using System;
-using System.Reflection;
 using TaleEngine.Data;
 using TaleEngine.Helpers;
 using TaleEngine.Infrastructure.Filters;
@@ -41,7 +40,7 @@ namespace TaleEngine.Extensions
                 options.UseSqlServer(configuration["ConnectionString"],
                     sqlServerOptionsAction: sqlOptions =>
                     {
-                        sqlOptions.MigrationsAssembly(typeof(Startup).GetTypeInfo().Assembly.GetName().Name);
+                        sqlOptions.MigrationsAssembly("TaleEngine.Data");
                         sqlOptions.EnableRetryOnFailure(maxRetryCount: 15, maxRetryDelay: TimeSpan.FromSeconds(30), errorNumbersToAdd: null);
                     });
             },
