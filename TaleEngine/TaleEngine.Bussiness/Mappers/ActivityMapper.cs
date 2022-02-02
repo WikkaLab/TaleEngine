@@ -1,43 +1,45 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using TaleEngine.Bussiness.Contracts.Models;
-using TaleEngine.Data.Contracts.Entities;
+using TaleEngine.API.Contracts.Dtos;
+using TaleEngine.Domain.Models;
 
-namespace TaleEngine.Bussiness.Mappers
+namespace TaleEngine.Commands.Mappers
 {
     public static class ActivityMapper
     {
-        public static Activity Map(ActivityModel activityModel)
+        // To models from DTO
+
+        public static Activity Map(ActivityDto dto)
         {
-            if (activityModel == null) return null;
+            if (dto == null) return null;
 
             return new Activity
             {
-                Id = activityModel.Id,
-                Title = activityModel.Title,
-                Description = activityModel.Description,
-                Places = activityModel.Places,
-                EndDateTime = activityModel.EndDateTime,
-                StartDateTime = activityModel.StartDateTime,
-                StatusId = activityModel.StatusId,
-                TypeId = activityModel.TypeId,
-                Image = activityModel.Image,
-                TimeSlotId = activityModel.TimeSlotId ?? 0
+                Id = dto.Id,
+                Title = dto.Title,
+                Description = dto.Description,
+                Places = dto.Places,
+                //EndDateTime = dto.ActivityEnd,
+                //StartDateTime = dto.ActivityStart,
+                StatusId = dto.StatusId,
+                TypeId = dto.TypeId,
+                Image = dto.Image,
+                TimeSlotId = dto.TimeSlotId
             };
         }
 
-        public static List<Activity> Map(List<ActivityModel> activityModels)
+        public static List<Activity> Map(List<ActivityDto> dtos)
         {
-            if (activityModels == null || activityModels.Count == 0) return null;
+            if (dtos == null || dtos.Count == 0) return null;
 
-            return activityModels.Select(Map).ToList();
+            return dtos.Select(Map).ToList();
         }
 
-        public static ActivityModel Map(Activity activity)
+        public static ActivityDto Map(Activity activity)
         {
             if (activity == null) return null;
 
-            return new ActivityModel
+            return new ActivityDto
             {
                 Id = activity.Id,
                 Title = activity.Title,
@@ -46,17 +48,17 @@ namespace TaleEngine.Bussiness.Mappers
                 Image = activity.Image,
                 TypeId = activity.TypeId,
                 StatusId = activity.StatusId,
-                EndDateTime = activity.EndDateTime,
-                StartDateTime = activity.StartDateTime,
-                TimeSlotId = activity.TimeSlotId
+                //EndDateTime = activity.EndDateTime,
+                //StartDateTime = activity.StartDateTime,
+                TimeSlotId = activity.TimeSlotId ?? 0
             };
         }
 
-        public static List<ActivityModel> Map(List<Activity> activities)
+        public static List<ActivityDto> Map(List<Activity> models)
         {
-            if (activities == null || activities.Count == 0) return null;
+            if (models == null || models.Count == 0) return null;
 
-            return activities.Select(Map).ToList();
+            return models.Select(Map).ToList();
         }
 
     }

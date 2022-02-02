@@ -2,7 +2,7 @@
 
 namespace TaleEngine.Data.Contracts.Repositories
 {
-    public interface ITimeSlotRepository : IGenericRepository<TimeSlot>
+    public interface ITimeSlotRepository : IGenericRepository<TimeSlotEntity>
     {
     }
 }

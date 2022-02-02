@@ -1,15 +1,14 @@
-﻿using TaleEngine.Bussiness.Contracts.Models;
-using TaleEngine.Data.Contracts.Entities;
+﻿using TaleEngine.Data.Contracts.Entities;
 
-namespace TaleEngine.Bussiness.Mappers
+namespace TaleEngine.Commands.Mappers
 {
     public static class EditionMapper
     {
-        public static Edition Map(EditionModel editionModel)
+        public static EditionEntity Map(EditionModel editionModel)
         {
             if (editionModel == null) return null;
 
-            return new Edition
+            return new EditionEntity
             {
                 DateEnd = editionModel.DateEnd,
                 DateInit = editionModel.DateInit,
@@ -17,7 +16,7 @@ namespace TaleEngine.Bussiness.Mappers
             };
         }
 
-        public static EditionModel Map(Edition editionEntity)
+        public static EditionModel Map(EditionEntity editionEntity)
         {
             if (editionEntity == null) return null;
 

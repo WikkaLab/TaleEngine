@@ -2,7 +2,6 @@
 using Moq;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using TaleEngine.Bussiness.DomainServices;
 using TaleEngine.Data.Contracts;
 using TaleEngine.Data.Contracts.Entities;
 using TaleEngine.Data.Contracts.Repositories;
@@ -27,13 +26,13 @@ namespace TaleEngine.Business.Testing.Services
         public void GetActiveActivities_Success()
         {
             // Arrange
-            List<TimeSlot> list = TimeSlotBuilder.BuildTimeSlotList();
+            List<TimeSlotEntity> list = TimeSlotBuilder.BuildTimeSlotList();
 
             timeSlotRepoMock.Setup(x => x.GetAll())
                 .Returns(list);
             uowMock.Setup(x => x.TimeSlotRepository)
                 .Returns(timeSlotRepoMock.Object);
-            var target = new TimeSlotDomainService(uowMock.Object);
+            var target = new TimeSlotCommands(uowMock.Object);
 
             // Act
             var result = target.GetAllTimeSlots();
@@ -47,13 +46,13 @@ namespace TaleEngine.Business.Testing.Services
         public void GetActiveActivities_RepoIsEmpty_ShouldReturnNull()
         {
             // Arrange
-            List<TimeSlot> list = null;
+            List<TimeSlotEntity> list = null;
 
             timeSlotRepoMock.Setup(x => x.GetAll())
                 .Returns(list);
             uowMock.Setup(x => x.TimeSlotRepository)
                 .Returns(timeSlotRepoMock.Object);
-            var target = new TimeSlotDomainService(uowMock.Object);
+            var target = new TimeSlotCommands(uowMock.Object);
 
             // Act
             var result = target.GetAllTimeSlots();
@@ -66,13 +65,13 @@ namespace TaleEngine.Business.Testing.Services
         public void GetActiveActivities_EmptyResult_ShouldReturnNull()
         {
             // Arrange
-            List<TimeSlot> list = new();
+            List<TimeSlotEntity> list = new();
 
             timeSlotRepoMock.Setup(x => x.GetAll())
                 .Returns(list);
             uowMock.Setup(x => x.TimeSlotRepository)
                 .Returns(timeSlotRepoMock.Object);
-            var target = new TimeSlotDomainService(uowMock.Object);
+            var target = new TimeSlotCommands(uowMock.Object);
 
             // Act
             var result = target.GetAllTimeSlots();

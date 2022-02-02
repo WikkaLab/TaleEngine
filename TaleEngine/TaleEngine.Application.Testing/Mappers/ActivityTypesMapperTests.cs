@@ -1,6 +1,5 @@
 ﻿using FluentAssertions;
 using System.Diagnostics.CodeAnalysis;
-using TaleEngine.Application.Mappers;
 using TaleEngine.Fakes.Dtos;
 using TaleEngine.Fakes.Models;
 using Xunit;

@@ -1,17 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using TaleEngine.Bussiness.Contracts.Models;
 using TaleEngine.Data.Contracts.Entities;
 
-namespace TaleEngine.Bussiness.Mappers
+namespace TaleEngine.Commands.Mappers
 {
     public class UserMapper
     {
-        public static User Map(UserModel userModel)
+        public static UserEntity Map(UserModel userModel)
         {
             if (userModel == null) return null;
 
-            return new User
+            return new UserEntity
             {
                 Username = userModel.Username,
                 Name = userModel.Name,
@@ -22,7 +21,7 @@ namespace TaleEngine.Bussiness.Mappers
             };
         }
 
-        public static UserModel Map(User userEntity)
+        public static UserModel Map(UserEntity userEntity)
         {
             if (userEntity == null) return null;
 
@@ -37,14 +36,14 @@ namespace TaleEngine.Bussiness.Mappers
             };
         }
 
-        public static List<User> MapToUsers(List<UserModel> models)
+        public static List<UserEntity> MapToUsers(List<UserModel> models)
         {
             if (models == null || models.Count == 0) return null;
 
             return models.Select(Map).ToList();
         }
 
-        public static List<UserModel> MapToUserModels(List<User> entities)
+        public static List<UserModel> MapToUserModels(List<UserEntity> entities)
         {
             if (entities == null || entities.Count == 0) return null;
 

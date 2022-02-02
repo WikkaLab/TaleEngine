@@ -1,24 +1,24 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
-using TaleEngine.Application.Contracts.Services;
+using TaleEngine.Commands.Contracts;
 
-namespace TaleEngine.Controllers.V1
+namespace TaleEngine.API.Controllers.V1
 {
     [ApiController]
     [Route("api/v1/[controller]")]
     public class ActivityTypeController : Controller
     {
-        private readonly IActivityTypeService _activityTypeService;
+        private readonly IActivityTypeCommands _command;
 
-        public ActivityTypeController(IActivityTypeService activityTypeService)
+        public ActivityTypeController(IActivityTypeCommands command)
         {
-            _activityTypeService = activityTypeService ?? throw new ArgumentNullException();
+            _command = command ?? throw new ArgumentNullException();
         }
 
         [HttpGet("[action]")]
         public IActionResult GetActivityTypes()
         {
-            var result = _activityTypeService.GetActivityTypes();
+            var result = _command.GetActivityTypes();
 
             if (result == null || result.Count == 0)
             {

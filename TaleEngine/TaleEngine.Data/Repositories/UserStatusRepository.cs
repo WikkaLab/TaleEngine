@@ -21,18 +21,18 @@ namespace TaleEngine.Data.Repositories
             throw new NotImplementedException();
         }
 
-        public List<UserStatus> GetAll()
+        public List<UserStatusEntity> GetAll()
         {
             return _context.UserStatuses.ToList();
         }
 
-        public UserStatus GetById(int entityId)
+        public UserStatusEntity GetById(int entityId)
         {
             return _context.UserStatuses
                 .FirstOrDefault(a => a.Id == entityId);
         }
 
-        public void Insert(UserStatus entity)
+        public void Insert(UserStatusEntity entity)
         {
             throw new NotImplementedException();
         }
@@ -42,7 +42,7 @@ namespace TaleEngine.Data.Repositories
             throw new NotImplementedException();
         }
 
-        public void Update(UserStatus entity)
+        public void Update(UserStatusEntity entity)
         {
             throw new NotImplementedException();
         }

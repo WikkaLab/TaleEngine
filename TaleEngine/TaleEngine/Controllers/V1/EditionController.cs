@@ -1,23 +1,23 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using TaleEngine.Application.Contracts.Services;
+using TaleEngine.Commands.Contracts;
 
-namespace TaleEngine.Controllers.V1
+namespace TaleEngine.API.Controllers.V1
 {
     [ApiController]
     [Route("api/v1/[controller]")]
     public class EditionController : Controller
     {
-        private readonly IEditionService _editionService;
+        private readonly IEditionCommands _command;
 
-        public EditionController(IEditionService editionService)
+        public EditionController(IEditionCommands command)
         {
-            _editionService = editionService;
+            _command = command;
         }
 
         [HttpGet("[action]/{editionId}")]
         public IActionResult GetEditionDays(int editionId)
         {
-            var result = _editionService.GetEditionDays(editionId);
+            var result = _command.GetEditionDays(editionId);
 
             if (result == null)
             {

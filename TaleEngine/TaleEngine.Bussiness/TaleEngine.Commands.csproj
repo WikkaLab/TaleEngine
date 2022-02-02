@@ -14,8 +14,10 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
   </ItemGroup>
+
   <ItemGroup>
-    <ProjectReference Include="..\TaleEngine.Data.Contracts\TaleEngine.Data.Contracts.csproj" />
-    <ProjectReference Include="..\TaleEngine.Bussiness.Contracts\TaleEngine.Domain.Contracts.csproj" />
+    <ProjectReference Include="..\TaleEngine.API.Contracts\TaleEngine.API.Contracts.csproj" />
+    <ProjectReference Include="..\TaleEngine.Application\TaleEngine.DbServices.csproj" />
+    <ProjectReference Include="..\TaleEngine.Cross\TaleEngine.Cross.csproj" />
   </ItemGroup>
 </Project>

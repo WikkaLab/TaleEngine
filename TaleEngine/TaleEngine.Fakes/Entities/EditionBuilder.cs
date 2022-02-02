@@ -8,11 +8,11 @@ namespace TaleEngine.Fakes.Entities
     [ExcludeFromCodeCoverage]
     public static class EditionBuilder
     {
-        public static Edition BuildEdition()
+        public static EditionEntity BuildEdition()
         {
             var faker = new Faker();
 
-            var entity = new Edition
+            var entity = new EditionEntity
             {
                 Id = faker.Random.Number(1),
                 EventId = faker.Random.Number(),
@@ -22,9 +22,9 @@ namespace TaleEngine.Fakes.Entities
             return entity;
         }
 
-        public static List<Edition> BuildEditionList()
+        public static List<EditionEntity> BuildEditionList()
         {
-            return new List<Edition>
+            return new List<EditionEntity>
             {
                 BuildEdition()
             };

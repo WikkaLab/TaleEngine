@@ -44,124 +44,124 @@ namespace TaleEngine.Data
             return base.SaveChanges();
         }
 
-        public DbSet<Event> Events { get; set; }
-        public DbSet<Activity> Activities { get; set; }
-        public DbSet<ActivityType> ActivityTypes { get; set; }
-        public DbSet<ActivityStatus> ActivityStatuses { get; set; }
-        public DbSet<UserStatus> UserStatuses { get; set; }
-        public DbSet<User> Users { get; set; }
-        public DbSet<Permission> Permissions { get; set; }
-        public DbSet<PermissionValue> PermissionsValue { get; set; }
-        public DbSet<AssignedPermission> AssignedPermissions { get; set; }
-        public DbSet<Role> Roles { get; set; }
-        public DbSet<Edition> Editions { get; set; }
-        public DbSet<TimeSlot> TimeSlots { get; set; }
+        public DbSet<EventEntity> Events { get; set; }
+        public DbSet<ActivityEntity> Activities { get; set; }
+        public DbSet<ActivityTypeEntity> ActivityTypes { get; set; }
+        public DbSet<ActivityStatusEntity> ActivityStatuses { get; set; }
+        public DbSet<UserStatusEntity> UserStatuses { get; set; }
+        public DbSet<UserEntity> Users { get; set; }
+        public DbSet<PermissionEntity> Permissions { get; set; }
+        public DbSet<PermissionValueEntity> PermissionsValue { get; set; }
+        public DbSet<AssignedPermissionEntity> AssignedPermissions { get; set; }
+        public DbSet<RoleEntity> Roles { get; set; }
+        public DbSet<EditionEntity> Editions { get; set; }
+        public DbSet<TimeSlotEntity> TimeSlots { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<Event>()
+            builder.Entity<EventEntity>()
                 .Property(e => e.Id)
                 .ValueGeneratedOnAdd();
-            builder.Entity<Event>()
+            builder.Entity<EventEntity>()
                 .ToTable("Event");
 
-            builder.Entity<Edition>()
+            builder.Entity<EditionEntity>()
                 .Property(e => e.Id)
                 .ValueGeneratedOnAdd();
-            builder.Entity<Edition>()
+            builder.Entity<EditionEntity>()
                 .HasOne(ed => ed.Event)
                 .WithMany(ev => ev.Editions)
                 .HasForeignKey(ed => ed.EventId);
-            builder.Entity<Edition>()
+            builder.Entity<EditionEntity>()
                 .Property(e => e.Id)
                 .ValueGeneratedOnAdd();
-            builder.Entity<Edition>()
+            builder.Entity<EditionEntity>()
                 .ToTable("Edition");
 
-            builder.Entity<Activity>()
+            builder.Entity<ActivityEntity>()
                 .HasOne(a => a.Edition)
                 .WithMany(ed => ed.Activities)
                 .HasForeignKey(a => a.EditionId)
                 .OnDelete(DeleteBehavior.Restrict);
-            builder.Entity<Activity>()
+            builder.Entity<ActivityEntity>()
                 .HasOne(a => a.TimeSlot)
                 .WithMany(tS => tS.Activities)
                 .HasForeignKey(a => a.TimeSlotId);
-            builder.Entity<Activity>()
+            builder.Entity<ActivityEntity>()
                 .HasOne(a => a.Status)
                 .WithMany(aS => aS.Activities)
                 .HasForeignKey(a => a.StatusId);
-            builder.Entity<Activity>()
+            builder.Entity<ActivityEntity>()
                 .HasOne(a => a.Type)
                 .WithMany(aT => aT.Activities)
                 .HasForeignKey(a => a.TypeId);
-            builder.Entity<Activity>()
+            builder.Entity<ActivityEntity>()
                 .HasMany(a => a.UsersCreate)
                 .WithMany(u => u.ActivitiesCreate)
                 .UsingEntity(x => x.ToTable("ActivityCreators"));
-            builder.Entity<Activity>()
+            builder.Entity<ActivityEntity>()
                 .HasMany(a => a.UsersFav)
                 .WithMany(u => u.ActivitiesFav)
                 .UsingEntity(x => x.ToTable("FavActivities"));
-            builder.Entity<Activity>()
+            builder.Entity<ActivityEntity>()
                 .HasMany(a => a.UsersPlay)
                 .WithMany(u => u.ActivitiesPlay)
                 .UsingEntity(x => x.ToTable("ActivityEnrollments"));
 
-            builder.Entity<Activity>()
+            builder.Entity<ActivityEntity>()
                 .Property(e => e.Id)
                 .ValueGeneratedOnAdd();
-            builder.Entity<Activity>()
+            builder.Entity<ActivityEntity>()
                 .ToTable("Activity");
 
-            builder.Entity<User>()
+            builder.Entity<UserEntity>()
                 .Property(e => e.Id)
                 .ValueGeneratedOnAdd();
-            builder.Entity<User>()
+            builder.Entity<UserEntity>()
                 .ToTable("User");
-            builder.Entity<User>()
+            builder.Entity<UserEntity>()
                 .HasMany(u => u.Roles)
                 .WithMany(r => r.Users);
-            builder.Entity<User>()
+            builder.Entity<UserEntity>()
                 .HasOne(u => u.Status)
                 .WithMany(uS => uS.Users)
                 .HasForeignKey(u => u.StatusId);
 
-            builder.Entity<Role>()
+            builder.Entity<RoleEntity>()
                 .ToTable("Roles");
 
-            builder.Entity<AssignedPermission>()
+            builder.Entity<AssignedPermissionEntity>()
                 .HasKey(x => new { x.RoleId, x.PermissionId, x.PermissionValueId });
 
-            builder.Entity<UserStatus>()
+            builder.Entity<UserStatusEntity>()
                 .HasData(InitialUserStatusData.GetUserStatuses().ToArray());
-            builder.Entity<UserStatus>()
+            builder.Entity<UserStatusEntity>()
                 .ToTable("UserStatus");
 
-            builder.Entity<Role>()
+            builder.Entity<RoleEntity>()
                 .HasData(InitialRoleData.GetRoleData().ToArray());
-            builder.Entity<Role>()
+            builder.Entity<RoleEntity>()
                 .ToTable("Role");
 
-            builder.Entity<Permission>()
+            builder.Entity<PermissionEntity>()
                 .HasData(InitialPermissionData.GetPermissionData().ToArray());
-            builder.Entity<Permission>()
+            builder.Entity<PermissionEntity>()
                 .ToTable("Permission");
 
-            builder.Entity<PermissionValue>()
+            builder.Entity<PermissionValueEntity>()
                 .ToTable("PermissionValue");
 
-            builder.Entity<ActivityType>()
+            builder.Entity<ActivityTypeEntity>()
                 .HasData(InitialActivityTypeData.GetActivityTypes().ToArray());
-            builder.Entity<ActivityType>()
+            builder.Entity<ActivityTypeEntity>()
                 .ToTable("ActivityType");
 
-            builder.Entity<ActivityStatus>()
+            builder.Entity<ActivityStatusEntity>()
                 .HasData(InitialActivityStatusData.GetActivityStatuses().ToArray());
-            builder.Entity<ActivityStatus>()
+            builder.Entity<ActivityStatusEntity>()
                 .ToTable("ActivityStatus");
 
-            builder.Entity<TimeSlot>()
+            builder.Entity<TimeSlotEntity>()
                 .HasData(InitialTimeSlotData.GetTimeSlotData().ToArray());
         }
     }

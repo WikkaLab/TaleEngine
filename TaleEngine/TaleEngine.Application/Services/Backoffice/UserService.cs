@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using TaleEngine.Application.Contracts.Dtos;
-using TaleEngine.Application.Contracts.Services;
-using TaleEngine.Application.Mappers;
-using TaleEngine.Bussiness.Contracts.DomainServices;
+using TaleEngine.Data.Contracts;
+using TaleEngine.DbServices.Contracts.Services;
 
-namespace TaleEngine.Application.Services.Backoffice
+namespace TaleEngine.DbServices.Services.Backoffice
 {
     public class UserService : IUserService
     {
+        private readonly IUnitOfWork _unitOfWork;
+
         private IUserDomainService _userDomainService;
 
         public UserService(IUserDomainService userDomainService)

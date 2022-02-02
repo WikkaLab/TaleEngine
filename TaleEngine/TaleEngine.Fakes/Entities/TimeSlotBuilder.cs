@@ -8,11 +8,11 @@ namespace TaleEngine.Fakes.Entities
     [ExcludeFromCodeCoverage]
     public static class TimeSlotBuilder
     {
-        public static TimeSlot BuildTimeSlot()
+        public static TimeSlotEntity BuildTimeSlot()
         {
             var faker = new Faker();
 
-            var entity = new TimeSlot
+            var entity = new TimeSlotEntity
             {
                 Id = faker.Random.Number(),
                 Name = faker.Random.String2(10)
@@ -20,9 +20,9 @@ namespace TaleEngine.Fakes.Entities
             return entity;
         }
 
-        public static List<TimeSlot> BuildTimeSlotList()
+        public static List<TimeSlotEntity> BuildTimeSlotList()
         {
-            List<TimeSlot> list = new List<TimeSlot>
+            List<TimeSlotEntity> list = new List<TimeSlotEntity>
             {
                 BuildTimeSlot()
             };

@@ -22,18 +22,18 @@ namespace TaleEngine.Data.Repositories
             _context.Activities.Remove(entity);
         }
 
-        public List<Activity> GetAll()
+        public List<ActivityEntity> GetAll()
         {
             return _context.Activities.ToList();
         }
 
-        public Activity GetById(int entityId)
+        public ActivityEntity GetById(int entityId)
         {
             return _context.Activities
                 .FirstOrDefault(a => a.Id == entityId);
         }
 
-        public void Insert(Activity entity)
+        public void Insert(ActivityEntity entity)
         {
             _context.Activities.Add(entity);
         }
@@ -43,64 +43,25 @@ namespace TaleEngine.Data.Repositories
             _context.SaveChanges();
         }
 
-        public void Update(Activity entity)
+        public void Update(ActivityEntity entity)
         {
             _context.Activities.Update(entity);
         }
 
-        public List<Activity> GetEventActivities(int editionId)
+        public List<ActivityEntity> GetEventActivities(int editionId)
         {
             return _context.Activities
                 .Where(a => a.EditionId == editionId)
                 .ToList();
         }
 
-        public List<Activity> GetActivitiesByStatus(int edition, int status)
+        public List<ActivityEntity> GetActivitiesByStatus(int edition, int status)
         {
             return _context.Activities
                 .Where(a => a.EditionId == edition && a.StatusId == status)
                 .ToList();
         }
 
-        public List<Activity> GetActiveActivitiesFiltered(int status, int type, int edition,
-            string title, int skipByPagination, int activitiesPerPage)
-        {
-            var query = GetActiveActivitiesWithFilter(status, type, edition, title);
 
-            return query.Skip(skipByPagination).Take(activitiesPerPage).ToList();
-        }
-
-        public List<Activity> GetLastThreeActivities(int status, int edition, int numberOfActivities)
-        {
-            var query = GetActiveActivitiesWithFilter(status, 0, edition, null);
-
-            return query.OrderByDescending(a => a.CreateDateTime).Take(numberOfActivities).ToList();
-        }
-
-        public int GetTotalActivities(int status, int type, int edition, string title)
-        {
-            var query = GetActiveActivitiesWithFilter(status, type, edition, title);
-
-            return query.ToList().Count;
-        }
-
-        private IQueryable<Activity> GetActiveActivitiesWithFilter(int status, int type, int edition, string title)
-        {
-            var query = _context.Activities.Select(a => a).Where(a => a.EditionId == edition);
-            if (status != 0)
-            {
-                query = query.Where(a => a.StatusId == status);
-            }
-            if (type != 0)
-            {
-                query = query.Where(a => a.TypeId == type);
-            }
-            if (!string.IsNullOrEmpty(title))
-            {
-                query = query.Where(a => a.Title.Contains(title));
-            }
-
-            return query;
-        }
     }
 }

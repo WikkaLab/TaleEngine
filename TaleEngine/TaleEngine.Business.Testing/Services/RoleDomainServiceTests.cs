@@ -2,7 +2,6 @@
 using Moq;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using TaleEngine.Bussiness.DomainServices;
 using TaleEngine.Data.Contracts;
 using TaleEngine.Data.Contracts.Entities;
 using TaleEngine.Data.Contracts.Repositories;
@@ -27,13 +26,13 @@ namespace TaleEngine.Business.Testing.Services
         public void GetAll_Success()
         {
             // Arrange
-            List<Role> list = RoleBuilder.BuildRoleList();
+            List<RoleEntity> list = RoleBuilder.BuildRoleList();
 
             roleRepoMock.Setup(x => x.GetAll())
                 .Returns(list);
             uowMock.Setup(x => x.RoleRepository)
                 .Returns(roleRepoMock.Object);
-            var target = new RoleDomainService(uowMock.Object);
+            var target = new RoleCommands(uowMock.Object);
 
             // Act
             var result = target.GetAllRoles();
@@ -47,13 +46,13 @@ namespace TaleEngine.Business.Testing.Services
         public void GetAll_RepoIsEmpty_ShouldReturnNull()
         {
             // Arrange
-            List<Role> list = null;
+            List<RoleEntity> list = null;
 
             roleRepoMock.Setup(x => x.GetAll())
                 .Returns(list);
             uowMock.Setup(x => x.RoleRepository)
                 .Returns(roleRepoMock.Object);
-            var target = new RoleDomainService(uowMock.Object);
+            var target = new RoleCommands(uowMock.Object);
 
             // Act
             var result = target.GetAllRoles();
@@ -66,13 +65,13 @@ namespace TaleEngine.Business.Testing.Services
         public void GetAll_EmptyResult_ShouldReturnNull()
         {
             // Arrange
-            List<Role> list = new();
+            List<RoleEntity> list = new();
 
             roleRepoMock.Setup(x => x.GetAll())
                 .Returns(list);
             uowMock.Setup(x => x.RoleRepository)
                 .Returns(roleRepoMock.Object);
-            var target = new RoleDomainService(uowMock.Object);
+            var target = new RoleCommands(uowMock.Object);
 
             // Act
             var result = target.GetAllRoles();

@@ -2,7 +2,6 @@
 using Moq;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using TaleEngine.Bussiness.DomainServices;
 using TaleEngine.Data.Contracts;
 using TaleEngine.Data.Contracts.Entities;
 using TaleEngine.Data.Contracts.Repositories;
@@ -33,7 +32,7 @@ namespace TaleEngine.Business.Testing.Services
             // Arrange
             int editionId = 1;
 
-            List<Activity> list = ActivityBuilder.BuildActivityList();
+            List<ActivityEntity> list = ActivityBuilder.BuildActivityList();
             var status = ActivityBuilder.BuildActivityStatus();
 
             activityRepoMock.Setup(x => x.GetActivitiesByStatus(It.IsAny<int>(), It.IsAny<int>()))
@@ -44,7 +43,7 @@ namespace TaleEngine.Business.Testing.Services
                 .Returns(status);
             uowMock.Setup(x => x.ActivityStatusRepository)
                 .Returns(activityStatusRepoMock.Object);
-            var target = new ActivityDomainService(uowMock.Object);
+            var target = new ActivityCommands(uowMock.Object);
 
             // Act
             var result = target.GetActiveActivities(editionId);
@@ -60,7 +59,7 @@ namespace TaleEngine.Business.Testing.Services
             // Arrange
             int editionId = 1;
 
-            List<Activity> list = null;
+            List<ActivityEntity> list = null;
             var status = ActivityBuilder.BuildActivityStatus();
 
             activityRepoMock.Setup(x => x.GetActivitiesByStatus(It.IsAny<int>(), It.IsAny<int>()))
@@ -71,7 +70,7 @@ namespace TaleEngine.Business.Testing.Services
                 .Returns(status);
             uowMock.Setup(x => x.ActivityStatusRepository)
                 .Returns(activityStatusRepoMock.Object);
-            var target = new ActivityDomainService(uowMock.Object);
+            var target = new ActivityCommands(uowMock.Object);
 
             // Act
             var result = target.GetActiveActivities(editionId);
@@ -86,8 +85,8 @@ namespace TaleEngine.Business.Testing.Services
             // Arrange
             int editionId = 1;
 
-            List<Activity> list = null;
-            ActivityStatus status = null;
+            List<ActivityEntity> list = null;
+            ActivityStatusEntity status = null;
 
             activityRepoMock.Setup(x => x.GetActivitiesByStatus(It.IsAny<int>(), It.IsAny<int>()))
                 .Returns(list);
@@ -97,7 +96,7 @@ namespace TaleEngine.Business.Testing.Services
                 .Returns(status);
             uowMock.Setup(x => x.ActivityStatusRepository)
                 .Returns(activityStatusRepoMock.Object);
-            var target = new ActivityDomainService(uowMock.Object);
+            var target = new ActivityCommands(uowMock.Object);
 
             // Act
             var result = target.GetActiveActivities(editionId);
@@ -113,7 +112,7 @@ namespace TaleEngine.Business.Testing.Services
             // Arrange
             int editionId = 1;
 
-            List<Activity> list = ActivityBuilder.BuildActivityList();
+            List<ActivityEntity> list = ActivityBuilder.BuildActivityList();
             var status = ActivityBuilder.BuildActivityStatus();
 
             activityRepoMock.Setup(x => x.GetActivitiesByStatus(It.IsAny<int>(), It.IsAny<int>()))
@@ -124,7 +123,7 @@ namespace TaleEngine.Business.Testing.Services
                 .Returns(status);
             uowMock.Setup(x => x.ActivityStatusRepository)
                 .Returns(activityStatusRepoMock.Object);
-            var target = new ActivityDomainService(uowMock.Object);
+            var target = new ActivityCommands(uowMock.Object);
 
             // Act
             var result = target.GetPendingActivities(editionId);
@@ -140,7 +139,7 @@ namespace TaleEngine.Business.Testing.Services
             // Arrange
             int editionId = 1;
 
-            List<Activity> list = null;
+            List<ActivityEntity> list = null;
             var status = ActivityBuilder.BuildActivityStatus();
 
             activityRepoMock.Setup(x => x.GetActivitiesByStatus(It.IsAny<int>(), It.IsAny<int>()))
@@ -151,7 +150,7 @@ namespace TaleEngine.Business.Testing.Services
                 .Returns(status);
             uowMock.Setup(x => x.ActivityStatusRepository)
                 .Returns(activityStatusRepoMock.Object);
-            var target = new ActivityDomainService(uowMock.Object);
+            var target = new ActivityCommands(uowMock.Object);
 
             // Act
             var result = target.GetPendingActivities(editionId);
@@ -166,8 +165,8 @@ namespace TaleEngine.Business.Testing.Services
             // Arrange
             int editionId = 1;
 
-            List<Activity> list = null;
-            ActivityStatus status = null;
+            List<ActivityEntity> list = null;
+            ActivityStatusEntity status = null;
 
             activityRepoMock.Setup(x => x.GetActivitiesByStatus(It.IsAny<int>(), It.IsAny<int>()))
                 .Returns(list);
@@ -177,7 +176,7 @@ namespace TaleEngine.Business.Testing.Services
                 .Returns(status);
             uowMock.Setup(x => x.ActivityStatusRepository)
                 .Returns(activityStatusRepoMock.Object);
-            var target = new ActivityDomainService(uowMock.Object);
+            var target = new ActivityCommands(uowMock.Object);
 
             // Act
             var result = target.GetPendingActivities(editionId);
@@ -196,7 +195,7 @@ namespace TaleEngine.Business.Testing.Services
 
             int totalActivities = 40;
 
-            List<Activity> list = ActivityBuilder.BuildActivityList();
+            List<ActivityEntity> list = ActivityBuilder.BuildActivityList();
             var status = ActivityBuilder.BuildActivityStatus();
             var edition = EditionBuilder.BuildEdition();
 
@@ -218,7 +217,7 @@ namespace TaleEngine.Business.Testing.Services
                 .Returns(edition);
             uowMock.Setup(x => x.EditionRepository)
                 .Returns(editionRepoMock.Object);
-            var target = new ActivityDomainService(uowMock.Object);
+            var target = new ActivityCommands(uowMock.Object);
 
             // Act
             var result = target.GetActiveActivitiesFiltered(typeId, edition.Id, title, currentPage);
@@ -238,7 +237,7 @@ namespace TaleEngine.Business.Testing.Services
             int currentPage = 1;
 
             var status = ActivityBuilder.BuildActivityStatus();
-            Edition edition = null;
+            EditionEntity edition = null;
 
             activityStatusRepoMock.Setup(x => x.GetById(It.IsAny<int>()))
                 .Returns(status);
@@ -248,7 +247,7 @@ namespace TaleEngine.Business.Testing.Services
                 .Returns(edition);
             uowMock.Setup(x => x.EditionRepository)
                 .Returns(editionRepoMock.Object);
-            var target = new ActivityDomainService(uowMock.Object);
+            var target = new ActivityCommands(uowMock.Object);
 
             // Act
             var result = target.GetActiveActivitiesFiltered(typeId, editionId, title, currentPage);
@@ -267,8 +266,8 @@ namespace TaleEngine.Business.Testing.Services
             int currentPage = 1;
             int statusId = 0;
 
-            ActivityStatus status = null;
-            Edition edition = EditionBuilder.BuildEdition();
+            ActivityStatusEntity status = null;
+            EditionEntity edition = EditionBuilder.BuildEdition();
 
             activityStatusRepoMock.Setup(x => x.GetById(statusId))
                 .Returns(status);
@@ -278,7 +277,7 @@ namespace TaleEngine.Business.Testing.Services
                 .Returns(edition);
             uowMock.Setup(x => x.EditionRepository)
                 .Returns(editionRepoMock.Object);
-            var target = new ActivityDomainService(uowMock.Object);
+            var target = new ActivityCommands(uowMock.Object);
 
             // Act
             var result = target.GetActiveActivitiesFiltered(typeId, editionId, title, currentPage);
@@ -291,9 +290,9 @@ namespace TaleEngine.Business.Testing.Services
         public void GetLastThreeActivities_Success()
         {
             // Arrange
-            List<Activity> list = ActivityBuilder.BuildActivityList();
-            ActivityStatus status = ActivityBuilder.BuildActivityStatus();
-            Edition edition = EditionBuilder.BuildEdition();
+            List<ActivityEntity> list = ActivityBuilder.BuildActivityList();
+            ActivityStatusEntity status = ActivityBuilder.BuildActivityStatus();
+            EditionEntity edition = EditionBuilder.BuildEdition();
 
             activityRepoMock.Setup(x => x.GetLastThreeActivities(It.IsAny<int>(), It.IsAny<int>(),
                     It.IsAny<int>()))
@@ -308,7 +307,7 @@ namespace TaleEngine.Business.Testing.Services
                 .Returns(edition);
             uowMock.Setup(x => x.EditionRepository)
                 .Returns(editionRepoMock.Object);
-            var target = new ActivityDomainService(uowMock.Object);
+            var target = new ActivityCommands(uowMock.Object);
 
             // Act
             var result = target.GetLastThreeActivities(edition.Id);
@@ -323,9 +322,9 @@ namespace TaleEngine.Business.Testing.Services
         {
             // Arrange
             int editionId = 0;
-            List<Activity> list = ActivityBuilder.BuildActivityList();
-            ActivityStatus status = ActivityBuilder.BuildActivityStatus();
-            Edition edition = null;
+            List<ActivityEntity> list = ActivityBuilder.BuildActivityList();
+            ActivityStatusEntity status = ActivityBuilder.BuildActivityStatus();
+            EditionEntity edition = null;
 
             activityRepoMock.Setup(x => x.GetLastThreeActivities(It.IsAny<int>(), It.IsAny<int>(),
                     It.IsAny<int>()))
@@ -340,7 +339,7 @@ namespace TaleEngine.Business.Testing.Services
                 .Returns(edition);
             uowMock.Setup(x => x.EditionRepository)
                 .Returns(editionRepoMock.Object);
-            var target = new ActivityDomainService(uowMock.Object);
+            var target = new ActivityCommands(uowMock.Object);
 
             // Act
             var result = target.GetLastThreeActivities(editionId);
@@ -353,9 +352,9 @@ namespace TaleEngine.Business.Testing.Services
         public void GetLastThreeActivities_StatusNotExist_ShouldReturnNull()
         {
             // Arrange
-            List<Activity> list = ActivityBuilder.BuildActivityList();
-            ActivityStatus status = null;
-            Edition edition = EditionBuilder.BuildEdition();
+            List<ActivityEntity> list = ActivityBuilder.BuildActivityList();
+            ActivityStatusEntity status = null;
+            EditionEntity edition = EditionBuilder.BuildEdition();
 
             activityRepoMock.Setup(x => x.GetLastThreeActivities(It.IsAny<int>(), It.IsAny<int>(),
                     It.IsAny<int>()))
@@ -370,7 +369,7 @@ namespace TaleEngine.Business.Testing.Services
                 .Returns(edition);
             uowMock.Setup(x => x.EditionRepository)
                 .Returns(editionRepoMock.Object);
-            var target = new ActivityDomainService(uowMock.Object);
+            var target = new ActivityCommands(uowMock.Object);
 
             // Act
             var result = target.GetLastThreeActivities(edition.Id);
@@ -383,9 +382,9 @@ namespace TaleEngine.Business.Testing.Services
         public void GetLastThreeActivities_NoActivities_ShouldReturnNull()
         {
             // Arrange
-            List<Activity> list = null;
-            ActivityStatus status = ActivityBuilder.BuildActivityStatus();
-            Edition edition = EditionBuilder.BuildEdition();
+            List<ActivityEntity> list = null;
+            ActivityStatusEntity status = ActivityBuilder.BuildActivityStatus();
+            EditionEntity edition = EditionBuilder.BuildEdition();
 
             activityRepoMock.Setup(x => x.GetLastThreeActivities(It.IsAny<int>(), It.IsAny<int>(),
                     It.IsAny<int>()))
@@ -400,7 +399,7 @@ namespace TaleEngine.Business.Testing.Services
                 .Returns(edition);
             uowMock.Setup(x => x.EditionRepository)
                 .Returns(editionRepoMock.Object);
-            var target = new ActivityDomainService(uowMock.Object);
+            var target = new ActivityCommands(uowMock.Object);
 
             // Act
             var result = target.GetLastThreeActivities(edition.Id);
@@ -413,9 +412,9 @@ namespace TaleEngine.Business.Testing.Services
         public void GetLastThreeActivities_ActivitiesEmpty_ShouldReturnNull()
         {
             // Arrange
-            List<Activity> list = new();
-            ActivityStatus status = ActivityBuilder.BuildActivityStatus();
-            Edition edition = EditionBuilder.BuildEdition();
+            List<ActivityEntity> list = new();
+            ActivityStatusEntity status = ActivityBuilder.BuildActivityStatus();
+            EditionEntity edition = EditionBuilder.BuildEdition();
 
             activityRepoMock.Setup(x => x.GetActivitiesByStatus(It.IsAny<int>(), It.IsAny<int>()))
                 .Returns(list);
@@ -432,7 +431,7 @@ namespace TaleEngine.Business.Testing.Services
                 .Returns(edition);
             uowMock.Setup(x => x.EditionRepository)
                 .Returns(editionRepoMock.Object);
-            var target = new ActivityDomainService(uowMock.Object);
+            var target = new ActivityCommands(uowMock.Object);
 
             // Act
             var result = target.GetLastThreeActivities(edition.Id);

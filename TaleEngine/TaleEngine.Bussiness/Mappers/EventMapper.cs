@@ -1,20 +1,19 @@
-﻿using TaleEngine.Bussiness.Contracts.Models;
-using TaleEngine.Data.Contracts.Entities;
+﻿using TaleEngine.Data.Contracts.Entities;
 
-namespace TaleEngine.Bussiness.Mappers
+namespace TaleEngine.Commands.Mappers
 {
     public static class EventMapper
     {
-        public static Event Map(EventModel eventModel)
+        public static EventEntity Map(EventModel eventModel)
         {
-            return new Event
+            return new EventEntity
             {
                 Id = eventModel.Id,
                 Title = eventModel.Title
             };
         }
 
-        public static EventModel Map(Event eventEntity)
+        public static EventModel Map(EventEntity eventEntity)
         {
             return new EventModel
             {

@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using TaleEngine.Bussiness.Contracts.Models;
 
 namespace TaleEngine.Fakes.Models
 {

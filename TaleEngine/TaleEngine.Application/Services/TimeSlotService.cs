@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
-using TaleEngine.Application.Contracts.Dtos;
-using TaleEngine.Application.Contracts.Services;
-using TaleEngine.Application.Mappers;
-using TaleEngine.Bussiness.Contracts.DomainServices;
+using TaleEngine.Data.Contracts;
+using TaleEngine.DbServices.Contracts.Services;
 
-namespace TaleEngine.Application.Services
+namespace TaleEngine.DbServices.Services
 {
     public class TimeSlotService : ITimeSlotService
     {
+        private readonly IUnitOfWork _unitOfWork;
+
         private readonly ITimeSlotDomainService _timeSlotDomainService;
 
         public TimeSlotService(ITimeSlotDomainService timeSlotService)

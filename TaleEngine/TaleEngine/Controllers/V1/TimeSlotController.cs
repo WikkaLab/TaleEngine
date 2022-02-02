@@ -1,23 +1,23 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using TaleEngine.Application.Contracts.Services;
+using TaleEngine.Commands.Contracts;
 
-namespace TaleEngine.Controllers.V1
+namespace TaleEngine.API.Controllers.V1
 {
     [ApiController]
     [Route("api/v1/[controller]")]
     public class TimeSlotController : Controller
     {
-        private readonly ITimeSlotService _timeSlotService;
+        private readonly ITimeSlotCommands _command;
 
-        public TimeSlotController(ITimeSlotService timeSlotService)
+        public TimeSlotController(ITimeSlotCommands command)
         {
-            _timeSlotService = timeSlotService;
+            _command = command;
         }
 
         [HttpGet("[action]")]
         public IActionResult GetTimeSlots()
         {
-            var result = _timeSlotService.GetTimeSlots();
+            var result = _command.GetTimeSlots();
 
             if (result == null || result.Count == 0)
             {

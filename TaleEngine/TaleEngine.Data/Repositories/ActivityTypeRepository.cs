@@ -22,18 +22,18 @@ namespace TaleEngine.Data.Repositories
             _context.ActivityTypes.Remove(entity);
         }
 
-        public List<ActivityType> GetAll()
+        public List<ActivityTypeEntity> GetAll()
         {
             return _context.ActivityTypes.ToList();
         }
 
-        public ActivityType GetById(int entityId)
+        public ActivityTypeEntity GetById(int entityId)
         {
             return _context.ActivityTypes
                 .FirstOrDefault(aT => aT.Id == entityId);
         }
 
-        public void Insert(ActivityType entity)
+        public void Insert(ActivityTypeEntity entity)
         {
             _context.ActivityTypes.Add(entity);
         }
@@ -43,7 +43,7 @@ namespace TaleEngine.Data.Repositories
             _context.SaveChanges();
         }
 
-        public void Update(ActivityType entity)
+        public void Update(ActivityTypeEntity entity)
         {
             _context.ActivityTypes.Update(entity);
         }

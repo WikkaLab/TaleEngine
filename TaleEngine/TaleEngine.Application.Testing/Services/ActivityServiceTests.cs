@@ -2,10 +2,6 @@
 using Moq;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using TaleEngine.Application.Contracts.Dtos;
-using TaleEngine.Application.Services;
-using TaleEngine.Bussiness.Contracts.DomainServices;
-using TaleEngine.Bussiness.Contracts.Models;
 using TaleEngine.Fakes.Dtos;
 using TaleEngine.Fakes.Models;
 using Xunit;

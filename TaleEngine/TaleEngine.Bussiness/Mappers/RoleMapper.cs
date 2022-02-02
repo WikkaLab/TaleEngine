@@ -1,17 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using TaleEngine.Bussiness.Contracts.Models;
 using TaleEngine.Data.Contracts.Entities;
 
-namespace TaleEngine.Bussiness.Mappers
+namespace TaleEngine.Commands.Mappers
 {
     public class RoleMapper
     {
-        public static Role Map(RoleModel roleModel)
+        public static RoleEntity Map(RoleModel roleModel)
         {
             if (roleModel == null) return null;
 
-            return new Role
+            return new RoleEntity
             {
                 Id = roleModel.Id,
                 Name = roleModel.Name,
@@ -19,7 +18,7 @@ namespace TaleEngine.Bussiness.Mappers
             };
         }
 
-        public static RoleModel Map(Role roleEntity)
+        public static RoleModel Map(RoleEntity roleEntity)
         {
             if (roleEntity == null) return null;
 
@@ -31,14 +30,14 @@ namespace TaleEngine.Bussiness.Mappers
             };
         }
 
-        public static List<Role> MapToRoles(List<RoleModel> models)
+        public static List<RoleEntity> MapToRoles(List<RoleModel> models)
         {
             if (models == null || models.Count == 0) return null;
 
             return models.Select(Map).ToList();
         }
 
-        public static List<RoleModel> MapToRoleModels(List<Role> entities)
+        public static List<RoleModel> MapToRoleModels(List<RoleEntity> entities)
         {
             if (entities == null || entities.Count == 0) return null;
 

@@ -1,14 +1,12 @@
 ﻿using System;
-using TaleEngine.Application.Contracts.Dtos;
-using TaleEngine.Application.Contracts.Services;
-using TaleEngine.Application.Mappers;
-using TaleEngine.Bussiness.Contracts.DomainServices;
+using TaleEngine.Data.Contracts;
+using TaleEngine.DbServices.Contracts.Services;
 
-namespace TaleEngine.Application.Services
+namespace TaleEngine.DbServices.Services
 {
     public class EditionService : IEditionService
     {
-        private readonly IEditionDomainService _editionDomainService;
+        private readonly IUnitOfWork _unitOfWork;
 
         public EditionService(IEditionDomainService editionDomainService)
         {

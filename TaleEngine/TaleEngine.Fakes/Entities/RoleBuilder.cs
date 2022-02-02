@@ -8,11 +8,11 @@ namespace TaleEngine.Fakes.Entities
     [ExcludeFromCodeCoverage]
     public static class RoleBuilder
     {
-        public static Role BuildRole()
+        public static RoleEntity BuildRole()
         {
             var faker = new Faker();
 
-            var entity = new Role
+            var entity = new RoleEntity
             {
                 Id = faker.Random.Number(),
                 Name = faker.Random.String2(10),
@@ -21,9 +21,9 @@ namespace TaleEngine.Fakes.Entities
             return entity;
         }
 
-        public static List<Role> BuildRoleList()
+        public static List<RoleEntity> BuildRoleList()
         {
-            return new List<Role>
+            return new List<RoleEntity>
             {
                 BuildRole()
             };

@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using TaleEngine.Application.Contracts.Services;
+using TaleEngine.Commands.Contracts;
 
-namespace TaleEngine.Controllers.V1
+namespace TaleEngine.API.Controllers.V1
 {
     /// <summary>
     /// Roles management
@@ -18,15 +18,15 @@ namespace TaleEngine.Controllers.V1
     [Route("api/v1/[controller]")]
     public class RolesController : Controller
     {
-        private IRoleService _roleService;
+        private IRoleCommands _command;
 
         /// <summary>
         /// Constructor for roles controller
         /// </summary>
-        /// <param name="roleService">Role service</param>
-        public RolesController(IRoleService roleService)
+        /// <param name="command">Role service</param>
+        public RolesController(IRoleCommands command)
         {
-            _roleService = roleService ?? throw new ArgumentNullException(nameof(roleService));
+            _command = command ?? throw new ArgumentNullException(nameof(command));
         }
 
     }

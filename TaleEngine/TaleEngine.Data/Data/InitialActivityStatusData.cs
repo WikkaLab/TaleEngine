@@ -5,32 +5,32 @@ namespace TaleEngine.Data.Data
 {
     public static class InitialActivityStatusData
     {
-        public static List<ActivityStatus> GetActivityStatuses()
+        public static List<ActivityStatusEntity> GetActivityStatuses()
         {
-            return new List<ActivityStatus>()
+            return new List<ActivityStatusEntity>()
             {
-                new ActivityStatus
+                new ActivityStatusEntity
                 {
                     Id = 1,
                     Name = "Pending",
                     Abbr = "PEN",
                     Description = "Waiting for approval"
                 },
-                new ActivityStatus
+                new ActivityStatusEntity
                 {
                     Id = 2,
                     Name = "Active",
                     Abbr = "ACT",
                     Description = "Accepted and waiting for participants"
                 },
-                new ActivityStatus
+                new ActivityStatusEntity
                 {
                     Id = 3,
                     Name = "Revision",
                     Abbr = "REV",
                     Description = "In revision process"
                 },
-                new ActivityStatus
+                new ActivityStatusEntity
                 {
                     Id = 4,
                     Name = "Banned",

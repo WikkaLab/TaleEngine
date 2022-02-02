@@ -8,11 +8,11 @@ namespace TaleEngine.Fakes.Entities
     [ExcludeFromCodeCoverage]
     public class ActivityBuilder
     {
-        public static Activity BuildActivity()
+        public static ActivityEntity BuildActivity()
         {
             var faker = new Faker();
 
-            var entity = new Activity
+            var entity = new ActivityEntity
             {
                 Id = faker.Random.Number(),
                 Places = faker.Random.Number(),
@@ -28,20 +28,20 @@ namespace TaleEngine.Fakes.Entities
             return entity;
         }
 
-        public static List<Activity> BuildActivityList()
+        public static List<ActivityEntity> BuildActivityList()
         {
-            var list = new List<Activity>
+            var list = new List<ActivityEntity>
             {
                 BuildActivity()
             };
             return list;
         }
 
-        public static ActivityStatus BuildActivityStatus()
+        public static ActivityStatusEntity BuildActivityStatus()
         {
             var faker = new Faker();
 
-            var entity = new ActivityStatus
+            var entity = new ActivityStatusEntity
             {
                 Id = faker.Random.Number(),
                 Name = faker.Random.String2(10)
@@ -49,20 +49,20 @@ namespace TaleEngine.Fakes.Entities
             return entity;
         }
 
-        public static List<ActivityStatus> BuildActivityStatusList()
+        public static List<ActivityStatusEntity> BuildActivityStatusList()
         {
-            var list = new List<ActivityStatus>
+            var list = new List<ActivityStatusEntity>
             {
                 BuildActivityStatus()
             };
             return list;
         }
 
-        public static ActivityType BuildActivityType()
+        public static ActivityTypeEntity BuildActivityType()
         {
             var faker = new Faker();
 
-            var entity = new ActivityType
+            var entity = new ActivityTypeEntity
             {
                 Id = faker.Random.Number(),
                 Name = faker.Random.String2(10)
@@ -70,9 +70,9 @@ namespace TaleEngine.Fakes.Entities
             return entity;
         }
 
-        public static List<ActivityType> BuildActivityTypeList()
+        public static List<ActivityTypeEntity> BuildActivityTypeList()
         {
-            var list = new List<ActivityType>
+            var list = new List<ActivityTypeEntity>
             {
                 BuildActivityType()
             };

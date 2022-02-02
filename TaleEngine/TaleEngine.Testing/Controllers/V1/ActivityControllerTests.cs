@@ -4,11 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using TaleEngine.Application.Contracts.Dtos;
-using TaleEngine.Application.Contracts.Dtos.Requests;
-using TaleEngine.Application.Contracts.Dtos.Results;
-using TaleEngine.Application.Contracts.Services;
-using TaleEngine.Controllers.V1;
 using TaleEngine.Fakes.Dtos;
 using Xunit;
 

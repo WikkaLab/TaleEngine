@@ -1,29 +1,28 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using TaleEngine.Bussiness.Contracts.Models;
 using TaleEngine.Data.Contracts.Entities;
 
-namespace TaleEngine.Bussiness.Mappers
+namespace TaleEngine.Commands.Mappers
 {
     public static class ActivityStatusMapper
     {
-        public static ActivityStatus Map(ActivityStatusModel activityStatusModel)
+        public static ActivityStatusEntity Map(ActivityStatusModel activityStatusModel)
         {
-            return new ActivityStatus
+            return new ActivityStatusEntity
             {
                 Id = activityStatusModel.Id,
                 Name = activityStatusModel.Name
             };
         }
 
-        public static List<ActivityStatus> Map(List<ActivityStatusModel> activityStatusModels)
+        public static List<ActivityStatusEntity> Map(List<ActivityStatusModel> activityStatusModels)
         {
             if (activityStatusModels == null || activityStatusModels.Count == 0) return null;
 
             return activityStatusModels.Select(Map).ToList();
         }
 
-        public static ActivityStatusModel Map(ActivityStatus activityStatus)
+        public static ActivityStatusModel Map(ActivityStatusEntity activityStatus)
         {
             return new ActivityStatusModel
             {
@@ -32,7 +31,7 @@ namespace TaleEngine.Bussiness.Mappers
             };
         }
 
-        public static List<ActivityStatusModel> Map(List<ActivityStatus> activityStatus)
+        public static List<ActivityStatusModel> Map(List<ActivityStatusEntity> activityStatus)
         {
             if (activityStatus == null || activityStatus.Count == 0) return null;
 

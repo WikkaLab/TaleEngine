@@ -5,11 +5,11 @@ namespace TaleEngine.Data.Data
 {
     public static class InitialEventData
     {
-        public static List<Event> GetEventsType()
+        public static List<EventEntity> GetEventsType()
         {
-            return new List<Event>
+            return new List<EventEntity>
             {
-                new Event
+                new EventEntity
                 {
                     Title = "The ultimate event"
                 }

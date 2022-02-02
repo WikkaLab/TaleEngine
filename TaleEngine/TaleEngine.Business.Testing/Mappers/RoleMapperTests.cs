@@ -1,7 +1,5 @@
 using FluentAssertions;
 using System.Diagnostics.CodeAnalysis;
-using TaleEngine.Bussiness.Contracts.Models;
-using TaleEngine.Bussiness.Mappers;
 using TaleEngine.Data.Contracts.Entities;
 using TaleEngine.Fakes.Entities;
 using TaleEngine.Fakes.Models;
@@ -30,7 +28,7 @@ namespace TaleEngine.Bussiness.Testing.Mappers
         public void Role_EntityToModel_IsNull()
         {
             // Arrange
-            Role entity = null;
+            RoleEntity entity = null;
 
             // Act
             var result = RoleMapper.Map(entity);

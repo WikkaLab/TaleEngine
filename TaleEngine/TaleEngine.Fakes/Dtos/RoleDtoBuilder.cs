@@ -1,6 +1,5 @@
 ﻿using Bogus;
 using System.Diagnostics.CodeAnalysis;
-using TaleEngine.Application.Contracts.Dtos;
 
 namespace TaleEngine.Fakes.Dtos
 {

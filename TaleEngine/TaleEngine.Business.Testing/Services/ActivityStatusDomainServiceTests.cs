@@ -2,7 +2,6 @@
 using Moq;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using TaleEngine.Bussiness.DomainServices;
 using TaleEngine.Data.Contracts;
 using TaleEngine.Data.Contracts.Entities;
 using TaleEngine.Data.Contracts.Repositories;
@@ -27,13 +26,13 @@ namespace TaleEngine.Business.Testing.Services
         public void GetAll_Success()
         {
             // Arrange
-            List<ActivityStatus> list = ActivityBuilder.BuildActivityStatusList();
+            List<ActivityStatusEntity> list = ActivityBuilder.BuildActivityStatusList();
 
             activityStatusRepoMock.Setup(x => x.GetAll())
                 .Returns(list);
             uowMock.Setup(x => x.ActivityStatusRepository)
                 .Returns(activityStatusRepoMock.Object);
-            var target = new ActivityStatusDomainService(uowMock.Object);
+            var target = new ActivityStatusCommands(uowMock.Object);
 
             // Act
             var result = target.GetAllActivityStatuses();
@@ -47,13 +46,13 @@ namespace TaleEngine.Business.Testing.Services
         public void GetAll_RepoIsEmpty_ShouldReturnNull()
         {
             // Arrange
-            List<ActivityStatus> list = null;
+            List<ActivityStatusEntity> list = null;
 
             activityStatusRepoMock.Setup(x => x.GetAll())
                 .Returns(list);
             uowMock.Setup(x => x.ActivityStatusRepository)
                 .Returns(activityStatusRepoMock.Object);
-            var target = new ActivityStatusDomainService(uowMock.Object);
+            var target = new ActivityStatusCommands(uowMock.Object);
 
             // Act
             var result = target.GetAllActivityStatuses();
@@ -66,13 +65,13 @@ namespace TaleEngine.Business.Testing.Services
         public void GetAll_EmptyResult_ShouldReturnNull()
         {
             // Arrange
-            List<ActivityStatus> list = new();
+            List<ActivityStatusEntity> list = new();
 
             activityStatusRepoMock.Setup(x => x.GetAll())
                 .Returns(list);
             uowMock.Setup(x => x.ActivityStatusRepository)
                 .Returns(activityStatusRepoMock.Object);
-            var target = new ActivityStatusDomainService(uowMock.Object);
+            var target = new ActivityStatusCommands(uowMock.Object);
 
             // Act
             var result = target.GetAllActivityStatuses();

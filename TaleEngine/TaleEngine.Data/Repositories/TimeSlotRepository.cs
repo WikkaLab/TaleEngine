@@ -22,18 +22,18 @@ namespace TaleEngine.Data.Repositories
             _context.TimeSlots.Remove(entity);
         }
 
-        public List<TimeSlot> GetAll()
+        public List<TimeSlotEntity> GetAll()
         {
             return _context.TimeSlots.ToList();
         }
 
-        public TimeSlot GetById(int entityId)
+        public TimeSlotEntity GetById(int entityId)
         {
             return _context.TimeSlots
                 .FirstOrDefault(a => a.Id == entityId);
         }
 
-        public void Insert(TimeSlot entity)
+        public void Insert(TimeSlotEntity entity)
         {
             _context.TimeSlots.Add(entity);
         }
@@ -43,7 +43,7 @@ namespace TaleEngine.Data.Repositories
             _context.SaveChanges();
         }
 
-        public void Update(TimeSlot entity)
+        public void Update(TimeSlotEntity entity)
         {
             _context.TimeSlots.Update(entity);
         }

@@ -22,18 +22,18 @@ namespace TaleEngine.Data.Repositories
             _context.Events.Remove(entity);
         }
 
-        public List<Event> GetAll()
+        public List<EventEntity> GetAll()
         {
             return _context.Events.ToList();
         }
 
-        public Event GetById(int entityId)
+        public EventEntity GetById(int entityId)
         {
             return _context.Events
                 .FirstOrDefault(ev => ev.Id == entityId);
         }
 
-        public void Insert(Event entity)
+        public void Insert(EventEntity entity)
         {
             _context.Events.Add(entity);
         }
@@ -43,7 +43,7 @@ namespace TaleEngine.Data.Repositories
             _context.SaveChanges();
         }
 
-        public void Update(Event entity)
+        public void Update(EventEntity entity)
         {
             _context.Events.Update(entity);
         }

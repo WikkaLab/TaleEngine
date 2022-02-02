@@ -1,31 +1,30 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using TaleEngine.Bussiness.Contracts.Models;
 using TaleEngine.Data.Contracts.Entities;
 
-namespace TaleEngine.Bussiness.Mappers
+namespace TaleEngine.Commands.Mappers
 {
     public static class ActivityTypeMapper
     {
-        public static ActivityType Map(ActivityTypeModel activityTypeModel)
+        public static ActivityTypeEntity Map(ActivityTypeModel activityTypeModel)
         {
             if (activityTypeModel == null) return null;
 
-            return new ActivityType
+            return new ActivityTypeEntity
             {
                 Id = activityTypeModel.Id,
                 Name = activityTypeModel.Name
             };
         }
 
-        public static List<ActivityType> Map(List<ActivityTypeModel> activityTypeModels)
+        public static List<ActivityTypeEntity> Map(List<ActivityTypeModel> activityTypeModels)
         {
             if (activityTypeModels == null || activityTypeModels.Count == 0) return null;
 
             return activityTypeModels.Select(Map).ToList();
         }
 
-        public static ActivityTypeModel Map(ActivityType activityType)
+        public static ActivityTypeModel Map(ActivityTypeEntity activityType)
         {
             if (activityType == null) return null;
 
@@ -36,7 +35,7 @@ namespace TaleEngine.Bussiness.Mappers
             };
         }
 
-        public static List<ActivityTypeModel> Map(List<ActivityType> activityTypes)
+        public static List<ActivityTypeModel> Map(List<ActivityTypeEntity> activityTypes)
         {
             if (activityTypes == null || activityTypes.Count == 0) return null;
 

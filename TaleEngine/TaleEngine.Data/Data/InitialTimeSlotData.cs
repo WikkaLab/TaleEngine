@@ -5,13 +5,13 @@ namespace TaleEngine.Data.Data
 {
     public static class InitialTimeSlotData
     {
-        public static List<TimeSlot> GetTimeSlotData()
+        public static List<TimeSlotEntity> GetTimeSlotData()
         {
-            return new List<TimeSlot>
+            return new List<TimeSlotEntity>
             {
-                new TimeSlot { Id = 1, Name = "MON" },
-                new TimeSlot { Id = 2, Name = "EVE" },
-                new TimeSlot { Id = 3, Name = "NGH" }
+                new TimeSlotEntity { Id = 1, Name = "MON" },
+                new TimeSlotEntity { Id = 2, Name = "EVE" },
+                new TimeSlotEntity { Id = 3, Name = "NGH" }
             };
         }
     }
