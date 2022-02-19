@@ -2,7 +2,7 @@
 using System.Linq;
 using TaleEngine.Data.Contracts.Entities;
 
-namespace TaleEngine.Commands.Mappers
+namespace TaleEngine.CQRS.Mappers
 {
     public static class TimeSlotMapper
     {

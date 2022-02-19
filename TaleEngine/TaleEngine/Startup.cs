@@ -4,9 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using TaleEngine.Commands.Contracts;
-using TaleEngine.Commands.Impl;
-using TaleEngine.Commands.Impl.Backoffice;
+using TaleEngine.CQRS.Contracts;
+using TaleEngine.CQRS.Impl;
+using TaleEngine.CQRS.Impl.Backoffice;
 using TaleEngine.Data;
 using TaleEngine.Data.Contracts;
 using TaleEngine.DbServices.Contracts.Services;
@@ -54,23 +54,26 @@ namespace TaleEngine
             }
             else
             {
-                services.AddTransient<IEventService, EventService>();
+                // CQRS
                 services.AddTransient<IEventCommands, EventCommands>();
-                services.AddTransient<IActivityService, ActivityService>();
-                services.AddTransient<IActivityTypeService, ActivityTypeService>();
                 services.AddTransient<IActivityTypeCommands, ActivityTypeCommands>();
                 services.AddTransient<IActivityCommands, ActivityCommands>();
-                services.AddTransient<ITimeSlotService, TimeSlotService>();
                 services.AddTransient<ITimeSlotCommands, TimeSlotCommands>();
-                services.AddTransient<IEditionService, EditionService>();
                 services.AddTransient<IEditionCommands, EditionCommands>();
+                services.AddTransient<IRoleCommands, RoleCommands>();
+                services.AddTransient<IUserCommands, UserCommands>();
+                services.AddTransient<IUserStatusCommands, UserStatusCommands>();
+                
+                // Services
+                services.AddTransient<IEventService, EventService>();
+                services.AddTransient<IActivityService, ActivityService>();
+                services.AddTransient<IActivityTypeService, ActivityTypeService>();
+                services.AddTransient<ITimeSlotService, TimeSlotService>();
+                services.AddTransient<IEditionService, EditionService>();
                 services.AddTransient<IActivityStatusService, ActivityStatusService>();
                 services.AddTransient<IActivityStatusCommands, ActivityStatusCommands>();
                 services.AddTransient<IRoleService, RoleService>();
-                services.AddTransient<IRoleCommands, RoleCommands>();
                 services.AddTransient<IUserService, UserService>();
-                services.AddTransient<IUserCommands, UserCommands>();
-                services.AddTransient<IUserStatusCommands, UserStatusCommands>();
             }
         }
 

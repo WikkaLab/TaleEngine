@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using TaleEngine.Commands.Contracts;
+using TaleEngine.CQRS.Contracts;
 
-namespace TaleEngine.Commands.Impl
+namespace TaleEngine.CQRS.Impl
 {
     public class EditionCommands : IEditionCommands
     {

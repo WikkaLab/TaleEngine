@@ -1,7 +1,7 @@
-﻿using TaleEngine.Commands.Contracts;
-using TaleEngine.Commands.Enums;
+﻿using TaleEngine.CQRS.Contracts;
+using TaleEngine.CQRS.Enums;
 
-namespace TaleEngine.Commands.Impl.Backoffice
+namespace TaleEngine.CQRS.Impl.Backoffice
 {
     public class UserStatusCommands : IUserStatusCommands
     {

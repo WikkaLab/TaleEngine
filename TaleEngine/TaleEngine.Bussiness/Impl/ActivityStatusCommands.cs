@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using TaleEngine.API.Contracts.Dtos;
-using TaleEngine.Commands.Contracts;
+using TaleEngine.CQRS.Contracts;
 
-namespace TaleEngine.Commands.Impl
+namespace TaleEngine.CQRS.Impl
 {
     public class ActivityStatusCommands : IActivityStatusCommands
     {

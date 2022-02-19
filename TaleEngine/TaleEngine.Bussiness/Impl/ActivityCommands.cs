@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using TaleEngine.Aggregates.ActivityAggregate;
 using TaleEngine.API.Contracts.Dtos;
+using TaleEngine.API.Contracts.Dtos.Requests;
 using TaleEngine.API.Contracts.Dtos.Results;
-using TaleEngine.Commands.Contracts;
-using TaleEngine.Commands.Enums;
-using TaleEngine.Commands.Mappers;
+using TaleEngine.CQRS.Contracts;
+using TaleEngine.CQRS.Mappers;
+using TaleEngine.Cross.Enums;
 using TaleEngine.DbServices.Contracts.Services;
 
-namespace TaleEngine.Commands.Impl
+namespace TaleEngine.CQRS.Impl
 {
     public class ActivityCommands : IActivityCommands
     {
@@ -32,6 +34,8 @@ namespace TaleEngine.Commands.Impl
             _timeSlotService = timeSlotService ?? throw new ArgumentNullException(nameof(timeSlotService));
         }
 
+        // Queries
+
         public List<ActivityDto> ActiveActivitiesQuery(int editionId)
         {
             var activities = _activityService
@@ -52,141 +56,44 @@ namespace TaleEngine.Commands.Impl
             return models;
         }
 
-        public int DeleteCommand(int activityId)
-        {
-            // Validate 
-
-            try
-            {
-                _activityService.DeleteActivity(activityId);
-            }
-            catch (Exception)
-            {
-                return 0;
-            }
-
-            return 1;
-        }
-
-        public int CreateCommand(int editionId, ActivityDto activityDto)
-        {
-            var isValidData = ValidateNewActivityData(activityDto, editionId);
-
-            if (!isValidData)
-            {
-                return 0;
-            }
-
-            var status = _activityStatusService.GetById((int)ActivityStatusEnum.PEN);
-            activityDto.StatusId = status.Id;
-
-            var activity = ActivityMapper.Map(activityDto);
-
-            _activityService.CreateActivity(editionId, activity);
-
-            return 1;
-        }
-
-        public int UpdateCommand(ActivityDto activityDto)
-        {
-            //var isValidData = ValidateNewActivityData(activityDto, editionId);
-
-            //if (!isValidData)
-            //{
-            //    return 0;
-            //}
-
-            var activity = ActivityMapper.Map(activityDto);
-
-            _activityService.UpdateActivity(activity);
-
-            return 1;
-        }
-
-        private bool ValidateNewActivityData(ActivityDto model, int editionId)
-        {
-            var edition = _editionService.GetById(editionId);
-            if (edition == null)
-            {
-                return false;
-            }
-
-            if (model.Places <= 0)
-            {
-                return false;
-            }
-
-            var type = _activityTypesService.GetById(model.TypeId);
-            if (type == null)
-            {
-                return false;
-            }
-
-            var timeSlot = _timeSlotService.GetById(model.TimeSlotId);
-            if (timeSlot == null)
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-        public int ChangeActivityStatusCommand(int activityId, int statusId)
-        {
-            var status = _activityStatusService.GetById(statusId);
-            var activity = _activityService.GetById(activityId);
-
-            if (status == null || activity == null)
-            {
-                return 0;
-            }
-
-            activity.StatusId = status.Id;
-
-            return _activityService.UpdateActivity(activity);
-
-            return 1;
-        }
-
-        public ActivityFilteredResult GetActiveActivitiesFiltered(int type, int edition,
-            string title, int currentPage)
+        public ActivityFilteredResult ActiveActivitiesFilteredQuery(ActivityFilterRequest request)
         {
             throw new NotImplementedException();
 
-            //    int activitiesPerPage = 10;
+            //int activitiesPerPage = 10;
 
-            //    var activeStatus = _activityStatusService
-            //        .GetById((int)ActivityStatusEnum.ACT);
+            //var activeStatus = _activityStatusService
+            //    .GetById((int)ActivityStatusEnum.ACT);
 
-            //    var currentEdition = _editionService.GetById(edition);
+            //var currentEdition = _editionService.GetById(request.EditionId);
 
-            //    if (currentEdition == null || activeStatus == null)
-            //    {
-            //        return null;
-            //    }
+            //if (currentEdition == null || activeStatus == null)
+            //{
+            //    return null;
+            //}
 
-            //    int skipByPagination = (currentPage - 1) * activitiesPerPage;
+            //int skipByPagination = (request.CurrentPage - 1) * activitiesPerPage;
 
-            //    var activities = _activityService
-            //        .GetActiveActivitiesFiltered(activeStatus.Id, type, currentEdition.Id,
-            //            title, skipByPagination, activitiesPerPage);
+            //var activities = _activityService
+            //    .GetActiveActivitiesFiltered(activeStatus.Id, request.TypeId, currentEdition.Id,
+            //        request.Title, skipByPagination, activitiesPerPage);
 
-            //    var models = ActivityMapper.Map(activities);
+            //var models = ActivityMapper.Map(activities);
 
-            //    int totalActivities = _activityService
-            //        .GetTotalActivities(activeStatus.Id, type, currentEdition.Id, title);
+            //int totalActivities = _activityService
+            //    .GetTotalActivities(activeStatus.Id, request.TypeId, currentEdition.Id, request.Title);
 
-            //    double actsPerPage = totalActivities / activitiesPerPage;
-            //    var totalPages = (int)Math.Ceiling(actsPerPage);
+            //double actsPerPage = totalActivities / activitiesPerPage;
+            //var totalPages = (int)Math.Ceiling(actsPerPage);
 
-            //    var result = new ActivityFilteredResultDto
-            //    {
-            //        Activities = models,
-            //        CurrentPage = currentPage,
-            //        TotalPages = totalPages
-            //    };
+            //var result = new ActivityFilteredResult
+            //{
+            //    Activities = models,
+            //    CurrentPage = currentPage,
+            //    TotalPages = totalPages
+            //};
 
-            //    return result;
+            //return result;
         }
 
         public List<ActivityDto> LastThreeActivitiesQuery(int edition)
@@ -194,15 +101,63 @@ namespace TaleEngine.Commands.Impl
             var activities = _activityService
                  .GetLastThreeActivities(edition);
 
-            if (activities == null || activities.Count == 0)
-            {
-                return null;
-            }
+            var result = ActivityMapper.Map(activities);
 
-            var models = ActivityMapper.Map(activities);
-
-            return models;
+            return result;
         }
 
+
+        // Commands
+
+        public void DeleteCommand(int activityId)
+        {
+            _activityService.DeleteActivity(activityId);
+        }
+
+        public void CreateCommand(int editionId, ActivityDto activityDto)
+        {
+            var edition = _editionService.GetById(editionId);
+
+            var type = _activityTypesService.GetById(activityDto.TypeId);
+            var timeSlot = _timeSlotService.GetById(activityDto.TimeSlotId);
+            var status = _activityStatusService.GetById((int)ActivityStatusEnum.PEN);
+
+            var activity = new Activity()
+                .SetTitle(activityDto.Title)
+                .SetDescription(activityDto.Description)
+                .SetPlaces(activityDto.Places)
+                .SetImage(activityDto.Image)
+                //.SetDates(activityDto.ActivityStart, activityDto.ActivityEnd)
+                .SetStatus(status)
+                .SetTimeSlot(timeSlot)
+                .SetType(type);
+
+            _activityService.CreateActivity(editionId, activity);
+        }
+
+        public void UpdateCommand(ActivityDto activityDto)
+        {
+            var timeSlot = _timeSlotService.GetById(activityDto.TimeSlotId);
+
+            var activity = new Activity()
+                .SetTitle(activityDto.Title)
+                .SetDescription(activityDto.Description)
+                .SetPlaces(activityDto.Places)
+                .SetImage(activityDto.Image)
+                //.SetDates(activityDto.ActivityStart, activityDto.ActivityEnd)
+                .SetTimeSlot(timeSlot);
+
+            _activityService.UpdateActivity(activity);
+        }
+
+        public void ChangeActivityStatusCommand(int activityId, int statusId)
+        {
+            var activity = _activityService.GetById(activityId);
+            var status = _activityStatusService.GetById(statusId);
+
+            activity.SetStatus(status);
+
+            _activityService.UpdateActivity(activity);
+        }
     }
 }

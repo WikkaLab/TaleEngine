@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using TaleEngine.Commands.Enums;
+using TaleEngine.Aggregates.ActivityAggregate;
+using TaleEngine.Cross.Enums;
 using TaleEngine.Data.Contracts;
 using TaleEngine.Data.Contracts.Entities;
 using TaleEngine.DbServices.Contracts.Services;
 using TaleEngine.DbServices.Mappers;
-using TaleEngine.Domain.Models;
 
 namespace TaleEngine.DbServices.Services
 {
@@ -27,31 +27,27 @@ namespace TaleEngine.DbServices.Services
             return ActivityMapper.Map(activity);
         }
 
-        public List<Activity> GetActiveActivities(int editionId)
+        public List<ActivityEntity> GetActiveActivities(int editionId)
         {
             var activeStatus = _unitOfWork.ActivityStatusRepository
                 .GetById((int)ActivityStatusEnum.ACT);
 
             var activities = GetActivitiesByStatus(editionId, activeStatus.Id);
 
-            var result = ActivityMapper.Map(activities);
-
-            return result;
+            return activities;
         }
 
-        public List<Activity> GetPendingActivities(int editionId)
+        public List<ActivityEntity> GetPendingActivities(int editionId)
         {
             var pendingStatus = _unitOfWork.ActivityStatusRepository
                 .GetById((int)ActivityStatusEnum.PEN);
 
             var activities = GetActivitiesByStatus(editionId, pendingStatus.Id);
 
-            var result = ActivityMapper.Map(activities);
-
-            return result;
+            return activities;
         }
 
-        public List<Activity> GetActiveActivitiesFiltered(int typeId, int editionId,
+        public List<ActivityEntity> GetActiveActivitiesFiltered(int typeId, int editionId,
                 string title, int skipByPagination, int activitiesPerPage)
         {
             var activeStatus = _unitOfWork.ActivityStatusRepository
@@ -61,9 +57,7 @@ namespace TaleEngine.DbServices.Services
 
             var activities = query.Skip(skipByPagination).Take(activitiesPerPage).ToList();
 
-            var result = ActivityMapper.Map(activities);
-
-            return result;
+            return activities;
         }
 
         public int DeleteActivity(int activityId)
@@ -88,11 +82,11 @@ namespace TaleEngine.DbServices.Services
                 EditionId = editionId,
                 CreateDateTime = DateTime.Now,
                 Title = activity.Title,
-                TypeId = activity.TypeId,
-                StatusId = activity.StatusId,
+                TypeId = activity.Type,
+                StatusId = activity.Status,
                 Places = activity.Places,
                 Description = activity.Description,
-                TimeSlotId = activity.TimeSlotId,
+                TimeSlotId = activity.TimeSlot,
                 Image = activity.Image
             };
 
@@ -109,17 +103,17 @@ namespace TaleEngine.DbServices.Services
             return 1;
         }
 
-        public int UpdateActivity(Activity activity)
+        public int UpdateActivity(int id, Activity activity)
         {
-            var activityEntity = _unitOfWork.ActivityRepository.GetById(activity.Id);
+            var activityEntity = _unitOfWork.ActivityRepository.GetById(id);
             if (activityEntity != null)
             {
                 activityEntity.Title = activity.Title;
-                activityEntity.TypeId = activity.TypeId;
-                activityEntity.StatusId = activity.StatusId;
+                activityEntity.TypeId = activity.Type;
+                activityEntity.StatusId = activity.Status;
                 activityEntity.Places = activity.Places;
                 activityEntity.Description = activity.Description;
-                activityEntity.TimeSlotId = activity.TimeSlotId;
+                activityEntity.TimeSlotId = activity.TimeSlot;
 
                 return Update(activityEntity);
             }
@@ -142,12 +136,7 @@ namespace TaleEngine.DbServices.Services
 
         public List<Activity> GetLastThreeActivities(int editionId)
         {
-            var activities = GetLastThreeActivities(editionId);
-
-            var result = new List<Activity>();
-            foreach (var activity in activities) { }
-
-            return result;
+            throw new NotImplementedException();
         }
 
         #region Private methods

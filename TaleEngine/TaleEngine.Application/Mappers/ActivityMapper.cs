@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using TaleEngine.Aggregates.ActivityAggregate;
 using TaleEngine.Data.Contracts.Entities;
-using TaleEngine.Domain.Models;
 
 namespace TaleEngine.DbServices.Mappers
 {
@@ -10,18 +10,15 @@ namespace TaleEngine.DbServices.Mappers
         public static Activity Map(ActivityEntity entity)
         {
             if (entity == null) return null;
-
-            var activity = new Activity
-            {
-                Id = entity.Id,
-                Image = entity.Image,
-                Places = entity.Places,
-                Title = entity.Title,
-                StatusId = entity.StatusId,
-                TypeId = entity.TypeId,
-                Description = entity.Description,
-                TimeSlotId = entity.TimeSlotId,
-            };
+            
+            var activity = new Activity()
+                .SetTitle(entity.Title)
+                .SetDescription(entity.Description)
+                .SetPlaces(entity.Places)
+                .SetImage(entity.Image)
+                .SetStatus(entity.StatusId)
+                .SetType(entity.TypeId)
+                .SetTimeSlot(entity.TimeSlotId.Value);
 
             return activity;
         }

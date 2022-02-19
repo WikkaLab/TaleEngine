@@ -1,4 +1,4 @@
-﻿namespace TaleEngine.Commands.Enums
+﻿namespace TaleEngine.Cross.Enums
 {
     public enum TimeSlotEnum
     {

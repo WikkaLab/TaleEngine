@@ -1,4 +1,4 @@
-﻿namespace TaleEngine.Domain.Models
+﻿namespace TaleEngine.Aggregates.EventAggregate
 {
     public class Event
     {

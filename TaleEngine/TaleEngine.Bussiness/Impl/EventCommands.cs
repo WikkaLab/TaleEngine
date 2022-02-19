@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using TaleEngine.Commands.Contracts;
+using TaleEngine.CQRS.Contracts;
 
-namespace TaleEngine.Commands.Impl
+namespace TaleEngine.CQRS.Impl
 {
     public class EventCommands : IEventCommands
     {

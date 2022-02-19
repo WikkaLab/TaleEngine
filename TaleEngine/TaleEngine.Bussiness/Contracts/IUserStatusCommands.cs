@@ -1,4 +1,4 @@
-﻿namespace TaleEngine.Commands.Contracts
+﻿namespace TaleEngine.CQRS.Contracts
 {
     public interface IUserStatusCommands
     {

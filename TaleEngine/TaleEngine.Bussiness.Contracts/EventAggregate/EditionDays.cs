@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace TaleEngine.Domain.Models
+namespace TaleEngine.Aggregates.EventAggregate
 {
     public class EditionDays
     {

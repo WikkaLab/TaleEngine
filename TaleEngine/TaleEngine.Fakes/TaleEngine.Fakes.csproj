@@ -18,7 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TaleEngine.Application.Contracts\TaleEngine.DbServices.Contracts.csproj" />
-    <ProjectReference Include="..\TaleEngine.Bussiness.Contracts\TaleEngine.Domain.csproj" />
+    <ProjectReference Include="..\TaleEngine.Bussiness.Contracts\TaleEngine.Aggregates.csproj" />
   </ItemGroup>
 
 </Project>

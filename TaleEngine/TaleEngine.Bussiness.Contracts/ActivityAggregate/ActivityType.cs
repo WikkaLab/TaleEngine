@@ -1,6 +1,6 @@
-﻿namespace TaleEngine.Domain.Models
+﻿namespace TaleEngine.Aggregates.ActivityAggregate
 {
-    public class ActivityStatus
+    public class ActivityType
     {
         public int Id { get; set; }
         public string Name { get; set; }

@@ -1,8 +1,9 @@
-﻿namespace TaleEngine.Domain.Models
+﻿namespace TaleEngine.Aggregates.ActivityAggregate
 {
-    public class ActivityType
+    public class TimeSlot
     {
         public int Id { get; set; }
         public string Name { get; set; }
+
     }
 }

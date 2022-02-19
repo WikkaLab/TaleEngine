@@ -15,9 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaleEngine.Data", "TaleEngi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaleEngine.Data.Contracts", "TaleEngine.Data.Contracts\TaleEngine.Data.Contracts.csproj", "{F291E54C-00DB-4304-BD09-3ADECC2763C7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaleEngine.Commands", "TaleEngine.Bussiness\TaleEngine.Commands.csproj", "{70A4BFB1-CC9E-43CF-AE27-30A0BED73A63}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaleEngine.CQRS", "TaleEngine.Bussiness\TaleEngine.CQRS.csproj", "{70A4BFB1-CC9E-43CF-AE27-30A0BED73A63}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaleEngine.Domain", "TaleEngine.Bussiness.Contracts\TaleEngine.Domain.csproj", "{A3A3704B-A23D-4B2B-8581-17433D6D68A5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaleEngine.Aggregates", "TaleEngine.Bussiness.Contracts\TaleEngine.Aggregates.csproj", "{A3A3704B-A23D-4B2B-8581-17433D6D68A5}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaleEngine.API.Testing", "TaleEngine.Testing\TaleEngine.API.Testing.csproj", "{82520E4E-84EE-4FEF-A65C-363A5345DFC8}"
 EndProject
@@ -47,9 +47,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "persistence", "persistence"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "infrastructure", "infrastructure", "{F0D668BD-5610-4E59-B0E4-E8E7CA99517E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaleEngine.API.Contracts", "TaleEngine.API.Contracts\TaleEngine.API.Contracts.csproj", "{BCCE20AB-5DF5-4189-AF97-C39B3F473C61}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaleEngine.API.Contracts", "TaleEngine.API.Contracts\TaleEngine.API.Contracts.csproj", "{BCCE20AB-5DF5-4189-AF97-C39B3F473C61}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaleEngine.Cross", "TaleEngine.Cross\TaleEngine.Cross.csproj", "{65053379-63F4-4E71-A30F-65AA0C7EFE85}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaleEngine.Cross", "TaleEngine.Cross\TaleEngine.Cross.csproj", "{65053379-63F4-4E71-A30F-65AA0C7EFE85}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

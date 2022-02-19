@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using TaleEngine.Commands.Contracts;
+using TaleEngine.CQRS.Contracts;
 
-namespace TaleEngine.Commands.Impl.Backoffice
+namespace TaleEngine.CQRS.Impl.Backoffice
 {
     public class UserCommands : IUserCommands
     {

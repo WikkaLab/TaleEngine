@@ -1,15 +1,16 @@
 ﻿using System.Collections.Generic;
-using TaleEngine.Domain.Models;
+using TaleEngine.Aggregates.ActivityAggregate;
+using TaleEngine.Data.Contracts.Entities;
 
 namespace TaleEngine.DbServices.Contracts.Services
 {
     public interface IActivityService
     {
         Activity GetById(int id);
-        List<Activity> GetActiveActivities(int editionId);
-        List<Activity> GetPendingActivities(int editionId);
-        List<Activity> GetLastThreeActivities(int editionId);
-        List<Activity> GetActiveActivitiesFiltered(int typeId, int editionId,
+        List<ActivityEntity> GetActiveActivities(int editionId);
+        List<ActivityEntity> GetPendingActivities(int editionId);
+        List<ActivityEntity> GetLastThreeActivities(int editionId);
+        List<ActivityEntity> GetActiveActivitiesFiltered(int typeId, int editionId,
                         string title, int skipByPagination, int activitiesPerPage);
 
         int ChangeActivityStatus(int activityId, int statusId);

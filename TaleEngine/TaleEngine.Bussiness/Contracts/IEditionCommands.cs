@@ -1,7 +1,6 @@
 ﻿using TaleEngine.API.Contracts.Dtos;
 
-namespace TaleEngine.Commands.Contracts
-
+namespace TaleEngine.CQRS.Contracts
 {
     public interface IEditionCommands
     {

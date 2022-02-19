@@ -1,31 +1,27 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using TaleEngine.Aggregates.ActivityAggregate;
 using TaleEngine.API.Contracts.Dtos;
-using TaleEngine.Domain.Models;
+using TaleEngine.Data.Contracts.Entities;
 
-namespace TaleEngine.Commands.Mappers
+namespace TaleEngine.CQRS.Mappers
 {
     public static class ActivityMapper
     {
-        // To models from DTO
-
         public static Activity Map(ActivityDto dto)
         {
             if (dto == null) return null;
 
-            return new Activity
-            {
-                Id = dto.Id,
-                Title = dto.Title,
-                Description = dto.Description,
-                Places = dto.Places,
-                //EndDateTime = dto.ActivityEnd,
-                //StartDateTime = dto.ActivityStart,
-                StatusId = dto.StatusId,
-                TypeId = dto.TypeId,
-                Image = dto.Image,
-                TimeSlotId = dto.TimeSlotId
-            };
+            return new Activity()
+                .SetTitle(dto.Title)
+                .SetDescription(dto.Description)
+                .SetPlaces(dto.Places)
+                .SetImage(dto.Image)
+                //.SetDates(activityDto.ActivityStart, activityDto.ActivityEnd)
+                .SetStatus(dto.StatusId)
+                .SetTimeSlot(dto.TimeSlotId)
+                .SetType(dto.TypeId);
         }
 
         public static List<Activity> Map(List<ActivityDto> dtos)
@@ -41,16 +37,15 @@ namespace TaleEngine.Commands.Mappers
 
             return new ActivityDto
             {
-                Id = activity.Id,
                 Title = activity.Title,
                 Description = activity.Description,
                 Places = activity.Places,
                 Image = activity.Image,
-                TypeId = activity.TypeId,
-                StatusId = activity.StatusId,
+                TypeId = activity.Type,
+                StatusId = activity.Status,
                 //EndDateTime = activity.EndDateTime,
                 //StartDateTime = activity.StartDateTime,
-                TimeSlotId = activity.TimeSlotId ?? 0
+                TimeSlotId = activity.TimeSlot ?? 0
             };
         }
 
@@ -61,5 +56,27 @@ namespace TaleEngine.Commands.Mappers
             return models.Select(Map).ToList();
         }
 
+        public static ActivityDto Map(ActivityEntity activity)
+        {
+            if (activity == null) return null;
+
+            return new ActivityDto
+            {
+                Title = activity.Title,
+                Description = activity.Description,
+                Places = activity.Places,
+                Image = activity.Image,
+                TypeId = activity.TypeId,
+                StatusId = activity.StatusId,
+                TimeSlotId = activity.TimeSlotId.Value
+            };
+        }
+
+        internal static List<ActivityDto> Map(List<ActivityEntity> activities)
+        {
+            if (activities == null || activities.Count == 0) return null;
+
+            return activities.Select(Map).ToList();
+        }
     }
 }
