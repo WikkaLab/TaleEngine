@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
-using TaleEngine.Domain.Models;
+using TaleEngine.Data.Contracts.Entities;
 
 namespace TaleEngine.DbServices.Contracts.Services
 {
     public interface IActivityStatusService
     {
-        ActivityStatus GetById(int statusId);
-        List<ActivityStatus> GetActivityStatuses();
+        ActivityStatusEntity GetById(int statusId);
+        List<ActivityStatusEntity> GetActivityStatuses();
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using TaleEngine.Data.Contracts;
+using TaleEngine.Data.Contracts.Entities;
 using TaleEngine.DbServices.Contracts.Services;
 
 namespace TaleEngine.DbServices.Services
@@ -8,16 +9,23 @@ namespace TaleEngine.DbServices.Services
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        public ActivityStatusService(IActivityStatusDomainService activityStatusDomainService)
+        public ActivityStatusService(IUnitOfWork unitOfWork)
         {
-            _activityStatusDomainService = activityStatusDomainService;
+            _unitOfWork = unitOfWork;
         }
 
-        public List<ActivityStatusDto> GetActivityStatuses()
+        public List<ActivityStatusEntity> GetActivityStatuses()
         {
-            var actStatuses = _activityStatusDomainService.GetAllActivityStatuses();
+            var result = _unitOfWork.ActivityStatusRepository
+                .GetAll();
 
-            var result = ActivityStatusMapper.Map(actStatuses);
+            return result;
+        }
+
+        public ActivityStatusEntity GetById(int statusId)
+        {
+            var result = _unitOfWork.ActivityStatusRepository
+                .GetById(statusId);
 
             return result;
         }

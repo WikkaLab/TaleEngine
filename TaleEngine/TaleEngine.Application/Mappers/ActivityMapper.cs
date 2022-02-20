@@ -10,7 +10,7 @@ namespace TaleEngine.DbServices.Mappers
         public static Activity Map(ActivityEntity entity)
         {
             if (entity == null) return null;
-            
+
             var activity = new Activity()
                 .SetTitle(entity.Title)
                 .SetDescription(entity.Description)

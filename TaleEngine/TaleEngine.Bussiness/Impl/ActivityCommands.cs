@@ -41,7 +41,7 @@ namespace TaleEngine.CQRS.Impl
             var activities = _activityService
                 .GetActiveActivities(editionId);
 
-            var models = ActivityMapper.Map(activities);
+            var models = ActivityMapper.MapEntityToDto(activities);
 
             return models;
         }
@@ -51,7 +51,7 @@ namespace TaleEngine.CQRS.Impl
             var activities = _activityService
                 .GetPendingActivities(editionId);
 
-            var models = ActivityMapper.Map(activities);
+            var models = ActivityMapper.MapEntityToDto(activities);
 
             return models;
         }
@@ -101,7 +101,7 @@ namespace TaleEngine.CQRS.Impl
             var activities = _activityService
                  .GetLastThreeActivities(edition);
 
-            var result = ActivityMapper.Map(activities);
+            var result = ActivityMapper.MapEntityToDto(activities);
 
             return result;
         }
@@ -128,7 +128,7 @@ namespace TaleEngine.CQRS.Impl
                 .SetPlaces(activityDto.Places)
                 .SetImage(activityDto.Image)
                 //.SetDates(activityDto.ActivityStart, activityDto.ActivityEnd)
-                .SetStatus(status)
+                .SetStatus(status.Id)
                 .SetTimeSlot(timeSlot)
                 .SetType(type);
 
@@ -147,7 +147,7 @@ namespace TaleEngine.CQRS.Impl
                 //.SetDates(activityDto.ActivityStart, activityDto.ActivityEnd)
                 .SetTimeSlot(timeSlot);
 
-            _activityService.UpdateActivity(activity);
+            _activityService.UpdateActivity(activityDto.Id, activity);
         }
 
         public void ChangeActivityStatusCommand(int activityId, int statusId)
@@ -155,9 +155,11 @@ namespace TaleEngine.CQRS.Impl
             var activity = _activityService.GetById(activityId);
             var status = _activityStatusService.GetById(statusId);
 
-            activity.SetStatus(status);
+            Activity model = ActivityMapper.MapEntityToModel(activity);
 
-            _activityService.UpdateActivity(activity);
+            model.SetStatus(status.Id);
+
+            _activityService.UpdateActivity(activityId, model);
         }
     }
 }

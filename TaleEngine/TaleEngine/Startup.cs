@@ -63,7 +63,7 @@ namespace TaleEngine
                 services.AddTransient<IRoleCommands, RoleCommands>();
                 services.AddTransient<IUserCommands, UserCommands>();
                 services.AddTransient<IUserStatusCommands, UserStatusCommands>();
-                
+
                 // Services
                 services.AddTransient<IEventService, EventService>();
                 services.AddTransient<IActivityService, ActivityService>();

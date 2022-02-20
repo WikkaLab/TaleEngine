@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using TaleEngine.Commands.Contracts;
+using TaleEngine.CQRS.Contracts;
 
 namespace TaleEngine.API.Controllers.V1
 {
@@ -7,9 +7,9 @@ namespace TaleEngine.API.Controllers.V1
     [Route("api/v1/[controller]")]
     public class ActivityStatusController : Controller
     {
-        private readonly IActivityCommands _command;
+        private readonly IActivityStatusCommands _command;
 
-        public ActivityStatusController(IActivityCommands command)
+        public ActivityStatusController(IActivityStatusCommands command)
         {
             _command = command;
         }
@@ -17,7 +17,7 @@ namespace TaleEngine.API.Controllers.V1
         [HttpGet("[action]")]
         public IActionResult GetActivityStatuses()
         {
-            var result = _command.GetActivityStatuses();
+            var result = _command.AllActivityStatusQuery();
 
             if (result == null || result.Count == 0)
             {

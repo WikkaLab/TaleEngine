@@ -6,7 +6,6 @@ using TaleEngine.Cross.Enums;
 using TaleEngine.Data.Contracts;
 using TaleEngine.Data.Contracts.Entities;
 using TaleEngine.DbServices.Contracts.Services;
-using TaleEngine.DbServices.Mappers;
 
 namespace TaleEngine.DbServices.Services
 {
@@ -19,12 +18,12 @@ namespace TaleEngine.DbServices.Services
             _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
         }
 
-        public Activity GetById(int id)
+        public ActivityEntity GetById(int id)
         {
             var activity = _unitOfWork.ActivityRepository
                 .GetById(id);
 
-            return ActivityMapper.Map(activity);
+            return activity;
         }
 
         public List<ActivityEntity> GetActiveActivities(int editionId)
@@ -134,7 +133,7 @@ namespace TaleEngine.DbServices.Services
             return 0;
         }
 
-        public List<Activity> GetLastThreeActivities(int editionId)
+        public List<ActivityEntity> GetLastThreeActivities(int editionId)
         {
             throw new NotImplementedException();
         }

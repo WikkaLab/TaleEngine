@@ -78,8 +78,8 @@ namespace TaleEngine.API.Controllers.V2
             //    return Unauthorized();
             //}
 
-            var result = _command.DeleteCommand(activityId);
-            return Ok(result);
+            _command.DeleteCommand(activityId);
+            return Ok();
         }
 
         [HttpPost("[action]/{editionId}")]
@@ -92,17 +92,17 @@ namespace TaleEngine.API.Controllers.V2
             //    return NoContent();
             //}
 
-            var result = _command.CreateCommand(editionId, activityDto);
-            return Ok(result);
+            _command.CreateCommand(editionId, activityDto);
+            return Ok();
         }
 
         [HttpPut("[action]")]
         public IActionResult ChangeActivityStatus([FromBody] ActivityChangeStatusDto activtyChangeStatusDto)
         {
-            var result = _command
+            _command
                 .ChangeActivityStatusCommand(activtyChangeStatusDto.ActivityId, activtyChangeStatusDto.StatusId);
 
-            return Ok(result);
+            return Ok();
         }
 
         [HttpPut("[action]")]
@@ -115,8 +115,8 @@ namespace TaleEngine.API.Controllers.V2
             //    return Unauthorized();
             //}
 
-            var result = _command.UpdateCommand(activityDto);
-            return Ok(result);
+            _command.UpdateCommand(activityDto);
+            return Ok();
         }
     }
 }

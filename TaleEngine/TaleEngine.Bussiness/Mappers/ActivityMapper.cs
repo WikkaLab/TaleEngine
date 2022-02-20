@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using TaleEngine.Aggregates.ActivityAggregate;
 using TaleEngine.API.Contracts.Dtos;
@@ -9,7 +8,7 @@ namespace TaleEngine.CQRS.Mappers
 {
     public static class ActivityMapper
     {
-        public static Activity Map(ActivityDto dto)
+        public static Activity MapDtoToModel(ActivityDto dto)
         {
             if (dto == null) return null;
 
@@ -24,14 +23,14 @@ namespace TaleEngine.CQRS.Mappers
                 .SetType(dto.TypeId);
         }
 
-        public static List<Activity> Map(List<ActivityDto> dtos)
+        public static List<Activity> MapDtoToModel(List<ActivityDto> dtos)
         {
             if (dtos == null || dtos.Count == 0) return null;
 
-            return dtos.Select(Map).ToList();
+            return dtos.Select(MapDtoToModel).ToList();
         }
 
-        public static ActivityDto Map(Activity activity)
+        public static ActivityDto MapModelToDto(Activity activity)
         {
             if (activity == null) return null;
 
@@ -49,14 +48,15 @@ namespace TaleEngine.CQRS.Mappers
             };
         }
 
-        public static List<ActivityDto> Map(List<Activity> models)
+        public static List<ActivityDto> MapModelToDto(List<Activity> models)
         {
             if (models == null || models.Count == 0) return null;
 
-            return models.Select(Map).ToList();
+            return models.Select(MapModelToDto).ToList();
         }
 
-        public static ActivityDto Map(ActivityEntity activity)
+        // entity to dto
+        public static ActivityDto MapEntityToDto(ActivityEntity activity)
         {
             if (activity == null) return null;
 
@@ -72,11 +72,26 @@ namespace TaleEngine.CQRS.Mappers
             };
         }
 
-        internal static List<ActivityDto> Map(List<ActivityEntity> activities)
+        public static List<ActivityDto> MapEntityToDto(List<ActivityEntity> activities)
         {
             if (activities == null || activities.Count == 0) return null;
 
-            return activities.Select(Map).ToList();
+            return activities.Select(MapEntityToDto).ToList();
+        }
+
+        public static Activity MapEntityToModel(ActivityEntity entitiy)
+        {
+            if (entitiy == null) return null;
+
+            return new Activity()
+                .SetTitle(entitiy.Title)
+                .SetDescription(entitiy.Description)
+                .SetPlaces(entitiy.Places)
+                .SetImage(entitiy.Image)
+                //.SetDates(activityDto.ActivityStart, activityDto.ActivityEnd)
+                .SetStatus(entitiy.StatusId)
+                .SetTimeSlot(entitiy.TimeSlotId.Value)
+                .SetType(entitiy.TypeId);
         }
     }
 }

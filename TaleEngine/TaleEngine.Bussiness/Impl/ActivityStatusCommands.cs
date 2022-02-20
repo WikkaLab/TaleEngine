@@ -1,30 +1,27 @@
 ﻿using System.Collections.Generic;
 using TaleEngine.API.Contracts.Dtos;
 using TaleEngine.CQRS.Contracts;
+using TaleEngine.CQRS.Mappers;
+using TaleEngine.DbServices.Contracts.Services;
 
 namespace TaleEngine.CQRS.Impl
 {
     public class ActivityStatusCommands : IActivityStatusCommands
     {
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly IActivityStatusService _service;
 
-        public ActivityStatusCommands(IUnitOfWork unitOfWork)
+        public ActivityStatusCommands(IActivityStatusService service)
         {
-            _unitOfWork = unitOfWork;
+            _service = service;
         }
 
-        public List<ActivityStatusDto> GetAllActivityStatuses()
+        public List<ActivityStatusDto> AllActivityStatusQuery()
         {
-            var allStatuses = _unitOfWork.ActivityStatusRepository.GetAll();
+            var allStatuses = _service.GetActivityStatuses();
 
-            if (allStatuses == null || allStatuses.Count == 0)
-            {
-                return null;
-            }
+            var dtos = ActivityStatusMapper.Map(allStatuses);
 
-            var models = ActivityStatusMapper.Map(allStatuses);
-
-            return models;
+            return dtos;
         }
     }
 }
