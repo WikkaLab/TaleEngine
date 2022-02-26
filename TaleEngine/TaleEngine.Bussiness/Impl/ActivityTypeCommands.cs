@@ -1,29 +1,25 @@
 ﻿using System.Collections.Generic;
+using TaleEngine.API.Contracts.Dtos;
 using TaleEngine.CQRS.Contracts;
+using TaleEngine.CQRS.Mappers;
+using TaleEngine.DbServices.Contracts.Services;
 
 namespace TaleEngine.CQRS.Impl
 {
     public class ActivityTypeCommands : IActivityTypeCommands
     {
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly IActivityTypeService _service;
 
-        public ActivityTypeCommands(IUnitOfWork unitOfWork)
+        public ActivityTypeCommands(IActivityTypeService service)
         {
-            _unitOfWork = unitOfWork;
+            _service = service;
         }
 
-        public List<ActivityTypeDto> GetAllActivityTypes()
+        public List<ActivityTypeDto> AllActivityTypesQuery()
         {
-            var activityTypes = _unitOfWork.ActivityTypeRepository.GetAll();
-
-            if (activityTypes == null || activityTypes.Count == 0)
-            {
-                return null;
-            }
-
-            var models = ActivityTypeMapper.Map(activityTypes);
-
-            return models;
+            var types = _service.GetActivityTypes();
+            var result = ActivityTypeMapper.Map(types);
+            return result;
         }
     }
 }

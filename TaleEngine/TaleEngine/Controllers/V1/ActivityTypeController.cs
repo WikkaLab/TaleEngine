@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
-using TaleEngine.Commands.Contracts;
 
 namespace TaleEngine.API.Controllers.V1
 {

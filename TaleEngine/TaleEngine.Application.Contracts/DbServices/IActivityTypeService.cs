@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
-using TaleEngine.Domain.Models;
+using TaleEngine.Data.Contracts.Entities;
 
 namespace TaleEngine.DbServices.Contracts.Services
 {
     public interface IActivityTypeService
     {
-        ActivityType GetById(int id);
-        List<ActivityType> GetActivityTypes();
+        ActivityTypeEntity GetById(int id);
+        List<ActivityTypeEntity> GetActivityTypes();
     }
 }
