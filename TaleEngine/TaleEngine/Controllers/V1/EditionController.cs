@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using TaleEngine.Commands.Contracts;
+using TaleEngine.CQRS.Contracts;
 
 namespace TaleEngine.API.Controllers.V1
 {
@@ -17,7 +17,7 @@ namespace TaleEngine.API.Controllers.V1
         [HttpGet("[action]/{editionId}")]
         public IActionResult GetEditionDays(int editionId)
         {
-            var result = _command.GetEditionDays(editionId);
+            var result = _command.EditionDaysQuery(editionId);
 
             if (result == null)
             {

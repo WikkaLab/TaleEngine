@@ -6,6 +6,5 @@ namespace TaleEngine.CQRS.Contracts
     {
         EditionDaysDto EditionDaysQuery(int editionId);
         int FutureOrCurrentEditionQuery(int ofEvent);
-
     }
 }

@@ -1,22 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using TaleEngine.API.Contracts.Dtos;
 using TaleEngine.CQRS.Contracts;
+using TaleEngine.DbServices.Contracts.Services;
 
 namespace TaleEngine.CQRS.Impl
 {
     public class EditionCommands : IEditionCommands
     {
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly IEditionService _service;
 
-        public EditionCommands(IUnitOfWork unitOfWork)
+        public EditionCommands(IEditionService service)
         {
-            _unitOfWork = unitOfWork;
+            _service = service;
         }
 
-        public EditionDaysDto GetEditionDays(int editionId)
+        public EditionDaysDto EditionDaysQuery(int editionId)
         {
-            var edition = _unitOfWork.EditionRepository.GetById(editionId);
+            var edition = _service.GetById(editionId);
 
             if (edition == null)
             {
@@ -33,27 +35,27 @@ namespace TaleEngine.CQRS.Impl
             return editionDaysDto;
         }
 
-        public EditionDto GetFutureOrCurrentEdition(int ofEvent)
+        public int FutureOrCurrentEditionQuery(int ofEvent)
         {
             if (ofEvent == 0) throw new ArgumentNullException();
 
-            var editionsOfEvent = _unitOfWork.EditionRepository.GetEditions(ofEvent);
+            var editionsOfEvent = _service.GetEditions(ofEvent);
 
-            if (editionsOfEvent == null || editionsOfEvent.Count == 0) return null;
+            if (editionsOfEvent == null || editionsOfEvent.Count == 0) return 0;
 
             var futureOrCurrentEdition = editionsOfEvent.Where(ed => ed.DateInit.Date > DateTime.Today).FirstOrDefault();
 
             if (futureOrCurrentEdition == null)
             {
-                futureOrCurrentEdition = _unitOfWork.EditionRepository.GetLastEditionInEvent(ofEvent);
+                futureOrCurrentEdition = _service.GetLastEditionInEvent(ofEvent);
             }
 
             if (futureOrCurrentEdition != null)
             {
-                return EditionMapper.Map(futureOrCurrentEdition);
+                return futureOrCurrentEdition.Id;
             }
 
-            return null;
+            return 0;
         }
 
         private List<DateTime> GetAllDaysFromRange(DateTime init, DateTime end)
