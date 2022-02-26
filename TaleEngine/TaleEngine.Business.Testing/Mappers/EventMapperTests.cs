@@ -1,40 +1,40 @@
-using FluentAssertions;
-using System.Diagnostics.CodeAnalysis;
-using TaleEngine.Fakes.Entities;
-using TaleEngine.Fakes.Models;
-using Xunit;
+//using FluentAssertions;
+//using System.Diagnostics.CodeAnalysis;
+//using TaleEngine.Fakes.Entities;
+//using TaleEngine.Fakes.Models;
+//using Xunit;
 
-namespace TaleEngine.Bussiness.Testing.Mappers
-{
-    [ExcludeFromCodeCoverage]
-    public class EventMapperTests
-    {
-        [Fact]
-        public void Event_EntityToModel()
-        {
-            // Arrange
-            var entity = EventBuilder.BuildEvent();
+//namespace TaleEngine.Bussiness.Testing.Mappers
+//{
+//    [ExcludeFromCodeCoverage]
+//    public class EventMapperTests
+//    {
+//        [Fact]
+//        public void Event_EntityToModel()
+//        {
+//            // Arrange
+//            var entity = EventBuilder.BuildEvent();
 
-            // Act
-            var result = EventMapper.Map(entity);
+//            // Act
+//            var result = EventMapper.Map(entity);
 
-            // Assert
-            result.Title.Should().Be(entity.Title);
-        }
+//            // Assert
+//            result.Title.Should().Be(entity.Title);
+//        }
 
-        [Fact]
-        public void Event_ModelToEntity()
-        {
-            // Arrange
-            var model = EventModelBuilder.BuildEventModel();
+//        [Fact]
+//        public void Event_ModelToEntity()
+//        {
+//            // Arrange
+//            var model = EventModelBuilder.BuildEventModel();
 
-            // Act
-            var result = EventMapper.Map(model);
+//            // Act
+//            var result = EventMapper.Map(model);
 
-            // Assert
-            result.Id.Should().Be(model.Id);
-            result.Title.Should().Be(model.Title);
-        }
+//            // Assert
+//            result.Id.Should().Be(model.Id);
+//            result.Title.Should().Be(model.Title);
+//        }
 
-    }
-}
+//    }
+//}

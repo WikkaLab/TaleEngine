@@ -1,20 +1,23 @@
 ﻿using System.Collections.Generic;
+using TaleEngine.API.Contracts.Dtos;
 using TaleEngine.CQRS.Contracts;
+using TaleEngine.CQRS.Mappers;
+using TaleEngine.DbServices.Contracts.Services;
 
 namespace TaleEngine.CQRS.Impl
 {
     public class EventCommands : IEventCommands
     {
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly IEventService _service;
 
-        public EventCommands(IUnitOfWork unitOfWork)
+        public EventCommands(IEventService service)
         {
-            _unitOfWork = unitOfWork;
+            _service = service;
         }
 
-        public List<EventDto> GetEventsNoFilter()
+        public List<EventDto> EventsNoFilterQuery()
         {
-            var events = _unitOfWork.EventRepository.GetAll();
+            var events = _service.GetAllEvents();
 
             var eventDtos = new List<EventDto>();
 
@@ -26,9 +29,9 @@ namespace TaleEngine.CQRS.Impl
             return eventDtos;
         }
 
-        public EventDto GetEvent(int eventId)
+        public EventDto EventQuery(int eventId)
         {
-            var ev = _unitOfWork.EventRepository.GetById(eventId);
+            var ev = _service.GetById(eventId);
 
             var result = EventMapper.Map(ev);
 

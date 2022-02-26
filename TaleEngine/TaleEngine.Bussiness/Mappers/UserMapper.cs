@@ -1,49 +1,51 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using TaleEngine.Aggregates.UserAggregate;
+using TaleEngine.API.Contracts.Dtos;
 using TaleEngine.Data.Contracts.Entities;
 
 namespace TaleEngine.CQRS.Mappers
 {
     public class UserMapper
     {
-        public static UserEntity Map(UserModel userModel)
+        public static UserEntity Map(User user)
         {
-            if (userModel == null) return null;
+            if (user == null) return null;
 
             return new UserEntity
             {
-                Username = userModel.Username,
-                Name = userModel.Name,
-                Blog = userModel.Blog,
-                Mail = userModel.Mail,
-                Website = userModel.Website,
-                StatusId = userModel.Status
+                Username = user.Username,
+                Name = user.Name,
+                Blog = user.Blog,
+                Mail = user.Mail,
+                Website = user.Website,
+                StatusId = user.Status
             };
         }
 
-        public static UserModel Map(UserEntity userEntity)
+        public static UserDto Map(UserEntity userEntity)
         {
             if (userEntity == null) return null;
 
-            return new UserModel
+            return new UserDto
             {
                 Username = userEntity.Username,
                 Name = userEntity.Name,
                 Website = userEntity.Website,
                 Mail = userEntity.Mail,
                 Blog = userEntity.Blog,
-                Status = userEntity.StatusId
+                //Status = userEntity.StatusId
             };
         }
 
-        public static List<UserEntity> MapToUsers(List<UserModel> models)
+        public static List<UserEntity> MapToUsers(List<User> models)
         {
             if (models == null || models.Count == 0) return null;
 
             return models.Select(Map).ToList();
         }
 
-        public static List<UserModel> MapToUserModels(List<UserEntity> entities)
+        public static List<UserDto> MapToUserModels(List<UserEntity> entities)
         {
             if (entities == null || entities.Count == 0) return null;
 

@@ -1,15 +1,13 @@
 ﻿using System.Collections.Generic;
-using TaleEngine.Domain.Models;
+using TaleEngine.Aggregates.UserAggregate;
+using TaleEngine.Data.Contracts.Entities;
 
 namespace TaleEngine.DbServices.Contracts.Services
 {
     public interface IUserService
     {
-        List<User> GetAllUsers();
-        int ActivateUser(int userId);
-        int DeactivateUser(int userId);
-        int BanUser(int userId);
-        int ReviewUser(int userId);
-        int MarkAsPendingUser(int userId);
+        UserEntity GetById(int id);
+        List<UserEntity> GetAllUsers();
+        void ChangeUserStatus(int id, User user);
     }
 }

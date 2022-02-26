@@ -1,105 +1,85 @@
 ﻿using System;
 using System.Collections.Generic;
+using TaleEngine.API.Contracts.Dtos;
 using TaleEngine.CQRS.Contracts;
+using TaleEngine.CQRS.Mappers;
+using TaleEngine.DbServices.Contracts.Services;
 
 namespace TaleEngine.CQRS.Impl.Backoffice
 {
     public class UserCommands : IUserCommands
     {
-        private readonly IUnitOfWork _unitOfWork;
-        private readonly IUserStatusCommands _userStatusDomainService;
+        private readonly IUserStatusCommands _userStatusCommands;
+        private readonly IUserService _service;
 
-        public UserCommands(IUnitOfWork unitOfWork,
-            IUserStatusCommands userStatusDomainService)
+        public UserCommands(IUserStatusCommands userStatusCommands)
         {
-            _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
-            _userStatusDomainService = userStatusDomainService ?? throw new ArgumentNullException(nameof(userStatusDomainService));
+            _userStatusCommands = userStatusCommands ?? throw new ArgumentNullException(nameof(userStatusCommands));
         }
 
-        public List<UserDto> GetAllUsers()
+        public List<UserDto> AllUsersQuery()
         {
-            var entities = _unitOfWork.UserRepository.GetAll();
+            var entities = _service.GetAllUsers();
 
             var result = UserMapper.MapToUserModels(entities);
             return result;
         }
 
-        public int ActivateUser(int userId)
+        public void ActivateCommand(int userId)
         {
-            if (userId == 0) return 0;
-            var status = _userStatusDomainService.GetActiveStatus();
-            if (status == 0) return 0;
-            int result = ChangeUserStatusTo(userId, status);
-
-            return result;
+            if (userId == 0) return;
+            var status = _userStatusCommands.ActiveQuery();
+            if (status == 0) return;
+            //ChangeUserStatusTo(userId, status);
         }
 
-        public int BanUser(int userId)
+        public void BanCommand(int userId)
         {
-            if (userId == 0) return 0;
-            var status = _userStatusDomainService.GetActiveStatus();
-            if (status == 0) return 0;
-            int result = ChangeUserStatusTo(userId, status);
-
-            return result;
+            if (userId == 0) return;
+            var status = _userStatusCommands.BanQuery();
+            if (status == 0) return;
+            //ChangeUserStatusTo(userId, status);
         }
 
-        public int DeactivateUser(int userId)
+        public void DeactivateCommand(int userId)
         {
-            if (userId == 0) return 0;
-            var status = _userStatusDomainService.GetInactiveStatus();
-            if (status == 0) return 0;
-            int result = ChangeUserStatusTo(userId, status);
-
-            return result;
+            if (userId == 0) return;
+            var status = _userStatusCommands.InactiveQuery();
+            if (status == 0) return;
+            //ChangeUserStatusTo(userId, status);
         }
 
-        public int MarkAsPendingUser(int userId)
+        public void MarkAsPendingCommand(int userId)
         {
-            if (userId == 0) return 0;
-            var status = _userStatusDomainService.GetPendingStatus();
-            if (status == 0) return 0;
-            int result = ChangeUserStatusTo(userId, status);
-
-            return result;
+            if (userId == 0) return;
+            var status = _userStatusCommands.PendingQuery();
+            if (status == 0) return;
+            //ChangeUserStatusTo(userId, status);
         }
 
-        public int ReviewUser(int userId)
+        public void ReviewCommand(int userId)
         {
-            if (userId == 0) return 0;
-            var status = _userStatusDomainService.GetRevisionStatus();
-            if (status == 0) return 0;
-            int result = ChangeUserStatusTo(userId, status);
-
-            return result;
+            if (userId == 0) return;
+            var status = _userStatusCommands.RevisionQuery();
+            if (status == 0) return;
+            //ChangeUserStatusTo(userId, status);
         }
 
-        public UserModel GetUser(int userId)
+        public UserDto UserQuery(int userId)
         {
             if (userId == 0) return null;
 
-            var entity = _unitOfWork.UserRepository.GetById(userId);
+            var entity = _service.GetById(userId);
             var model = UserMapper.Map(entity);
             return model;
         }
 
-        private int ChangeUserStatusTo(int userId, int status)
+        private void ChangeUserStatusTo(int userId, int status)
         {
-            var user = _unitOfWork.UserRepository.GetById(userId);
-            if (user == null) return 0;
+            var user = _service.GetById(userId);
+            if (user == null) return;
 
-            try
-            {
-                user.StatusId = status;
-                _unitOfWork.UserRepository.Update(user);
-                _unitOfWork.UserRepository.Save();
-
-                return user.Id;
-            }
-            catch (Exception ex)
-            {
-                return 0;
-            }
+            throw new NotImplementedException();
         }
     }
 }

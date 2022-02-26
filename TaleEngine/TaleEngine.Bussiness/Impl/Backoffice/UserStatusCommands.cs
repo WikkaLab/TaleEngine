@@ -1,42 +1,43 @@
 ﻿using TaleEngine.CQRS.Contracts;
-using TaleEngine.CQRS.Enums;
+using TaleEngine.Cross.Enums;
+using TaleEngine.DbServices.Contracts.Services;
 
 namespace TaleEngine.CQRS.Impl.Backoffice
 {
     public class UserStatusCommands : IUserStatusCommands
     {
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly IUserStatusService _service;
 
-        public UserStatusCommands(IUnitOfWork unitOfWork)
+        public UserStatusCommands(IUserStatusService service)
         {
-            _unitOfWork = unitOfWork;
+            _service = service;
         }
 
-        public int GetActiveStatus()
+        public int ActiveQuery()
         {
             var result = GetUserStatus((int)UserStatusEnum.ACTIVE);
             return result;
         }
 
-        public int GetPendingStatus()
+        public int PendingQuery()
         {
             var result = GetUserStatus((int)UserStatusEnum.PENDING);
             return result;
         }
 
-        public int GetBanStatus()
+        public int BanQuery()
         {
             var result = GetUserStatus((int)UserStatusEnum.BANNED);
             return result;
         }
 
-        public int GetRevisionStatus()
+        public int RevisionQuery()
         {
             var result = GetUserStatus((int)UserStatusEnum.REVISION);
             return result;
         }
 
-        public int GetInactiveStatus()
+        public int InactiveQuery()
         {
             var result = GetUserStatus((int)UserStatusEnum.INACTIVE);
             return result;
@@ -46,8 +47,7 @@ namespace TaleEngine.CQRS.Impl.Backoffice
         {
             if (userStatusId == 0) return 0;
 
-            var result = _unitOfWork.UserStatusRepository
-                .GetById(userStatusId);
+            var result = _service.GetUserStatus(userStatusId);
 
             return result.Id;
         }

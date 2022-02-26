@@ -10,7 +10,7 @@ using TaleEngine.CQRS.Impl.Backoffice;
 using TaleEngine.Data;
 using TaleEngine.Data.Contracts;
 using TaleEngine.DbServices.Contracts.Services;
-using TaleEngine.DbServices.Mocks;
+//using TaleEngine.DbServices.Mocks;
 using TaleEngine.DbServices.Services;
 using TaleEngine.DbServices.Services.Backoffice;
 using TaleEngine.Extensions;
@@ -49,31 +49,32 @@ namespace TaleEngine
 
             if (Configuration.GetValue<bool>("UseCustomizationData"))
             {
-                services.AddTransient<IEventService, EventServiceMock>();
-                services.AddTransient<ITimeSlotService, TimeSlotServiceMock>();
+                //services.AddTransient<IEventService, EventServiceMock>();
+                //services.AddTransient<ITimeSlotService, TimeSlotServiceMock>();
             }
             else
             {
                 // CQRS
-                services.AddTransient<IEventCommands, EventCommands>();
-                services.AddTransient<IActivityTypeCommands, ActivityTypeCommands>();
                 services.AddTransient<IActivityCommands, ActivityCommands>();
-                services.AddTransient<ITimeSlotCommands, TimeSlotCommands>();
+                services.AddTransient<IActivityStatusCommands, ActivityStatusCommands>();
+                services.AddTransient<IActivityTypeCommands, ActivityTypeCommands>();
                 services.AddTransient<IEditionCommands, EditionCommands>();
+                services.AddTransient<IEventCommands, EventCommands>();
                 services.AddTransient<IRoleCommands, RoleCommands>();
+                services.AddTransient<ITimeSlotCommands, TimeSlotCommands>();
                 services.AddTransient<IUserCommands, UserCommands>();
                 services.AddTransient<IUserStatusCommands, UserStatusCommands>();
 
                 // Services
-                services.AddTransient<IEventService, EventService>();
                 services.AddTransient<IActivityService, ActivityService>();
-                services.AddTransient<IActivityTypeService, ActivityTypeService>();
-                services.AddTransient<ITimeSlotService, TimeSlotService>();
-                services.AddTransient<IEditionService, EditionService>();
                 services.AddTransient<IActivityStatusService, ActivityStatusService>();
-                services.AddTransient<IActivityStatusCommands, ActivityStatusCommands>();
+                services.AddTransient<IActivityTypeService, ActivityTypeService>();
+                services.AddTransient<IEditionService, EditionService>();
+                services.AddTransient<IEventService, EventService>();
                 services.AddTransient<IRoleService, RoleService>();
+                services.AddTransient<ITimeSlotService, TimeSlotService>();
                 services.AddTransient<IUserService, UserService>();
+                services.AddTransient<IUserStatusService, UserStatusService>();
             }
         }
 

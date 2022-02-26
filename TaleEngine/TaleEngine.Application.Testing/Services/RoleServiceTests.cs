@@ -1,75 +1,75 @@
-﻿using FluentAssertions;
-using Moq;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using TaleEngine.Fakes.Models;
-using Xunit;
+﻿//using FluentAssertions;
+//using Moq;
+//using System.Collections.Generic;
+//using System.Diagnostics.CodeAnalysis;
+//using TaleEngine.Fakes.Models;
+//using Xunit;
 
-namespace TaleEngine.Application.Testing.Services
-{
-    [ExcludeFromCodeCoverage]
-    public class RoleServiceTests
-    {
-        private Mock<IRoleDomainService> serviceMock;
+//namespace TaleEngine.Application.Testing.Services
+//{
+//    [ExcludeFromCodeCoverage]
+//    public class RoleServiceTests
+//    {
+//        private Mock<IRoleDomainService> serviceMock;
 
-        public RoleServiceTests()
-        {
-            serviceMock = new Mock<IRoleDomainService>();
-        }
+//        public RoleServiceTests()
+//        {
+//            serviceMock = new Mock<IRoleDomainService>();
+//        }
 
-        [Fact]
-        public void GetRoles_Success()
-        {
-            // Arrange
-            List<RoleModel> list = RoleModelBuilder.BuildRoleModelList();
+//        [Fact]
+//        public void GetRoles_Success()
+//        {
+//            // Arrange
+//            List<RoleModel> list = RoleModelBuilder.BuildRoleModelList();
 
-            serviceMock.Setup(x => x.GetAllRoles())
-                .Returns(list);
+//            serviceMock.Setup(x => x.GetAllRoles())
+//                .Returns(list);
 
-            RoleService service = new RoleService(serviceMock.Object);
+//            RoleService service = new RoleService(serviceMock.Object);
 
-            // Act
-            var result = service.GetAllRoles();
+//            // Act
+//            var result = service.GetAllRoles();
 
-            // Assert
-            result.Should().NotBeNull();
-            result.Should().NotBeEmpty();
-        }
+//            // Assert
+//            result.Should().NotBeNull();
+//            result.Should().NotBeEmpty();
+//        }
 
-        [Fact]
-        public void GetRoles_ReturnsEmpty_Success()
-        {
-            // Arrange
-            List<RoleModel> list = new();
+//        [Fact]
+//        public void GetRoles_ReturnsEmpty_Success()
+//        {
+//            // Arrange
+//            List<RoleModel> list = new();
 
-            serviceMock.Setup(x => x.GetAllRoles())
-                .Returns(list);
+//            serviceMock.Setup(x => x.GetAllRoles())
+//                .Returns(list);
 
-            RoleService service = new RoleService(serviceMock.Object);
+//            RoleService service = new RoleService(serviceMock.Object);
 
-            // Act
-            var result = service.GetAllRoles();
+//            // Act
+//            var result = service.GetAllRoles();
 
-            // Assert
-            result.Should().BeNull();
-        }
+//            // Assert
+//            result.Should().BeNull();
+//        }
 
-        [Fact]
-        public void GetRoles_ReturnsNull_Success()
-        {
-            // Arrange
-            List<RoleModel> list = null;
+//        [Fact]
+//        public void GetRoles_ReturnsNull_Success()
+//        {
+//            // Arrange
+//            List<RoleModel> list = null;
 
-            serviceMock.Setup(x => x.GetAllRoles())
-                .Returns(list);
+//            serviceMock.Setup(x => x.GetAllRoles())
+//                .Returns(list);
 
-            RoleService service = new RoleService(serviceMock.Object);
+//            RoleService service = new RoleService(serviceMock.Object);
 
-            // Act
-            var result = service.GetAllRoles();
+//            // Act
+//            var result = service.GetAllRoles();
 
-            // Assert
-            result.Should().BeNull();
-        }
-    }
-}
+//            // Assert
+//            result.Should().BeNull();
+//        }
+//    }
+//}

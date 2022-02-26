@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using TaleEngine.Commands.Contracts;
+using TaleEngine.CQRS.Contracts;
 
 namespace TaleEngine.API.Controllers.V2
 {
@@ -17,7 +17,7 @@ namespace TaleEngine.API.Controllers.V2
         [HttpGet("[action]")]
         public IActionResult GetEvents()
         {
-            var result = _command.GetAllEvents();
+            var result = _command.EventsNoFilterQuery();
 
             return Ok(result);
         }
@@ -25,15 +25,7 @@ namespace TaleEngine.API.Controllers.V2
         [HttpGet("[action]")]
         public IActionResult GetEvent(int eventId)
         {
-            var result = _command.GetEvent(eventId);
-
-            return Ok(result);
-        }
-
-        [HttpGet("[action]/{selectedEvent}")]
-        public IActionResult GetCurrentOrFutureEdition(int selectedEvent)
-        {
-            var result = _command.GetCurrentOrFutureEdition(selectedEvent);
+            var result = _command.EventQuery(eventId);
 
             return Ok(result);
         }

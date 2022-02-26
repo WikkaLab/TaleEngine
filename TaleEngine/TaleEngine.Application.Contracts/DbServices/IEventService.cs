@@ -1,14 +1,11 @@
 ﻿using System.Collections.Generic;
-using TaleEngine.Domain.Models;
+using TaleEngine.Data.Contracts.Entities;
 
 namespace TaleEngine.DbServices.Contracts.Services
 {
     public interface IEventService
     {
-        Event GetById(int id);
-        List<Event> GetAllEvents();
-
-        Event GetEvent(int eventId);
-        int GetCurrentOrFutureEdition(int selectedEvent);
+        EventEntity GetById(int id);
+        List<EventEntity> GetAllEvents();
     }
 }

@@ -2,31 +2,31 @@
 using System.Collections.Generic;
 using TaleEngine.API.Contracts.Dtos;
 using TaleEngine.CQRS.Contracts;
+using TaleEngine.CQRS.Mappers;
+using TaleEngine.DbServices.Contracts.Services;
 
 namespace TaleEngine.CQRS.Impl
 {
     public class RoleCommands : IRoleCommands
     {
-        private readonly RoleService _roleService;
+        private readonly IRoleService _service;
 
-        public RoleCommands(RoleService roleService)
+        public RoleCommands(IRoleService roleService)
         {
-            _roleService = roleService ?? throw new ArgumentNullException(nameof(roleService));
+            _service = roleService ?? throw new ArgumentNullException(nameof(roleService));
         }
 
-        public List<RoleDto> GetAllRoles()
+        public List<RoleDto> AllRolesQuery()
         {
-            List<RoleModels> roles = _roleService.GetAll();
+            var roles = _service.GetAllRoles();
 
             if (roles == null || roles.Count == 0)
             {
                 return null;
             }
 
-
-
-            List<RoleDto> roleDtos = RoleMapper.MapToRoleDtos(roles);
-            return roleDtos;
+            var dtos = RoleMapper.Map(roles);
+            return dtos;
         }
     }
 }

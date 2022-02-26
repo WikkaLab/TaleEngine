@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using TaleEngine.Commands.Contracts;
+using TaleEngine.CQRS.Contracts;
 
 namespace TaleEngine.API.Controllers.V1
 {

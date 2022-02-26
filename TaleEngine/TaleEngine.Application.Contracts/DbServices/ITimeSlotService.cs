@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
-using TaleEngine.Domain.Models;
+using TaleEngine.Data.Contracts.Entities;
 
 namespace TaleEngine.DbServices.Contracts.Services
 {
     public interface ITimeSlotService
     {
-        TimeSlot GetById(int id);
-        List<TimeSlot> GetTimeSlots();
+        TimeSlotEntity GetById(int id);
+        List<TimeSlotEntity> GetTimeSlots();
     }
 }

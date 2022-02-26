@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
-using TaleEngine.Commands.Contracts;
+using TaleEngine.CQRS.Contracts;
 
 namespace TaleEngine.API.Controllers.Backoffice
 {
@@ -18,7 +18,7 @@ namespace TaleEngine.API.Controllers.Backoffice
         [HttpGet("[action]")]
         public IActionResult GetAllUsers()
         {
-            var result = _command.GetAllUsers();
+            var result = _command.AllUsersQuery();
 
             return Ok(result);
         }
@@ -26,41 +26,41 @@ namespace TaleEngine.API.Controllers.Backoffice
         [HttpPut("[action]")]
         public IActionResult ActivateUser(int userId)
         {
-            var result = _command.ActivateUser(userId);
+            _command.ActivateCommand(userId);
 
-            return Ok(result);
+            return Ok();
         }
 
         [HttpPut("[action]")]
         public IActionResult BanUser(int userId)
         {
-            var result = _command.BanUser(userId);
+            _command.BanCommand(userId);
 
-            return Ok(result);
+            return Ok();
         }
 
         [HttpPut("[action]")]
         public IActionResult DeactivateUser(int userId)
         {
-            var result = _command.DeactivateUser(userId);
+            _command.DeactivateCommand(userId);
 
-            return Ok(result);
+            return Ok();
         }
 
         [HttpPut("[action]")]
         public IActionResult MarkAsPendingUser(int userId)
         {
-            var result = _command.MarkAsPendingUser(userId);
+            _command.MarkAsPendingCommand(userId);
 
-            return Ok(result);
+            return Ok();
         }
 
         [HttpPut("[action]")]
         public IActionResult ReviewUser(int userId)
         {
-            var result = _command.ReviewUser(userId);
+            _command.ReviewCommand(userId);
 
-            return Ok(result);
+            return Ok();
         }
     }
 }

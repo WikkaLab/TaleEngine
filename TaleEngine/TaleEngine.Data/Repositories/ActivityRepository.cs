@@ -62,6 +62,19 @@ namespace TaleEngine.Data.Repositories
                 .ToList();
         }
 
+        public List<ActivityEntity> GetActiveActivitiesFiltered(int status, int type, int edition, string title, int skip, int activitiesPerPage)
+        {
+            throw new System.NotImplementedException();
+        }
 
+        public List<ActivityEntity> GetLastThreeActivities(int status, int edition, int numberOfActivities)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public int GetTotalActivities(int status, int type, int edition, string title)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

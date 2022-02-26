@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using TaleEngine.Commands.Contracts;
+using TaleEngine.CQRS.Contracts;
 
 namespace TaleEngine.API.Controllers.V2
 {
@@ -17,7 +17,7 @@ namespace TaleEngine.API.Controllers.V2
         [HttpGet("[action]")]
         public IActionResult GetTimeSlots()
         {
-            var result = _command.GetTimeSlots();
+            var result = _command.AllTimeSlotsQuery();
 
             if (result == null || result.Count == 0)
             {

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using TaleEngine.Commands.Contracts;
+using TaleEngine.CQRS.Contracts;
 
 namespace TaleEngine.API.Controllers.V2
 {
@@ -38,7 +38,7 @@ namespace TaleEngine.API.Controllers.V2
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public IActionResult GetAllRoles()
         {
-            var result = _command.GetAllRoles();
+            var result = _command.AllRolesQuery();
 
             if (result == null || result.Count == 0)
             {

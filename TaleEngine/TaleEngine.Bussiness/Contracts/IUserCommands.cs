@@ -8,10 +8,10 @@ namespace TaleEngine.CQRS.Contracts
         List<UserDto> AllUsersQuery();
         UserDto UserQuery(int userId);
 
-        int ActivateCommand(int userId);
-        int DeactivateCommand(int userId);
-        int BanCommand(int userId);
-        int ReviewCommand(int userId);
-        int MarkAsPendingCommand(int userId);
+        void ActivateCommand(int userId);
+        void DeactivateCommand(int userId);
+        void BanCommand(int userId);
+        void ReviewCommand(int userId);
+        void MarkAsPendingCommand(int userId);
     }
 }

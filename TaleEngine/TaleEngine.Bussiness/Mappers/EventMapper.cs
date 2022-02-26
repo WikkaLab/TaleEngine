@@ -1,24 +1,16 @@
-﻿using TaleEngine.Data.Contracts.Entities;
+﻿using TaleEngine.API.Contracts.Dtos;
+using TaleEngine.Data.Contracts.Entities;
 
 namespace TaleEngine.CQRS.Mappers
 {
     public static class EventMapper
     {
-        public static EventEntity Map(EventModel eventModel)
+        public static EventDto Map(EventEntity eventModel)
         {
-            return new EventEntity
+            return new EventDto
             {
                 Id = eventModel.Id,
                 Title = eventModel.Title
-            };
-        }
-
-        public static EventModel Map(EventEntity eventEntity)
-        {
-            return new EventModel
-            {
-                Id = eventEntity.Id,
-                Title = eventEntity.Title
             };
         }
     }

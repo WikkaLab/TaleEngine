@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using TaleEngine.Data.Contracts;
+using TaleEngine.Data.Contracts.Entities;
 using TaleEngine.DbServices.Contracts.Services;
 
 namespace TaleEngine.DbServices.Services
@@ -8,20 +9,21 @@ namespace TaleEngine.DbServices.Services
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        private readonly ITimeSlotDomainService _timeSlotDomainService;
-
-        public TimeSlotService(ITimeSlotDomainService timeSlotService)
+        public TimeSlotService(IUnitOfWork unitOfWork)
         {
-            _timeSlotDomainService = timeSlotService;
+            _unitOfWork = unitOfWork;
         }
 
-        public List<TimeSlotDto> GetTimeSlots()
+        public TimeSlotEntity GetById(int id)
         {
-            var timeSlots = _timeSlotDomainService.GetAllTimeSlots();
+            var timeslot = _unitOfWork.TimeSlotRepository.GetById(id);
+            return timeslot;
+        }
 
-            var result = TimeSlotMapper.Map(timeSlots);
-
-            return result;
+        public List<TimeSlotEntity> GetTimeSlots()
+        {
+            var timeSlots = _unitOfWork.TimeSlotRepository.GetAll();
+            return timeSlots;
         }
     }
 }

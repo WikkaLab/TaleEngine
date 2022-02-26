@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using TaleEngine.Aggregates.UserAggregate;
 using TaleEngine.Data.Contracts;
+using TaleEngine.Data.Contracts.Entities;
 using TaleEngine.DbServices.Contracts.Services;
 
 namespace TaleEngine.DbServices.Services.Backoffice
@@ -9,58 +11,25 @@ namespace TaleEngine.DbServices.Services.Backoffice
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        private IUserDomainService _userDomainService;
-
-        public UserService(IUserDomainService userDomainService)
+        public UserService(IUnitOfWork unitOfWork)
         {
-            _userDomainService = userDomainService ?? throw new ArgumentNullException();
+            _unitOfWork = unitOfWork ?? throw new ArgumentNullException();
         }
 
-        public List<UserDto> GetAllUsers()
+        public void ChangeUserStatus(int id, User user)
         {
-            var models = _userDomainService.GetAllUsers();
+            throw new NotImplementedException();
+        }
 
-            var result = UserMapper.MapToUserDtos(models);
+        public List<UserEntity> GetAllUsers()
+        {
+            var result = _unitOfWork.UserRepository.GetAll();
             return result;
         }
 
-        public int ActivateUser(int userId)
+        public UserEntity GetById(int id)
         {
-            if (userId == 0) return 0;
-
-            int result = _userDomainService.ActivateUser(userId);
-            return result;
-        }
-
-        public int BanUser(int userId)
-        {
-            if (userId == 0) return 0;
-
-            int result = _userDomainService.BanUser(userId);
-            return result;
-        }
-
-        public int DeactivateUser(int userId)
-        {
-            if (userId == 0) return 0;
-
-            int result = _userDomainService.DeactivateUser(userId);
-            return result;
-        }
-
-        public int MarkAsPendingUser(int userId)
-        {
-            if (userId == 0) return 0;
-
-            int result = _userDomainService.MarkAsPendingUser(userId);
-            return result;
-        }
-
-        public int ReviewUser(int userId)
-        {
-            if (userId == 0) return 0;
-
-            int result = _userDomainService.ReviewUser(userId);
+            var result = _unitOfWork.UserRepository.GetById(id);
             return result;
         }
     }

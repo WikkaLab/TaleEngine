@@ -1,20 +1,24 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using TaleEngine.API.Contracts.Dtos;
 using TaleEngine.CQRS.Contracts;
+using TaleEngine.CQRS.Mappers;
+using TaleEngine.DbServices.Contracts.Services;
 
 namespace TaleEngine.CQRS.Impl
 {
     public class TimeSlotCommands : ITimeSlotCommands
     {
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly ITimeSlotService _service;
 
-        public TimeSlotCommands(IUnitOfWork unitOfWork)
+        public TimeSlotCommands(ITimeSlotService service)
         {
-            _unitOfWork = unitOfWork;
+            _service = service ?? throw new ArgumentNullException(nameof(service));
         }
 
-        public List<TimeSlotModel> GetAllTimeSlots()
+        public List<TimeSlotDto> AllTimeSlotsQuery()
         {
-            var timeslots = _unitOfWork.TimeSlotRepository.GetAll();
+            var timeslots = _service.GetTimeSlots();
 
             if (timeslots == null || timeslots.Count == 0)
             {

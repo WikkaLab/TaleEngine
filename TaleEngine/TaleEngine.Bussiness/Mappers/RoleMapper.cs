@@ -1,43 +1,25 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using TaleEngine.API.Contracts.Dtos;
 using TaleEngine.Data.Contracts.Entities;
 
 namespace TaleEngine.CQRS.Mappers
 {
     public class RoleMapper
     {
-        public static RoleEntity Map(RoleModel roleModel)
+        public static RoleDto Map(RoleEntity entity)
         {
-            if (roleModel == null) return null;
+            if (entity == null) return null;
 
-            return new RoleEntity
+            return new RoleDto
             {
-                Id = roleModel.Id,
-                Name = roleModel.Name,
-                Description = roleModel.Description
+                Id = entity.Id,
+                Name = entity.Name,
+                Description = entity.Description
             };
         }
 
-        public static RoleModel Map(RoleEntity roleEntity)
-        {
-            if (roleEntity == null) return null;
-
-            return new RoleModel
-            {
-                Id = roleEntity.Id,
-                Name = roleEntity.Name,
-                Description = roleEntity.Description
-            };
-        }
-
-        public static List<RoleEntity> MapToRoles(List<RoleModel> models)
-        {
-            if (models == null || models.Count == 0) return null;
-
-            return models.Select(Map).ToList();
-        }
-
-        public static List<RoleModel> MapToRoleModels(List<RoleEntity> entities)
+        public static List<RoleDto> Map(List<RoleEntity> entities)
         {
             if (entities == null || entities.Count == 0) return null;
 
