@@ -19,6 +19,5 @@
     <ProjectReference Include="..\TaleEngine.Bussiness.Contracts\TaleEngine.Aggregates.csproj" />
     <ProjectReference Include="..\TaleEngine.Cross\TaleEngine.Cross.csproj" />
     <ProjectReference Include="..\TaleEngine.Data.Contracts\TaleEngine.Data.Contracts.csproj" />
-    <ProjectReference Include="..\TaleEngine.Fakes\TaleEngine.Fakes.csproj" />
   </ItemGroup>
 </Project>
