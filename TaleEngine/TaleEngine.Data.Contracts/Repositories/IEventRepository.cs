@@ -2,7 +2,7 @@
 
 namespace TaleEngine.Data.Contracts.Repositories
 {
-    public interface IEventRepository : IGenericRepository<Event>
+    public interface IEventRepository : IGenericRepository<EventEntity>
     {
 
     }

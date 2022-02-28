@@ -1,42 +1,24 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using TaleEngine.Bussiness.Contracts.Models;
+using TaleEngine.API.Contracts.Dtos;
 using TaleEngine.Data.Contracts.Entities;
 
-namespace TaleEngine.Bussiness.Mappers
+namespace TaleEngine.CQRS.Mappers
 {
     public static class TimeSlotMapper
     {
-        public static TimeSlot Map(TimeSlotModel timeslotModel)
-        {
-            if (timeslotModel == null) return null;
-
-            return new TimeSlot
-            {
-                Id = timeslotModel.Id,
-                Name = timeslotModel.Name
-            };
-        }
-
-        public static List<TimeSlot> Map(List<TimeSlotModel> timeslotModels)
-        {
-            if (timeslotModels == null || timeslotModels.Count == 0) return null;
-
-            return timeslotModels.Select(Map).ToList();
-        }
-
-        public static TimeSlotModel Map(TimeSlot timeslot)
+        public static TimeSlotDto Map(TimeSlotEntity timeslot)
         {
             if (timeslot == null) return null;
 
-            return new TimeSlotModel
+            return new TimeSlotDto
             {
                 Id = timeslot.Id,
                 Name = timeslot.Name
             };
         }
 
-        public static List<TimeSlotModel> Map(List<TimeSlot> timeslots)
+        public static List<TimeSlotDto> Map(List<TimeSlotEntity> timeslots)
         {
             if (timeslots == null || timeslots.Count == 0) return null;
 

@@ -1,26 +1,26 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
-using TaleEngine.Application.Contracts.Dtos;
-using TaleEngine.Application.Contracts.Dtos.Requests;
-using TaleEngine.Application.Contracts.Services;
+using TaleEngine.API.Contracts.Dtos;
+using TaleEngine.API.Contracts.Dtos.Requests;
+using TaleEngine.CQRS.Contracts;
 
-namespace TaleEngine.Controllers.V1
+namespace TaleEngine.API.Controllers.V1
 {
     [ApiController]
     [Route("api/v1/[controller]")]
     public class ActivityController : Controller
     {
-        private readonly IActivityService _activityService;
+        private readonly IActivityCommands _command;
 
-        public ActivityController(IActivityService activityService)
+        public ActivityController(IActivityCommands command)
         {
-            _activityService = activityService ?? throw new ArgumentNullException(nameof(activityService));
+            _command = command ?? throw new ArgumentNullException(nameof(command));
         }
 
         [HttpGet("[action]/{editionId}")]
         public IActionResult GetActivities(int editionId)
         {
-            var result = _activityService.GetActiveActivities(editionId);
+            var result = _command.ActiveActivitiesQuery(editionId);
 
             if (result == null || result.Count == 0)
             {
@@ -32,7 +32,7 @@ namespace TaleEngine.Controllers.V1
         [HttpGet("[action]/{editionId}")]
         public IActionResult GetPendingActivities(int editionId)
         {
-            var result = _activityService.GetPendingActivities(editionId);
+            var result = _command.PendingActivitiesQuery(editionId);
 
             if (result == null || result.Count == 0)
             {
@@ -45,7 +45,7 @@ namespace TaleEngine.Controllers.V1
         [HttpGet("[action]/{editionId}")]
         public IActionResult GetLastThreeActivies(int editionId)
         {
-            var result = _activityService.GetLastThreeActivities(editionId);
+            var result = _command.LastThreeActivitiesQuery(editionId);
 
             if (result == null || result.Count == 0)
             {
@@ -58,7 +58,7 @@ namespace TaleEngine.Controllers.V1
         [HttpPut("[action]")]
         public IActionResult GetActivitiesFiltered([FromBody] ActivityFilterRequest activityFilterRequest)
         {
-            var result = _activityService.GetActiveActivitiesFiltered(activityFilterRequest);
+            var result = _command.ActiveActivitiesFilteredQuery(activityFilterRequest);
 
             if (result == null)
             {
@@ -78,8 +78,8 @@ namespace TaleEngine.Controllers.V1
             //    return Unauthorized();
             //}
 
-            var result = _activityService.DeleteActivity(activityId);
-            return Ok(result);
+            _command.DeleteCommand(activityId);
+            return Ok();
         }
 
         [HttpPost("[action]/{editionId}")]
@@ -92,16 +92,16 @@ namespace TaleEngine.Controllers.V1
             //    return NoContent();
             //}
 
-            var result = _activityService.CreateActivity(editionId, activityDto);
-            return Ok(result);
+            _command.CreateCommand(editionId, activityDto);
+            return Ok();
         }
 
         [HttpPut("[action]")]
-        public IActionResult ChangeActivityStatus([FromBody] ActivityChangeStatusDto activtyChangeStatusDto)
+        public IActionResult ChangeActivityStatus([FromBody] ActivityChangeStatusDto dto)
         {
-            var result = _activityService.ChangeActivityStatus(activtyChangeStatusDto);
+            _command.ChangeActivityStatusCommand(dto.ActivityId, dto.StatusId);
 
-            return Ok(result);
+            return Ok();
         }
 
         [HttpPut("[action]")]
@@ -114,8 +114,8 @@ namespace TaleEngine.Controllers.V1
             //    return Unauthorized();
             //}
 
-            var result = _activityService.UpdateActivity(activityDto);
-            return Ok(result);
+            _command.UpdateCommand(activityDto);
+            return Ok();
         }
     }
 }

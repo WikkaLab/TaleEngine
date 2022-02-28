@@ -1,25 +1,31 @@
 ﻿using System.Collections.Generic;
-using TaleEngine.Application.Contracts.Dtos;
-using TaleEngine.Application.Contracts.Services;
-using TaleEngine.Application.Mappers;
-using TaleEngine.Bussiness.Contracts.DomainServices;
+using TaleEngine.Data.Contracts;
+using TaleEngine.Data.Contracts.Entities;
+using TaleEngine.DbServices.Contracts.Services;
 
-namespace TaleEngine.Application.Services
+namespace TaleEngine.DbServices.Services
 {
     public class ActivityStatusService : IActivityStatusService
     {
-        private IActivityStatusDomainService _activityStatusDomainService;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public ActivityStatusService(IActivityStatusDomainService activityStatusDomainService)
+        public ActivityStatusService(IUnitOfWork unitOfWork)
         {
-            _activityStatusDomainService = activityStatusDomainService;
+            _unitOfWork = unitOfWork;
         }
 
-        public List<ActivityStatusDto> GetActivityStatuses()
+        public List<ActivityStatusEntity> GetActivityStatuses()
         {
-            var actStatuses = _activityStatusDomainService.GetAllActivityStatuses();
+            var result = _unitOfWork.ActivityStatusRepository
+                .GetAll();
 
-            var result = ActivityStatusMapper.Map(actStatuses);
+            return result;
+        }
+
+        public ActivityStatusEntity GetById(int statusId)
+        {
+            var result = _unitOfWork.ActivityStatusRepository
+                .GetById(statusId);
 
             return result;
         }

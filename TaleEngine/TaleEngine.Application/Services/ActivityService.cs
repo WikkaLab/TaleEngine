@@ -1,85 +1,206 @@
 ﻿using System;
 using System.Collections.Generic;
-using TaleEngine.Application.Contracts.Dtos;
-using TaleEngine.Application.Contracts.Dtos.Requests;
-using TaleEngine.Application.Contracts.Dtos.Results;
-using TaleEngine.Application.Contracts.Services;
-using TaleEngine.Application.Mappers;
-using TaleEngine.Bussiness.Contracts.DomainServices;
+using System.Linq;
+using TaleEngine.Aggregates.ActivityAggregate;
+using TaleEngine.Cross.Enums;
+using TaleEngine.Data.Contracts;
+using TaleEngine.Data.Contracts.Entities;
+using TaleEngine.DbServices.Contracts.Services;
 
-namespace TaleEngine.Application.Services
+namespace TaleEngine.DbServices.Services
 {
     public class ActivityService : IActivityService
     {
-        private readonly IActivityDomainService _activityDomainService;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public ActivityService(IActivityDomainService activityDomainService)
+        public ActivityService(IUnitOfWork unitOfWork)
         {
-            _activityDomainService = activityDomainService ?? throw new ArgumentNullException(nameof(activityDomainService));
+            _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
         }
 
-        public List<ActivityDto> GetActiveActivities(int editionId)
+        public ActivityEntity GetById(int id)
         {
-            var activities = _activityDomainService.GetActiveActivities(editionId);
+            var activity = _unitOfWork.ActivityRepository
+                .GetById(id);
 
-            var result = ActivityMapper.Map(activities);
-
-            return result;
+            return activity;
         }
 
-        public List<ActivityDto> GetPendingActivities(int editionId)
+        public List<ActivityEntity> GetActiveActivities(int editionId)
         {
-            var penActivities = _activityDomainService.GetPendingActivities(editionId);
+            var activeStatus = _unitOfWork.ActivityStatusRepository
+                .GetById((int)ActivityStatusEnum.ACT);
 
-            var result = ActivityMapper.Map(penActivities);
+            var activities = GetActivitiesByStatus(editionId, activeStatus.Id);
 
-            return result;
+            return activities;
         }
 
-        public ActivityFilteredResult GetActiveActivitiesFiltered(ActivityFilterRequest activityFilterRequest)
+        public List<ActivityEntity> GetPendingActivities(int editionId)
         {
-            var filtered = _activityDomainService
-                .GetActiveActivitiesFiltered(activityFilterRequest.TypeId,
-                activityFilterRequest.EditionId,
-                activityFilterRequest.Title,
-                activityFilterRequest.CurrentPage);
+            var pendingStatus = _unitOfWork.ActivityStatusRepository
+                .GetById((int)ActivityStatusEnum.PEN);
 
-            return ActivityFilteredMapper.Map(filtered);
+            var activities = GetActivitiesByStatus(editionId, pendingStatus.Id);
+
+            return activities;
+        }
+
+        public List<ActivityEntity> GetActiveActivitiesFiltered(int typeId, int editionId,
+                string title, int skipByPagination, int activitiesPerPage)
+        {
+            var activeStatus = _unitOfWork.ActivityStatusRepository
+                .GetById((int)ActivityStatusEnum.ACT);
+
+            var query = GetActiveActivitiesWithFilter(activeStatus.Id, typeId, editionId, title);
+
+            var activities = query.Skip(skipByPagination).Take(activitiesPerPage).ToList();
+
+            return activities;
         }
 
         public int DeleteActivity(int activityId)
         {
-            return _activityDomainService.DeleteActivity(activityId);
+            try
+            {
+                _unitOfWork.ActivityRepository.Delete(activityId);
+                _unitOfWork.ActivityRepository.Save();
+            }
+            catch (Exception)
+            {
+                return 0;
+            }
+
+            return 1;
         }
 
-        public int CreateActivity(int editionId, ActivityDto activityDto)
+        public int CreateActivity(int editionId, Activity activity)
         {
-            var activityModel = ActivityMapper.Map(activityDto);
+            var activityEntity = new ActivityEntity
+            {
+                EditionId = editionId,
+                CreateDateTime = DateTime.Now,
+                Title = activity.Title,
+                TypeId = activity.Type,
+                StatusId = activity.Status,
+                Places = activity.Places,
+                Description = activity.Description,
+                TimeSlotId = activity.TimeSlot,
+                Image = activity.Image
+            };
 
-            var result = _activityDomainService.CreateActivity(editionId, activityModel);
-            return result;
+            try
+            {
+                _unitOfWork.ActivityRepository.Insert(activityEntity);
+                _unitOfWork.ActivityRepository.Save();
+            }
+            catch (Exception)
+            {
+                return 0;
+            }
+
+            return 1;
         }
 
-        public int UpdateActivity(ActivityDto activityDto)
+        public int UpdateActivity(int id, Activity activity)
         {
-            var activityModel = ActivityMapper.Map(activityDto);
+            var activityEntity = _unitOfWork.ActivityRepository.GetById(id);
+            if (activityEntity != null)
+            {
+                activityEntity.Title = activity.Title;
+                activityEntity.TypeId = activity.Type;
+                activityEntity.StatusId = activity.Status;
+                activityEntity.Places = activity.Places;
+                activityEntity.Description = activity.Description;
+                activityEntity.TimeSlotId = activity.TimeSlot;
 
-            return _activityDomainService.UpdateActivity(activityModel);
+                return Update(activityEntity);
+            }
+
+            return 0;
         }
 
-        public int ChangeActivityStatus(ActivityChangeStatusDto activityChangeStatusDto)
+        public int ChangeActivityStatus(int activityId, int statusId)
         {
-            return _activityDomainService
-                .ChangeActivityStatus(activityChangeStatusDto.ActivityId, activityChangeStatusDto.StatusId);
+            var activityEntity = _unitOfWork.ActivityRepository.GetById(activityId);
+            var status = _unitOfWork.ActivityStatusRepository.GetById(statusId);
+
+            if (activityEntity != null)
+            {
+                activityEntity.StatusId = status.Id;
+                return Update(activityEntity);
+            }
+            return 0;
         }
 
-        public List<ActivityDto> GetLastThreeActivities(int editionId)
+        public List<ActivityEntity> GetLastThreeActivities(int editionId)
         {
-            var activities = _activityDomainService.GetLastThreeActivities(editionId);
-
-            var dtos = ActivityMapper.Map(activities);
-
-            return dtos;
+            throw new NotImplementedException();
         }
+
+        #region Private methods
+
+        private List<ActivityEntity> GetActivitiesByStatus(int editionId, int statusId)
+        {
+            var pendingStatus = _unitOfWork.ActivityStatusRepository
+                .GetById(statusId);
+
+            var activities = _unitOfWork.ActivityRepository.GetAll()
+                .Where(a => a.StatusId == statusId
+                            && a.EditionId == editionId)
+                .ToList();
+
+            return activities;
+        }
+
+        private List<ActivityEntity> GetLastThreeActivities(int status, int edition, int numberOfActivities)
+        {
+            var query = GetActiveActivitiesWithFilter(status, 0, edition, null);
+
+            return query.OrderByDescending(a => a.CreateDateTime).Take(numberOfActivities).ToList();
+        }
+
+        private int GetTotalActivities(int status, int type, int edition, string title)
+        {
+            var query = GetActiveActivitiesWithFilter(status, type, edition, title);
+
+            return query.ToList().Count;
+        }
+
+        private IEnumerable<ActivityEntity> GetActiveActivitiesWithFilter(int status, int type, int edition, string title)
+        {
+            var query = _unitOfWork.ActivityRepository.GetAll().Select(a => a).Where(a => a.EditionId == edition);
+            if (status != 0)
+            {
+                query = query.Where(a => a.StatusId == status);
+            }
+            if (type != 0)
+            {
+                query = query.Where(a => a.TypeId == type);
+            }
+            if (!string.IsNullOrEmpty(title))
+            {
+                query = query.Where(a => a.Title.Contains(title));
+            }
+
+            return query;
+        }
+
+        private int Update(ActivityEntity activityEntity)
+        {
+            try
+            {
+                _unitOfWork.ActivityRepository.Update(activityEntity);
+                _unitOfWork.ActivityRepository.Save();
+            }
+            catch (Exception)
+            {
+                return 0;
+            }
+
+            return 1;
+        }
+
+        #endregion
     }
 }

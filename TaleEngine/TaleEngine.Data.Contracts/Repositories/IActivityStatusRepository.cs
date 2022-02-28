@@ -2,7 +2,7 @@
 
 namespace TaleEngine.Data.Contracts.Repositories
 {
-    public interface IActivityStatusRepository : IGenericRepository<ActivityStatus>
+    public interface IActivityStatusRepository : IGenericRepository<ActivityStatusEntity>
     {
 
     }

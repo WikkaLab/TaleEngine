@@ -1,25 +1,33 @@
 ﻿using System;
-using TaleEngine.Application.Contracts.Dtos;
-using TaleEngine.Application.Contracts.Services;
-using TaleEngine.Application.Mappers;
-using TaleEngine.Bussiness.Contracts.DomainServices;
+using System.Collections.Generic;
+using TaleEngine.Data.Contracts;
+using TaleEngine.Data.Contracts.Entities;
+using TaleEngine.DbServices.Contracts.Services;
 
-namespace TaleEngine.Application.Services
+namespace TaleEngine.DbServices.Services
 {
     public class EditionService : IEditionService
     {
-        private readonly IEditionDomainService _editionDomainService;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public EditionService(IEditionDomainService editionDomainService)
+        public EditionService(IUnitOfWork unitOfWork)
         {
-            _editionDomainService = editionDomainService;
+            _unitOfWork = unitOfWork;
+        }
+
+        public EditionEntity GetById(int id)
+        {
+            var edition = _unitOfWork.EditionRepository.GetById(id);
+
+            return edition;
         }
 
         public int GetCurrentOrLastEdition(int selectedEvent)
         {
             if (selectedEvent == 0) throw new ArgumentNullException();
 
-            var lastOrCurrentEdition = _editionDomainService.GetFutureOrCurrentEdition(selectedEvent);
+            var lastOrCurrentEdition = _unitOfWork.EditionRepository
+                .GetLastEditionInEvent(selectedEvent);
 
             if (lastOrCurrentEdition != null)
             {
@@ -29,11 +37,20 @@ namespace TaleEngine.Application.Services
             return 0;
         }
 
-        public EditionDaysDto GetEditionDays(int editionId)
+        public List<EditionEntity> GetEditions(int ofEvent)
         {
-            var editionDays = _editionDomainService.GetEditionDays(editionId);
+            var editions = _unitOfWork.EditionRepository
+                .GetEditions(ofEvent);
 
-            return EditionDaysMapper.Map(editionDays);
+            return editions;
+        }
+
+        public EditionEntity GetLastEditionInEvent(int ofEvent)
+        {
+            var lastOrCurrentEdition = _unitOfWork.EditionRepository
+               .GetLastEditionInEvent(ofEvent);
+
+            return lastOrCurrentEdition;
         }
     }
 }

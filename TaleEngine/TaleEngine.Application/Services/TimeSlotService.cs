@@ -1,27 +1,29 @@
 ﻿using System.Collections.Generic;
-using TaleEngine.Application.Contracts.Dtos;
-using TaleEngine.Application.Contracts.Services;
-using TaleEngine.Application.Mappers;
-using TaleEngine.Bussiness.Contracts.DomainServices;
+using TaleEngine.Data.Contracts;
+using TaleEngine.Data.Contracts.Entities;
+using TaleEngine.DbServices.Contracts.Services;
 
-namespace TaleEngine.Application.Services
+namespace TaleEngine.DbServices.Services
 {
     public class TimeSlotService : ITimeSlotService
     {
-        private readonly ITimeSlotDomainService _timeSlotDomainService;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public TimeSlotService(ITimeSlotDomainService timeSlotService)
+        public TimeSlotService(IUnitOfWork unitOfWork)
         {
-            _timeSlotDomainService = timeSlotService;
+            _unitOfWork = unitOfWork;
         }
 
-        public List<TimeSlotDto> GetTimeSlots()
+        public TimeSlotEntity GetById(int id)
         {
-            var timeSlots = _timeSlotDomainService.GetAllTimeSlots();
+            var timeslot = _unitOfWork.TimeSlotRepository.GetById(id);
+            return timeslot;
+        }
 
-            var result = TimeSlotMapper.Map(timeSlots);
-
-            return result;
+        public List<TimeSlotEntity> GetTimeSlots()
+        {
+            var timeSlots = _unitOfWork.TimeSlotRepository.GetAll();
+            return timeSlots;
         }
     }
 }

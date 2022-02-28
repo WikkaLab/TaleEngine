@@ -37,6 +37,6 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\TaleEngine.Fakes\TaleEngine.Fakes.csproj" />
-		<ProjectReference Include="..\TaleEngine\TaleEngine.csproj" />
+		<ProjectReference Include="..\TaleEngine\TaleEngine.API.csproj" />
 	</ItemGroup>
 </Project>

@@ -1,43 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
-using TaleEngine.Application.Contracts.Dtos;
-using TaleEngine.Application.Contracts.Services;
-using TaleEngine.Application.Mappers;
-using TaleEngine.Bussiness.Contracts.DomainServices;
+using TaleEngine.Data.Contracts;
+using TaleEngine.Data.Contracts.Entities;
+using TaleEngine.DbServices.Contracts.Services;
 
-namespace TaleEngine.Application.Services
+namespace TaleEngine.DbServices.Services
 {
     public class EventService : IEventService
     {
-        private readonly IEventDomainService _eventDomainService;
-        private readonly IEditionService _editionService;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public EventService(IEventDomainService eventDomainService,
-            IEditionService editionService)
+        public EventService(IUnitOfWork unitOfWork)
         {
-            _eventDomainService = eventDomainService ?? throw new ArgumentNullException(nameof(eventDomainService));
-            _editionService = editionService ?? throw new ArgumentNullException(nameof(editionService));
+            _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
         }
 
-        public List<EventDto> GetAllEvents()
+        public List<EventEntity> GetAllEvents()
         {
-            var events = _eventDomainService.GetEventsNoFilter();
+            var events = _unitOfWork.EventRepository.GetAll();
 
-            var result = EventMapper.Map(events);
-
-            return result;
+            return events;
         }
 
-        public int GetCurrentOrFutureEdition(int selectedEvent)
+        public EventEntity GetById(int eventId)
         {
-            int lastOrCurrentEdition = _editionService.GetCurrentOrLastEdition(selectedEvent);
-            return lastOrCurrentEdition;
-        }
-
-        public EventDto GetEvent(int eventId)
-        {
-            var selectedEvent = _eventDomainService.GetEvent(eventId);
-            return EventMapper.Map(selectedEvent);
+            var selectedEvent = _unitOfWork.EventRepository.GetById(eventId);
+            return selectedEvent;
         }
     }
 }

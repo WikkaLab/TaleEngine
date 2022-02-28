@@ -2,7 +2,7 @@
 
 namespace TaleEngine.Data.Contracts.Repositories
 {
-    public interface IActivityTypeRepository : IGenericRepository<ActivityType>
+    public interface IActivityTypeRepository : IGenericRepository<ActivityTypeEntity>
     {
 
     }

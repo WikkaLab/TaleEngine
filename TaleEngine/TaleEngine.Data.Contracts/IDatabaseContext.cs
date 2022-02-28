@@ -5,18 +5,18 @@ namespace TaleEngine.Data.Contracts
 {
     public interface IDatabaseContext
     {
-        DbSet<Event> Events { get; set; }
-        DbSet<Activity> Activities { get; set; }
-        DbSet<ActivityType> ActivityTypes { get; set; }
-        DbSet<ActivityStatus> ActivityStatuses { get; set; }
-        DbSet<UserStatus> UserStatuses { get; set; }
-        DbSet<User> Users { get; set; }
-        DbSet<Permission> Permissions { get; set; }
-        DbSet<PermissionValue> PermissionsValue { get; set; }
-        DbSet<AssignedPermission> AssignedPermissions { get; set; }
-        DbSet<Role> Roles { get; set; }
-        DbSet<Edition> Editions { get; set; }
-        DbSet<TimeSlot> TimeSlots { get; set; }
+        DbSet<EventEntity> Events { get; set; }
+        DbSet<ActivityEntity> Activities { get; set; }
+        DbSet<ActivityTypeEntity> ActivityTypes { get; set; }
+        DbSet<ActivityStatusEntity> ActivityStatuses { get; set; }
+        DbSet<UserStatusEntity> UserStatuses { get; set; }
+        DbSet<UserEntity> Users { get; set; }
+        DbSet<PermissionEntity> Permissions { get; set; }
+        DbSet<PermissionValueEntity> PermissionsValue { get; set; }
+        DbSet<AssignedPermissionEntity> AssignedPermissions { get; set; }
+        DbSet<RoleEntity> Roles { get; set; }
+        DbSet<EditionEntity> Editions { get; set; }
+        DbSet<TimeSlotEntity> TimeSlots { get; set; }
 
         int SaveChanges();
     }

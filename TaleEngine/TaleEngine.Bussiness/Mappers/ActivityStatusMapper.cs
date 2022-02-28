@@ -1,42 +1,26 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using TaleEngine.Bussiness.Contracts.Models;
+using TaleEngine.API.Contracts.Dtos;
 using TaleEngine.Data.Contracts.Entities;
 
-namespace TaleEngine.Bussiness.Mappers
+namespace TaleEngine.CQRS.Mappers
 {
     public static class ActivityStatusMapper
     {
-        public static ActivityStatus Map(ActivityStatusModel activityStatusModel)
+        public static ActivityStatusDto Map(ActivityStatusEntity entity)
         {
-            return new ActivityStatus
+            return new ActivityStatusDto
             {
-                Id = activityStatusModel.Id,
-                Name = activityStatusModel.Name
+                Id = entity.Id,
+                Name = entity.Name
             };
         }
 
-        public static List<ActivityStatus> Map(List<ActivityStatusModel> activityStatusModels)
+        public static List<ActivityStatusDto> Map(List<ActivityStatusEntity> entities)
         {
-            if (activityStatusModels == null || activityStatusModels.Count == 0) return null;
+            if (entities == null || entities.Count == 0) return null;
 
-            return activityStatusModels.Select(Map).ToList();
-        }
-
-        public static ActivityStatusModel Map(ActivityStatus activityStatus)
-        {
-            return new ActivityStatusModel
-            {
-                Id = activityStatus.Id,
-                Name = activityStatus.Name
-            };
-        }
-
-        public static List<ActivityStatusModel> Map(List<ActivityStatus> activityStatus)
-        {
-            if (activityStatus == null || activityStatus.Count == 0) return null;
-
-            return activityStatus.Select(Map).ToList();
+            return entities.Select(Map).ToList();
         }
     }
 }

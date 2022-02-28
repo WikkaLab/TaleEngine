@@ -3,12 +3,12 @@ using TaleEngine.Data.Contracts.Entities;
 
 namespace TaleEngine.Data.Contracts.Repositories
 {
-    public interface IActivityRepository : IGenericRepository<Activity>
+    public interface IActivityRepository : IGenericRepository<ActivityEntity>
     {
-        List<Activity> GetEventActivities(int eventId);
-        List<Activity> GetActivitiesByStatus(int edition, int status);
-        List<Activity> GetActiveActivitiesFiltered(int status, int type, int edition, string title, int skip, int activitiesPerPage);
-        List<Activity> GetLastThreeActivities(int status, int edition, int numberOfActivities);
+        List<ActivityEntity> GetEventActivities(int eventId);
+        List<ActivityEntity> GetActivitiesByStatus(int edition, int status);
+        List<ActivityEntity> GetActiveActivitiesFiltered(int status, int type, int edition, string title, int skip, int activitiesPerPage);
+        List<ActivityEntity> GetLastThreeActivities(int status, int edition, int numberOfActivities);
         int GetTotalActivities(int status, int type, int edition, string title);
     }
 }

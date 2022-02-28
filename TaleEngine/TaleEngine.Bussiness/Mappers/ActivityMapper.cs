@@ -1,63 +1,97 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using TaleEngine.Bussiness.Contracts.Models;
+using TaleEngine.Aggregates.ActivityAggregate;
+using TaleEngine.API.Contracts.Dtos;
 using TaleEngine.Data.Contracts.Entities;
 
-namespace TaleEngine.Bussiness.Mappers
+namespace TaleEngine.CQRS.Mappers
 {
     public static class ActivityMapper
     {
-        public static Activity Map(ActivityModel activityModel)
+        public static Activity MapDtoToModel(ActivityDto dto)
         {
-            if (activityModel == null) return null;
+            if (dto == null) return null;
 
-            return new Activity
-            {
-                Id = activityModel.Id,
-                Title = activityModel.Title,
-                Description = activityModel.Description,
-                Places = activityModel.Places,
-                EndDateTime = activityModel.EndDateTime,
-                StartDateTime = activityModel.StartDateTime,
-                StatusId = activityModel.StatusId,
-                TypeId = activityModel.TypeId,
-                Image = activityModel.Image,
-                TimeSlotId = activityModel.TimeSlotId ?? 0
-            };
+            return new Activity()
+                .SetTitle(dto.Title)
+                .SetDescription(dto.Description)
+                .SetPlaces(dto.Places)
+                .SetImage(dto.Image)
+                //.SetDates(activityDto.ActivityStart, activityDto.ActivityEnd)
+                .SetStatus(dto.StatusId)
+                .SetTimeSlot(dto.TimeSlotId)
+                .SetType(dto.TypeId);
         }
 
-        public static List<Activity> Map(List<ActivityModel> activityModels)
+        public static List<Activity> MapDtoToModel(List<ActivityDto> dtos)
         {
-            if (activityModels == null || activityModels.Count == 0) return null;
+            if (dtos == null || dtos.Count == 0) return null;
 
-            return activityModels.Select(Map).ToList();
+            return dtos.Select(MapDtoToModel).ToList();
         }
 
-        public static ActivityModel Map(Activity activity)
+        public static ActivityDto MapModelToDto(Activity activity)
         {
             if (activity == null) return null;
 
-            return new ActivityModel
+            return new ActivityDto
             {
-                Id = activity.Id,
+                Title = activity.Title,
+                Description = activity.Description,
+                Places = activity.Places,
+                Image = activity.Image,
+                TypeId = activity.Type,
+                StatusId = activity.Status,
+                //EndDateTime = activity.EndDateTime,
+                //StartDateTime = activity.StartDateTime,
+                TimeSlotId = activity.TimeSlot ?? 0
+            };
+        }
+
+        public static List<ActivityDto> MapModelToDto(List<Activity> models)
+        {
+            if (models == null || models.Count == 0) return null;
+
+            return models.Select(MapModelToDto).ToList();
+        }
+
+        // entity to dto
+        public static ActivityDto MapEntityToDto(ActivityEntity activity)
+        {
+            if (activity == null) return null;
+
+            return new ActivityDto
+            {
                 Title = activity.Title,
                 Description = activity.Description,
                 Places = activity.Places,
                 Image = activity.Image,
                 TypeId = activity.TypeId,
                 StatusId = activity.StatusId,
-                EndDateTime = activity.EndDateTime,
-                StartDateTime = activity.StartDateTime,
-                TimeSlotId = activity.TimeSlotId
+                TimeSlotId = activity.TimeSlotId.Value
             };
         }
 
-        public static List<ActivityModel> Map(List<Activity> activities)
+        public static List<ActivityDto> MapEntityToDto(List<ActivityEntity> activities)
         {
             if (activities == null || activities.Count == 0) return null;
 
-            return activities.Select(Map).ToList();
+            return activities.Select(MapEntityToDto).ToList();
         }
 
+        public static Activity MapEntityToModel(ActivityEntity entitiy)
+        {
+            if (entitiy == null) return null;
+
+            return new Activity()
+                .SetTitle(entitiy.Title)
+                .SetDescription(entitiy.Description)
+                .SetPlaces(entitiy.Places)
+                .SetImage(entitiy.Image)
+                //.SetDates(activityDto.ActivityStart, activityDto.ActivityEnd)
+                .SetStatus(entitiy.StatusId)
+                .SetTimeSlot(entitiy.TimeSlotId.Value)
+                .SetType(entitiy.TypeId);
+        }
     }
 }

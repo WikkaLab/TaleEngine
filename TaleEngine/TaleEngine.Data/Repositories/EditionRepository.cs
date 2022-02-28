@@ -22,30 +22,30 @@ namespace TaleEngine.Data.Repositories
             _context.Editions.Remove(entity);
         }
 
-        public List<Edition> GetAll()
+        public List<EditionEntity> GetAll()
         {
             return _context.Editions.ToList();
         }
 
-        public Edition GetById(int entityId)
+        public EditionEntity GetById(int entityId)
         {
             return _context.Editions
                 .FirstOrDefault(ed => ed.Id == entityId);
         }
 
-        public List<Edition> GetEditions(int ofEvent)
+        public List<EditionEntity> GetEditions(int ofEvent)
         {
             return _context.Editions.Where(ed => ed.EventId == ofEvent).ToList();
         }
 
-        public Edition GetLastEditionInEvent(int ofEvent)
+        public EditionEntity GetLastEditionInEvent(int ofEvent)
         {
             return _context.Editions
                 .OrderBy(x => x.DateInit)
                 .LastOrDefault(ed => ed.EventId == ofEvent);
         }
 
-        public void Insert(Edition entity)
+        public void Insert(EditionEntity entity)
         {
             _context.Editions.Add(entity);
         }
@@ -55,7 +55,7 @@ namespace TaleEngine.Data.Repositories
             _context.SaveChanges();
         }
 
-        public void Update(Edition entity)
+        public void Update(EditionEntity entity)
         {
             _context.Editions.Update(entity);
         }

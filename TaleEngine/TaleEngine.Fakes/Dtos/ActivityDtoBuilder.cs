@@ -1,9 +1,9 @@
 ﻿using Bogus;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using TaleEngine.Application.Contracts.Dtos;
-using TaleEngine.Application.Contracts.Dtos.Requests;
-using TaleEngine.Application.Contracts.Dtos.Results;
+using TaleEngine.API.Contracts.Dtos;
+using TaleEngine.API.Contracts.Dtos.Requests;
+using TaleEngine.API.Contracts.Dtos.Results;
 
 namespace TaleEngine.Fakes.Dtos
 {

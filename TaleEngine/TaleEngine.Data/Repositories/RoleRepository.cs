@@ -23,18 +23,18 @@ namespace TaleEngine.Data.Repositories
             _context.Roles.Remove(entity);
         }
 
-        public List<Role> GetAll()
+        public List<RoleEntity> GetAll()
         {
             return _context.Roles.ToList();
         }
 
-        public Role GetById(int entityId)
+        public RoleEntity GetById(int entityId)
         {
             return _context.Roles
                 .FirstOrDefault(x => x.Id == entityId);
         }
 
-        public void Insert(Role entity)
+        public void Insert(RoleEntity entity)
         {
             _context.Roles.Add(entity);
         }
@@ -44,7 +44,7 @@ namespace TaleEngine.Data.Repositories
             _context.SaveChanges();
         }
 
-        public void Update(Role entity)
+        public void Update(RoleEntity entity)
         {
             _context.Roles.Update(entity);
         }

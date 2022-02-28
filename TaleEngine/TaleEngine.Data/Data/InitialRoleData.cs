@@ -5,11 +5,11 @@ namespace TaleEngine.Data.Data
 {
     public static class InitialRoleData
     {
-        public static List<Role> GetRoleData()
+        public static List<RoleEntity> GetRoleData()
         {
-            return new List<Role>
+            return new List<RoleEntity>
             {
-                new Role
+                new RoleEntity
                 {
                     Id = 1,
                     Name = "Manager",
@@ -17,7 +17,7 @@ namespace TaleEngine.Data.Data
                     Description = "Manager of the app",
                     EventId = 2
                 },
-                new Role
+                new RoleEntity
                 {
                     Id = 2,
                     Name = "Operator",
@@ -25,7 +25,7 @@ namespace TaleEngine.Data.Data
                     Description = "Operator in the app",
                     EventId = 2
                 },
-                new Role
+                new RoleEntity
                 {
                     Id = 3,
                     Name = "Creator",
@@ -33,7 +33,7 @@ namespace TaleEngine.Data.Data
                     Description = "Creator content in the events",
                     EventId = 2
                 },
-                new Role
+                new RoleEntity
                 {
                     Id = 4,
                     Name = "User",

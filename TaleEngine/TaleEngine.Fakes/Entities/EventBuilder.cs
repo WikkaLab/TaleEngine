@@ -8,11 +8,11 @@ namespace TaleEngine.Fakes.Entities
     [ExcludeFromCodeCoverage]
     public static class EventBuilder
     {
-        public static Event BuildEvent()
+        public static EventEntity BuildEvent()
         {
             var faker = new Faker();
 
-            var entity = new Event
+            var entity = new EventEntity
             {
                 Id = faker.Random.Number(),
                 Title = faker.Random.String2(10)
@@ -20,9 +20,9 @@ namespace TaleEngine.Fakes.Entities
             return entity;
         }
 
-        public static List<Event> BuildEventList()
+        public static List<EventEntity> BuildEventList()
         {
-            return new List<Event>
+            return new List<EventEntity>
             {
                 BuildEvent()
             };

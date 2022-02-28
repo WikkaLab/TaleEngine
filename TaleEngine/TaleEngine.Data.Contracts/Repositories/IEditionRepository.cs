@@ -3,9 +3,9 @@ using TaleEngine.Data.Contracts.Entities;
 
 namespace TaleEngine.Data.Contracts.Repositories
 {
-    public interface IEditionRepository : IGenericRepository<Edition>
+    public interface IEditionRepository : IGenericRepository<EditionEntity>
     {
-        Edition GetLastEditionInEvent(int ofEvent);
-        List<Edition> GetEditions(int ofEvent);
+        EditionEntity GetLastEditionInEvent(int ofEvent);
+        List<EditionEntity> GetEditions(int ofEvent);
     }
 }

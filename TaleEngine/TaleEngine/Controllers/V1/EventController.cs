@@ -1,23 +1,23 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using TaleEngine.Application.Contracts.Services;
+using TaleEngine.CQRS.Contracts;
 
-namespace TaleEngine.Controllers.V1
+namespace TaleEngine.API.Controllers.V1
 {
     [ApiController]
     [Route("api/v1/[controller]")]
     public class EventController : Controller
     {
-        private readonly IEventService _eventService;
+        private readonly IEventCommands _command;
 
-        public EventController(IEventService eventService)
+        public EventController(IEventCommands command)
         {
-            _eventService = eventService;
+            _command = command;
         }
 
         [HttpGet("[action]")]
         public IActionResult GetEvents()
         {
-            var result = _eventService.GetAllEvents();
+            var result = _command.EventsNoFilterQuery();
 
             return Ok(result);
         }
@@ -25,15 +25,7 @@ namespace TaleEngine.Controllers.V1
         [HttpGet("[action]")]
         public IActionResult GetEvent(int eventId)
         {
-            var result = _eventService.GetEvent(eventId);
-
-            return Ok(result);
-        }
-
-        [HttpGet("[action]/{selectedEvent}")]
-        public IActionResult GetCurrentOrFutureEdition(int selectedEvent)
-        {
-            var result = _eventService.GetCurrentOrFutureEdition(selectedEvent);
+            var result = _command.EventQuery(eventId);
 
             return Ok(result);
         }

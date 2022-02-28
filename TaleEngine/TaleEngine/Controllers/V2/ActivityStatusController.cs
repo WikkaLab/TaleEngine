@@ -1,23 +1,23 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using TaleEngine.Application.Contracts.Services;
+using TaleEngine.CQRS.Contracts;
 
-namespace TaleEngine.Controllers.V2
+namespace TaleEngine.API.Controllers.V2
 {
     [ApiController]
     [Route("api/v2/[controller]")]
     public class ActivityStatusController : Controller
     {
-        private readonly IActivityStatusService _activityStatusService;
+        private readonly IActivityStatusCommands _command;
 
-        public ActivityStatusController(IActivityStatusService activityStatusService)
+        public ActivityStatusController(IActivityStatusCommands command)
         {
-            _activityStatusService = activityStatusService;
+            _command = command;
         }
 
         [HttpGet("[action]")]
         public IActionResult GetActivityStatuses()
         {
-            var result = _activityStatusService.GetActivityStatuses();
+            var result = _command.AllActivityStatusQuery();
 
             if (result == null || result.Count == 0)
             {

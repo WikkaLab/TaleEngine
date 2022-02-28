@@ -1,28 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
-using TaleEngine.Application.Contracts.Dtos;
-using TaleEngine.Application.Contracts.Services;
-using TaleEngine.Application.Mappers;
-using TaleEngine.Bussiness.Contracts.DomainServices;
+using TaleEngine.Data.Contracts;
+using TaleEngine.Data.Contracts.Entities;
+using TaleEngine.DbServices.Contracts.Services;
 
-namespace TaleEngine.Application.Services
+namespace TaleEngine.DbServices.Services
 {
     public class RoleService : IRoleService
     {
-        private IRoleDomainService _roleDomainService;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public RoleService(IRoleDomainService roleDomainService)
+        public RoleService(IUnitOfWork unitOfWork)
         {
-            _roleDomainService = roleDomainService ?? throw new ArgumentNullException(nameof(roleDomainService));
+            _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
         }
 
-        public List<RoleDto> GetAllRoles()
+        public List<RoleEntity> GetAllRoles()
         {
-            var roleModels = _roleDomainService.GetAllRoles();
-
-            var dtos = RoleMapper.MapToRoleDtos(roleModels);
-
-            return dtos;
+            var roles = _unitOfWork.RoleRepository.GetAll();
+            return roles;
         }
     }
 }
