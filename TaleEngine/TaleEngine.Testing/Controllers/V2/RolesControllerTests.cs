@@ -1,106 +1,109 @@
-﻿//using FluentAssertions;
-//using Microsoft.AspNetCore.Http;
-//using Microsoft.AspNetCore.Mvc;
-//using Moq;
-//using System.Collections.Generic;
-//using System.Diagnostics.CodeAnalysis;
-//using Xunit;
+﻿using FluentAssertions;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Moq;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using TaleEngine.API.Contracts.Dtos;
+using TaleEngine.API.Controllers.V2;
+using TaleEngine.CQRS.Contracts;
+using Xunit;
 
-//namespace TaleEngine.Testing.Controllers.V2
-//{
-//    [ExcludeFromCodeCoverage]
-//    public class RolesControllerTests
-//    {
-//        [Fact]
-//        public void GetRoles_Success()
-//        {
-//            // Act
-//            List<RoleDto> dto = new()
-//            {
-//                new RoleDto()
-//            };
+namespace TaleEngine.Testing.Controllers.V2
+{
+    [ExcludeFromCodeCoverage]
+    public class RolesControllerTests
+    {
+        [Fact]
+        public void GetRoles_Success()
+        {
+            // Act
+            List<RoleDto> dto = new()
+            {
+                new RoleDto()
+            };
 
-//            Mock<IRoleService> serviceMock = new();
-//            serviceMock.Setup(x => x.GetAllRoles())
-//                .Returns(dto);
+            Mock<IRoleCommands> serviceMock = new();
+            serviceMock.Setup(x => x.AllRolesQuery())
+                .Returns(dto);
 
-//            RolesController target = new(serviceMock.Object);
+            RolesController target = new(serviceMock.Object);
 
-//            // Act
-//            var result = target.GetAllRoles();
+            // Act
+            var result = target.GetAllRoles();
 
-//            // Assert
-//            ObjectResult resultAsObjResult = result as OkObjectResult;
-//            result.Should().NotBeNull();
-//            resultAsObjResult.StatusCode.Should().Be(StatusCodes.Status200OK);
+            // Assert
+            ObjectResult resultAsObjResult = result as OkObjectResult;
+            result.Should().NotBeNull();
+            resultAsObjResult.StatusCode.Should().Be(StatusCodes.Status200OK);
 
-//            serviceMock.Verify(x => x.GetAllRoles(), Times.Once);
-//        }
+            serviceMock.Verify(x => x.AllRolesQuery(), Times.Once);
+        }
 
-//        [Fact]
-//        public void GetRoles_EmtpyResult_Success()
-//        {
-//            // Act
-//            List<RoleDto> dto = new();
+        [Fact]
+        public void GetRoles_EmtpyResult_Success()
+        {
+            // Act
+            List<RoleDto> dto = new();
 
-//            Mock<IRoleService> serviceMock = new();
-//            serviceMock.Setup(x => x.GetAllRoles())
-//                .Returns(dto);
+            Mock<IRoleCommands> serviceMock = new();
+            serviceMock.Setup(x => x.AllRolesQuery())
+                .Returns(dto);
 
-//            RolesController target = new(serviceMock.Object);
+            RolesController target = new(serviceMock.Object);
 
-//            // Act
-//            var result = target.GetAllRoles();
+            // Act
+            var result = target.GetAllRoles();
 
-//            // Assert
-//            var resultAsObjResult = result as StatusCodeResult;
+            // Assert
+            var resultAsObjResult = result as StatusCodeResult;
 
-//            result.Should().NotBeNull();
-//            resultAsObjResult.StatusCode.Should().Be(StatusCodes.Status204NoContent);
+            result.Should().NotBeNull();
+            resultAsObjResult.StatusCode.Should().Be(StatusCodes.Status204NoContent);
 
-//            serviceMock.Verify(x => x.GetAllRoles(), Times.Once);
-//        }
+            serviceMock.Verify(x => x.AllRolesQuery(), Times.Once);
+        }
 
-//        [Fact]
-//        public void GetRoles_NullResult_Success()
-//        {
-//            // Act
-//            List<RoleDto> dto = null;
+        [Fact]
+        public void GetRoles_NullResult_Success()
+        {
+            // Act
+            List<RoleDto> dto = null;
 
-//            Mock<IRoleService> serviceMock = new();
-//            serviceMock.Setup(x => x.GetAllRoles())
-//                .Returns(dto);
+            Mock<IRoleCommands> serviceMock = new();
+            serviceMock.Setup(x => x.AllRolesQuery())
+                .Returns(dto);
 
-//            RolesController target = new(serviceMock.Object);
+            RolesController target = new(serviceMock.Object);
 
-//            // Act
-//            var result = target.GetAllRoles();
+            // Act
+            var result = target.GetAllRoles();
 
-//            // Assert
-//            var resultAsObjResult = result as StatusCodeResult;
+            // Assert
+            var resultAsObjResult = result as StatusCodeResult;
 
-//            result.Should().NotBeNull();
-//            resultAsObjResult.StatusCode.Should().Be(StatusCodes.Status204NoContent);
+            result.Should().NotBeNull();
+            resultAsObjResult.StatusCode.Should().Be(StatusCodes.Status204NoContent);
 
-//            serviceMock.Verify(x => x.GetAllRoles(), Times.Once);
-//        }
+            serviceMock.Verify(x => x.AllRolesQuery(), Times.Once);
+        }
 
-//        [Fact]
-//        public void GetRole_Success()
-//        {
-//            // Arrange
-//            int roleId = 1;
-//            Mock<IRoleService> serviceMock = new();
+        [Fact]
+        public void GetRole_Success()
+        {
+            // Arrange
+            int roleId = 1;
+            Mock<IRoleCommands> serviceMock = new();
 
-//            RolesController target = new(serviceMock.Object);
+            RolesController target = new(serviceMock.Object);
 
-//            // Act
-//            var result = target.GetRole(roleId);
+            // Act
+            var result = target.GetRole(roleId);
 
-//            // Assert
-//            var resultAsObjResult = result as OkResult;
-//            result.Should().NotBeNull();
-//            resultAsObjResult.StatusCode.Should().Be(StatusCodes.Status200OK);
-//        }
-//    }
-//}
+            // Assert
+            var resultAsObjResult = result as OkResult;
+            result.Should().NotBeNull();
+            resultAsObjResult.StatusCode.Should().Be(StatusCodes.Status200OK);
+        }
+    }
+}
