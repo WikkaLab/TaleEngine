@@ -44,7 +44,7 @@ namespace TaleEngine.CQRS.Mappers
                 StatusId = activity.Status,
                 //EndDateTime = activity.EndDateTime,
                 //StartDateTime = activity.StartDateTime,
-                TimeSlotId = activity.TimeSlot ?? 0
+                TimeSlotId = activity.TimeSlot
             };
         }
 
@@ -62,13 +62,14 @@ namespace TaleEngine.CQRS.Mappers
 
             return new ActivityDto
             {
+                Id = activity.Id,
                 Title = activity.Title,
                 Description = activity.Description,
                 Places = activity.Places,
                 Image = activity.Image,
                 TypeId = activity.TypeId,
                 StatusId = activity.StatusId,
-                TimeSlotId = activity.TimeSlotId.Value
+                TimeSlotId = activity.TimeSlotId
             };
         }
 
@@ -90,7 +91,7 @@ namespace TaleEngine.CQRS.Mappers
                 .SetImage(entitiy.Image)
                 //.SetDates(activityDto.ActivityStart, activityDto.ActivityEnd)
                 .SetStatus(entitiy.StatusId)
-                .SetTimeSlot(entitiy.TimeSlotId.Value)
+                .SetTimeSlot(entitiy.TimeSlotId)
                 .SetType(entitiy.TypeId);
         }
     }

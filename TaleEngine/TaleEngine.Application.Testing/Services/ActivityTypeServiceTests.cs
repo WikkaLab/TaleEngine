@@ -1,78 +1,79 @@
-﻿//using FluentAssertions;
-//using Moq;
-//using System.Collections.Generic;
-//using System.Diagnostics.CodeAnalysis;
-//using TaleEngine.Fakes.Models;
-//using Xunit;
+﻿using FluentAssertions;
+using Moq;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using TaleEngine.Data.Contracts;
+using TaleEngine.Data.Contracts.Entities;
+using TaleEngine.DbServices.Services;
+using TaleEngine.Fakes.Entities;
+using Xunit;
 
-//namespace TaleEngine.Application.Testing.Services
-//{
-//    [ExcludeFromCodeCoverage]
-//    public class ActivityTypeServiceTests
-//    {
-//        private Mock<IActivityTypeDomainService> ActivityTypeServiceMock;
+namespace TaleEngine.DbServices.Testing.Services
+{
+    [ExcludeFromCodeCoverage]
+    public class ActivityTypeServiceTests
+    {
+        private Mock<IUnitOfWork> mock;
 
-//        public ActivityTypeServiceTests()
-//        {
-//            ActivityTypeServiceMock = new Mock<IActivityTypeDomainService>();
-//        }
+        public ActivityTypeServiceTests()
+        {
+            mock = new Mock<IUnitOfWork>();
+        }
 
-//        [Fact]
-//        public void GetActivityTypes_Success()
-//        {
-//            // Arrange
-//            List<ActivityTypeModel> list = ActivityModelBuilder.BuildActivityTypeModelList();
+        [Fact]
+        public void GetActivityTypes_Success()
+        {
+            // Arrange
+            List<ActivityTypeEntity> list = ActivityBuilder.BuildActivityTypeList();
 
-//            ActivityTypeServiceMock.Setup(x => x.GetAllActivityTypes())
-//                .Returns(list);
+            mock.Setup(x => x.ActivityTypeRepository.GetAll())
+                .Returns(list);
 
-//            ActivityTypeService service = new ActivityTypeService(
-//                ActivityTypeServiceMock.Object);
+            ActivityTypeService service = new ActivityTypeService(mock.Object);
 
-//            // Act
-//            var result = service.GetActivityTypes();
+            // Act
+            var result = service.GetActivityTypes();
 
-//            // Assert
-//            result.Should().NotBeNull();
-//            result.Should().NotBeEmpty();
-//        }
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().NotBeEmpty();
+        }
 
-//        [Fact]
-//        public void GetActivityTypes_ReturnsEmpty_Success()
-//        {
-//            // Arrange
-//            List<ActivityTypeModel> list = new();
+        [Fact]
+        public void GetActivityTypes_ReturnsEmpty_Success()
+        {
+            // Arrange
+            List<ActivityTypeEntity> list = new();
 
-//            ActivityTypeServiceMock.Setup(x => x.GetAllActivityTypes())
-//                .Returns(list);
+            mock.Setup(x => x.ActivityTypeRepository.GetAll())
+                .Returns(list);
 
-//            ActivityTypeService service = new ActivityTypeService(
-//                ActivityTypeServiceMock.Object);
+            ActivityTypeService service = new ActivityTypeService(mock.Object);
 
-//            // Act
-//            var result = service.GetActivityTypes();
+            // Act
+            var result = service.GetActivityTypes();
 
-//            // Assert
-//            result.Should().BeNull();
-//        }
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().BeEmpty();
+        }
 
-//        [Fact]
-//        public void GetActivityTypes_ReturnsNull_Success()
-//        {
-//            // Arrange
-//            List<ActivityTypeModel> list = null;
+        [Fact]
+        public void GetActivityTypes_ReturnsNull_Success()
+        {
+            // Arrange
+            List<ActivityTypeEntity> list = null;
 
-//            ActivityTypeServiceMock.Setup(x => x.GetAllActivityTypes())
-//                .Returns(list);
+            mock.Setup(x => x.ActivityTypeRepository.GetAll())
+                .Returns(list);
 
-//            ActivityTypeService service = new ActivityTypeService(
-//                ActivityTypeServiceMock.Object);
+            ActivityTypeService service = new ActivityTypeService(mock.Object);
 
-//            // Act
-//            var result = service.GetActivityTypes();
+            // Act
+            var result = service.GetActivityTypes();
 
-//            // Assert
-//            result.Should().BeNull();
-//        }
-//    }
-//}
+            // Assert
+            result.Should().BeNull();
+        }
+    }
+}

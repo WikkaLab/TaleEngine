@@ -1,75 +1,79 @@
-﻿//using FluentAssertions;
-//using Moq;
-//using System.Collections.Generic;
-//using System.Diagnostics.CodeAnalysis;
-//using TaleEngine.Fakes.Models;
-//using Xunit;
+﻿using FluentAssertions;
+using Moq;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using TaleEngine.Data.Contracts;
+using TaleEngine.Data.Contracts.Entities;
+using TaleEngine.DbServices.Services;
+using TaleEngine.Fakes.Entities;
+using Xunit;
 
-//namespace TaleEngine.Application.Testing.Services
-//{
-//    [ExcludeFromCodeCoverage]
-//    public class RoleServiceTests
-//    {
-//        private Mock<IRoleDomainService> serviceMock;
+namespace TaleEngine.DbServices.Testing.Services
+{
+    [ExcludeFromCodeCoverage]
+    public class RoleServiceTests
+    {
+        private Mock<IUnitOfWork> mock;
 
-//        public RoleServiceTests()
-//        {
-//            serviceMock = new Mock<IRoleDomainService>();
-//        }
+        public RoleServiceTests()
+        {
+            mock = new Mock<IUnitOfWork>();
+        }
 
-//        [Fact]
-//        public void GetRoles_Success()
-//        {
-//            // Arrange
-//            List<RoleModel> list = RoleModelBuilder.BuildRoleModelList();
+        [Fact]
+        public void GetRoles_Success()
+        {
+            // Arrange
+            List<RoleEntity> list = RoleBuilder.BuildRoleList();
 
-//            serviceMock.Setup(x => x.GetAllRoles())
-//                .Returns(list);
+            mock.Setup(x => x.RoleRepository.GetAll())
+                .Returns(list);
 
-//            RoleService service = new RoleService(serviceMock.Object);
+            RoleService service = new RoleService(mock.Object);
 
-//            // Act
-//            var result = service.GetAllRoles();
+            // Act
+            var result = service.GetAllRoles();
 
-//            // Assert
-//            result.Should().NotBeNull();
-//            result.Should().NotBeEmpty();
-//        }
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().NotBeEmpty();
+        }
 
-//        [Fact]
-//        public void GetRoles_ReturnsEmpty_Success()
-//        {
-//            // Arrange
-//            List<RoleModel> list = new();
+        [Fact]
+        public void GetRoles_ReturnsEmpty_Success()
+        {
+            // Arrange
+            List<RoleEntity> list = new();
 
-//            serviceMock.Setup(x => x.GetAllRoles())
-//                .Returns(list);
+            mock.Setup(x => x.RoleRepository.GetAll())
+                .Returns(list);
 
-//            RoleService service = new RoleService(serviceMock.Object);
+            RoleService service = new RoleService(mock.Object);
 
-//            // Act
-//            var result = service.GetAllRoles();
+            // Act
+            var result = service.GetAllRoles();
 
-//            // Assert
-//            result.Should().BeNull();
-//        }
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().BeEmpty();
+        }
 
-//        [Fact]
-//        public void GetRoles_ReturnsNull_Success()
-//        {
-//            // Arrange
-//            List<RoleModel> list = null;
+        [Fact]
+        public void GetRoles_ReturnsNull_Success()
+        {
+            // Arrange
+            List<RoleEntity> list = null;
 
-//            serviceMock.Setup(x => x.GetAllRoles())
-//                .Returns(list);
+            mock.Setup(x => x.RoleRepository.GetAll())
+                .Returns(list);
 
-//            RoleService service = new RoleService(serviceMock.Object);
+            RoleService service = new RoleService(mock.Object);
 
-//            // Act
-//            var result = service.GetAllRoles();
+            // Act
+            var result = service.GetAllRoles();
 
-//            // Assert
-//            result.Should().BeNull();
-//        }
-//    }
-//}
+            // Assert
+            result.Should().BeNull();
+        }
+    }
+}

@@ -8,22 +8,23 @@ namespace TaleEngine.Fakes.Entities
     [ExcludeFromCodeCoverage]
     public class ActivityBuilder
     {
+
         public static ActivityEntity BuildActivity()
         {
             var faker = new Faker();
 
             var entity = new ActivityEntity
             {
-                Id = faker.Random.Number(),
-                Places = faker.Random.Number(),
+                Id = faker.Random.Number(1),
+                Places = faker.Random.Number(1),
                 Image = faker.Person.Avatar,
                 Description = faker.Random.String2(10),
-                StatusId = faker.Random.Number(),
+                StatusId = faker.Random.Number(1),
                 Title = faker.Random.String2(10),
-                TypeId = faker.Random.Number(),
+                TypeId = faker.Random.Number(1),
                 EndDateTime = faker.Date.Recent().Date,
                 StartDateTime = faker.Date.Recent().Date,
-                TimeSlotId = faker.Random.Number(),
+                TimeSlotId = faker.Random.Number(1)
             };
             return entity;
         }

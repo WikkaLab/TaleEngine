@@ -1,161 +1,118 @@
-﻿//using FluentAssertions;
-//using Moq;
-//using System.Collections.Generic;
-//using System.Diagnostics.CodeAnalysis;
-//using TaleEngine.Fakes.Models;
-//using Xunit;
+﻿using FluentAssertions;
+using Moq;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using TaleEngine.Data.Contracts;
+using TaleEngine.Data.Contracts.Entities;
+using TaleEngine.DbServices.Services;
+using TaleEngine.Fakes.Entities;
+using Xunit;
 
-//namespace TaleEngine.Application.Testing.Services
-//{
-//    [ExcludeFromCodeCoverage]
-//    public class EventServiceTests
-//    {
-//        private Mock<IEventDomainService> eventServiceMock;
-//        private Mock<IEditionService> editionServiceMock;
+namespace TaleEngine.DbServices.Testing.Services
+{
+    [ExcludeFromCodeCoverage]
+    public class EventServiceTests
+    {
+        private Mock<IUnitOfWork> mock;
 
-//        public EventServiceTests()
-//        {
-//            eventServiceMock = new Mock<IEventDomainService>();
-//            editionServiceMock = new Mock<IEditionService>();
-//        }
+        public EventServiceTests()
+        {
+            mock = new Mock<IUnitOfWork>();
+        }
 
-//        [Fact]
-//        public void GetEvents_Success()
-//        {
-//            // Arrange
-//            List<EventModel> list = EventModelBuilder.BuildEventModelList();
+        [Fact]
+        public void GetEvents_Success()
+        {
+            // Arrange
+            List<EventEntity> list = EventBuilder.BuildEventList();
 
-//            eventServiceMock.Setup(x => x.GetEventsNoFilter())
-//                .Returns(list);
+            mock.Setup(x => x.EventRepository.GetAll())
+                .Returns(list);
 
-//            EventService service = new EventService(
-//                eventServiceMock.Object, editionServiceMock.Object);
+            EventService service = new EventService(mock.Object);
 
-//            // Act
-//            var result = service.GetAllEvents();
+            // Act
+            var result = service.GetAllEvents();
 
-//            // Assert
-//            result.Should().NotBeNull();
-//            result.Should().NotBeEmpty();
-//        }
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().NotBeEmpty();
+        }
 
-//        [Fact]
-//        public void GetEvents_ReturnsEmpty_Success()
-//        {
-//            // Arrange
-//            List<EventModel> list = new();
+        [Fact]
+        public void GetEvents_ReturnsEmpty_Success()
+        {
+            // Arrange
+            List<EventEntity> list = new();
 
-//            eventServiceMock.Setup(x => x.GetEventsNoFilter())
-//                .Returns(list);
+            mock.Setup(x => x.EventRepository.GetAll())
+                .Returns(list);
 
-//            EventService service = new EventService(
-//                eventServiceMock.Object, editionServiceMock.Object);
+            EventService service = new EventService(mock.Object);
 
-//            // Act
-//            var result = service.GetAllEvents();
+            // Act
+            var result = service.GetAllEvents();
 
-//            // Assert
-//            result.Should().BeNull();
-//        }
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().BeEmpty();
+        }
 
-//        [Fact]
-//        public void GetEvents_ReturnsNull_Success()
-//        {
-//            // Arrange
-//            List<EventModel> list = null;
+        [Fact]
+        public void GetEvents_ReturnsNull_Success()
+        {
+            // Arrange
+            List<EventEntity> list = null;
 
-//            eventServiceMock.Setup(x => x.GetEventsNoFilter())
-//                .Returns(list);
+            mock.Setup(x => x.EventRepository.GetAll())
+                .Returns(list);
 
-//            EventService service = new EventService(
-//                eventServiceMock.Object, editionServiceMock.Object);
+            EventService service = new EventService(mock.Object);
 
-//            // Act
-//            var result = service.GetAllEvents();
+            // Act
+            var result = service.GetAllEvents();
 
-//            // Assert
-//            result.Should().BeNull();
-//        }
+            // Assert
+            result.Should().BeNull();
+        }
 
-//        [Fact]
-//        public void GetEvent_Success()
-//        {
-//            // Arrange
-//            int eventId = 1;
-//            EventModel model = EventModelBuilder.BuildEventModel();
+        [Fact]
+        public void GetEvent_Success()
+        {
+            // Arrange
+            int eventId = 1;
+            EventEntity model = EventBuilder.BuildEvent();
 
-//            eventServiceMock.Setup(x => x.GetEvent(eventId))
-//                .Returns(model);
+            mock.Setup(x => x.EventRepository.GetById(eventId))
+                .Returns(model);
 
-//            EventService service = new EventService(
-//                eventServiceMock.Object, editionServiceMock.Object);
+            EventService service = new EventService(mock.Object);
 
-//            // Act
-//            var result = service.GetEvent(eventId);
+            // Act
+            var result = service.GetById(eventId);
 
-//            // Assert
-//            result.Should().NotBeNull();
-//        }
+            // Assert
+            result.Should().NotBeNull();
+        }
 
-//        [Fact]
-//        public void GetEvent_EditionIdIsZero_Success()
-//        {
-//            // Arrange
-//            int eventId = 0;
-//            EventModel model = EventModelBuilder.BuildEventModel();
+        [Fact]
+        public void GetEvent_EditionIdIsZero_Success()
+        {
+            // Arrange
+            int eventId = 0;
+            EventEntity model = EventBuilder.BuildEvent();
 
-//            eventServiceMock.Setup(x => x.GetEvent(eventId))
-//                .Returns(model);
+            mock.Setup(x => x.EventRepository.GetById(eventId))
+                .Returns(model);
 
-//            EventService service = new EventService(
-//                eventServiceMock.Object, editionServiceMock.Object);
+            EventService service = new EventService(mock.Object);
 
-//            // Act
-//            var result = service.GetEvent(eventId);
+            // Act
+            var result = service.GetById(eventId);
 
-//            // Assert
-//            result.Should().NotBeNull();
-//        }
+            // Assert
+            result.Should().NotBeNull();
+        }
 
-//        [Fact]
-//        public void GetCurrentOrFutureEdition_Success()
-//        {
-//            // Arrange
-//            int eventId = 1;
-//            int resultId = 2;
-
-//            editionServiceMock.Setup(x => x.GetCurrentOrLastEdition(eventId))
-//                .Returns(resultId);
-
-//            EventService service = new EventService(
-//                eventServiceMock.Object, editionServiceMock.Object);
-
-//            // Act
-//            var result = service.GetCurrentOrFutureEdition(eventId);
-
-//            // Assert
-//            result.Should().NotBe(0);
-//        }
-
-//        [Fact]
-//        public void GetCurrentOrFutureEdition_EditionIdIsZero_Success()
-//        {
-//            // Arrange
-//            int eventId = 0;
-//            int resultId = 0;
-
-//            editionServiceMock.Setup(x => x.GetCurrentOrLastEdition(eventId))
-//                .Returns(resultId);
-
-//            EventService service = new EventService(
-//                eventServiceMock.Object, editionServiceMock.Object);
-
-//            // Act
-//            var result = service.GetCurrentOrFutureEdition(eventId);
-
-//            // Assert
-//            result.Should().Be(0);
-//        }
-
-//    }
-//}
+    }
+}

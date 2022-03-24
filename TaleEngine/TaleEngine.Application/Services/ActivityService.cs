@@ -135,7 +135,9 @@ namespace TaleEngine.DbServices.Services
 
         public List<ActivityEntity> GetLastThreeActivities(int editionId)
         {
-            throw new NotImplementedException();
+            var result = GetLastThreeActivities(0, editionId, 3);
+
+            return result;
         }
 
         #region Private methods
