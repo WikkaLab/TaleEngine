@@ -76,6 +76,9 @@ namespace TaleEngine.DbServices.Services
 
         public int CreateActivity(int editionId, Activity activity)
         {
+            if (activity == null)
+                return 0;
+
             var activityEntity = new ActivityEntity
             {
                 EditionId = editionId,
@@ -144,9 +147,6 @@ namespace TaleEngine.DbServices.Services
 
         private List<ActivityEntity> GetActivitiesByStatus(int editionId, int statusId)
         {
-            var pendingStatus = _unitOfWork.ActivityStatusRepository
-                .GetById(statusId);
-
             var activities = _unitOfWork.ActivityRepository.GetAll()
                 .Where(a => a.StatusId == statusId
                             && a.EditionId == editionId)

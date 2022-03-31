@@ -3,6 +3,7 @@ using Moq;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using TaleEngine.Aggregates.ActivityAggregate;
+using TaleEngine.Cross.Enums;
 using TaleEngine.Data.Contracts;
 using TaleEngine.Data.Contracts.Entities;
 using TaleEngine.DbServices.Services;
@@ -25,11 +26,15 @@ namespace TaleEngine.DbServices.Testing.Services
         public void GetActiveActivities_Success()
         {
             // Arrange
-            int editionId = 1;
-            var list = ActivityBuilder.BuildActivityList();
+            int editionId = 11;
+            int statusId = (int)ActivityStatusEnum.ACT;
+            var list = ActivityBuilder.BuildActivityList(editionId: editionId, status: statusId);
+            var status = ActivityBuilder.BuildActivityStatus(statusId);
 
             mock.Setup(x => x.ActivityRepository.GetAll())
                 .Returns(list);
+            mock.Setup(x => x.ActivityStatusRepository.GetById(It.IsAny<int>()))
+                .Returns(status);
 
             var target = new ActivityService(mock.Object);
 
@@ -48,9 +53,14 @@ namespace TaleEngine.DbServices.Testing.Services
         {
             // Arrange
             int editionId = 0;
-            List<ActivityEntity> models = null;
+            int statusId = (int)ActivityStatusEnum.ACT;
+            List<ActivityEntity> list = new();
+            var status = ActivityBuilder.BuildActivityStatus(statusId);
+
             mock.Setup(x => x.ActivityRepository.GetAll())
-                .Returns(models);
+                .Returns(list);
+            mock.Setup(x => x.ActivityStatusRepository.GetById(It.IsAny<int>()))
+                .Returns(status);
 
             var target = new ActivityService(mock.Object);
 
@@ -58,7 +68,7 @@ namespace TaleEngine.DbServices.Testing.Services
             var result = target.GetActiveActivities(editionId);
 
             // Assert
-            result.Should().BeNull();
+            result.Should().BeEmpty();
             mock.Verify(x => x.ActivityRepository.GetAll(),
                 Times.Once);
         }
@@ -67,10 +77,15 @@ namespace TaleEngine.DbServices.Testing.Services
         public void GetPendingActivities_Success()
         {
             // Arrange
-            int editionId = 1;
-            var list = ActivityBuilder.BuildActivityList();
+            int editionId = 11;
+            int statusId = (int)ActivityStatusEnum.PEN;
+            var list = ActivityBuilder.BuildActivityList(editionId: editionId, status: statusId);
+            var status = ActivityBuilder.BuildActivityStatus(statusId);
+
             mock.Setup(x => x.ActivityRepository.GetAll())
                 .Returns(list);
+            mock.Setup(x => x.ActivityStatusRepository.GetById(It.IsAny<int>()))
+                .Returns(status);
 
             var target = new ActivityService(mock.Object);
 
@@ -89,9 +104,14 @@ namespace TaleEngine.DbServices.Testing.Services
         {
             // Arrange
             int editionId = 0;
-            List<ActivityEntity> models = null;
+            int statusId = (int)ActivityStatusEnum.PEN;
+            List<ActivityEntity> list = new();
+            var status = ActivityBuilder.BuildActivityStatus(statusId);
+
             mock.Setup(x => x.ActivityRepository.GetAll())
-                .Returns(models);
+                .Returns(list);
+            mock.Setup(x => x.ActivityStatusRepository.GetById(It.IsAny<int>()))
+                .Returns(status);
 
             var target = new ActivityService(mock.Object);
 
@@ -99,7 +119,7 @@ namespace TaleEngine.DbServices.Testing.Services
             var result = target.GetPendingActivities(editionId);
 
             // Assert
-            result.Should().BeNull();
+            result.Should().BeEmpty();
             mock.Verify(x => x.ActivityRepository.GetAll(),
                 Times.Once);
         }
@@ -119,7 +139,7 @@ namespace TaleEngine.DbServices.Testing.Services
             var result = target.DeleteActivity(activityId);
 
             // Assert
-            result.Should().Be(0);
+            result.Should().Be(1);
             mock.Verify(x => x.ActivityRepository.Delete(It.IsAny<int>()),
                 Times.Once);
         }
@@ -146,14 +166,11 @@ namespace TaleEngine.DbServices.Testing.Services
         }
 
         [Fact]
-        public void CreateActivity_DtoIsNull_ShouldReturnZero()
+        public void CreateActivity_AggrIsNull_ShouldReturnZero()
         {
             // Arrange
             int editionId = 1;
             Activity aggr = null;
-
-            mock.Setup(x => x.ActivityRepository.Insert(It.IsAny<ActivityEntity>()))
-                .Verifiable();
 
             var target = new ActivityService(mock.Object);
 
@@ -162,8 +179,6 @@ namespace TaleEngine.DbServices.Testing.Services
 
             // Assert
             result.Should().Be(0);
-            mock.Verify(x => x.ActivityRepository.Insert(It.IsAny<ActivityEntity>()),
-                Times.Once);
         }
 
         [Fact]
@@ -182,9 +197,7 @@ namespace TaleEngine.DbServices.Testing.Services
             var result = target.UpdateActivity(id, aggr);
 
             // Assert
-            result.Should().Be(1);
-            mock.Verify(x => x.ActivityRepository.Update(It.IsAny<ActivityEntity>()),
-                Times.Once);
+            result.Should().Be(0);
         }
 
         [Fact]
@@ -204,8 +217,6 @@ namespace TaleEngine.DbServices.Testing.Services
 
             // Assert
             result.Should().Be(0);
-            mock.Verify(x => x.ActivityRepository.Update(It.IsAny<ActivityEntity>()),
-                Times.Once);
         }
 
         //[Fact]
@@ -237,16 +248,23 @@ namespace TaleEngine.DbServices.Testing.Services
         public void ChangeActivityStatus_Success()
         {
             // Arrange
-            int id = 1;
-            int status = 1;
 
+            int id = 1;
+            int statusId = 1;
+            var activity = ActivityBuilder.BuildActivity();
+            var status = ActivityBuilder.BuildActivityStatus();
+
+            mock.Setup(x => x.ActivityRepository.GetById(It.IsAny<int>()))
+                .Returns(activity);
+            mock.Setup(x => x.ActivityStatusRepository.GetById(It.IsAny<int>()))
+                .Returns(status);
             mock.Setup(x => x.ActivityRepository.Update(It.IsAny<ActivityEntity>()))
                 .Verifiable();
 
             var target = new ActivityService(mock.Object);
 
             // Act
-            var result = target.ChangeActivityStatus(id, status);
+            var result = target.ChangeActivityStatus(id, statusId);
 
             // Assert
             result.Should().Be(1);
@@ -258,10 +276,15 @@ namespace TaleEngine.DbServices.Testing.Services
         public void GetLastThreeActivities_Success()
         {
             // Arrange
-            int editionId = 1;
-            var list = ActivityBuilder.BuildActivityList();
-            mock.Setup(x => x.ActivityRepository.GetEventActivities(editionId))
+            int editionId = 11;
+            int statusId = (int)ActivityStatusEnum.ACT;
+            var list = ActivityBuilder.BuildActivityList(editionId: editionId, status: statusId);
+            var status = ActivityBuilder.BuildActivityStatus(statusId);
+
+            mock.Setup(x => x.ActivityRepository.GetAll())
                 .Returns(list);
+            mock.Setup(x => x.ActivityStatusRepository.GetById(It.IsAny<int>()))
+                .Returns(status);
 
             var target = new ActivityService(mock.Object);
 
@@ -280,9 +303,14 @@ namespace TaleEngine.DbServices.Testing.Services
         {
             // Arrange
             int editionId = 0;
-            List<ActivityEntity> models = null;
+            int statusId = (int)ActivityStatusEnum.ACT;
+            List<ActivityEntity> list = new();
+            var status = ActivityBuilder.BuildActivityStatus(statusId);
+
             mock.Setup(x => x.ActivityRepository.GetAll())
-                .Returns(models);
+                .Returns(list);
+            mock.Setup(x => x.ActivityStatusRepository.GetById(It.IsAny<int>()))
+                .Returns(status);
 
             var target = new ActivityService(mock.Object);
 
@@ -290,7 +318,7 @@ namespace TaleEngine.DbServices.Testing.Services
             var result = target.GetLastThreeActivities(editionId);
 
             // Assert
-            result.Should().BeNull();
+            result.Should().BeEmpty();
             mock.Verify(x => x.ActivityRepository.GetAll(),
                 Times.Once);
         }
