@@ -20,7 +20,7 @@ namespace TaleEngine.Data.Contracts.Entities
         public int EditionId { get; set; }
         public EditionEntity Edition { get; set; }
 
-        public int? TimeSlotId { get; set; }
+        public int TimeSlotId { get; set; }
         public TimeSlotEntity TimeSlot { get; set; }
 
         public DateTime PublicationDate { get; set; }

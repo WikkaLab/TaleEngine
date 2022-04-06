@@ -8,8 +8,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaleEngine.API", "TaleEngin
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaleEngine.DbServices", "TaleEngine.Application\TaleEngine.DbServices.csproj", "{916C4408-6263-4821-9763-FDEB1E03C0CA}"
+	ProjectSection(ProjectDependencies) = postProject
+		{EA5FC62F-B813-4433-A00A-034F49A63934} = {EA5FC62F-B813-4433-A00A-034F49A63934}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaleEngine.DbServices.Contracts", "TaleEngine.Application.Contracts\TaleEngine.DbServices.Contracts.csproj", "{6B7D4065-B213-44B4-B758-E1A77EC67DA7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{EA5FC62F-B813-4433-A00A-034F49A63934} = {EA5FC62F-B813-4433-A00A-034F49A63934}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaleEngine.Data", "TaleEngine.Data\TaleEngine.Data.csproj", "{EA5FC62F-B813-4433-A00A-034F49A63934}"
 EndProject
@@ -29,9 +35,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{FD89CD00-60B
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaleEngine.Fakes", "TaleEngine.Fakes\TaleEngine.Fakes.csproj", "{A41A36ED-768C-43DB-B39A-CAD91497323E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaleEngine.Application.Testing", "TaleEngine.Application.Testing\TaleEngine.Application.Testing.csproj", "{EE100298-B48B-4EF6-A3B7-900E7A03199E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaleEngine.DbServices.Testing", "TaleEngine.Application.Testing\TaleEngine.DbServices.Testing.csproj", "{EE100298-B48B-4EF6-A3B7-900E7A03199E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaleEngine.Commands.Testing", "TaleEngine.Business.Testing\TaleEngine.Commands.Testing.csproj", "{66D44ECB-8B79-47A8-92A2-A77297980C64}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaleEngine.CQRS.Testing", "TaleEngine.Business.Testing\TaleEngine.CQRS.Testing.csproj", "{66D44ECB-8B79-47A8-92A2-A77297980C64}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaleEngine.IntegrationTests", "TaleEngine.IntegrationTests\TaleEngine.IntegrationTests.csproj", "{42B926BC-2935-4CF4-B043-A2162B8E069B}"
 EndProject

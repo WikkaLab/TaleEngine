@@ -1,289 +1,327 @@
-﻿//using FluentAssertions;
-//using Moq;
-//using System.Collections.Generic;
-//using System.Diagnostics.CodeAnalysis;
-//using TaleEngine.Fakes.Dtos;
-//using TaleEngine.Fakes.Models;
-//using Xunit;
+﻿using FluentAssertions;
+using Moq;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using TaleEngine.Aggregates.ActivityAggregate;
+using TaleEngine.Cross.Enums;
+using TaleEngine.Data.Contracts;
+using TaleEngine.Data.Contracts.Entities;
+using TaleEngine.DbServices.Services;
+using TaleEngine.Fakes.Entities;
+using Xunit;
 
-//namespace TaleEngine.Application.Testing.Services
-//{
-//    [ExcludeFromCodeCoverage]
-//    public class ActivityServiceTests
-//    {
-//        private Mock<IActivityDomainService> serviceMock;
+namespace TaleEngine.DbServices.Testing.Services
+{
+    [ExcludeFromCodeCoverage]
+    public class ActivityServiceTests
+    {
+        private Mock<IUnitOfWork> mock;
 
-//        public ActivityServiceTests()
-//        {
-//            serviceMock = new Mock<IActivityDomainService>();
-//        }
+        public ActivityServiceTests()
+        {
+            mock = new Mock<IUnitOfWork>();
+        }
 
-//        [Fact]
-//        public void GetActiveActivities_Success()
-//        {
-//            // Arrange
-//            int editionId = 1;
-//            serviceMock.Setup(x => x.GetActiveActivities(editionId))
-//                .Returns(ActivityModelBuilder.BuildActivityModelList());
+        [Fact]
+        public void GetActiveActivities_Success()
+        {
+            // Arrange
+            int editionId = 11;
+            int statusId = (int)ActivityStatusEnum.ACT;
+            var list = ActivityBuilder.BuildActivityList(editionId: editionId, status: statusId);
+            var status = ActivityBuilder.BuildActivityStatus(statusId);
 
-//            var target = new ActivityService(serviceMock.Object);
+            mock.Setup(x => x.ActivityRepository.GetAll())
+                .Returns(list);
+            mock.Setup(x => x.ActivityStatusRepository.GetById(It.IsAny<int>()))
+                .Returns(status);
 
-//            // Act
-//            var result = target.GetActiveActivities(editionId);
+            var target = new ActivityService(mock.Object);
 
-//            // Assert
-//            result.Should().NotBeNull();
-//            result.Should().NotBeEmpty();
-//            serviceMock.Verify(x => x.GetActiveActivities(It.IsAny<int>()),
-//                Times.Once);
-//        }
+            // Act
+            var result = target.GetActiveActivities(editionId);
 
-//        [Fact]
-//        public void GetActiveActivities_IdIsZero_ShouldReturnNull()
-//        {
-//            // Arrange
-//            int editionId = 0;
-//            List<ActivityModel> models = null;
-//            serviceMock.Setup(x => x.GetActiveActivities(editionId))
-//                .Returns(models);
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().NotBeEmpty();
+            mock.Verify(x => x.ActivityRepository.GetAll(),
+                Times.Once);
+        }
 
-//            var target = new ActivityService(serviceMock.Object);
+        [Fact]
+        public void GetActiveActivities_IdIsZero_ShouldReturnNull()
+        {
+            // Arrange
+            int editionId = 0;
+            int statusId = (int)ActivityStatusEnum.ACT;
+            List<ActivityEntity> list = new();
+            var status = ActivityBuilder.BuildActivityStatus(statusId);
 
-//            // Act
-//            var result = target.GetActiveActivities(editionId);
+            mock.Setup(x => x.ActivityRepository.GetAll())
+                .Returns(list);
+            mock.Setup(x => x.ActivityStatusRepository.GetById(It.IsAny<int>()))
+                .Returns(status);
 
-//            // Assert
-//            result.Should().BeNull();
-//            serviceMock.Verify(x => x.GetActiveActivities(It.IsAny<int>()),
-//                Times.Once);
-//        }
+            var target = new ActivityService(mock.Object);
 
-//        [Fact]
-//        public void GetPendingActivities_Success()
-//        {
-//            // Arrange
-//            int editionId = 1;
-//            serviceMock.Setup(x => x.GetPendingActivities(editionId))
-//                .Returns(ActivityModelBuilder.BuildActivityModelList());
+            // Act
+            var result = target.GetActiveActivities(editionId);
 
-//            var target = new ActivityService(serviceMock.Object);
+            // Assert
+            result.Should().BeEmpty();
+            mock.Verify(x => x.ActivityRepository.GetAll(),
+                Times.Once);
+        }
 
-//            // Act
-//            var result = target.GetPendingActivities(editionId);
+        [Fact]
+        public void GetPendingActivities_Success()
+        {
+            // Arrange
+            int editionId = 11;
+            int statusId = (int)ActivityStatusEnum.PEN;
+            var list = ActivityBuilder.BuildActivityList(editionId: editionId, status: statusId);
+            var status = ActivityBuilder.BuildActivityStatus(statusId);
 
-//            // Assert
-//            result.Should().NotBeNull();
-//            result.Should().NotBeEmpty();
-//            serviceMock.Verify(x => x.GetPendingActivities(It.IsAny<int>()),
-//                Times.Once);
-//        }
+            mock.Setup(x => x.ActivityRepository.GetAll())
+                .Returns(list);
+            mock.Setup(x => x.ActivityStatusRepository.GetById(It.IsAny<int>()))
+                .Returns(status);
 
-//        [Fact]
-//        public void GetPendingActivities_IdIsZero_ShouldReturnNull()
-//        {
-//            // Arrange
-//            int editionId = 0;
-//            List<ActivityModel> models = null;
-//            serviceMock.Setup(x => x.GetPendingActivities(editionId))
-//                .Returns(models);
+            var target = new ActivityService(mock.Object);
 
-//            var target = new ActivityService(serviceMock.Object);
+            // Act
+            var result = target.GetPendingActivities(editionId);
 
-//            // Act
-//            var result = target.GetPendingActivities(editionId);
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().NotBeEmpty();
+            mock.Verify(x => x.ActivityRepository.GetAll(),
+                Times.Once);
+        }
 
-//            // Assert
-//            result.Should().BeNull();
-//            serviceMock.Verify(x => x.GetPendingActivities(It.IsAny<int>()),
-//                Times.Once);
-//        }
+        [Fact]
+        public void GetPendingActivities_IdIsZero_ShouldReturnNull()
+        {
+            // Arrange
+            int editionId = 0;
+            int statusId = (int)ActivityStatusEnum.PEN;
+            List<ActivityEntity> list = new();
+            var status = ActivityBuilder.BuildActivityStatus(statusId);
 
-//        [Fact]
-//        public void DeleteActivity_Success()
-//        {
-//            // Arrange
-//            int activityId = 1;
+            mock.Setup(x => x.ActivityRepository.GetAll())
+                .Returns(list);
+            mock.Setup(x => x.ActivityStatusRepository.GetById(It.IsAny<int>()))
+                .Returns(status);
 
-//            serviceMock.Setup(x => x.DeleteActivity(activityId))
-//                .Returns(0);
+            var target = new ActivityService(mock.Object);
 
-//            var target = new ActivityService(serviceMock.Object);
+            // Act
+            var result = target.GetPendingActivities(editionId);
 
-//            // Act
-//            var result = target.DeleteActivity(activityId);
+            // Assert
+            result.Should().BeEmpty();
+            mock.Verify(x => x.ActivityRepository.GetAll(),
+                Times.Once);
+        }
 
-//            // Assert
-//            result.Should().Be(0);
-//            serviceMock.Verify(x => x.DeleteActivity(It.IsAny<int>()),
-//                Times.Once);
-//        }
+        [Fact]
+        public void DeleteActivity_Success()
+        {
+            // Arrange
+            int activityId = 1;
 
-//        [Fact]
-//        public void CreateActivity_Success()
-//        {
-//            // Arrange
-//            int editionId = 1;
-//            var activityDto = ActivityDtoBuilder.BuildActivityDto();
+            mock.Setup(x => x.ActivityRepository.Delete(activityId))
+                .Verifiable();
 
-//            serviceMock.Setup(x => x.CreateActivity(editionId, It.IsAny<ActivityModel>()))
-//                .Returns(1);
+            var target = new ActivityService(mock.Object);
 
-//            var target = new ActivityService(serviceMock.Object);
+            // Act
+            var result = target.DeleteActivity(activityId);
 
-//            // Act
-//            var result = target.CreateActivity(editionId, activityDto);
+            // Assert
+            result.Should().Be(1);
+            mock.Verify(x => x.ActivityRepository.Delete(It.IsAny<int>()),
+                Times.Once);
+        }
 
-//            // Assert
-//            result.Should().Be(1);
-//            serviceMock.Verify(x => x.CreateActivity(editionId, It.IsAny<ActivityModel>()),
-//                Times.Once);
-//        }
+        [Fact]
+        public void CreateActivity_Success()
+        {
+            // Arrange
+            int editionId = 1;
+            Activity aggr = new();
 
-//        [Fact]
-//        public void CreateActivity_DtoIsNull_ShouldReturnZero()
-//        {
-//            // Arrange
-//            int editionId = 1;
-//            ActivityDto activityDto = null;
+            mock.Setup(x => x.ActivityRepository.Insert(It.IsAny<ActivityEntity>()))
+                .Verifiable();
 
-//            serviceMock.Setup(x => x.CreateActivity(editionId, It.IsAny<ActivityModel>()))
-//                .Returns(0);
+            var target = new ActivityService(mock.Object);
 
-//            var target = new ActivityService(serviceMock.Object);
+            // Act
+            var result = target.CreateActivity(editionId, aggr);
 
-//            // Act
-//            var result = target.CreateActivity(editionId, activityDto);
+            // Assert
+            result.Should().Be(1);
+            mock.Verify(x => x.ActivityRepository.Insert(It.IsAny<ActivityEntity>()),
+                Times.Once);
+        }
 
-//            // Assert
-//            result.Should().Be(0);
-//            serviceMock.Verify(x => x.CreateActivity(editionId, It.IsAny<ActivityModel>()),
-//                Times.Once);
-//        }
+        [Fact]
+        public void CreateActivity_AggrIsNull_ShouldReturnZero()
+        {
+            // Arrange
+            int editionId = 1;
+            Activity aggr = null;
 
-//        [Fact]
-//        public void UpdateActivity_Success()
-//        {
-//            // Arrange
-//            var activityDto = ActivityDtoBuilder.BuildActivityDto();
+            var target = new ActivityService(mock.Object);
 
-//            serviceMock.Setup(x => x.UpdateActivity(It.IsAny<ActivityModel>()))
-//                .Returns(1);
+            // Act
+            var result = target.CreateActivity(editionId, aggr);
 
-//            var target = new ActivityService(serviceMock.Object);
+            // Assert
+            result.Should().Be(0);
+        }
 
-//            // Act
-//            var result = target.UpdateActivity(activityDto);
+        [Fact]
+        public void UpdateActivity_Success()
+        {
+            // Arrange
+            int id = 1;
+            Activity aggr = new();
 
-//            // Assert
-//            result.Should().Be(1);
-//            serviceMock.Verify(x => x.UpdateActivity(It.IsAny<ActivityModel>()),
-//                Times.Once);
-//        }
+            mock.Setup(x => x.ActivityRepository.Update(It.IsAny<ActivityEntity>()))
+                .Verifiable();
 
-//        [Fact]
-//        public void UpdateActivity_DtoIsNull_ShouldReturnZero()
-//        {
-//            // Arrange
-//            ActivityDto activityDto = null;
+            var target = new ActivityService(mock.Object);
 
-//            serviceMock.Setup(x => x.UpdateActivity(It.IsAny<ActivityModel>()))
-//                .Returns(0);
+            // Act
+            var result = target.UpdateActivity(id, aggr);
 
-//            var target = new ActivityService(serviceMock.Object);
+            // Assert
+            result.Should().Be(0);
+        }
 
-//            // Act
-//            var result = target.UpdateActivity(activityDto);
+        [Fact]
+        public void UpdateActivity_DtoIsNull_ShouldReturnZero()
+        {
+            // Arrange
+            int id = 0;
+            Activity activityDto = null;
 
-//            // Assert
-//            result.Should().Be(0);
-//            serviceMock.Verify(x => x.UpdateActivity(It.IsAny<ActivityModel>()),
-//                Times.Once);
-//        }
+            mock.Setup(x => x.ActivityRepository.Update(It.IsAny<ActivityEntity>()))
+                .Verifiable();
 
-//        [Fact]
-//        public void GetActiveActivitiesFiltered_Success()
-//        {
-//            // Arrange
-//            var request = ActivityDtoBuilder.BuildActivityFilterRequest();
-//            var resultModel = ActivityModelBuilder.BuildActivityFilteredResultModel();
+            var target = new ActivityService(mock.Object);
 
-//            serviceMock.Setup(x => x.GetActiveActivitiesFiltered(request.TypeId,
-//                request.EditionId, request.Title, request.CurrentPage))
-//                .Returns(resultModel);
+            // Act
+            var result = target.UpdateActivity(id, activityDto);
 
-//            var target = new ActivityService(serviceMock.Object);
+            // Assert
+            result.Should().Be(0);
+        }
 
-//            // Act
-//            var result = target.GetActiveActivitiesFiltered(request);
+        //[Fact]
+        //public void GetActiveActivitiesFiltered_Success()
+        //{
+        //    // Arrange
+        //    var request = ActivityBuilder.BuildActivityFilterRequest();
+        //    var resultModel = ActivityModelBuilder.BuildActivityFilteredResultModel();
 
-//            // Assert
-//            result.Should().NotBeNull();
-//            result.Activities.Should().NotBeNull();
-//            result.Activities.Should().NotBeEmpty();
-//            serviceMock.Verify(x => x.GetActiveActivitiesFiltered(It.IsAny<int>(),
-//                It.IsAny<int>(), It.IsAny<string>(), It.IsAny<int>()),
-//                Times.Once);
-//        }
+        //    mock.Setup(x => x.GetActiveActivitiesFiltered(request.TypeId,
+        //        request.EditionId, request.Title, request.CurrentPage))
+        //        .Returns(resultModel);
 
-//        [Fact]
-//        public void ChangeActivityStatus_Success()
-//        {
-//            // Arrange
-//            var activityDto = ActivityDtoBuilder.BuildActivityChangeStatusDto();
+        //    var target = new ActivityService(mock.Object);
 
-//            serviceMock.Setup(x => x.ChangeActivityStatus(It.IsAny<int>(), It.IsAny<int>()))
-//                .Returns(1);
+        //    // Act
+        //    var result = target.GetActiveActivitiesFiltered(request);
 
-//            var target = new ActivityService(serviceMock.Object);
+        //    // Assert
+        //    result.Should().NotBeNull();
+        //    result.Activities.Should().NotBeNull();
+        //    result.Activities.Should().NotBeEmpty();
+        //    mock.Verify(x => x.GetActiveActivitiesFiltered(It.IsAny<int>(),
+        //        It.IsAny<int>(), It.IsAny<string>(), It.IsAny<int>()),
+        //        Times.Once);
+        //}
 
-//            // Act
-//            var result = target.ChangeActivityStatus(activityDto);
+        [Fact]
+        public void ChangeActivityStatus_Success()
+        {
+            // Arrange
 
-//            // Assert
-//            result.Should().Be(1);
-//            serviceMock.Verify(x => x.ChangeActivityStatus(It.IsAny<int>(), It.IsAny<int>()),
-//                Times.Once);
-//        }
+            int id = 1;
+            int statusId = 1;
+            var activity = ActivityBuilder.BuildActivity();
+            var status = ActivityBuilder.BuildActivityStatus();
 
-//        [Fact]
-//        public void GetLastThreeActivities_Success()
-//        {
-//            // Arrange
-//            int editionId = 1;
-//            serviceMock.Setup(x => x.GetLastThreeActivities(editionId))
-//                .Returns(ActivityModelBuilder.BuildActivityModelList());
+            mock.Setup(x => x.ActivityRepository.GetById(It.IsAny<int>()))
+                .Returns(activity);
+            mock.Setup(x => x.ActivityStatusRepository.GetById(It.IsAny<int>()))
+                .Returns(status);
+            mock.Setup(x => x.ActivityRepository.Update(It.IsAny<ActivityEntity>()))
+                .Verifiable();
 
-//            var target = new ActivityService(serviceMock.Object);
+            var target = new ActivityService(mock.Object);
 
-//            // Act
-//            var result = target.GetLastThreeActivities(editionId);
+            // Act
+            var result = target.ChangeActivityStatus(id, statusId);
 
-//            // Assert
-//            result.Should().NotBeNull();
-//            result.Should().NotBeEmpty();
-//            serviceMock.Verify(x => x.GetLastThreeActivities(It.IsAny<int>()),
-//                Times.Once);
-//        }
+            // Assert
+            result.Should().Be(1);
+            mock.Verify(x => x.ActivityRepository.Update(It.IsAny<ActivityEntity>()),
+                Times.Once);
+        }
 
-//        [Fact]
-//        public void GetLastThreeActivities_IdIsZero_ShouldReturnNull()
-//        {
-//            // Arrange
-//            int editionId = 0;
-//            List<ActivityModel> models = null;
-//            serviceMock.Setup(x => x.GetLastThreeActivities(editionId))
-//                .Returns(models);
+        [Fact]
+        public void GetLastThreeActivities_Success()
+        {
+            // Arrange
+            int editionId = 11;
+            int statusId = (int)ActivityStatusEnum.ACT;
+            var list = ActivityBuilder.BuildActivityList(editionId: editionId, status: statusId);
+            var status = ActivityBuilder.BuildActivityStatus(statusId);
 
-//            var target = new ActivityService(serviceMock.Object);
+            mock.Setup(x => x.ActivityRepository.GetAll())
+                .Returns(list);
+            mock.Setup(x => x.ActivityStatusRepository.GetById(It.IsAny<int>()))
+                .Returns(status);
 
-//            // Act
-//            var result = target.GetLastThreeActivities(editionId);
+            var target = new ActivityService(mock.Object);
 
-//            // Assert
-//            result.Should().BeNull();
-//            serviceMock.Verify(x => x.GetLastThreeActivities(It.IsAny<int>()),
-//                Times.Once);
-//        }
+            // Act
+            var result = target.GetLastThreeActivities(editionId);
 
-//    }
-//}
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().NotBeEmpty();
+            mock.Verify(x => x.ActivityRepository.GetAll(),
+                Times.Once);
+        }
+
+        [Fact]
+        public void GetLastThreeActivities_IdIsZero_ShouldReturnNull()
+        {
+            // Arrange
+            int editionId = 0;
+            int statusId = (int)ActivityStatusEnum.ACT;
+            List<ActivityEntity> list = new();
+            var status = ActivityBuilder.BuildActivityStatus(statusId);
+
+            mock.Setup(x => x.ActivityRepository.GetAll())
+                .Returns(list);
+            mock.Setup(x => x.ActivityStatusRepository.GetById(It.IsAny<int>()))
+                .Returns(status);
+
+            var target = new ActivityService(mock.Object);
+
+            // Act
+            var result = target.GetLastThreeActivities(editionId);
+
+            // Assert
+            result.Should().BeEmpty();
+            mock.Verify(x => x.ActivityRepository.GetAll(),
+                Times.Once);
+        }
+
+    }
+}

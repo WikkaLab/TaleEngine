@@ -1,76 +1,80 @@
-﻿//using FluentAssertions;
-//using Moq;
-//using System.Collections.Generic;
-//using System.Diagnostics.CodeAnalysis;
-//using TaleEngine.Fakes.Models;
-//using Xunit;
+﻿using FluentAssertions;
+using Moq;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using TaleEngine.Data.Contracts;
+using TaleEngine.Data.Contracts.Entities;
+using TaleEngine.DbServices.Services;
+using TaleEngine.Fakes.Entities;
+using Xunit;
 
-//namespace TaleEngine.Application.Testing.Services
-//{
-//    [ExcludeFromCodeCoverage]
-//    public class TimeSlotServiceTests
-//    {
-//        private Mock<ITimeSlotDomainService> serviceMock;
+namespace TaleEngine.DbServices.Testing.Services
+{
+    [ExcludeFromCodeCoverage]
+    public class TimeSlotServiceTests
+    {
+        private Mock<IUnitOfWork> mock;
 
-//        public TimeSlotServiceTests()
-//        {
-//            serviceMock = new Mock<ITimeSlotDomainService>();
-//        }
+        public TimeSlotServiceTests()
+        {
+            mock = new Mock<IUnitOfWork>();
+        }
 
-//        [Fact]
-//        public void GetTimeSlots_Success()
-//        {
-//            // Arrange
-//            List<TimeSlotModel> list = TimeSlotModelBuilder.BuildTimeSlotModelList();
+        [Fact]
+        public void GetTimeSlots_Success()
+        {
+            // Arrange
+            List<TimeSlotEntity> list = TimeSlotBuilder.BuildTimeSlotList();
 
-//            serviceMock.Setup(x => x.GetAllTimeSlots())
-//                .Returns(list);
+            mock.Setup(x => x.TimeSlotRepository.GetAll())
+                .Returns(list);
 
-//            TimeSlotService service = new TimeSlotService(serviceMock.Object);
+            TimeSlotService service = new TimeSlotService(mock.Object);
 
-//            // Act
-//            var result = service.GetTimeSlots();
+            // Act
+            var result = service.GetTimeSlots();
 
-//            // Assert
-//            result.Should().NotBeNull();
-//            result.Should().NotBeEmpty();
-//        }
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().NotBeEmpty();
+        }
 
-//        [Fact]
-//        public void GetTimeSlots_ReturnsEmpty_Success()
-//        {
-//            // Arrange
-//            List<TimeSlotModel> list = new();
+        [Fact]
+        public void GetTimeSlots_ReturnsEmpty_Success()
+        {
+            // Arrange
+            List<TimeSlotEntity> list = new();
 
-//            serviceMock.Setup(x => x.GetAllTimeSlots())
-//                .Returns(list);
+            mock.Setup(x => x.TimeSlotRepository.GetAll())
+                .Returns(list);
 
-//            TimeSlotService service = new TimeSlotService(serviceMock.Object);
+            TimeSlotService service = new TimeSlotService(mock.Object);
 
-//            // Act
-//            var result = service.GetTimeSlots();
+            // Act
+            var result = service.GetTimeSlots();
 
-//            // Assert
-//            result.Should().BeNull();
-//        }
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().BeEmpty();
+        }
 
-//        [Fact]
-//        public void GetTimeSlots_ReturnsNull_Success()
-//        {
-//            // Arrange
-//            List<TimeSlotModel> list = null;
+        [Fact]
+        public void GetTimeSlots_ReturnsNull_Success()
+        {
+            // Arrange
+            List<TimeSlotEntity> list = null;
 
-//            serviceMock.Setup(x => x.GetAllTimeSlots())
-//                .Returns(list);
+            mock.Setup(x => x.TimeSlotRepository.GetAll())
+                .Returns(list);
 
-//            TimeSlotService service = new TimeSlotService(serviceMock.Object);
+            TimeSlotService service = new TimeSlotService(mock.Object);
 
-//            // Act
-//            var result = service.GetTimeSlots();
+            // Act
+            var result = service.GetTimeSlots();
 
-//            // Assert
-//            result.Should().BeNull();
-//        }
+            // Assert
+            result.Should().BeNull();
+        }
 
-//    }
-//}
+    }
+}

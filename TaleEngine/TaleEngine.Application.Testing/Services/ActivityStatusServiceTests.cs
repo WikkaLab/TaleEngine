@@ -1,78 +1,79 @@
-﻿//using FluentAssertions;
-//using Moq;
-//using System.Collections.Generic;
-//using System.Diagnostics.CodeAnalysis;
-//using TaleEngine.Fakes.Models;
-//using Xunit;
+﻿using FluentAssertions;
+using Moq;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using TaleEngine.Data.Contracts;
+using TaleEngine.Data.Contracts.Entities;
+using TaleEngine.DbServices.Services;
+using TaleEngine.Fakes.Entities;
+using Xunit;
 
-//namespace TaleEngine.Application.Testing.Services
-//{
-//    [ExcludeFromCodeCoverage]
-//    public class ActivityStatusServiceTests
-//    {
-//        private Mock<IActivityStatusDomainService> ActivityStatusServiceMock;
+namespace TaleEngine.DbServices.Testing.Services
+{
+    [ExcludeFromCodeCoverage]
+    public class ActivityStatusServiceTests
+    {
+        private Mock<IUnitOfWork> mock;
 
-//        public ActivityStatusServiceTests()
-//        {
-//            ActivityStatusServiceMock = new Mock<IActivityStatusDomainService>();
-//        }
+        public ActivityStatusServiceTests()
+        {
+            mock = new Mock<IUnitOfWork>();
+        }
 
-//        [Fact]
-//        public void GetActivityStatuss_Success()
-//        {
-//            // Arrange
-//            List<ActivityStatusModel> list = ActivityModelBuilder.BuildActivityStatusModelList();
+        [Fact]
+        public void GetActivityStatuss_Success()
+        {
+            // Arrange
+            List<ActivityStatusEntity> list = ActivityBuilder.BuildActivityStatusList();
 
-//            ActivityStatusServiceMock.Setup(x => x.GetAllActivityStatuses())
-//                .Returns(list);
+            mock.Setup(x => x.ActivityStatusRepository.GetAll())
+                .Returns(list);
 
-//            ActivityStatusService service = new ActivityStatusService(
-//                ActivityStatusServiceMock.Object);
+            ActivityStatusService service = new ActivityStatusService(mock.Object);
 
-//            // Act
-//            var result = service.GetActivityStatuses();
+            // Act
+            var result = service.GetActivityStatuses();
 
-//            // Assert
-//            result.Should().NotBeNull();
-//            result.Should().NotBeEmpty();
-//        }
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().NotBeEmpty();
+        }
 
-//        [Fact]
-//        public void GetActivityStatuss_ReturnsEmpty_Success()
-//        {
-//            // Arrange
-//            List<ActivityStatusModel> list = new();
+        [Fact]
+        public void GetActivityStatuss_ReturnsEmpty_Success()
+        {
+            // Arrange
+            List<ActivityStatusEntity> list = new();
 
-//            ActivityStatusServiceMock.Setup(x => x.GetAllActivityStatuses())
-//                .Returns(list);
+            mock.Setup(x => x.ActivityStatusRepository.GetAll())
+                .Returns(list);
 
-//            ActivityStatusService service = new ActivityStatusService(
-//                ActivityStatusServiceMock.Object);
+            ActivityStatusService service = new ActivityStatusService(mock.Object);
 
-//            // Act
-//            var result = service.GetActivityStatuses();
+            // Act
+            var result = service.GetActivityStatuses();
 
-//            // Assert
-//            result.Should().BeNull();
-//        }
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().BeEmpty();
+        }
 
-//        [Fact]
-//        public void GetActivityStatuss_ReturnsNull_Success()
-//        {
-//            // Arrange
-//            List<ActivityStatusModel> list = null;
+        [Fact]
+        public void GetActivityStatuss_ReturnsNull_Success()
+        {
+            // Arrange
+            List<ActivityStatusEntity> list = null;
 
-//            ActivityStatusServiceMock.Setup(x => x.GetAllActivityStatuses())
-//                .Returns(list);
+            mock.Setup(x => x.ActivityStatusRepository.GetAll())
+                .Returns(list);
 
-//            ActivityStatusService service = new ActivityStatusService(
-//                ActivityStatusServiceMock.Object);
+            ActivityStatusService service = new ActivityStatusService(mock.Object);
 
-//            // Act
-//            var result = service.GetActivityStatuses();
+            // Act
+            var result = service.GetActivityStatuses();
 
-//            // Assert
-//            result.Should().BeNull();
-//        }
-//    }
-//}
+            // Assert
+            result.Should().BeNull();
+        }
+    }
+}

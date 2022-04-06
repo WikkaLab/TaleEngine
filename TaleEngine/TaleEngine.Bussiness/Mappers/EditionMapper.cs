@@ -1,32 +1,28 @@
-﻿//using TaleEngine.Data.Contracts.Entities;
+﻿using System.Collections.Generic;
+using System.Linq;
+using TaleEngine.API.Contracts.Dtos;
+using TaleEngine.Data.Contracts.Entities;
 
-//namespace TaleEngine.CQRS.Mappers
-//{
-//    public static class EditionMapper
-//    {
-//        public static EditionEntity Map(EditionModel editionModel)
-//        {
-//            if (editionModel == null) return null;
+namespace TaleEngine.CQRS.Mappers
+{
+    public static class EditionMapper
+    {
+        public static EditionDto Map(EditionEntity entity)
+        {
+            if (entity == null) return null;
 
-//            return new EditionEntity
-//            {
-//                DateEnd = editionModel.DateEnd,
-//                DateInit = editionModel.DateInit,
-//                EventId = editionModel.EventId
-//            };
-//        }
+            return new EditionDto
+            {
+                Id = entity.Id,
+                EventId = entity.EventId
+            };
+        }
 
-//        public static EditionModel Map(EditionEntity editionEntity)
-//        {
-//            if (editionEntity == null) return null;
+        public static List<EditionDto> Map(List<EditionEntity> entities)
+        {
+            if (entities == null || entities.Count == 0) return null;
 
-//            return new EditionModel
-//            {
-//                Id = editionEntity.Id,
-//                DateEnd = editionEntity.DateEnd,
-//                DateInit = editionEntity.DateInit,
-//                EventId = editionEntity.EventId
-//            };
-//        }
-//    }
-//}
+            return entities.Select(Map).ToList();
+        }
+    }
+}

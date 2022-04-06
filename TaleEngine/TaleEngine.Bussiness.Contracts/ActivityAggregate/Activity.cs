@@ -9,7 +9,7 @@ namespace TaleEngine.Aggregates.ActivityAggregate
         public int Places { get; private set; }
         public string Image { get; private set; }
 
-        public int? TimeSlot { get; private set; }
+        public int TimeSlot { get; private set; }
 
         public int Type { get; private set; }
         public int Status { get; private set; }
@@ -63,13 +63,19 @@ namespace TaleEngine.Aggregates.ActivityAggregate
 
         public Activity SetType(int type)
         {
-            Type = type;
+            if (type > 0)
+            {
+                Type = type;
+            }
             return this;
         }
 
-        public Activity SetStatus(int type)
+        public Activity SetStatus(int status)
         {
-            Type = type;
+            if (status > 0)
+            {
+                Status = status;
+            }
             return this;
         }
 

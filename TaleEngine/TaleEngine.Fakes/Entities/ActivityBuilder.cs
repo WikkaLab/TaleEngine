@@ -8,42 +8,46 @@ namespace TaleEngine.Fakes.Entities
     [ExcludeFromCodeCoverage]
     public class ActivityBuilder
     {
-        public static ActivityEntity BuildActivity()
+
+        public static ActivityEntity BuildActivity(int? editionId = null,
+            int? status = null, int? type = null)
         {
             var faker = new Faker();
 
             var entity = new ActivityEntity
             {
-                Id = faker.Random.Number(),
-                Places = faker.Random.Number(),
+                Id = faker.Random.Number(1),
+                Places = faker.Random.Number(1),
                 Image = faker.Person.Avatar,
                 Description = faker.Random.String2(10),
-                StatusId = faker.Random.Number(),
+                StatusId = status.HasValue ? status.Value : faker.Random.Number(5),
                 Title = faker.Random.String2(10),
-                TypeId = faker.Random.Number(),
+                TypeId = type.HasValue ? type.Value : faker.Random.Number(5),
                 EndDateTime = faker.Date.Recent().Date,
                 StartDateTime = faker.Date.Recent().Date,
-                TimeSlotId = faker.Random.Number(),
+                TimeSlotId = faker.Random.Number(1),
+                EditionId = editionId.HasValue ? editionId.Value : faker.Random.Number(5)
             };
             return entity;
         }
 
-        public static List<ActivityEntity> BuildActivityList()
+        public static List<ActivityEntity> BuildActivityList(int? editionId = null,
+            int? status = null, int? type = null)
         {
             var list = new List<ActivityEntity>
             {
-                BuildActivity()
+                BuildActivity(editionId, status, type)
             };
             return list;
         }
 
-        public static ActivityStatusEntity BuildActivityStatus()
+        public static ActivityStatusEntity BuildActivityStatus(int? id = null)
         {
             var faker = new Faker();
 
             var entity = new ActivityStatusEntity
             {
-                Id = faker.Random.Number(),
+                Id = id.HasValue ? id.Value : faker.Random.Number(),
                 Name = faker.Random.String2(10)
             };
             return entity;
