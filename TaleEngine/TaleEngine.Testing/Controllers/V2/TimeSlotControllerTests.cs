@@ -18,7 +18,7 @@ namespace TaleEngine.Testing.Controllers.V2
         public void GetAllTimeSlots_Success()
         {
             // Arrange
-            Mock<ITimeSlotCommands> serviceMock = new Mock<ITimeSlotCommands>();
+            Mock<ITimeSlotQueries> serviceMock = new Mock<ITimeSlotQueries>();
             List<TimeSlotDto> dto = new()
             {
                 new TimeSlotDto
@@ -49,7 +49,7 @@ namespace TaleEngine.Testing.Controllers.V2
         public void GetAllTimeSlots_EmptyResult_Success()
         {
             // Arrange
-            Mock<ITimeSlotCommands> serviceMock = new Mock<ITimeSlotCommands>();
+            Mock<ITimeSlotQueries> serviceMock = new Mock<ITimeSlotQueries>();
             List<TimeSlotDto> dto = new();
 
             serviceMock.Setup(x => x.AllTimeSlotsQuery())
@@ -73,7 +73,7 @@ namespace TaleEngine.Testing.Controllers.V2
         public void GetAllTimeSlots_NullResult_Success()
         {
             // Arrange
-            Mock<ITimeSlotCommands> serviceMock = new Mock<ITimeSlotCommands>();
+            Mock<ITimeSlotQueries> serviceMock = new Mock<ITimeSlotQueries>();
             List<TimeSlotDto> dto = null;
 
             serviceMock.Setup(x => x.AllTimeSlotsQuery())

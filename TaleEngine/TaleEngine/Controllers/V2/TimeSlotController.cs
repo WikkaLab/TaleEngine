@@ -7,9 +7,9 @@ namespace TaleEngine.API.Controllers.V2
     [Route("api/v2/[controller]")]
     public class TimeSlotController : Controller
     {
-        private readonly ITimeSlotCommands _command;
+        private readonly ITimeSlotQueries _command;
 
-        public TimeSlotController(ITimeSlotCommands command)
+        public TimeSlotController(ITimeSlotQueries command)
         {
             _command = command;
         }

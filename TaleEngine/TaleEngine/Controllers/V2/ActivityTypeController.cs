@@ -7,9 +7,9 @@ namespace TaleEngine.API.Controllers.V2
     [Route("api/v2/[controller]")]
     public class ActivityTypeController : Controller
     {
-        private readonly IActivityTypeCommands _command;
+        private readonly IActivityTypeQueries _command;
 
-        public ActivityTypeController(IActivityTypeCommands command)
+        public ActivityTypeController(IActivityTypeQueries command)
         {
             _command = command;
         }

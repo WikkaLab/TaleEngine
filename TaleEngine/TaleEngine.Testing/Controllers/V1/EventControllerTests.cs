@@ -27,7 +27,7 @@ namespace TaleEngine.Testing.Controllers.V1
                 }
             };
 
-            Mock<IEventCommands> serviceMock = new Mock<IEventCommands>();
+            Mock<IEventQueries> serviceMock = new Mock<IEventQueries>();
             serviceMock.Setup(x => x.EventsNoFilterQuery())
                 .Returns(dto);
 
@@ -55,7 +55,7 @@ namespace TaleEngine.Testing.Controllers.V1
                 Title = "Title"
             };
 
-            Mock<IEventCommands> serviceMock = new Mock<IEventCommands>();
+            Mock<IEventQueries> serviceMock = new Mock<IEventQueries>();
             serviceMock.Setup(x => x.EventQuery(eventId))
                 .Returns(dto);
 

@@ -2,7 +2,7 @@
 using Moq;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using TaleEngine.CQRS.Impl;
+using TaleEngine.CQRS.Queries;
 using TaleEngine.Data.Contracts.Entities;
 using TaleEngine.DbServices.Contracts.Services;
 using TaleEngine.Fakes.Entities;
@@ -29,7 +29,7 @@ namespace TaleEngine.CQRS.Testing
             roleServMock.Setup(x => x.GetAllRoles())
                 .Returns(list);
 
-            var target = new RoleCommands(roleServMock.Object);
+            var target = new RoleQueries(roleServMock.Object);
 
             // Act
             var result = target.AllRolesQuery();
@@ -48,7 +48,7 @@ namespace TaleEngine.CQRS.Testing
             roleServMock.Setup(x => x.GetAllRoles())
                 .Returns(list);
 
-            var target = new RoleCommands(roleServMock.Object);
+            var target = new RoleQueries(roleServMock.Object);
 
             // Act
             var result = target.AllRolesQuery();
@@ -66,7 +66,7 @@ namespace TaleEngine.CQRS.Testing
             roleServMock.Setup(x => x.GetAllRoles())
                 .Returns(list);
 
-            var target = new RoleCommands(roleServMock.Object);
+            var target = new RoleQueries(roleServMock.Object);
 
             // Act
             var result = target.AllRolesQuery();

@@ -26,7 +26,7 @@ namespace TaleEngine.Testing.Controllers.V1
                 EditionDays = new List<DateTime>()
             };
 
-            Mock<IEditionCommands> serviceMock = new();
+            Mock<IEditionQueries> serviceMock = new();
             serviceMock.Setup(x => x.EditionDaysQuery(editionId))
                 .Returns(dto);
 
@@ -51,7 +51,7 @@ namespace TaleEngine.Testing.Controllers.V1
 
             EditionDaysDto dto = null;
 
-            Mock<IEditionCommands> serviceMock = new();
+            Mock<IEditionQueries> serviceMock = new();
             serviceMock.Setup(x => x.EditionDaysQuery(editionId))
                 .Returns(dto);
 

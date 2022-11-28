@@ -8,9 +8,9 @@ namespace TaleEngine.API.Controllers.V1
     [Route("api/v1/[controller]")]
     public class TimeSlotController : Controller
     {
-        private readonly ITimeSlotCommands _command;
+        private readonly ITimeSlotQueries _command;
 
-        public TimeSlotController(ITimeSlotCommands command)
+        public TimeSlotController(ITimeSlotQueries command)
         {
             _command = command ?? throw new ArgumentNullException(nameof(command));
         }

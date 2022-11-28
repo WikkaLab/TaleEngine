@@ -23,7 +23,7 @@ namespace TaleEngine.Testing.Controllers.V2
                 new RoleDto()
             };
 
-            Mock<IRoleCommands> serviceMock = new();
+            Mock<IRoleQueries> serviceMock = new();
             serviceMock.Setup(x => x.AllRolesQuery())
                 .Returns(dto);
 
@@ -46,7 +46,7 @@ namespace TaleEngine.Testing.Controllers.V2
             // Act
             List<RoleDto> dto = new();
 
-            Mock<IRoleCommands> serviceMock = new();
+            Mock<IRoleQueries> serviceMock = new();
             serviceMock.Setup(x => x.AllRolesQuery())
                 .Returns(dto);
 
@@ -70,7 +70,7 @@ namespace TaleEngine.Testing.Controllers.V2
             // Act
             List<RoleDto> dto = null;
 
-            Mock<IRoleCommands> serviceMock = new();
+            Mock<IRoleQueries> serviceMock = new();
             serviceMock.Setup(x => x.AllRolesQuery())
                 .Returns(dto);
 
@@ -93,7 +93,7 @@ namespace TaleEngine.Testing.Controllers.V2
         {
             // Arrange
             int roleId = 1;
-            Mock<IRoleCommands> serviceMock = new();
+            Mock<IRoleQueries> serviceMock = new();
 
             RolesController target = new(serviceMock.Object);
 

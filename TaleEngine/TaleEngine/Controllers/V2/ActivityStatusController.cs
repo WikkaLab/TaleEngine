@@ -7,9 +7,9 @@ namespace TaleEngine.API.Controllers.V2
     [Route("api/v2/[controller]")]
     public class ActivityStatusController : Controller
     {
-        private readonly IActivityStatusCommands _command;
+        private readonly IActivityStatusQueries _command;
 
-        public ActivityStatusController(IActivityStatusCommands command)
+        public ActivityStatusController(IActivityStatusQueries command)
         {
             _command = command;
         }

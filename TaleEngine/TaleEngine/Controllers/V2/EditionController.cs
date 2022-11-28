@@ -7,9 +7,9 @@ namespace TaleEngine.API.Controllers.V2
     [Route("api/v2/[controller]")]
     public class EditionController : Controller
     {
-        private readonly IEditionCommands _command;
+        private readonly IEditionQueries _command;
 
-        public EditionController(IEditionCommands command)
+        public EditionController(IEditionQueries command)
         {
             _command = command;
         }

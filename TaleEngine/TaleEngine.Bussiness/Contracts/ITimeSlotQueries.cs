@@ -3,8 +3,8 @@ using TaleEngine.API.Contracts.Dtos;
 
 namespace TaleEngine.CQRS.Contracts
 {
-    public interface IActivityStatusCommands
+    public interface ITimeSlotQueries
     {
-        List<ActivityStatusDto> AllActivityStatusQuery();
+        List<TimeSlotDto> AllTimeSlotsQuery();
     }
 }

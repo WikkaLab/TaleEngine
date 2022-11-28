@@ -3,8 +3,9 @@ using TaleEngine.API.Contracts.Dtos;
 
 namespace TaleEngine.CQRS.Contracts
 {
-    public interface ITimeSlotCommands
+    public interface IEventQueries
     {
-        List<TimeSlotDto> AllTimeSlotsQuery();
+        List<EventDto> EventsNoFilterQuery();
+        EventDto EventQuery(int eventId);
     }
 }

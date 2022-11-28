@@ -9,16 +9,18 @@ namespace TaleEngine.API.Controllers.Backoffice
     public class UserController : Controller
     {
         private readonly IUserCommands _command;
+        private readonly IUserQueries _queries;
 
-        public UserController(IUserCommands command)
+        public UserController(IUserCommands command, IUserQueries queries)
         {
             _command = command ?? throw new ArgumentNullException(nameof(command));
+            _queries = queries ?? throw new ArgumentNullException(nameof(queries));
         }
 
         [HttpGet("[action]")]
         public IActionResult GetAllUsers()
         {
-            var result = _command.AllUsersQuery();
+            var result = _queries.AllUsersQuery();
 
             return Ok(result);
         }

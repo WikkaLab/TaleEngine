@@ -2,7 +2,7 @@
 using Moq;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using TaleEngine.CQRS.Impl;
+using TaleEngine.CQRS.Queries;
 using TaleEngine.Data.Contracts.Entities;
 using TaleEngine.DbServices.Contracts.Services;
 using TaleEngine.Fakes.Entities;
@@ -28,7 +28,7 @@ namespace TaleEngine.CQRS.Testing
 
             activityStatusServMock.Setup(x => x.GetActivityStatuses())
                 .Returns(list);
-            var target = new ActivityStatusCommands(activityStatusServMock.Object);
+            var target = new ActivityStatusQueries(activityStatusServMock.Object);
 
             // Act
             var result = target.AllActivityStatusQuery();
@@ -46,7 +46,7 @@ namespace TaleEngine.CQRS.Testing
 
             activityStatusServMock.Setup(x => x.GetActivityStatuses())
                 .Returns(list);
-            var target = new ActivityStatusCommands(activityStatusServMock.Object);
+            var target = new ActivityStatusQueries(activityStatusServMock.Object);
 
             // Act
             var result = target.AllActivityStatusQuery();
@@ -63,7 +63,7 @@ namespace TaleEngine.CQRS.Testing
 
             activityStatusServMock.Setup(x => x.GetActivityStatuses())
                 .Returns(list);
-            var target = new ActivityStatusCommands(activityStatusServMock.Object);
+            var target = new ActivityStatusQueries(activityStatusServMock.Object);
 
             // Act
             var result = target.AllActivityStatusQuery();

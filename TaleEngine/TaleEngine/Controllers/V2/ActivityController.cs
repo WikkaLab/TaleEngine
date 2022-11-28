@@ -11,16 +11,19 @@ namespace TaleEngine.API.Controllers.V2
     public class ActivityController : Controller
     {
         private readonly IActivityCommands _command;
+        private readonly IActivityQueries _queries;
 
-        public ActivityController(IActivityCommands command)
+        public ActivityController(IActivityCommands command,
+            IActivityQueries queries)
         {
             _command = command ?? throw new ArgumentNullException(nameof(command));
+            _queries = queries ?? throw new ArgumentNullException(nameof(queries));
         }
 
         [HttpGet("[action]/{editionId}")]
         public IActionResult GetActivities(int editionId)
         {
-            var result = _command.ActiveActivitiesQuery(editionId);
+            var result = _queries.ActiveActivitiesQuery(editionId);
 
             if (result == null || result.Count == 0)
             {
@@ -32,7 +35,7 @@ namespace TaleEngine.API.Controllers.V2
         [HttpGet("[action]/{editionId}")]
         public IActionResult GetPendingActivities(int editionId)
         {
-            var result = _command.PendingActivitiesQuery(editionId);
+            var result = _queries.PendingActivitiesQuery(editionId);
 
             if (result == null || result.Count == 0)
             {
@@ -45,7 +48,7 @@ namespace TaleEngine.API.Controllers.V2
         [HttpGet("[action]/{editionId}")]
         public IActionResult GetLastThreeActivies(int editionId)
         {
-            var result = _command.LastThreeActivitiesQuery(editionId);
+            var result = _queries.LastThreeActivitiesQuery(editionId);
 
             if (result == null || result.Count == 0)
             {
@@ -58,7 +61,7 @@ namespace TaleEngine.API.Controllers.V2
         [HttpPut("[action]")]
         public IActionResult GetActivitiesFiltered([FromBody] ActivityFilterRequest activityFilterRequest)
         {
-            var result = _command.ActiveActivitiesFilteredQuery(activityFilterRequest);
+            var result = _queries.ActiveActivitiesFilteredQuery(activityFilterRequest);
 
             if (result == null)
             {

@@ -7,9 +7,9 @@ namespace TaleEngine.API.Controllers.V2
     [Route("api/v2/[controller]")]
     public class EventController : Controller
     {
-        private readonly IEventCommands _command;
+        private readonly IEventQueries _command;
 
-        public EventController(IEventCommands eventService)
+        public EventController(IEventQueries eventService)
         {
             _command = eventService;
         }

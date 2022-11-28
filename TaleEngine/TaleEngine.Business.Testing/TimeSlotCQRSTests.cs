@@ -2,7 +2,7 @@
 using Moq;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using TaleEngine.CQRS.Impl;
+using TaleEngine.CQRS.Queries;
 using TaleEngine.Data.Contracts.Entities;
 using TaleEngine.DbServices.Contracts.Services;
 using TaleEngine.Fakes.Entities;
@@ -29,7 +29,7 @@ namespace TaleEngine.CQRS.Testing
             timeSlotServMock.Setup(x => x.GetTimeSlots())
                 .Returns(list);
 
-            var target = new TimeSlotCommands(timeSlotServMock.Object);
+            var target = new TimeSlotQueries(timeSlotServMock.Object);
 
             // Act
             var result = target.AllTimeSlotsQuery();
@@ -47,7 +47,7 @@ namespace TaleEngine.CQRS.Testing
 
             timeSlotServMock.Setup(x => x.GetTimeSlots())
                 .Returns(list);
-            var target = new TimeSlotCommands(timeSlotServMock.Object);
+            var target = new TimeSlotQueries(timeSlotServMock.Object);
 
             // Act
             var result = target.AllTimeSlotsQuery();
@@ -65,7 +65,7 @@ namespace TaleEngine.CQRS.Testing
             timeSlotServMock.Setup(x => x.GetTimeSlots())
                 .Returns(list);
 
-            var target = new TimeSlotCommands(timeSlotServMock.Object);
+            var target = new TimeSlotQueries(timeSlotServMock.Object);
 
             // Act
             var result = target.AllTimeSlotsQuery();

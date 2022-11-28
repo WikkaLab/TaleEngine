@@ -18,7 +18,7 @@ namespace TaleEngine.Testing.Controllers.V1
         public void GetActivityStatuses_Success()
         {
             // Arrange
-            Mock<IActivityStatusCommands> serviceMock = new();
+            Mock<IActivityStatusQueries> serviceMock = new();
             List<ActivityStatusDto> dto = new()
             {
                 new ActivityStatusDto
@@ -49,7 +49,7 @@ namespace TaleEngine.Testing.Controllers.V1
         public void GetActivityStatuses_EmptyResult_Success()
         {
             // Arrange
-            Mock<IActivityStatusCommands> serviceMock = new();
+            Mock<IActivityStatusQueries> serviceMock = new();
             List<ActivityStatusDto> dto = new();
 
             serviceMock.Setup(x => x.AllActivityStatusQuery())
@@ -73,7 +73,7 @@ namespace TaleEngine.Testing.Controllers.V1
         public void GetActivityStatuses_NullResult_Success()
         {
             // Arrange
-            Mock<IActivityStatusCommands> serviceMock = new();
+            Mock<IActivityStatusQueries> serviceMock = new();
             List<ActivityStatusDto> dto = null;
 
             serviceMock.Setup(x => x.AllActivityStatusQuery())

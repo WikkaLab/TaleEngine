@@ -3,8 +3,8 @@ using TaleEngine.API.Contracts.Dtos;
 
 namespace TaleEngine.CQRS.Contracts
 {
-    public interface IRoleCommands
+    public interface IActivityStatusQueries
     {
-        List<RoleDto> AllRolesQuery();
+        List<ActivityStatusDto> AllActivityStatusQuery();
     }
 }

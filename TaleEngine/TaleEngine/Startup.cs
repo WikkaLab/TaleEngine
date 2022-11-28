@@ -4,13 +4,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using TaleEngine.CQRS.Commands;
+using TaleEngine.CQRS.Commands.Backoffice;
 using TaleEngine.CQRS.Contracts;
-using TaleEngine.CQRS.Impl;
-using TaleEngine.CQRS.Impl.Backoffice;
+using TaleEngine.CQRS.Queries;
+using TaleEngine.CQRS.Queries.Backoffice;
 using TaleEngine.Data;
 using TaleEngine.Data.Contracts;
 using TaleEngine.DbServices.Contracts.Services;
-//using TaleEngine.DbServices.Mocks;
 using TaleEngine.DbServices.Services;
 using TaleEngine.DbServices.Services.Backoffice;
 using TaleEngine.Extensions;
@@ -56,14 +57,16 @@ namespace TaleEngine
             {
                 // CQRS
                 services.AddTransient<IActivityCommands, ActivityCommands>();
-                services.AddTransient<IActivityStatusCommands, ActivityStatusCommands>();
-                services.AddTransient<IActivityTypeCommands, ActivityTypeCommands>();
-                services.AddTransient<IEditionCommands, EditionCommands>();
-                services.AddTransient<IEventCommands, EventCommands>();
-                services.AddTransient<IRoleCommands, RoleCommands>();
-                services.AddTransient<ITimeSlotCommands, TimeSlotCommands>();
+                services.AddTransient<IActivityQueries, ActivityQueries>();
+                services.AddTransient<IActivityStatusQueries, ActivityStatusQueries>();
+                services.AddTransient<IActivityTypeQueries, ActivityTypeQueries>();
+                services.AddTransient<IEditionQueries, EditionQueries>();
+                services.AddTransient<IEventQueries, EventQueries>();
+                services.AddTransient<IRoleQueries, RoleQueries>();
+                services.AddTransient<ITimeSlotQueries, TimeSlotQueries>();
                 services.AddTransient<IUserCommands, UserCommands>();
-                services.AddTransient<IUserStatusCommands, UserStatusCommands>();
+                services.AddTransient<IUserQueries, UserQueries>();
+                services.AddTransient<IUserStatusQueries, UserStatusQueries>();
 
                 // Services
                 services.AddTransient<IActivityService, ActivityService>();

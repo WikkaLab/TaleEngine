@@ -18,13 +18,13 @@ namespace TaleEngine.API.Controllers.V2
     [Route("api/v2/[controller]")]
     public class RolesController : Controller
     {
-        private IRoleCommands _command;
+        private IRoleQueries _command;
 
         /// <summary>
         /// Constructor for roles controller
         /// </summary>
         /// <param name="command">Role service</param>
-        public RolesController(IRoleCommands command)
+        public RolesController(IRoleQueries command)
         {
             _command = command ?? throw new ArgumentNullException(nameof(command));
         }

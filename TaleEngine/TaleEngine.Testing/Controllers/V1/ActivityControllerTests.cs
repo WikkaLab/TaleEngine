@@ -22,16 +22,17 @@ namespace TaleEngine.Testing.Controllers.V1
         {
             // Arrange
             int editionId = 1;
-            Mock<IActivityCommands> serviceMock = new();
+            Mock<IActivityCommands> commands = new();
+            Mock<IActivityQueries> queries = new();
             List<ActivityDto> dto = new()
             {
                 new ActivityDto()
             };
 
-            serviceMock.Setup(x => x.ActiveActivitiesQuery(editionId))
+            queries.Setup(x => x.ActiveActivitiesQuery(editionId))
                     .Returns(dto);
 
-            ActivityController target = new(serviceMock.Object);
+            ActivityController target = new(commands.Object, queries.Object);
 
             // Act
             IActionResult result = target.GetActivities(editionId);
@@ -42,7 +43,7 @@ namespace TaleEngine.Testing.Controllers.V1
             result.Should().NotBeNull();
             resultAsObjResult.StatusCode.Should().Be(StatusCodes.Status200OK);
 
-            serviceMock.Verify(x => x.ActiveActivitiesQuery(editionId), Times.Once);
+            queries.Verify(x => x.ActiveActivitiesQuery(editionId), Times.Once);
         }
 
         [Fact]
@@ -50,13 +51,14 @@ namespace TaleEngine.Testing.Controllers.V1
         {
             // Arrange
             int editionId = 1;
-            Mock<IActivityCommands> serviceMock = new();
+            Mock<IActivityCommands> commands = new();
+            Mock<IActivityQueries> queries = new();
             List<ActivityDto> dto = new();
 
-            serviceMock.Setup(x => x.ActiveActivitiesQuery(editionId))
+            queries.Setup(x => x.ActiveActivitiesQuery(editionId))
                     .Returns(dto);
 
-            ActivityController target = new(serviceMock.Object);
+            ActivityController target = new(commands.Object, queries.Object);
 
             // Act
             IActionResult result = target.GetActivities(editionId);
@@ -67,7 +69,7 @@ namespace TaleEngine.Testing.Controllers.V1
             result.Should().NotBeNull();
             resultAsObjResult.StatusCode.Should().Be(StatusCodes.Status204NoContent);
 
-            serviceMock.Verify(x => x.ActiveActivitiesQuery(editionId), Times.Once);
+            queries.Verify(x => x.ActiveActivitiesQuery(editionId), Times.Once);
         }
 
         [Fact]
@@ -75,13 +77,14 @@ namespace TaleEngine.Testing.Controllers.V1
         {
             // Arrange
             int editionId = 1;
-            Mock<IActivityCommands> serviceMock = new();
+            Mock<IActivityCommands> commands = new();
+            Mock<IActivityQueries> queries = new();
             List<ActivityDto> dto = null;
 
-            serviceMock.Setup(x => x.ActiveActivitiesQuery(editionId))
+            queries.Setup(x => x.ActiveActivitiesQuery(editionId))
                     .Returns(dto);
 
-            ActivityController target = new(serviceMock.Object);
+            ActivityController target = new(commands.Object, queries.Object);
 
             // Act
             IActionResult result = target.GetActivities(editionId);
@@ -92,7 +95,7 @@ namespace TaleEngine.Testing.Controllers.V1
             result.Should().NotBeNull();
             resultAsObjResult.StatusCode.Should().Be(StatusCodes.Status204NoContent);
 
-            serviceMock.Verify(x => x.ActiveActivitiesQuery(editionId), Times.Once);
+            queries.Verify(x => x.ActiveActivitiesQuery(editionId), Times.Once);
         }
 
         [Fact]
@@ -100,16 +103,17 @@ namespace TaleEngine.Testing.Controllers.V1
         {
             // Arrange
             int editionId = 1;
-            Mock<IActivityCommands> serviceMock = new();
+            Mock<IActivityCommands> commands = new();
+            Mock<IActivityQueries> queries = new();
             List<ActivityDto> dto = new()
             {
                 new ActivityDto()
             };
 
-            serviceMock.Setup(x => x.PendingActivitiesQuery(editionId))
+            queries.Setup(x => x.PendingActivitiesQuery(editionId))
                     .Returns(dto);
 
-            ActivityController target = new(serviceMock.Object);
+            ActivityController target = new(commands.Object, queries.Object);
 
             // Act
             IActionResult result = target.GetPendingActivities(editionId);
@@ -120,7 +124,7 @@ namespace TaleEngine.Testing.Controllers.V1
             result.Should().NotBeNull();
             resultAsObjResult.StatusCode.Should().Be(StatusCodes.Status200OK);
 
-            serviceMock.Verify(x => x.PendingActivitiesQuery(editionId), Times.Once);
+            queries.Verify(x => x.PendingActivitiesQuery(editionId), Times.Once);
         }
 
         [Fact]
@@ -128,13 +132,14 @@ namespace TaleEngine.Testing.Controllers.V1
         {
             // Arrange
             int editionId = 1;
-            Mock<IActivityCommands> serviceMock = new();
+            Mock<IActivityCommands> commands = new();
+            Mock<IActivityQueries> queries = new();
             List<ActivityDto> dto = new();
 
-            serviceMock.Setup(x => x.PendingActivitiesQuery(editionId))
+            queries.Setup(x => x.PendingActivitiesQuery(editionId))
                     .Returns(dto);
 
-            ActivityController target = new(serviceMock.Object);
+            ActivityController target = new(commands.Object, queries.Object);
 
             // Act
             IActionResult result = target.GetPendingActivities(editionId);
@@ -145,7 +150,7 @@ namespace TaleEngine.Testing.Controllers.V1
             result.Should().NotBeNull();
             resultAsObjResult.StatusCode.Should().Be(StatusCodes.Status204NoContent);
 
-            serviceMock.Verify(x => x.PendingActivitiesQuery(editionId), Times.Once);
+            queries.Verify(x => x.PendingActivitiesQuery(editionId), Times.Once);
         }
 
         [Fact]
@@ -153,13 +158,14 @@ namespace TaleEngine.Testing.Controllers.V1
         {
             // Arrange
             int editionId = 1;
-            Mock<IActivityCommands> serviceMock = new();
+            Mock<IActivityCommands> commands = new();
+            Mock<IActivityQueries> queries = new();
             List<ActivityDto> dto = null;
 
-            serviceMock.Setup(x => x.PendingActivitiesQuery(editionId))
+            queries.Setup(x => x.PendingActivitiesQuery(editionId))
                     .Returns(dto);
 
-            ActivityController target = new(serviceMock.Object);
+            ActivityController target = new(commands.Object, queries.Object);
 
             // Act
             IActionResult result = target.GetPendingActivities(editionId);
@@ -170,7 +176,7 @@ namespace TaleEngine.Testing.Controllers.V1
             result.Should().NotBeNull();
             resultAsObjResult.StatusCode.Should().Be(StatusCodes.Status204NoContent);
 
-            serviceMock.Verify(x => x.PendingActivitiesQuery(editionId), Times.Once);
+            queries.Verify(x => x.PendingActivitiesQuery(editionId), Times.Once);
         }
 
         [Fact]
@@ -178,16 +184,17 @@ namespace TaleEngine.Testing.Controllers.V1
         {
             // Arrange
             int editionId = 1;
-            Mock<IActivityCommands> serviceMock = new();
+            Mock<IActivityCommands> commands = new();
+            Mock<IActivityQueries> queries = new();
             List<ActivityDto> dto = new()
             {
                 new ActivityDto()
             };
 
-            serviceMock.Setup(x => x.LastThreeActivitiesQuery(editionId))
+            queries.Setup(x => x.LastThreeActivitiesQuery(editionId))
                     .Returns(dto);
 
-            ActivityController target = new(serviceMock.Object);
+            ActivityController target = new(commands.Object, queries.Object);
 
             // Act
             IActionResult result = target.GetLastThreeActivies(editionId);
@@ -198,7 +205,7 @@ namespace TaleEngine.Testing.Controllers.V1
             result.Should().NotBeNull();
             resultAsObjResult.StatusCode.Should().Be(StatusCodes.Status200OK);
 
-            serviceMock.Verify(x => x.LastThreeActivitiesQuery(editionId), Times.Once);
+            queries.Verify(x => x.LastThreeActivitiesQuery(editionId), Times.Once);
         }
 
         [Fact]
@@ -206,13 +213,14 @@ namespace TaleEngine.Testing.Controllers.V1
         {
             // Arrange
             int editionId = 1;
-            Mock<IActivityCommands> serviceMock = new();
+            Mock<IActivityCommands> commands = new();
+            Mock<IActivityQueries> queries = new();
             List<ActivityDto> dto = new();
 
-            serviceMock.Setup(x => x.LastThreeActivitiesQuery(editionId))
+            queries.Setup(x => x.LastThreeActivitiesQuery(editionId))
                     .Returns(dto);
 
-            ActivityController target = new(serviceMock.Object);
+            ActivityController target = new(commands.Object, queries.Object);
 
             // Act
             IActionResult result = target.GetLastThreeActivies(editionId);
@@ -223,7 +231,7 @@ namespace TaleEngine.Testing.Controllers.V1
             result.Should().NotBeNull();
             resultAsObjResult.StatusCode.Should().Be(StatusCodes.Status204NoContent);
 
-            serviceMock.Verify(x => x.LastThreeActivitiesQuery(editionId), Times.Once);
+            queries.Verify(x => x.LastThreeActivitiesQuery(editionId), Times.Once);
         }
 
         [Fact]
@@ -231,13 +239,14 @@ namespace TaleEngine.Testing.Controllers.V1
         {
             // Arrange
             int editionId = 1;
-            Mock<IActivityCommands> serviceMock = new();
+            Mock<IActivityCommands> commands = new();
+            Mock<IActivityQueries> queries = new();
             List<ActivityDto> dto = null;
 
-            serviceMock.Setup(x => x.LastThreeActivitiesQuery(editionId))
+            queries.Setup(x => x.LastThreeActivitiesQuery(editionId))
                     .Returns(dto);
 
-            ActivityController target = new(serviceMock.Object);
+            ActivityController target = new(commands.Object, queries.Object);
 
             // Act
             IActionResult result = target.GetLastThreeActivies(editionId);
@@ -248,7 +257,7 @@ namespace TaleEngine.Testing.Controllers.V1
             result.Should().NotBeNull();
             resultAsObjResult.StatusCode.Should().Be(StatusCodes.Status204NoContent);
 
-            serviceMock.Verify(x => x.LastThreeActivitiesQuery(editionId), Times.Once);
+            queries.Verify(x => x.LastThreeActivitiesQuery(editionId), Times.Once);
         }
 
         [Fact]
@@ -256,12 +265,13 @@ namespace TaleEngine.Testing.Controllers.V1
         {
             // Arrange
             int editionId = 1;
-            Mock<IActivityCommands> serviceMock = new();
+            Mock<IActivityCommands> commands = new();
+            Mock<IActivityQueries> queries = new();
             ActivityDto dto = new();
 
-            serviceMock.Setup(x => x.CreateCommand(editionId, dto)).Verifiable();
+            commands.Setup(x => x.CreateCommand(editionId, dto)).Verifiable();
 
-            ActivityController target = new(serviceMock.Object);
+            ActivityController target = new(commands.Object, queries.Object);
 
             // Act
             IActionResult result = target.CreateActivity(editionId, dto);
@@ -272,7 +282,7 @@ namespace TaleEngine.Testing.Controllers.V1
             result.Should().NotBeNull();
             resultAsObjResult.StatusCode.Should().Be(StatusCodes.Status200OK);
 
-            serviceMock.Verify(x => x.CreateCommand(editionId, dto), Times.Once);
+            commands.Verify(x => x.CreateCommand(editionId, dto), Times.Once);
         }
 
         [Fact]
@@ -280,12 +290,13 @@ namespace TaleEngine.Testing.Controllers.V1
         {
             // Arrange
             int updateResult = 1;
-            Mock<IActivityCommands> serviceMock = new();
+            Mock<IActivityCommands> commands = new();
+            Mock<IActivityQueries> queries = new();
             ActivityDto dto = new();
 
-            serviceMock.Setup(x => x.UpdateCommand(dto)).Verifiable();
+            commands.Setup(x => x.UpdateCommand(dto)).Verifiable();
 
-            ActivityController target = new(serviceMock.Object);
+            ActivityController target = new(commands.Object, queries.Object);
 
             // Act
             IActionResult result = target.UpdateActivity(dto);
@@ -296,7 +307,7 @@ namespace TaleEngine.Testing.Controllers.V1
             result.Should().NotBeNull();
             resultAsObjResult.StatusCode.Should().Be(StatusCodes.Status200OK);
 
-            serviceMock.Verify(x => x.UpdateCommand(dto), Times.Once);
+            commands.Verify(x => x.UpdateCommand(dto), Times.Once);
         }
 
         [Fact]
@@ -304,11 +315,12 @@ namespace TaleEngine.Testing.Controllers.V1
         {
             // Arrange
             int activityId = 1;
-            Mock<IActivityCommands> serviceMock = new();
+            Mock<IActivityCommands> commands = new();
+            Mock<IActivityQueries> queries = new();
 
-            serviceMock.Setup(x => x.DeleteCommand(activityId)).Verifiable();
+            commands.Setup(x => x.DeleteCommand(activityId)).Verifiable();
 
-            ActivityController target = new(serviceMock.Object);
+            ActivityController target = new(commands.Object, queries.Object);
 
             // Act
             IActionResult result = target.DeleteActivity(activityId);
@@ -319,7 +331,7 @@ namespace TaleEngine.Testing.Controllers.V1
             result.Should().NotBeNull();
             resultAsObjResult.StatusCode.Should().Be(StatusCodes.Status200OK);
 
-            serviceMock.Verify(x => x.DeleteCommand(activityId), Times.Once);
+            commands.Verify(x => x.DeleteCommand(activityId), Times.Once);
         }
 
         [Fact]
@@ -328,17 +340,18 @@ namespace TaleEngine.Testing.Controllers.V1
             // Arrange
             int statusId = 1;
             int activityId = 1;
-            Mock<IActivityCommands> serviceMock = new();
+            Mock<IActivityCommands> commands = new();
+            Mock<IActivityQueries> queries = new();
             ActivityChangeStatusDto dto = new()
             {
                 ActivityId = 1,
                 StatusId = 1
             };
 
-            serviceMock.Setup(x => x.ChangeActivityStatusCommand(dto.StatusId, dto.ActivityId))
+            commands.Setup(x => x.ChangeActivityStatusCommand(dto.StatusId, dto.ActivityId))
                 .Verifiable();
 
-            ActivityController target = new(serviceMock.Object);
+            ActivityController target = new(commands.Object, queries.Object);
 
             // Act
             IActionResult result = target.ChangeActivityStatus(dto);
@@ -349,7 +362,7 @@ namespace TaleEngine.Testing.Controllers.V1
             result.Should().NotBeNull();
             resultAsObjResult.StatusCode.Should().Be(StatusCodes.Status200OK);
 
-            serviceMock.Verify(x => x.ChangeActivityStatusCommand(dto.StatusId, dto.ActivityId), Times.Once);
+            commands.Verify(x => x.ChangeActivityStatusCommand(dto.StatusId, dto.ActivityId), Times.Once);
         }
 
         [Fact]
@@ -358,12 +371,13 @@ namespace TaleEngine.Testing.Controllers.V1
             // Arrange
             var request = ActivityDtoBuilder.BuildActivityFilterRequest();
             var modelResult = ActivityDtoBuilder.BuildActivityFilteredResult();
-            Mock<IActivityCommands> serviceMock = new();
+            Mock<IActivityCommands> commands = new();
+            Mock<IActivityQueries> queries = new();
 
-            serviceMock.Setup(x => x.ActiveActivitiesFilteredQuery(request))
+            queries.Setup(x => x.ActiveActivitiesFilteredQuery(request))
                     .Returns(modelResult);
 
-            ActivityController target = new(serviceMock.Object);
+            ActivityController target = new(commands.Object, queries.Object);
 
             // Act
             IActionResult result = target.GetActivitiesFiltered(request);
@@ -374,7 +388,7 @@ namespace TaleEngine.Testing.Controllers.V1
             result.Should().NotBeNull();
             resultAsObjResult.StatusCode.Should().Be(StatusCodes.Status200OK);
 
-            serviceMock.Verify(x => x.ActiveActivitiesFilteredQuery(request), Times.Once);
+            queries.Verify(x => x.ActiveActivitiesFilteredQuery(request), Times.Once);
         }
 
         [Fact]
@@ -383,12 +397,13 @@ namespace TaleEngine.Testing.Controllers.V1
             // Arrange
             var request = ActivityDtoBuilder.BuildActivityFilterRequest();
             ActivityFilteredResult modelResult = null;
-            Mock<IActivityCommands> serviceMock = new();
+            Mock<IActivityCommands> commands = new();
+            Mock<IActivityQueries> queries = new();
 
-            serviceMock.Setup(x => x.ActiveActivitiesFilteredQuery(request))
+            queries.Setup(x => x.ActiveActivitiesFilteredQuery(request))
                     .Returns(modelResult);
 
-            ActivityController target = new(serviceMock.Object);
+            ActivityController target = new(commands.Object, queries.Object);
 
             // Act
             IActionResult result = target.GetActivitiesFiltered(request);
@@ -399,7 +414,7 @@ namespace TaleEngine.Testing.Controllers.V1
             result.Should().NotBeNull();
             resultAsObjResult.StatusCode.Should().Be(StatusCodes.Status204NoContent);
 
-            serviceMock.Verify(x => x.ActiveActivitiesFilteredQuery(request), Times.Once);
+            queries.Verify(x => x.ActiveActivitiesFilteredQuery(request), Times.Once);
         }
     }
 }
