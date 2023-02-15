@@ -10,6 +10,7 @@ namespace TaleEngine.CQRS.Contracts
         List<ActivityDto> ActiveActivitiesQuery(int editionId);
         List<ActivityDto> PendingActivitiesQuery(int editionId);
         ActivityFilteredResult ActiveActivitiesFilteredQuery(ActivityFilterRequest activityFilterRequest);
+        ActivityFilteredResult FavouriteActivitiesQuery(FavouriteActivityFilterRequest favActivityFilterRequest);
         List<ActivityDto> LastThreeActivitiesQuery(int editionId);
     }
 }

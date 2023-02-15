@@ -16,6 +16,14 @@ namespace TaleEngine.CQRS.Queries
             _service = roleService ?? throw new ArgumentNullException(nameof(roleService));
         }
 
+        public RoleDto GetRoleQuery(int roleId)
+        {
+            var role = _service.GetRole(roleId);
+
+            var dto = RoleMapper.Map(role);
+            return dto;
+        }
+
         public List<RoleDto> AllRolesQuery()
         {
             var roles = _service.GetAllRoles();

@@ -18,7 +18,7 @@ namespace TaleEngine.API.Controllers.V2
     [Route("api/v2/[controller]")]
     public class RolesController : Controller
     {
-        private IRoleQueries _command;
+        private IRoleQueries query;
 
         /// <summary>
         /// Constructor for roles controller
@@ -26,7 +26,7 @@ namespace TaleEngine.API.Controllers.V2
         /// <param name="command">Role service</param>
         public RolesController(IRoleQueries command)
         {
-            _command = command ?? throw new ArgumentNullException(nameof(command));
+            query = command ?? throw new ArgumentNullException(nameof(command));
         }
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace TaleEngine.API.Controllers.V2
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public IActionResult GetAllRoles()
         {
-            var result = _command.AllRolesQuery();
+            var result = query.AllRolesQuery();
 
             if (result == null || result.Count == 0)
             {
@@ -58,7 +58,8 @@ namespace TaleEngine.API.Controllers.V2
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public IActionResult GetRole(int roleId)
         {
-            return Ok();
+            var result = query.GetRoleQuery(roleId);
+            return Ok(result);
         }
 
     }

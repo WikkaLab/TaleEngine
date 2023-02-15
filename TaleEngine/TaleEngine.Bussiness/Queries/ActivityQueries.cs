@@ -91,5 +91,10 @@ namespace TaleEngine.CQRS.Queries
 
             return result;
         }
+
+        public ActivityFilteredResult FavouriteActivitiesQuery(FavouriteActivityFilterRequest favActivityFilterRequest)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
