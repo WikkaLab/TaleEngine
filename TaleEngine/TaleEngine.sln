@@ -7,12 +7,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaleEngine.API", "TaleEngin
 		{BCCE20AB-5DF5-4189-AF97-C39B3F473C61} = {BCCE20AB-5DF5-4189-AF97-C39B3F473C61}
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaleEngine.DbServices", "TaleEngine.Application\TaleEngine.DbServices.csproj", "{916C4408-6263-4821-9763-FDEB1E03C0CA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaleEngine.Services", "TaleEngine.Application\TaleEngine.Services.csproj", "{916C4408-6263-4821-9763-FDEB1E03C0CA}"
 	ProjectSection(ProjectDependencies) = postProject
 		{EA5FC62F-B813-4433-A00A-034F49A63934} = {EA5FC62F-B813-4433-A00A-034F49A63934}
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaleEngine.DbServices.Contracts", "TaleEngine.Application.Contracts\TaleEngine.DbServices.Contracts.csproj", "{6B7D4065-B213-44B4-B758-E1A77EC67DA7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaleEngine.Services.Contracts", "TaleEngine.Application.Contracts\TaleEngine.Services.Contracts.csproj", "{6B7D4065-B213-44B4-B758-E1A77EC67DA7}"
 	ProjectSection(ProjectDependencies) = postProject
 		{EA5FC62F-B813-4433-A00A-034F49A63934} = {EA5FC62F-B813-4433-A00A-034F49A63934}
 	EndProjectSection

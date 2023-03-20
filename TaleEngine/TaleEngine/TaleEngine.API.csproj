@@ -33,10 +33,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TaleEngine.API.Contracts\TaleEngine.API.Contracts.csproj" />
-    <ProjectReference Include="..\TaleEngine.Application.Contracts\TaleEngine.DbServices.Contracts.csproj">
+    <ProjectReference Include="..\TaleEngine.Application.Contracts\TaleEngine.Services.Contracts.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
-    <ProjectReference Include="..\TaleEngine.Application\TaleEngine.DbServices.csproj">
+    <ProjectReference Include="..\TaleEngine.Application\TaleEngine.Services.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
     <ProjectReference Include="..\TaleEngine.Data.Contracts\TaleEngine.Data.Contracts.csproj">

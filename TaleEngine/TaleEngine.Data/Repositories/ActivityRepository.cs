@@ -62,14 +62,24 @@ namespace TaleEngine.Data.Repositories
                 .ToList();
         }
 
-        public List<ActivityEntity> GetActiveActivitiesFiltered(int status, int type, int edition, string title, int skip, int activitiesPerPage)
+        public List<ActivityEntity> GetActiveActivitiesFiltered(int status, int type, int edition,
+            string title, int skip, int activitiesPerPage)
         {
-            throw new System.NotImplementedException();
+            return _context.Activities
+                .Where(a => a.EditionId == edition && a.StatusId == status)
+                .Where(a => a.Title.Contains(title))
+                .Skip(skip)
+                .Take(activitiesPerPage)
+                .ToList();
         }
 
         public List<ActivityEntity> GetLastThreeActivities(int status, int edition, int numberOfActivities)
         {
-            throw new System.NotImplementedException();
+            return _context.Activities
+                .Where(a => a.EditionId == edition && a.StatusId == status)
+                .OrderByDescending(a => a.CreateDateTime)
+                .Take(numberOfActivities)
+                .ToList();
         }
 
         public int GetTotalActivities(int status, int type, int edition, string title)

@@ -1,6 +1,6 @@
 ﻿using System;
 using TaleEngine.CQRS.Contracts;
-using TaleEngine.DbServices.Contracts.Services;
+using TaleEngine.Services.Contracts;
 
 namespace TaleEngine.CQRS.Commands.Backoffice
 {

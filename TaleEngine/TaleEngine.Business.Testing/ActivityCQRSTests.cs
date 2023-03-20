@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using TaleEngine.CQRS.Queries;
 using TaleEngine.Data.Contracts.Entities;
-using TaleEngine.DbServices.Contracts.Services;
 using TaleEngine.Fakes.Entities;
+using TaleEngine.Services.Contracts;
 using Xunit;
 
 namespace TaleEngine.CQRS.Testing
@@ -40,7 +40,7 @@ namespace TaleEngine.CQRS.Testing
             activityServMock.Setup(x => x.GetActiveActivities(It.IsAny<int>()))
                 .Returns(list);
 
-            var target = new ActivityQueries(activityServMock.Object);
+            var target = new ActivityQueries(activityServMock.Object, activityStatusServMock.Object, editionServMock.Object);
 
             // Act
             var result = target.ActiveActivitiesQuery(editionId);
@@ -62,7 +62,7 @@ namespace TaleEngine.CQRS.Testing
             activityServMock.Setup(x => x.GetActiveActivities(It.IsAny<int>()))
                 .Returns(list);
 
-            var target = new ActivityQueries(activityServMock.Object);
+            var target = new ActivityQueries(activityServMock.Object, activityStatusServMock.Object, editionServMock.Object);
 
             // Act
             var result = target.ActiveActivitiesQuery(editionId);
@@ -83,7 +83,7 @@ namespace TaleEngine.CQRS.Testing
             activityServMock.Setup(x => x.GetActiveActivities(It.IsAny<int>()))
                 .Returns(list);
 
-            var target = new ActivityQueries(activityServMock.Object);
+            var target = new ActivityQueries(activityServMock.Object, activityStatusServMock.Object, editionServMock.Object);
 
             // Act
             var result = target.ActiveActivitiesQuery(editionId);

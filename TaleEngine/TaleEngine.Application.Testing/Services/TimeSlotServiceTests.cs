@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using TaleEngine.Data.Contracts;
 using TaleEngine.Data.Contracts.Entities;
-using TaleEngine.DbServices.Services;
 using TaleEngine.Fakes.Entities;
+using TaleEngine.Services;
 using Xunit;
 
 namespace TaleEngine.DbServices.Testing.Services

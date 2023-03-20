@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using TaleEngine.Data.Contracts;
 using TaleEngine.Data.Contracts.Entities;
-using TaleEngine.DbServices.Contracts.Services;
+using TaleEngine.Services.Contracts;
 
-namespace TaleEngine.DbServices.Services
+namespace TaleEngine.Services
 {
     public class TimeSlotService : ITimeSlotService
     {

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace TaleEngine.API.Contracts.Dtos.Requests
 {
@@ -7,10 +8,10 @@ namespace TaleEngine.API.Contracts.Dtos.Requests
         public string Title { get; set; }
         public int TypeId { get; set; }
         public int EditionId { get; set; }
-        public int TimeFrame { get; set; }
+        public List<int> TimeFrames { get; set; }
 
         public DateTime ActivityDate { get; set; }
 
-        public int CurrentPage { get; set; }
+        public int Page { get; set; }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using TaleEngine.CQRS.Contracts;
 using TaleEngine.Cross.Enums;
-using TaleEngine.DbServices.Contracts.Services;
+using TaleEngine.Services.Contracts;
 
 namespace TaleEngine.CQRS.Queries.Backoffice
 {

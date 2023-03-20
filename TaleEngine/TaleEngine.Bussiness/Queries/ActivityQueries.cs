@@ -5,22 +5,22 @@ using TaleEngine.API.Contracts.Dtos.Requests;
 using TaleEngine.API.Contracts.Dtos.Results;
 using TaleEngine.CQRS.Contracts;
 using TaleEngine.CQRS.Mappers;
-using TaleEngine.DbServices.Contracts.Services;
+using TaleEngine.Services.Contracts;
 
 namespace TaleEngine.CQRS.Queries
 {
     public class ActivityQueries : IActivityQueries
     {
-        private const int ACTIVITIESINHOME = 3;
+        private const int ACTIVITIESPERPAGE = 2;
 
         private readonly IActivityService _activityService;
+        private readonly IEditionService _editionService;
 
-        public ActivityQueries(IActivityService activityService)
+        public ActivityQueries(IActivityService activityService, IEditionService editionService)
         {
             _activityService = activityService ?? throw new ArgumentNullException(nameof(activityService));
+            _editionService = editionService ?? throw new ArgumentNullException(nameof(editionService));
         }
-
-        // Queries
 
         public List<ActivityDto> ActiveActivitiesQuery(int editionId)
         {
@@ -44,42 +44,33 @@ namespace TaleEngine.CQRS.Queries
 
         public ActivityFilteredResult ActiveActivitiesFilteredQuery(ActivityFilterRequest request)
         {
-            throw new NotImplementedException();
+            var currentEdition = _editionService.GetById(request.EditionId);
 
-            //int activitiesPerPage = 10;
+            if (currentEdition == null)
+            {
+                return null;
+            }
 
-            //var activeStatus = _activityStatusService
-            //    .GetById((int)ActivityStatusEnum.ACT);
+            int skipByPagination = request.Page * ACTIVITIESPERPAGE;
 
-            //var currentEdition = _editionService.GetById(request.EditionId);
+            var activities = _activityService
+                .GetActiveActivitiesFiltered(request.TypeId, currentEdition.Id,
+                    request.TimeFrames, request.Title, skipByPagination, ACTIVITIESPERPAGE);
+            int totalActivities = _activityService
+                .GetTotalActiveActivities(request.TypeId, currentEdition.Id, request.TimeFrames, request.Title);
 
-            //if (currentEdition == null || activeStatus == null)
-            //{
-            //    return null;
-            //}
+            var models = ActivityMapper.MapEntityToDto(activities);
 
-            //int skipByPagination = (request.CurrentPage - 1) * activitiesPerPage;
+            var totalPages = (int)Math.Ceiling((double)(totalActivities / ACTIVITIESPERPAGE));
 
-            //var activities = _activityService
-            //    .GetActiveActivitiesFiltered(activeStatus.Id, request.TypeId, currentEdition.Id,
-            //        request.Title, skipByPagination, activitiesPerPage);
+            var result = new ActivityFilteredResult
+            {
+                Activities = models,
+                CurrentPage = request.Page,
+                TotalPages = totalPages
+            };
 
-            //var models = ActivityMapper.Map(activities);
-
-            //int totalActivities = _activityService
-            //    .GetTotalActivities(activeStatus.Id, request.TypeId, currentEdition.Id, request.Title);
-
-            //double actsPerPage = totalActivities / activitiesPerPage;
-            //var totalPages = (int)Math.Ceiling(actsPerPage);
-
-            //var result = new ActivityFilteredResult
-            //{
-            //    Activities = models,
-            //    CurrentPage = currentPage,
-            //    TotalPages = totalPages
-            //};
-
-            //return result;
+            return result;
         }
 
         public List<ActivityDto> LastThreeActivitiesQuery(int edition)
