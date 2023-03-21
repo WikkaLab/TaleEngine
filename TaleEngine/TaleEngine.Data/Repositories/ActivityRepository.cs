@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Linq;
 using TaleEngine.Data.Contracts;
 using TaleEngine.Data.Contracts.Entities;
@@ -85,6 +86,13 @@ namespace TaleEngine.Data.Repositories
         public int GetTotalActivities(int status, int type, int edition, string title)
         {
             throw new System.NotImplementedException();
+        }
+
+        public List<ActivityEntity> GetAllIncludeFavs(int eventId)
+        {
+            return _context.Activities
+                .Include(a => a.UsersFav)
+                .ToList();
         }
     }
 }

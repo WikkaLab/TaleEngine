@@ -5,6 +5,7 @@ namespace TaleEngine.Data.Contracts.Repositories
 {
     public interface IActivityRepository : IGenericRepository<ActivityEntity>
     {
+        List<ActivityEntity> GetAllIncludeFavs(int eventId);
         List<ActivityEntity> GetEventActivities(int eventId);
         List<ActivityEntity> GetActivitiesByStatus(int edition, int status);
         List<ActivityEntity> GetActiveActivitiesFiltered(int status, int type, int edition, string title, int skip, int activitiesPerPage);

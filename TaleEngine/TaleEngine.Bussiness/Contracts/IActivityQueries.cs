@@ -9,8 +9,7 @@ namespace TaleEngine.CQRS.Contracts
     {
         List<ActivityDto> ActiveActivitiesQuery(int editionId);
         List<ActivityDto> PendingActivitiesQuery(int editionId);
-        ActivityFilteredResult ActiveActivitiesFilteredQuery(ActivityFilterRequest activityFilterRequest);
-        ActivityFilteredResult FavouriteActivitiesQuery(FavouriteActivityFilterRequest favActivityFilterRequest);
+        ActivityFilteredResult ActiveActivitiesFilteredQuery(ActivityFilterRequest activityFilterRequest, int userId = default);
         List<ActivityDto> LastThreeActivitiesQuery(int editionId);
     }
 }

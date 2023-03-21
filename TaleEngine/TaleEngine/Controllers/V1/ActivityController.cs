@@ -71,6 +71,22 @@ namespace TaleEngine.API.Controllers.V1
             return Ok(result);
         }
 
+        [HttpPut("[action]")]
+        public IActionResult GetFavouriteActivitiesFiltered([FromBody] ActivityFilterRequest activityFilterRequest)
+        {
+            // Getting user who is calling
+            int userId = 1;
+
+            var result = _queries.ActiveActivitiesFilteredQuery(activityFilterRequest, userId);
+
+            if (result == null)
+            {
+                return NoContent();
+            }
+
+            return Ok(result);
+        }
+
         [HttpDelete("[action]/{activityId}")]
         public IActionResult DeleteActivity(int activityId)
         {

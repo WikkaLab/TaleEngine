@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Xml.Linq;
 using TaleEngine.Aggregates.ActivityAggregate;
-using TaleEngine.Aggregates.EventAggregate;
 using TaleEngine.Cross.Enums;
 using TaleEngine.Data.Contracts;
 using TaleEngine.Data.Contracts.Entities;
@@ -52,14 +50,21 @@ namespace TaleEngine.Services
             return activities;
         }
 
-        public List<ActivityEntity> GetActiveActivitiesFiltered(int typeId, int editionId,
-                List<int> timeFrames, string title, int skipByPagination, int activitiesPerPage)
+        public IEnumerable<ActivityEntity> GetActiveActivitiesFiltered(int typeId, int editionId,
+                List<int> timeFrames, string title, int skipByPagination, int activitiesPerPage, int userFav = default)
         {
-            var query = GetActiveActivitiesWithFilter(typeId, timeFrames, editionId, title);
+            IEnumerable<ActivityEntity> query;
 
-            var activities = query.Skip(skipByPagination).Take(activitiesPerPage).ToList();
+            if (userFav == 0)
+            {
+                query = GetActiveActivitiesWithFilter(typeId, timeFrames, editionId, title);
+            }
+            else
+            {
+                query = GetFavActivitiesFiltered(typeId, editionId, timeFrames, title, userFav);
+            }
 
-            return activities;
+            return query;
         }
 
         public int DeleteActivity(int activityId)
@@ -165,25 +170,35 @@ namespace TaleEngine.Services
             return query.OrderByDescending(a => a.CreateDateTime).Take(numberOfActivities).ToList();
         }
 
-        public int GetTotalActiveActivities(int typeId, int editionId, List<int> timeframes, string title)
-        {
-            var query = GetActiveActivitiesWithFilter(typeId, null, editionId, title);
-
-            return query.ToList().Count;
-        }
-
-        private IEnumerable<ActivityEntity> GetActiveActivitiesWithFilter(int type,
-            List<int> timeframes, int edition, string title)
+        private IEnumerable<ActivityEntity> GetActiveActivitiesWithFilter(int type, List<int> timeframes, int edition, string title)
         {
             var activeStatus = _activityStatusService
                 .GetById((int)ActivityStatusEnum.ACT);
 
-            var query = _unitOfWork.ActivityRepository.GetAll()
+            IEnumerable<ActivityEntity> query = _unitOfWork.ActivityRepository.GetAll()
                 .Where(a => a.EditionId == edition)
                 .Where(a => a.StatusId == activeStatus.Id)
                 .Where(a => (!string.IsNullOrEmpty(a.Title) && a.Title.Contains(title)) || (string.IsNullOrEmpty(title) && !string.IsNullOrEmpty(a.Title)))
                 .Where(a => (type != 0 && a.TypeId == type) || (type == 0 && a.TypeId != 0))
                 .Where(a => (timeframes != null && timeframes.Contains(a.TimeSlotId)) || (timeframes == null && a.TimeSlotId != 0));
+
+            return query;
+        }
+
+        private IEnumerable<ActivityEntity> GetFavActivitiesFiltered(int type, int editionId, List<int> timeframes, string title, int userFav)
+        {
+            var user = _unitOfWork.UserRepository.GetById(userFav);
+
+            var activeStatus = _activityStatusService
+                .GetById((int)ActivityStatusEnum.ACT);
+
+            var query = _unitOfWork.ActivityRepository.GetAllIncludeFavs(editionId)
+                .Where(a => a.UsersFav.Contains(user))
+                .Where(a => a.StatusId == activeStatus.Id)
+                .Where(a => (!string.IsNullOrEmpty(a.Title) && a.Title.Contains(title)) || (string.IsNullOrEmpty(title) && !string.IsNullOrEmpty(a.Title)))
+                .Where(a => (type != 0 && a.TypeId == type) || (type == 0 && a.TypeId != 0))
+                .Where(a => (timeframes != null && timeframes.Contains(a.TimeSlotId)) || (timeframes == null && a.TimeSlotId != 0));
+
             return query;
         }
 

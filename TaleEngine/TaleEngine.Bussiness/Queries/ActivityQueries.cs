@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using TaleEngine.API.Contracts.Dtos;
 using TaleEngine.API.Contracts.Dtos.Requests;
 using TaleEngine.API.Contracts.Dtos.Results;
@@ -11,7 +12,7 @@ namespace TaleEngine.CQRS.Queries
 {
     public class ActivityQueries : IActivityQueries
     {
-        private const int ACTIVITIESPERPAGE = 2;
+        private const int ACTIVITIESPERPAGE = 3;
 
         private readonly IActivityService _activityService;
         private readonly IEditionService _editionService;
@@ -42,7 +43,7 @@ namespace TaleEngine.CQRS.Queries
             return models;
         }
 
-        public ActivityFilteredResult ActiveActivitiesFilteredQuery(ActivityFilterRequest request)
+        public ActivityFilteredResult ActiveActivitiesFilteredQuery(ActivityFilterRequest request, int userId = default)
         {
             var currentEdition = _editionService.GetById(request.EditionId);
 
@@ -53,15 +54,16 @@ namespace TaleEngine.CQRS.Queries
 
             int skipByPagination = request.Page * ACTIVITIESPERPAGE;
 
-            var activities = _activityService
-                .GetActiveActivitiesFiltered(request.TypeId, currentEdition.Id,
-                    request.TimeFrames, request.Title, skipByPagination, ACTIVITIESPERPAGE);
-            int totalActivities = _activityService
-                .GetTotalActiveActivities(request.TypeId, currentEdition.Id, request.TimeFrames, request.Title);
+            var activitiesQueried = _activityService.GetActiveActivitiesFiltered(request.TypeId, currentEdition.Id,
+                request.TimeFrames, request.Title, skipByPagination, ACTIVITIESPERPAGE, userId);
+
+            var totalActivities = activitiesQueried.ToList().Count;
+            var activities = activitiesQueried.Skip(skipByPagination).Take(ACTIVITIESPERPAGE).ToList();
 
             var models = ActivityMapper.MapEntityToDto(activities);
 
-            var totalPages = (int)Math.Ceiling((double)(totalActivities / ACTIVITIESPERPAGE));
+            double v = Math.Floor((double)(totalActivities / ACTIVITIESPERPAGE));
+            var totalPages = (int)v;
 
             var result = new ActivityFilteredResult
             {
@@ -81,11 +83,6 @@ namespace TaleEngine.CQRS.Queries
             var result = ActivityMapper.MapEntityToDto(activities);
 
             return result;
-        }
-
-        public ActivityFilteredResult FavouriteActivitiesQuery(FavouriteActivityFilterRequest favActivityFilterRequest)
-        {
-            throw new NotImplementedException();
         }
     }
 }
