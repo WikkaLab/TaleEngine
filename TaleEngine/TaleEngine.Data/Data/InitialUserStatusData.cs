@@ -13,7 +13,7 @@ namespace TaleEngine.Data.Data
                 new UserStatusEntity { Id = 2, Name = "Active", Abbr = "ACT", Description = "Active user" },
                 new UserStatusEntity { Id = 3, Name = "Revision", Abbr = "REV", Description = "In revision process" },
                 new UserStatusEntity { Id = 4, Name = "Banned", Abbr = "BAN", Description = "Banned from event" },
-                new UserStatusEntity { Id = 5, Name = "Inactive", Abbr = "INC", Description = "Pending to confirm" },
+                new UserStatusEntity { Id = 5, Name = "Inactive", Abbr = "INC", Description = "Disabled due to inactivity" },
             };
         }
     }
