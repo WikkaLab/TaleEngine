@@ -99,7 +99,7 @@ namespace TaleEngine.Fakes.Dtos
 
             var dto = new ActivityFilterRequest
             {
-                CurrentPage = faker.Random.Number(),
+                Page = faker.Random.Number(),
                 EditionId = faker.Random.Number(),
                 TypeId = faker.Random.Number(),
                 Title = faker.Random.String2(10)

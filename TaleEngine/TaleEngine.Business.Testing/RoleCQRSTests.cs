@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using TaleEngine.CQRS.Queries;
 using TaleEngine.Data.Contracts.Entities;
-using TaleEngine.DbServices.Contracts.Services;
 using TaleEngine.Fakes.Entities;
+using TaleEngine.Services.Contracts;
 using Xunit;
 
 namespace TaleEngine.CQRS.Testing
@@ -18,6 +18,42 @@ namespace TaleEngine.CQRS.Testing
         public RoleDomainServiceTests()
         {
             roleServMock = new Mock<IRoleService>();
+        }
+
+        [Fact]
+        public void Get_Success()
+        {
+            // Arrange
+            var role = RoleBuilder.BuildRole();
+
+            roleServMock.Setup(x => x.GetRole(It.IsAny<int>()))
+                .Returns(role);
+
+            var target = new RoleQueries(roleServMock.Object);
+
+            // Act
+            var result = target.GetRoleQuery(role.Id);
+
+            // Assert
+            result.Should().NotBeNull();
+        }
+
+        [Fact]
+        public void Get_ReturnNull()
+        {
+            // Arrange
+            RoleEntity role = null;
+
+            roleServMock.Setup(x => x.GetRole(It.IsAny<int>()))
+                .Returns(role);
+
+            var target = new RoleQueries(roleServMock.Object);
+
+            // Act
+            var result = target.GetRoleQuery(role.Id);
+
+            // Assert
+            result.Should().BeNull();
         }
 
         [Fact]

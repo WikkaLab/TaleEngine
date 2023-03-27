@@ -17,7 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TaleEngine.API.Contracts\TaleEngine.API.Contracts.csproj" />
-    <ProjectReference Include="..\TaleEngine.Application\TaleEngine.DbServices.csproj" />
+    <ProjectReference Include="..\TaleEngine.Application\TaleEngine.Services.csproj" />
     <ProjectReference Include="..\TaleEngine.Cross\TaleEngine.Cross.csproj" />
   </ItemGroup>
 </Project>

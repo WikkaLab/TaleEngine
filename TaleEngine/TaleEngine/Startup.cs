@@ -11,10 +11,10 @@ using TaleEngine.CQRS.Queries;
 using TaleEngine.CQRS.Queries.Backoffice;
 using TaleEngine.Data;
 using TaleEngine.Data.Contracts;
-using TaleEngine.DbServices.Contracts.Services;
-using TaleEngine.DbServices.Services;
-using TaleEngine.DbServices.Services.Backoffice;
 using TaleEngine.Extensions;
+using TaleEngine.Services;
+using TaleEngine.Services.Backoffice;
+using TaleEngine.Services.Contracts;
 
 namespace TaleEngine
 {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TaleEngine.API.Contracts.Dtos;
 using TaleEngine.CQRS.Contracts;
-using TaleEngine.DbServices.Contracts.Services;
+using TaleEngine.Services.Contracts;
 
 namespace TaleEngine.CQRS.Queries
 {

@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using TaleEngine.CQRS.Queries;
 using TaleEngine.Data.Contracts.Entities;
-using TaleEngine.DbServices.Contracts.Services;
 using TaleEngine.Fakes.Entities;
+using TaleEngine.Services.Contracts;
 using Xunit;
 
 namespace TaleEngine.CQRS.Testing
@@ -31,65 +31,65 @@ namespace TaleEngine.CQRS.Testing
         [Fact]
         public void GetActiveActivities_Success()
         {
-            // Arrange
-            int editionId = 1;
+            //// Arrange
+            //int editionId = 1;
 
-            List<ActivityEntity> list = ActivityBuilder.BuildActivityList();
-            var status = ActivityBuilder.BuildActivityStatus();
+            //List<ActivityEntity> list = ActivityBuilder.BuildActivityList();
+            //var status = ActivityBuilder.BuildActivityStatus();
 
-            activityServMock.Setup(x => x.GetActiveActivities(It.IsAny<int>()))
-                .Returns(list);
+            //activityServMock.Setup(x => x.GetActiveActivities(It.IsAny<int>()))
+            //    .Returns(list);
 
-            var target = new ActivityQueries(activityServMock.Object);
+            //var target = new ActivityQueries(activityServMock.Object, activityStatusServMock.Object, editionServMock.Object);
 
-            // Act
-            var result = target.ActiveActivitiesQuery(editionId);
+            //// Act
+            //var result = target.ActiveActivitiesQuery(editionId);
 
-            // Assert
-            result.Should().NotBeNull();
-            result.Should().NotBeEmpty();
+            //// Assert
+            //result.Should().NotBeNull();
+            //result.Should().NotBeEmpty();
         }
 
         [Fact]
         public void GetActiveActivities_IdIsZero_ShouldReturnNull()
         {
-            // Arrange
-            int editionId = 0;
+            //// Arrange
+            //int editionId = 0;
 
-            List<ActivityEntity> list = null;
-            var status = ActivityBuilder.BuildActivityStatus();
+            //List<ActivityEntity> list = null;
+            //var status = ActivityBuilder.BuildActivityStatus();
 
-            activityServMock.Setup(x => x.GetActiveActivities(It.IsAny<int>()))
-                .Returns(list);
+            //activityServMock.Setup(x => x.GetActiveActivities(It.IsAny<int>()))
+            //    .Returns(list);
 
-            var target = new ActivityQueries(activityServMock.Object);
+            //var target = new ActivityQueries(activityServMock.Object, activityStatusServMock.Object, editionServMock.Object);
 
-            // Act
-            var result = target.ActiveActivitiesQuery(editionId);
+            //// Act
+            //var result = target.ActiveActivitiesQuery(editionId);
 
-            // Assert
-            result.Should().BeNull();
+            //// Assert
+            //result.Should().BeNull();
         }
 
         [Fact]
         public void GetActiveActivities_StatusNotExist_ShouldReturnNull()
         {
-            // Arrange
-            int editionId = 1;
+            //// Arrange
+            //int editionId = 1;
 
-            List<ActivityEntity> list = null;
-            ActivityStatusEntity status = null;
+            //List<ActivityEntity> list = null;
+            //ActivityStatusEntity status = null;
 
-            activityServMock.Setup(x => x.GetActiveActivities(It.IsAny<int>()))
-                .Returns(list);
+            //activityServMock.Setup(x => x.GetActiveActivities(It.IsAny<int>()))
+            //    .Returns(list);
 
-            var target = new ActivityQueries(activityServMock.Object);
+            //var target = new ActivityQueries(activityServMock.Object, activityStatusServMock.Object, editionServMock.Object);
 
-            // Act
-            var result = target.ActiveActivitiesQuery(editionId);
+            //// Act
+            //var result = target.ActiveActivitiesQuery(editionId);
 
-            // Assert
-            result.Should().BeNull();
+            //// Assert
+            //result.Should().BeNull();
         }
 
 

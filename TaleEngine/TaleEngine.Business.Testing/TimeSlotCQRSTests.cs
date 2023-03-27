@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using TaleEngine.CQRS.Queries;
 using TaleEngine.Data.Contracts.Entities;
-using TaleEngine.DbServices.Contracts.Services;
 using TaleEngine.Fakes.Entities;
+using TaleEngine.Services.Contracts;
 using Xunit;
 
 namespace TaleEngine.CQRS.Testing

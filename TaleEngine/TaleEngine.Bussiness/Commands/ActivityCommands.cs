@@ -4,7 +4,7 @@ using TaleEngine.API.Contracts.Dtos;
 using TaleEngine.CQRS.Contracts;
 using TaleEngine.CQRS.Mappers;
 using TaleEngine.Cross.Enums;
-using TaleEngine.DbServices.Contracts.Services;
+using TaleEngine.Services.Contracts;
 
 namespace TaleEngine.CQRS.Commands
 {

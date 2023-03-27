@@ -5,6 +5,7 @@ namespace TaleEngine.CQRS.Contracts
 {
     public interface IRoleQueries
     {
+        RoleDto GetRoleQuery(int roleId);
         List<RoleDto> AllRolesQuery();
     }
 }

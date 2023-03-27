@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TaleEngine.API.Contracts.Dtos;
 using TaleEngine.CQRS.Contracts;
 using TaleEngine.CQRS.Mappers;
-using TaleEngine.DbServices.Contracts.Services;
+using TaleEngine.Services.Contracts;
 
 namespace TaleEngine.CQRS.Queries
 {
@@ -14,6 +14,14 @@ namespace TaleEngine.CQRS.Queries
         public RoleQueries(IRoleService roleService)
         {
             _service = roleService ?? throw new ArgumentNullException(nameof(roleService));
+        }
+
+        public RoleDto GetRoleQuery(int roleId)
+        {
+            var role = _service.GetRole(roleId);
+
+            var dto = RoleMapper.Map(role);
+            return dto;
         }
 
         public List<RoleDto> AllRolesQuery()

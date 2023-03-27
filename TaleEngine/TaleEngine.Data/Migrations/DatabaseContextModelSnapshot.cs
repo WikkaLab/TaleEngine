@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TaleEngine.Data;
 
+#nullable disable
+
 namespace TaleEngine.Data.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
@@ -15,9 +17,10 @@ namespace TaleEngine.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.4")
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("ProductVersion", "7.0.0")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("ActivityEntityUserEntity", b =>
                 {
@@ -31,7 +34,7 @@ namespace TaleEngine.Data.Migrations
 
                     b.HasIndex("UsersCreateId");
 
-                    b.ToTable("ActivityCreators");
+                    b.ToTable("ActivityCreators", (string)null);
                 });
 
             modelBuilder.Entity("ActivityEntityUserEntity1", b =>
@@ -46,7 +49,7 @@ namespace TaleEngine.Data.Migrations
 
                     b.HasIndex("UsersFavId");
 
-                    b.ToTable("FavActivities");
+                    b.ToTable("FavActivities", (string)null);
                 });
 
             modelBuilder.Entity("ActivityEntityUserEntity2", b =>
@@ -61,7 +64,7 @@ namespace TaleEngine.Data.Migrations
 
                     b.HasIndex("UsersPlayId");
 
-                    b.ToTable("ActivityEnrollments");
+                    b.ToTable("ActivityEnrollments", (string)null);
                 });
 
             modelBuilder.Entity("RoleEntityUserEntity", b =>
@@ -83,8 +86,9 @@ namespace TaleEngine.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime?>("CreateDateTime")
                         .HasColumnType("datetime2");
@@ -135,15 +139,16 @@ namespace TaleEngine.Data.Migrations
 
                     b.HasIndex("TypeId");
 
-                    b.ToTable("Activity");
+                    b.ToTable("Activity", (string)null);
                 });
 
             modelBuilder.Entity("TaleEngine.Data.Contracts.Entities.ActivityStatusEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Abbr")
                         .HasColumnType("nvarchar(max)");
@@ -162,7 +167,7 @@ namespace TaleEngine.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ActivityStatus");
+                    b.ToTable("ActivityStatus", (string)null);
 
                     b.HasData(
                         new
@@ -199,8 +204,9 @@ namespace TaleEngine.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Abbr")
                         .HasColumnType("nvarchar(max)");
@@ -219,7 +225,7 @@ namespace TaleEngine.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ActivityType");
+                    b.ToTable("ActivityType", (string)null);
 
                     b.HasData(
                         new
@@ -292,8 +298,9 @@ namespace TaleEngine.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime?>("CreateDateTime")
                         .HasColumnType("datetime2");
@@ -314,15 +321,16 @@ namespace TaleEngine.Data.Migrations
 
                     b.HasIndex("EventId");
 
-                    b.ToTable("Edition");
+                    b.ToTable("Edition", (string)null);
                 });
 
             modelBuilder.Entity("TaleEngine.Data.Contracts.Entities.EventEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime?>("CreateDateTime")
                         .HasColumnType("datetime2");
@@ -335,15 +343,16 @@ namespace TaleEngine.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Event");
+                    b.ToTable("Event", (string)null);
                 });
 
             modelBuilder.Entity("TaleEngine.Data.Contracts.Entities.PermissionEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Abbr")
                         .HasColumnType("nvarchar(max)");
@@ -362,7 +371,7 @@ namespace TaleEngine.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Permission");
+                    b.ToTable("Permission", (string)null);
 
                     b.HasData(
                         new
@@ -473,8 +482,9 @@ namespace TaleEngine.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Abbr")
                         .HasColumnType("nvarchar(max)");
@@ -493,15 +503,16 @@ namespace TaleEngine.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("PermissionValue");
+                    b.ToTable("PermissionValue", (string)null);
                 });
 
             modelBuilder.Entity("TaleEngine.Data.Contracts.Entities.RoleEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Abbr")
                         .HasColumnType("nvarchar(max)");
@@ -525,7 +536,7 @@ namespace TaleEngine.Data.Migrations
 
                     b.HasIndex("EventId");
 
-                    b.ToTable("Role");
+                    b.ToTable("Role", (string)null);
 
                     b.HasData(
                         new
@@ -566,8 +577,9 @@ namespace TaleEngine.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime?>("CreateDateTime")
                         .HasColumnType("datetime2");
@@ -604,8 +616,9 @@ namespace TaleEngine.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Blog")
                         .HasColumnType("nvarchar(max)");
@@ -638,15 +651,16 @@ namespace TaleEngine.Data.Migrations
 
                     b.HasIndex("StatusId");
 
-                    b.ToTable("User");
+                    b.ToTable("User", (string)null);
                 });
 
             modelBuilder.Entity("TaleEngine.Data.Contracts.Entities.UserStatusEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Abbr")
                         .HasColumnType("nvarchar(max)");
@@ -665,7 +679,7 @@ namespace TaleEngine.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("UserStatus");
+                    b.ToTable("UserStatus", (string)null);
 
                     b.HasData(
                         new
@@ -700,7 +714,7 @@ namespace TaleEngine.Data.Migrations
                         {
                             Id = 5,
                             Abbr = "INC",
-                            Description = "Pending to confirm",
+                            Description = "Disabled due to inactivity",
                             Name = "Inactive"
                         });
                 });
