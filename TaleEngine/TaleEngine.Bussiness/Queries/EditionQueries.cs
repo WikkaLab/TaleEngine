@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using TaleEngine.API.Contracts.Dtos;
 using TaleEngine.CQRS.Contracts;
+using TaleEngine.CQRS.Mappers;
 using TaleEngine.Services.Contracts;
 
-namespace TaleEngine.CQRS.Queries
-{
+namespace TaleEngine.CQRS.Queries {
     public class EditionQueries : IEditionQueries
     {
         private readonly IEditionService _service;
@@ -33,6 +33,22 @@ namespace TaleEngine.CQRS.Queries
             };
 
             return editionDaysDto;
+        }
+
+        public List<EditionDto> EditionsQuery(int eventId) {
+            if (eventId == 0) throw new ArgumentNullException();
+
+            var editionsOfEvent = _service.GetEditions(eventId);
+
+            if (editionsOfEvent == null || editionsOfEvent.Count == 0) return null;
+
+            var editionDtos = new List<EditionDto>();
+
+            foreach (var ed in editionsOfEvent) {
+                editionDtos.Add(EditionMapper.Map(ed));
+            }
+
+            return editionDtos;
         }
 
         public int FutureOrCurrentEditionQuery(int ofEvent)

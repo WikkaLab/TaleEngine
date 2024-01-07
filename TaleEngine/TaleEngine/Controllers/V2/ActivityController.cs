@@ -23,13 +23,13 @@ namespace TaleEngine.API.Controllers.V2
         [HttpGet("[action]/{editionId}")]
         public IActionResult GetActivities(int editionId)
         {
-            var result = _queries.ActiveActivitiesQuery(editionId);
+            var activities = _queries.ActiveActivitiesQuery(editionId);
 
-            if (result == null || result.Count == 0)
+            if (activities == null || activities.Count == 0)
             {
                 return NoContent();
             }
-            return Ok(result);
+            return Ok(activities);
         }
 
         [HttpGet("[action]/{editionId}")]

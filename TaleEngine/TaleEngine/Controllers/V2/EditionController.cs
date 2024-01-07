@@ -26,5 +26,16 @@ namespace TaleEngine.API.Controllers.V2
 
             return Ok(result);
         }
+
+        [HttpGet("[action]/{eventId}")]
+        public IActionResult GetEditionsBy(int eventId) {
+            var result = _command.EditionsQuery(eventId);
+
+            if (result == null) {
+                return NoContent();
+            }
+
+            return Ok(result);
+        }
     }
 }
