@@ -1,8 +1,11 @@
 insert into [TaleEngine].[dbo].[Event] (CreateDateTime, Title) values 
-    (GETDATE(), 'Jornadas dotnet')
+    (GETDATE(), 'Jornadas dotnet'),
+    (GETDATE(), 'FlutterConf Málaga')
 
 insert into [TaleEngine].[dbo].[Edition] (CreateDateTime, DateInit, DateEnd, EventId) values 
-    (GETDATE(), '2023-01-01', '2023-02-02', 1)
+    (GETDATE(), '2023-01-01', '2023-02-02', 1),
+    (GETDATE(), '2022-01-01', '2022-02-02', 2),
+    (GETDATE(), '2024-01-01', '2024-02-02', 2)
 
 insert into [TaleEngine].[dbo].[Activity] (CreateDateTime, Title, Places, StatusId, TypeId, EditionId, TimeSlotId) values
 	(GETDATE(), 'Partida 1', 3, 2, 1, 1, 1),
@@ -15,7 +18,17 @@ insert into [TaleEngine].[dbo].[Activity] (CreateDateTime, Title, Places, Status
 	(GETDATE(), 'LARP 1', 4, 2, 5, 1, 1),
 	(GETDATE(), 'LARP 2', 4, 2, 5, 1, 1),
 	(GETDATE(), 'LARP 3', 4, 1, 5, 1, 1),
-	(GETDATE(), 'LARP 4', 4, 3, 5, 1, 1)
+	(GETDATE(), 'LARP 4', 4, 3, 5, 1, 1),
+
+    (GETDATE(), 'Partida 2.1', 3, 2, 1, 2, 1),
+	(GETDATE(), 'Partida 2.2', 4, 2, 1, 2, 1),
+	(GETDATE(), 'Torneo 2.1', 5, 2, 3, 2, 1),
+	(GETDATE(), 'LARP 2.1', 4, 2, 5, 2, 1),
+
+     (GETDATE(), 'Partida 3.1', 3, 2, 1, 3, 1),
+	(GETDATE(), 'Partida 3.2', 4, 2, 1, 3, 1),
+	(GETDATE(), 'Torneo 3.1', 5, 2, 3, 3, 1),
+	(GETDATE(), 'LARP 3.1', 4, 2, 5, 3, 1)
 
 insert into [TaleEngine].[dbo].[User] (CreateDateTime, Name, Mail, StatusId, Username) values
 	(GETDATE(), 'User1', 'user1@email.com', 2, 'SomeUser'),
