@@ -13,9 +13,10 @@ namespace TaleEngine.CQRS.Queries.Backoffice
         private readonly IUserStatusQueries _userStatusCommands;
         private readonly IUserService _service;
 
-        public UserQueries(IUserStatusQueries userStatusCommands)
+        public UserQueries(IUserService userService, IUserStatusQueries userStatusCommands)
         {
             _userStatusCommands = userStatusCommands ?? throw new ArgumentNullException(nameof(userStatusCommands));
+            _service = userService ?? throw new ArgumentNullException(nameof(userService));
         }
 
         public List<UserDto> AllUsersQuery()
