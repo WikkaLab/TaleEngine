@@ -11,6 +11,8 @@ namespace TaleEngine.Data.Contracts.Entities
         public int EventId { get; set; }
         public EventEntity Event { get; set; }
 
+        public EventEntity? IsCurrentEditionInEvent { get; set; }
+
         public List<ActivityEntity> Activities { get; set; }
     }
 }

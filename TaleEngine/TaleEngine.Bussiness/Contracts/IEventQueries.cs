@@ -6,6 +6,7 @@ namespace TaleEngine.CQRS.Contracts
     public interface IEventQueries
     {
         List<EventDto> EventsNoFilterQuery();
-        EventDto EventQuery(int eventId);
+        EventDto GetEvent(int eventId);
+        EditionInEventDto GetCurrentEdition(int eventId);
     }
 }

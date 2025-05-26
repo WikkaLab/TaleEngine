@@ -13,5 +13,13 @@ namespace TaleEngine.CQRS.Mappers
                 Title = eventModel.Title
             };
         }
+
+        public static EditionInEventDto MapWithCurrentEdition(EventEntity eventModel) {
+            return new EditionInEventDto {
+                EventId = eventModel.Id,
+                EventTitle = eventModel.Title,
+                EditionId = eventModel.CurrentEditionId
+            };
+        }
     }
 }

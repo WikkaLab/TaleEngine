@@ -165,9 +165,21 @@ namespace TaleEngine.Services
 
         private List<ActivityEntity> GetLastThreeActivities(int edition, int numberOfActivities)
         {
-            var query = GetActiveActivitiesWithFilter(0, null, edition, null);
+            try {
 
-            return query.OrderByDescending(a => a.CreateDateTime).Take(numberOfActivities).ToList();
+                IEnumerable<ActivityEntity> query = GetActiveActivitiesWithFilter(0, null, edition, null);
+
+            return query
+                //.OrderByDescending(a => a.CreateDateTime)
+                .Take(numberOfActivities)
+                .Select(a => a)
+                .ToList()
+                ;
+            }
+            catch (Exception ex) {
+                var e = ex.Message;
+                return null;
+            }
         }
 
         private IEnumerable<ActivityEntity> GetActiveActivitiesWithFilter(int type, List<int> timeframes, int edition, string title)

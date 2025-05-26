@@ -56,7 +56,7 @@ namespace TaleEngine.Testing.Controllers.V1
             };
 
             Mock<IEventQueries> serviceMock = new Mock<IEventQueries>();
-            serviceMock.Setup(x => x.EventQuery(eventId))
+            serviceMock.Setup(x => x.GetEvent(eventId))
                 .Returns(dto);
 
             EventController target = new EventController(serviceMock.Object);
@@ -69,7 +69,7 @@ namespace TaleEngine.Testing.Controllers.V1
             result.Should().NotBeNull();
             resultAsObjResult.StatusCode.Should().Be(StatusCodes.Status200OK);
 
-            serviceMock.Verify(x => x.EventQuery(eventId), Times.Once);
+            serviceMock.Verify(x => x.GetEvent(eventId), Times.Once);
         }
     }
 }

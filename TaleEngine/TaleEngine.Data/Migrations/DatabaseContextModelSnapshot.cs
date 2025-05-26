@@ -335,6 +335,9 @@ namespace TaleEngine.Data.Migrations
                     b.Property<DateTime?>("CreateDateTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("CurrentEditionId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime?>("ModificationDate")
                         .HasColumnType("datetime2");
 
@@ -342,6 +345,9 @@ namespace TaleEngine.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CurrentEditionId")
+                        .IsUnique();
 
                     b.ToTable("Event", (string)null);
                 });
@@ -852,6 +858,17 @@ namespace TaleEngine.Data.Migrations
                     b.Navigation("Event");
                 });
 
+            modelBuilder.Entity("TaleEngine.Data.Contracts.Entities.EventEntity", b =>
+                {
+                    b.HasOne("TaleEngine.Data.Contracts.Entities.EditionEntity", "CurrentEdition")
+                        .WithOne("IsCurrentEditionInEvent")
+                        .HasForeignKey("TaleEngine.Data.Contracts.Entities.EventEntity", "CurrentEditionId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("CurrentEdition");
+                });
+
             modelBuilder.Entity("TaleEngine.Data.Contracts.Entities.RoleEntity", b =>
                 {
                     b.HasOne("TaleEngine.Data.Contracts.Entities.EventEntity", "Event")
@@ -885,6 +902,8 @@ namespace TaleEngine.Data.Migrations
             modelBuilder.Entity("TaleEngine.Data.Contracts.Entities.EditionEntity", b =>
                 {
                     b.Navigation("Activities");
+
+                    b.Navigation("IsCurrentEditionInEvent");
                 });
 
             modelBuilder.Entity("TaleEngine.Data.Contracts.Entities.EventEntity", b =>

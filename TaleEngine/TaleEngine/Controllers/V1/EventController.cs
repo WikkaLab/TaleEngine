@@ -7,17 +7,17 @@ namespace TaleEngine.API.Controllers.V1
     [Route("api/v1/[controller]")]
     public class EventController : Controller
     {
-        private readonly IEventQueries _command;
+        private readonly IEventQueries _queries;
 
-        public EventController(IEventQueries command)
+        public EventController(IEventQueries queries)
         {
-            _command = command;
+            _queries = queries;
         }
 
         [HttpGet("[action]")]
         public IActionResult GetEvents()
         {
-            var result = _command.EventsNoFilterQuery();
+            var result = _queries.EventsNoFilterQuery();
 
             return Ok(result);
         }
@@ -25,7 +25,14 @@ namespace TaleEngine.API.Controllers.V1
         [HttpGet("[action]")]
         public IActionResult GetEvent(int eventId)
         {
-            var result = _command.EventQuery(eventId);
+            var result = _queries.GetEvent(eventId);
+
+            return Ok(result);
+        }
+
+        [HttpGet("[action]")]
+        public IActionResult GetCurrentEditionInEvent(int eventId) {
+            var result = _queries.GetCurrentEdition(eventId);
 
             return Ok(result);
         }

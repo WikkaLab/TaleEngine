@@ -29,11 +29,19 @@ namespace TaleEngine.CQRS.Queries
             return eventDtos;
         }
 
-        public EventDto EventQuery(int eventId)
+        public EventDto GetEvent(int eventId)
         {
             var ev = _service.GetById(eventId);
 
             var result = EventMapper.Map(ev);
+
+            return result;
+        }
+
+        public EditionInEventDto GetCurrentEdition(int eventId) {
+            var ev = _service.GetById(eventId);
+
+            var result = EventMapper.MapWithCurrentEdition(ev);
 
             return result;
         }

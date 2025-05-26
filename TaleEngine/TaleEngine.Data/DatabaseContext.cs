@@ -63,6 +63,10 @@ namespace TaleEngine.Data
                 .Property(e => e.Id)
                 .ValueGeneratedOnAdd();
             builder.Entity<EventEntity>()
+                .HasOne(ev => ev.CurrentEdition)
+                .WithOne(ed => ed.IsCurrentEditionInEvent)
+                .OnDelete(DeleteBehavior.NoAction);
+            builder.Entity<EventEntity>()
                 .ToTable("Event");
 
             builder.Entity<EditionEntity>()
