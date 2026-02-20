@@ -31,7 +31,7 @@ namespace TaleEngine
         {
             services.AddCustomMVC()
                 .AddCustomDbContext(Configuration)
-                .AddSwaggerGen()
+                .AddCustomSwagger()
                 .AddCustomConfiguration(Configuration);
 
             services.AddRazorPages();
