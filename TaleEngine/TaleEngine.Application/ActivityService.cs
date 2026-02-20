@@ -187,14 +187,10 @@ namespace TaleEngine.Services
             var activeStatus = _activityStatusService
                 .GetById((int)ActivityStatusEnum.ACT);
 
-            IEnumerable<ActivityEntity> query = _unitOfWork.ActivityRepository.GetAll()
-                .Where(a => a.EditionId == edition)
-                .Where(a => a.StatusId == activeStatus.Id)
-                .Where(a => (!string.IsNullOrEmpty(a.Title) && a.Title.Contains(title)) || (string.IsNullOrEmpty(title) && !string.IsNullOrEmpty(a.Title)))
-                .Where(a => (type != 0 && a.TypeId == type) || (type == 0 && a.TypeId != 0))
-                .Where(a => (timeframes != null && timeframes.Contains(a.TimeSlotId)) || (timeframes == null && a.TimeSlotId != 0));
+            var query = _unitOfWork.ActivityRepository.GetAll()
+                .Where(a => a.EditionId == edition && a.StatusId == activeStatus.Id);
 
-            return query;
+            return ApplyActivityFilters(query, type, timeframes, title);
         }
 
         private IEnumerable<ActivityEntity> GetFavActivitiesFiltered(int type, int editionId, List<int> timeframes, string title, int userFav)
@@ -205,11 +201,27 @@ namespace TaleEngine.Services
                 .GetById((int)ActivityStatusEnum.ACT);
 
             var query = _unitOfWork.ActivityRepository.GetAllIncludeFavs(editionId)
-                .Where(a => a.UsersFav.Contains(user))
-                .Where(a => a.StatusId == activeStatus.Id)
-                .Where(a => (!string.IsNullOrEmpty(a.Title) && a.Title.Contains(title)) || (string.IsNullOrEmpty(title) && !string.IsNullOrEmpty(a.Title)))
-                .Where(a => (type != 0 && a.TypeId == type) || (type == 0 && a.TypeId != 0))
-                .Where(a => (timeframes != null && timeframes.Contains(a.TimeSlotId)) || (timeframes == null && a.TimeSlotId != 0));
+                .Where(a => a.UsersFav.Contains(user) && a.StatusId == activeStatus.Id);
+
+            return ApplyActivityFilters(query, type, timeframes, title);
+        }
+
+        private IEnumerable<ActivityEntity> ApplyActivityFilters(IEnumerable<ActivityEntity> query, int type, List<int> timeframes, string title)
+        {
+            if (type != 0)
+            {
+                query = query.Where(a => a.TypeId == type);
+            }
+
+            if (timeframes != null && timeframes.Any())
+            {
+                query = query.Where(a => timeframes.Contains(a.TimeSlotId));
+            }
+
+            if (!string.IsNullOrEmpty(title))
+            {
+                query = query.Where(a => !string.IsNullOrEmpty(a.Title) && a.Title.Contains(title));
+            }
 
             return query;
         }

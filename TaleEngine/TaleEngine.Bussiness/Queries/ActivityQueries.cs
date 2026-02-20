@@ -57,13 +57,12 @@ namespace TaleEngine.CQRS.Queries
             var activitiesQueried = _activityService.GetActiveActivitiesFiltered(request.TypeId, currentEdition.Id,
                 request.TimeFrames, request.Title, skipByPagination, ACTIVITIESPERPAGE, userId);
 
-            var totalActivities = activitiesQueried.ToList().Count;
-            var activities = activitiesQueried.Skip(skipByPagination).Take(ACTIVITIESPERPAGE).ToList();
+            var totalActivities = activitiesQueried.Count();
+            var activities = activitiesQueried.ToList();
 
             var models = ActivityMapper.MapEntityToDto(activities);
 
-            double v = Math.Floor((double)(totalActivities / ACTIVITIESPERPAGE));
-            var totalPages = (int)v;
+            var totalPages = (int)Math.Ceiling((double)totalActivities / ACTIVITIESPERPAGE);
 
             var result = new ActivityFilteredResult
             {
