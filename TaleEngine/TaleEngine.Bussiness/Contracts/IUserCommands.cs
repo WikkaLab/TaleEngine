@@ -7,5 +7,6 @@
         void BanCommand(int userId);
         void ReviewCommand(int userId);
         void MarkAsPendingCommand(int userId);
+        void AssignRoleCommand(int userId, int roleId);
     }
 }

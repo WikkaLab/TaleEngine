@@ -5,7 +5,7 @@ using TaleEngine.CQRS.Contracts;
 namespace TaleEngine.API.Controllers.Backoffice
 {
     [ApiController]
-    [Route("api/v1/[controller]")]
+    [Route("api/[controller]")]
     public class UserController : Controller
     {
         private readonly IUserCommands _command;
@@ -61,6 +61,14 @@ namespace TaleEngine.API.Controllers.Backoffice
         public IActionResult ReviewUser(int userId)
         {
             _command.ReviewCommand(userId);
+
+            return Ok();
+        }
+
+        [HttpPost("[action]")]
+        public IActionResult AssignRole(int userId, int roleId)
+        {
+            _command.AssignRoleCommand(userId, roleId);
 
             return Ok();
         }

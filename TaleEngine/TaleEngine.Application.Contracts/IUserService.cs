@@ -9,5 +9,6 @@ namespace TaleEngine.Services.Contracts
         UserEntity GetById(int id);
         List<UserEntity> GetAllUsers();
         void ChangeUserStatus(int id, User user);
+        void AssignRoleToUser(int id, int roleId);
     }
 }
