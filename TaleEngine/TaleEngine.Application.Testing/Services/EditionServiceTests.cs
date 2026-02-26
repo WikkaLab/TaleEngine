@@ -2,10 +2,9 @@
 using System.Diagnostics.CodeAnalysis;
 using TaleEngine.Data.Contracts;
 using TaleEngine.Data.Contracts.Entities;
-using TaleEngine.Services;
 using Xunit;
 
-namespace TaleEngine.DbServices.Testing.Services
+namespace TaleEngine.Services.Testing.Services
 {
     [ExcludeFromCodeCoverage]
     public class EditionServiceTests

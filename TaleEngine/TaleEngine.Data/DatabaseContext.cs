@@ -153,6 +153,8 @@ namespace TaleEngine.Data
                 .ToTable("Permission");
 
             builder.Entity<PermissionValueEntity>()
+                .HasData(InitialPermissionValueData.GetPermissionValueData().ToArray());
+            builder.Entity<PermissionValueEntity>()
                 .ToTable("PermissionValue");
 
             builder.Entity<ActivityTypeEntity>()

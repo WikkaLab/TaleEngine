@@ -35,7 +35,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{FD89CD00-60B
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaleEngine.Fakes", "TaleEngine.Fakes\TaleEngine.Fakes.csproj", "{A41A36ED-768C-43DB-B39A-CAD91497323E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaleEngine.DbServices.Testing", "TaleEngine.Application.Testing\TaleEngine.DbServices.Testing.csproj", "{EE100298-B48B-4EF6-A3B7-900E7A03199E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaleEngine.Services.Testing", "TaleEngine.Application.Testing\TaleEngine.Services.Testing.csproj", "{EE100298-B48B-4EF6-A3B7-900E7A03199E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaleEngine.CQRS.Testing", "TaleEngine.Business.Testing\TaleEngine.CQRS.Testing.csproj", "{66D44ECB-8B79-47A8-92A2-A77297980C64}"
 EndProject

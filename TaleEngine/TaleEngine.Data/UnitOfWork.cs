@@ -22,6 +22,9 @@ namespace TaleEngine.Data
             RoleRepository = new RoleRepository(_context);
             UserRepository = new UserRepository(_context);
             UserStatusRepository = new UserStatusRepository(_context);
+            PermissionRepository = new PermissionRepository(_context);
+            PermissionValueRepository = new PermissionValueRepository(_context);
+            AssignedPermissionRepository = new AssignedPermissionRepository(_context);
         }
 
         public IEventRepository EventRepository { get; }
@@ -33,5 +36,8 @@ namespace TaleEngine.Data
         public IRoleRepository RoleRepository { get; set; }
         public IUserRepository UserRepository { get; set; }
         public IUserStatusRepository UserStatusRepository { get; set; }
+        public IPermissionRepository PermissionRepository { get; set; }
+        public IPermissionValueRepository PermissionValueRepository { get; set; }
+        public IAssignedPermissionRepository AssignedPermissionRepository { get; set; }
     }
 }

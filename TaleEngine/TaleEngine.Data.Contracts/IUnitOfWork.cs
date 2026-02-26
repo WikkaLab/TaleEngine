@@ -13,5 +13,8 @@ namespace TaleEngine.Data.Contracts
         IRoleRepository RoleRepository { get; }
         IUserRepository UserRepository { get; }
         IUserStatusRepository UserStatusRepository { get; }
+        IPermissionRepository PermissionRepository { get; }
+        IPermissionValueRepository PermissionValueRepository { get; }
+        IAssignedPermissionRepository AssignedPermissionRepository { get; }
     }
 }

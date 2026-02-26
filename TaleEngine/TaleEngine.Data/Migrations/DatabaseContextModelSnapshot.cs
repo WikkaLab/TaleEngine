@@ -510,6 +510,20 @@ namespace TaleEngine.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("PermissionValue", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Abbr = "ALLOW",
+                            Name = "Allow"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Abbr = "DENY",
+                            Name = "Deny"
+                        });
                 });
 
             modelBuilder.Entity("TaleEngine.Data.Contracts.Entities.RoleEntity", b =>
