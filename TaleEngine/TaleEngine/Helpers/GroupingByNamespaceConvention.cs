@@ -11,7 +11,7 @@ namespace TaleEngine.Helpers
         {
             var controllerNamespace = controller.ControllerType.Namespace;
             var apiVersion = controllerNamespace.Split(".").Last().ToLower();
-            if (!apiVersion.StartsWith("v")) { apiVersion = "v1"; }
+            if (!apiVersion.StartsWith("v") && apiVersion != "backoffice") { apiVersion = "v1"; }
             controller.ApiExplorer.GroupName = apiVersion;
         }
     }

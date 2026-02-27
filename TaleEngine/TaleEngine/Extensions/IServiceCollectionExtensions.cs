@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 using System;
 using TaleEngine.Data;
 using TaleEngine.Helpers;
@@ -69,6 +69,17 @@ namespace TaleEngine.Extensions
                 {
                     Title = "TaleEngine API v2",
                     Version = "v2",
+                    Contact = new OpenApiContact
+                    {
+                        Name = "Elena G",
+                        Email = "elena.guzbla@gmail.com",
+                        Url = new Uri("https://beelzenef.github.io")
+                    }
+                });
+                options.SwaggerDoc("backoffice", new OpenApiInfo
+                {
+                    Title = "TaleEngine Backoffice API",
+                    Version = "backoffice",
                     Contact = new OpenApiContact
                     {
                         Name = "Elena G",

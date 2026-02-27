@@ -1,6 +1,6 @@
+using Asp.Versioning;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -42,7 +42,7 @@ namespace TaleEngine
                 config.DefaultApiVersion = new ApiVersion(1, 0);
                 config.ReportApiVersions = true;
                 config.AssumeDefaultVersionWhenUnspecified = true;
-                config.UseApiBehavior = false;
+                //config.UseApiBehavior = false;
             });
 
             services.AddDbContext<IDatabaseContext, DatabaseContext>();
@@ -98,6 +98,7 @@ namespace TaleEngine
                 options.DocumentTitle = "TaleEngine Docs";
                 options.SwaggerEndpoint($"/swagger/v1/swagger.json", $"v1");
                 options.SwaggerEndpoint($"/swagger/v2/swagger.json", $"v2");
+                options.SwaggerEndpoint($"/swagger/backoffice/swagger.json", $"Backoffice");
             });
 
             app.Build();

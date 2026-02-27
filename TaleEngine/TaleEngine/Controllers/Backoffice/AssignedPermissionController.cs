@@ -3,7 +3,7 @@ using System;
 using TaleEngine.API.Contracts.Dtos.Requests;
 using TaleEngine.CQRS.Contracts;
 
-namespace TaleEngine.API.Controllers.V2
+namespace TaleEngine.API.Controllers.Backoffice
 {
     [ApiController]
     [Route("api/[controller]")]
