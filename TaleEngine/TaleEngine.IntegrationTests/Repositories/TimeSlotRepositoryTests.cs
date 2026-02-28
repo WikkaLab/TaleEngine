@@ -38,9 +38,11 @@ namespace TaleEngine.IntegrationTests.Repositories
             var initialId = item.Id;
 
             repository.Insert(item);
+            repository.Save();
 
             // delete the item
             repository.Delete(item.Id);
+            repository.Save();
 
             // verify it's no longer there
             Assert.DoesNotContain(repository.GetAll(), i => i.Id == initialId);

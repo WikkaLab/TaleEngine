@@ -40,9 +40,11 @@ namespace TaleEngine.IntegrationTests.Repositories
             var item = ActivityBuilder.BuildActivityType();
             item.Name = initialName;
             repository.Insert(item);
+            repository.Save();
 
             // delete the item
             repository.Delete(item.Id);
+            repository.Save();
 
             // verify it's no longer there
             Assert.DoesNotContain(repository.GetAll(), i => i.Name == initialName);
@@ -57,6 +59,7 @@ namespace TaleEngine.IntegrationTests.Repositories
             var initialDescription = item.Description;
 
             repository.Insert(item);
+            repository.Save();
 
             // detach the item so we get a different instance
             _dbContext.Entry(item).State = EntityState.Detached;
@@ -70,6 +73,8 @@ namespace TaleEngine.IntegrationTests.Repositories
 
             // Update the item
             repository.Update(newItem);
+            repository.Save();
+
             var updatedItem = repository.GetAll().FirstOrDefault(i => i.Description == newDescription);
 
             Assert.NotNull(updatedItem);

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using TaleEngine.API.Contracts.Dtos;
 using TaleEngine.API.Contracts.Dtos.Requests;
-using TaleEngine.API.Controllers.V2;
+using TaleEngine.API.Controllers.Backoffice;
 using TaleEngine.CQRS.Contracts;
 using Xunit;
 

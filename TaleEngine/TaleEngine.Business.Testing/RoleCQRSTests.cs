@@ -43,6 +43,7 @@ namespace TaleEngine.CQRS.Testing
         {
             // Arrange
             RoleEntity role = null;
+            int roleId = 1;
 
             roleServMock.Setup(x => x.GetRole(It.IsAny<int>()))
                 .Returns(role);
@@ -50,7 +51,7 @@ namespace TaleEngine.CQRS.Testing
             var target = new RoleQueries(roleServMock.Object);
 
             // Act
-            var result = target.GetRoleQuery(role.Id);
+            var result = target.GetRoleQuery(roleId);
 
             // Assert
             result.Should().BeNull();

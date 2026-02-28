@@ -101,8 +101,6 @@ namespace TaleEngine
                 options.SwaggerEndpoint($"/swagger/backoffice/swagger.json", $"Backoffice");
             });
 
-            app.Build();
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

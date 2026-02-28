@@ -93,7 +93,10 @@ namespace TaleEngine.API.Testing.Controllers.Backoffice
         {
             // Arrange
             int roleId = 1;
+            RoleDto roleDto = new RoleDto();
             Mock<IRoleQueries> serviceMock = new();
+            serviceMock.Setup(x => x.GetRoleQuery(It.IsAny<int>()))
+                .Returns(roleDto);
 
             RolesController target = new(serviceMock.Object);
 
@@ -101,8 +104,9 @@ namespace TaleEngine.API.Testing.Controllers.Backoffice
             var result = target.GetRole(roleId);
 
             // Assert
-            var resultAsObjResult = result as OkResult;
+            var resultAsObjResult = result as OkObjectResult;
             result.Should().NotBeNull();
+            resultAsObjResult.Should().NotBeNull();
             resultAsObjResult.StatusCode.Should().Be(StatusCodes.Status200OK);
         }
     }

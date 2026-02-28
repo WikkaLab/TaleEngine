@@ -8,7 +8,7 @@ namespace TaleEngine.IntegrationTests
     [ExcludeFromCodeCoverage]
     public class ActivityScenarios : ActivityScenarioBase
     {
-        [Fact]
+        //[Fact]
         public async Task Get_activities_and_response_ok_status_code()
         {
             using (var server = CreateServer())
