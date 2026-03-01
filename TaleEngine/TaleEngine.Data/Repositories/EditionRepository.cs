@@ -17,30 +17,36 @@ namespace TaleEngine.Data.Repositories
 
         public void Delete(int entityId)
         {
-            var entity = GetById(entityId);
-
-            _context.Editions.Remove(entity);
+            var entity = _context.Editions
+                .FirstOrDefault(ed => ed.Id == entityId && !ed.IsDeleted);
+            
+            if (entity != null)
+            {
+                entity.IsDeleted = true;
+                _context.Editions.Update(entity);
+            }
         }
 
         public List<EditionEntity> GetAll()
         {
-            return _context.Editions.ToList();
+            return _context.Editions.Where(ed => !ed.IsDeleted).ToList();
         }
 
         public EditionEntity GetById(int entityId)
         {
             return _context.Editions
-                .FirstOrDefault(ed => ed.Id == entityId);
+                .FirstOrDefault(ed => ed.Id == entityId && !ed.IsDeleted);
         }
 
         public List<EditionEntity> GetEditions(int ofEvent)
         {
-            return _context.Editions.Where(ed => ed.EventId == ofEvent).ToList();
+            return _context.Editions.Where(ed => ed.EventId == ofEvent && !ed.IsDeleted).ToList();
         }
 
         public EditionEntity GetLastEditionInEvent(int ofEvent)
         {
             return _context.Editions
+                .Where(ed => !ed.IsDeleted)
                 .OrderBy(x => x.DateInit)
                 .LastOrDefault(ed => ed.EventId == ofEvent);
         }

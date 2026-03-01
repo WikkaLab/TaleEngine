@@ -18,9 +18,14 @@ namespace TaleEngine.Data.Repositories
 
         public void Delete(int entityId)
         {
-            var entity = GetById(entityId);
-
-            _context.AssignedPermissions.Remove(entity);
+            var entity = _context.AssignedPermissions
+                .FirstOrDefault(ap => ap.Id == entityId && !ap.IsDeleted);
+            
+            if (entity != null)
+            {
+                entity.IsDeleted = true;
+                _context.AssignedPermissions.Update(entity);
+            }
         }
 
         public void DeleteByRoleIdAndPermissionId(int roleId, int permissionId, int permissionValueId)
@@ -28,11 +33,13 @@ namespace TaleEngine.Data.Repositories
             var entity = _context.AssignedPermissions
                 .FirstOrDefault(ap => ap.RoleId == roleId 
                     && ap.PermissionId == permissionId 
-                    && ap.PermissionValueId == permissionValueId);
+                    && ap.PermissionValueId == permissionValueId
+                    && !ap.IsDeleted);
 
             if (entity != null)
             {
-                _context.AssignedPermissions.Remove(entity);
+                entity.IsDeleted = true;
+                _context.AssignedPermissions.Update(entity);
             }
         }
 
@@ -42,6 +49,7 @@ namespace TaleEngine.Data.Repositories
                 .Include(ap => ap.Permission)
                 .Include(ap => ap.PermissionValue)
                 .Include(ap => ap.Role)
+                .Where(ap => !ap.IsDeleted)
                 .ToList();
         }
 
@@ -51,7 +59,7 @@ namespace TaleEngine.Data.Repositories
                 .Include(ap => ap.Permission)
                 .Include(ap => ap.PermissionValue)
                 .Include(ap => ap.Role)
-                .FirstOrDefault(ap => ap.Id == entityId);
+                .FirstOrDefault(ap => ap.Id == entityId && !ap.IsDeleted);
         }
 
         public List<AssignedPermissionEntity> GetByRoleId(int roleId)
@@ -59,7 +67,7 @@ namespace TaleEngine.Data.Repositories
             return _context.AssignedPermissions
                 .Include(ap => ap.Permission)
                 .Include(ap => ap.PermissionValue)
-                .Where(ap => ap.RoleId == roleId)
+                .Where(ap => ap.RoleId == roleId && !ap.IsDeleted)
                 .ToList();
         }
 

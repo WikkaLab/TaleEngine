@@ -12,6 +12,8 @@ namespace TaleEngine.Data.Contracts.Entities
         public DateTime? CreateDateTime { get; set; }
         public DateTime? ModificationDate { get; set; }
 
+        public bool IsDeleted { get; set; } = false;
+
         public void SetAudit(EntityState state)
         {
             var now = DateTime.UtcNow;

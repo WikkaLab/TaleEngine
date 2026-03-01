@@ -23,13 +23,13 @@ namespace TaleEngine.Data.Repositories
 
         public List<UserStatusEntity> GetAll()
         {
-            return _context.UserStatuses.ToList();
+            return _context.UserStatuses.Where(us => !us.IsDeleted).ToList();
         }
 
         public UserStatusEntity GetById(int entityId)
         {
             return _context.UserStatuses
-                .FirstOrDefault(a => a.Id == entityId);
+                .FirstOrDefault(a => a.Id == entityId && !a.IsDeleted);
         }
 
         public void Insert(UserStatusEntity entity)

@@ -18,20 +18,25 @@ namespace TaleEngine.Data.Repositories
 
         public void Delete(int entityId)
         {
-            var entity = GetById(entityId);
-
-            _context.Roles.Remove(entity);
+            var entity = _context.Roles
+                .FirstOrDefault(x => x.Id == entityId && !x.IsDeleted);
+            
+            if (entity != null)
+            {
+                entity.IsDeleted = true;
+                _context.Roles.Update(entity);
+            }
         }
 
         public List<RoleEntity> GetAll()
         {
-            return _context.Roles.ToList();
+            return _context.Roles.Where(x => !x.IsDeleted).ToList();
         }
 
         public RoleEntity GetById(int entityId)
         {
             return _context.Roles
-                .FirstOrDefault(x => x.Id == entityId);
+                .FirstOrDefault(x => x.Id == entityId && !x.IsDeleted);
         }
 
         public void Insert(RoleEntity entity)

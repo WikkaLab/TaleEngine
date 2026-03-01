@@ -17,20 +17,25 @@ namespace TaleEngine.Data.Repositories
 
         public void Delete(int entityId)
         {
-            var entity = GetById(entityId);
-
-            _context.ActivityStatuses.Remove(entity);
+            var entity = _context.ActivityStatuses
+                .FirstOrDefault(aS => aS.Id == entityId && !aS.IsDeleted);
+            
+            if (entity != null)
+            {
+                entity.IsDeleted = true;
+                _context.ActivityStatuses.Update(entity);
+            }
         }
 
         public List<ActivityStatusEntity> GetAll()
         {
-            return _context.ActivityStatuses.ToList();
+            return _context.ActivityStatuses.Where(aS => !aS.IsDeleted).ToList();
         }
 
         public ActivityStatusEntity GetById(int entityId)
         {
             return _context.ActivityStatuses
-                .FirstOrDefault(aS => aS.Id == entityId);
+                .FirstOrDefault(aS => aS.Id == entityId && !aS.IsDeleted);
         }
 
         public void Insert(ActivityStatusEntity entity)

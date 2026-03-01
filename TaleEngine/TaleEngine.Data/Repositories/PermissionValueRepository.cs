@@ -17,20 +17,25 @@ namespace TaleEngine.Data.Repositories
 
         public void Delete(int entityId)
         {
-            var entity = GetById(entityId);
-
-            _context.PermissionsValue.Remove(entity);
+            var entity = _context.PermissionsValue
+                .FirstOrDefault(pv => pv.Id == entityId && !pv.IsDeleted);
+            
+            if (entity != null)
+            {
+                entity.IsDeleted = true;
+                _context.PermissionsValue.Update(entity);
+            }
         }
 
         public List<PermissionValueEntity> GetAll()
         {
-            return _context.PermissionsValue.ToList();
+            return _context.PermissionsValue.Where(pv => !pv.IsDeleted).ToList();
         }
 
         public PermissionValueEntity GetById(int entityId)
         {
             return _context.PermissionsValue
-                .FirstOrDefault(pv => pv.Id == entityId);
+                .FirstOrDefault(pv => pv.Id == entityId && !pv.IsDeleted);
         }
 
         public void Insert(PermissionValueEntity entity)

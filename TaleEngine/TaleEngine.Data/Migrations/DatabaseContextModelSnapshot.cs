@@ -17,7 +17,7 @@ namespace TaleEngine.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.0")
+                .HasAnnotation("ProductVersion", "10.0.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -105,6 +105,9 @@ namespace TaleEngine.Data.Migrations
                     b.Property<string>("Image")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime?>("ModificationDate")
                         .HasColumnType("datetime2");
 
@@ -159,6 +162,9 @@ namespace TaleEngine.Data.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime?>("ModificationDate")
                         .HasColumnType("datetime2");
 
@@ -175,6 +181,7 @@ namespace TaleEngine.Data.Migrations
                             Id = 1,
                             Abbr = "PEN",
                             Description = "Waiting for approval",
+                            IsDeleted = false,
                             Name = "Pending"
                         },
                         new
@@ -182,6 +189,7 @@ namespace TaleEngine.Data.Migrations
                             Id = 2,
                             Abbr = "ACT",
                             Description = "Accepted and waiting for participants",
+                            IsDeleted = false,
                             Name = "Active"
                         },
                         new
@@ -189,6 +197,7 @@ namespace TaleEngine.Data.Migrations
                             Id = 3,
                             Abbr = "REV",
                             Description = "In revision process",
+                            IsDeleted = false,
                             Name = "Revision"
                         },
                         new
@@ -196,6 +205,7 @@ namespace TaleEngine.Data.Migrations
                             Id = 4,
                             Abbr = "BAN",
                             Description = "Excluded as it doesn't align with the core values",
+                            IsDeleted = false,
                             Name = "Banned"
                         });
                 });
@@ -217,6 +227,9 @@ namespace TaleEngine.Data.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime?>("ModificationDate")
                         .HasColumnType("datetime2");
 
@@ -233,6 +246,7 @@ namespace TaleEngine.Data.Migrations
                             Id = 1,
                             Abbr = "TTRPG",
                             Description = "Tabletop roleplaying game session",
+                            IsDeleted = false,
                             Name = "Tabletop role-playing games"
                         },
                         new
@@ -240,6 +254,7 @@ namespace TaleEngine.Data.Migrations
                             Id = 2,
                             Abbr = "BG",
                             Description = "Board games for everyone!",
+                            IsDeleted = false,
                             Name = "Board games"
                         },
                         new
@@ -247,6 +262,7 @@ namespace TaleEngine.Data.Migrations
                             Id = 3,
                             Abbr = "TOU",
                             Description = "A board or card game competition",
+                            IsDeleted = false,
                             Name = "Tournament"
                         },
                         new
@@ -254,6 +270,7 @@ namespace TaleEngine.Data.Migrations
                             Id = 4,
                             Abbr = "DEM",
                             Description = "Show your brand new project to the community",
+                            IsDeleted = false,
                             Name = "Demos"
                         },
                         new
@@ -261,6 +278,7 @@ namespace TaleEngine.Data.Migrations
                             Id = 5,
                             Abbr = "LARP",
                             Description = "Role-play games in live action",
+                            IsDeleted = false,
                             Name = "Live action role-playing"
                         });
                 });
@@ -281,6 +299,9 @@ namespace TaleEngine.Data.Migrations
 
                     b.Property<int>("Id")
                         .HasColumnType("int");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime?>("ModificationDate")
                         .HasColumnType("datetime2");
@@ -314,6 +335,9 @@ namespace TaleEngine.Data.Migrations
                     b.Property<int>("EventId")
                         .HasColumnType("int");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime?>("ModificationDate")
                         .HasColumnType("datetime2");
 
@@ -337,6 +361,9 @@ namespace TaleEngine.Data.Migrations
 
                     b.Property<int>("CurrentEditionId")
                         .HasColumnType("int");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime?>("ModificationDate")
                         .HasColumnType("datetime2");
@@ -369,6 +396,9 @@ namespace TaleEngine.Data.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime?>("ModificationDate")
                         .HasColumnType("datetime2");
 
@@ -384,102 +414,119 @@ namespace TaleEngine.Data.Migrations
                         {
                             Id = 1,
                             Abbr = "SEE",
+                            IsDeleted = false,
                             Name = "See activities"
                         },
                         new
                         {
                             Id = 2,
                             Abbr = "REQJOIN",
+                            IsDeleted = false,
                             Name = "Request join"
                         },
                         new
                         {
                             Id = 3,
                             Abbr = "MARKFAV",
+                            IsDeleted = false,
                             Name = "Mark as favourite"
                         },
                         new
                         {
                             Id = 4,
                             Abbr = "ABANACT",
+                            IsDeleted = false,
                             Name = "Abandon activity"
                         },
                         new
                         {
                             Id = 5,
                             Abbr = "PROPACT",
+                            IsDeleted = false,
                             Name = "Propose activity"
                         },
                         new
                         {
                             Id = 6,
                             Abbr = "EDITACT",
+                            IsDeleted = false,
                             Name = "Edit proposed activity"
                         },
                         new
                         {
                             Id = 7,
                             Abbr = "DELACT",
+                            IsDeleted = false,
                             Name = "Delete proposed activity"
                         },
                         new
                         {
                             Id = 8,
                             Abbr = "SEEPART",
+                            IsDeleted = false,
                             Name = "See participants"
                         },
                         new
                         {
                             Id = 9,
                             Abbr = "ACCACTEDIT",
+                            IsDeleted = false,
                             Name = "Accept activity edit"
                         },
                         new
                         {
                             Id = 10,
                             Abbr = "ACCACTDEL",
+                            IsDeleted = false,
                             Name = "Accept activity deletion"
                         },
                         new
                         {
                             Id = 11,
                             Abbr = "MARKREV",
+                            IsDeleted = false,
                             Name = "Mark proposal for revision"
                         },
                         new
                         {
                             Id = 12,
                             Abbr = "CRTU",
+                            IsDeleted = false,
                             Name = "Create user"
                         },
                         new
                         {
                             Id = 13,
                             Abbr = "DELU",
+                            IsDeleted = false,
                             Name = "Delete user"
                         },
                         new
                         {
                             Id = 14,
                             Abbr = "BANU",
+                            IsDeleted = false,
                             Name = "Ban user"
                         },
                         new
                         {
                             Id = 15,
                             Abbr = "ACCACTPROP",
+                            IsDeleted = false,
                             Name = "Accept activity proposal"
                         },
                         new
                         {
                             Id = 16,
                             Abbr = "DELACTPROP",
+                            IsDeleted = false,
                             Name = "Delete activity proposal"
                         },
                         new
                         {
                             Id = 17,
                             Abbr = "EDITU",
+                            IsDeleted = false,
                             Name = "Edit user"
                         });
                 });
@@ -501,6 +548,9 @@ namespace TaleEngine.Data.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime?>("ModificationDate")
                         .HasColumnType("datetime2");
 
@@ -516,12 +566,14 @@ namespace TaleEngine.Data.Migrations
                         {
                             Id = 1,
                             Abbr = "ALLOW",
+                            IsDeleted = false,
                             Name = "Allow"
                         },
                         new
                         {
                             Id = 2,
                             Abbr = "DENY",
+                            IsDeleted = false,
                             Name = "Deny"
                         });
                 });
@@ -546,6 +598,9 @@ namespace TaleEngine.Data.Migrations
                     b.Property<int?>("EventId")
                         .HasColumnType("int");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime?>("ModificationDate")
                         .HasColumnType("datetime2");
 
@@ -565,6 +620,7 @@ namespace TaleEngine.Data.Migrations
                             Abbr = "MNG",
                             Description = "Manager of the app",
                             EventId = 2,
+                            IsDeleted = false,
                             Name = "Manager"
                         },
                         new
@@ -573,6 +629,7 @@ namespace TaleEngine.Data.Migrations
                             Abbr = "OPR",
                             Description = "Operator in the app",
                             EventId = 2,
+                            IsDeleted = false,
                             Name = "Operator"
                         },
                         new
@@ -581,6 +638,7 @@ namespace TaleEngine.Data.Migrations
                             Abbr = "CRT",
                             Description = "Creator content in the events",
                             EventId = 2,
+                            IsDeleted = false,
                             Name = "Creator"
                         },
                         new
@@ -589,6 +647,7 @@ namespace TaleEngine.Data.Migrations
                             Abbr = "USR",
                             Description = "Player in the application",
                             EventId = 2,
+                            IsDeleted = false,
                             Name = "User"
                         });
                 });
@@ -604,6 +663,9 @@ namespace TaleEngine.Data.Migrations
                     b.Property<DateTime?>("CreateDateTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime?>("ModificationDate")
                         .HasColumnType("datetime2");
 
@@ -618,16 +680,19 @@ namespace TaleEngine.Data.Migrations
                         new
                         {
                             Id = 1,
+                            IsDeleted = false,
                             Name = "MON"
                         },
                         new
                         {
                             Id = 2,
+                            IsDeleted = false,
                             Name = "EVE"
                         },
                         new
                         {
                             Id = 3,
+                            IsDeleted = false,
                             Name = "NGH"
                         });
                 });
@@ -645,6 +710,9 @@ namespace TaleEngine.Data.Migrations
 
                     b.Property<DateTime?>("CreateDateTime")
                         .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Mail")
                         .HasColumnType("nvarchar(max)");
@@ -691,6 +759,9 @@ namespace TaleEngine.Data.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime?>("ModificationDate")
                         .HasColumnType("datetime2");
 
@@ -707,6 +778,7 @@ namespace TaleEngine.Data.Migrations
                             Id = 1,
                             Abbr = "PEN",
                             Description = "Pending to confirm",
+                            IsDeleted = false,
                             Name = "Pending"
                         },
                         new
@@ -714,6 +786,7 @@ namespace TaleEngine.Data.Migrations
                             Id = 2,
                             Abbr = "ACT",
                             Description = "Active user",
+                            IsDeleted = false,
                             Name = "Active"
                         },
                         new
@@ -721,6 +794,7 @@ namespace TaleEngine.Data.Migrations
                             Id = 3,
                             Abbr = "REV",
                             Description = "In revision process",
+                            IsDeleted = false,
                             Name = "Revision"
                         },
                         new
@@ -728,6 +802,7 @@ namespace TaleEngine.Data.Migrations
                             Id = 4,
                             Abbr = "BAN",
                             Description = "Banned from event",
+                            IsDeleted = false,
                             Name = "Banned"
                         },
                         new
@@ -735,6 +810,7 @@ namespace TaleEngine.Data.Migrations
                             Id = 5,
                             Abbr = "INC",
                             Description = "Disabled due to inactivity",
+                            IsDeleted = false,
                             Name = "Inactive"
                         });
                 });

@@ -18,20 +18,25 @@ namespace TaleEngine.Data.Repositories
 
         public void Delete(int entityId)
         {
-            var entity = GetById(entityId);
-
-            _context.Activities.Remove(entity);
+            var entity = _context.Activities
+                .FirstOrDefault(a => a.Id == entityId && !a.IsDeleted);
+            
+            if (entity != null)
+            {
+                entity.IsDeleted = true;
+                _context.Activities.Update(entity);
+            }
         }
 
         public List<ActivityEntity> GetAll()
         {
-            return _context.Activities.ToList();
+            return _context.Activities.Where(a => !a.IsDeleted).ToList();
         }
 
         public ActivityEntity GetById(int entityId)
         {
             return _context.Activities
-                .FirstOrDefault(a => a.Id == entityId);
+                .FirstOrDefault(a => a.Id == entityId && !a.IsDeleted);
         }
 
         public void Insert(ActivityEntity entity)
@@ -52,14 +57,14 @@ namespace TaleEngine.Data.Repositories
         public List<ActivityEntity> GetEventActivities(int editionId)
         {
             return _context.Activities
-                .Where(a => a.EditionId == editionId)
+                .Where(a => a.EditionId == editionId && !a.IsDeleted)
                 .ToList();
         }
 
         public List<ActivityEntity> GetActivitiesByStatus(int edition, int status)
         {
             return _context.Activities
-                .Where(a => a.EditionId == edition && a.StatusId == status)
+                .Where(a => a.EditionId == edition && a.StatusId == status && !a.IsDeleted)
                 .ToList();
         }
 
@@ -67,7 +72,7 @@ namespace TaleEngine.Data.Repositories
             string title, int skip, int activitiesPerPage)
         {
             return _context.Activities
-                .Where(a => a.EditionId == edition && a.StatusId == status)
+                .Where(a => a.EditionId == edition && a.StatusId == status && !a.IsDeleted)
                 .Where(a => a.Title.Contains(title))
                 .Skip(skip)
                 .Take(activitiesPerPage)
@@ -77,7 +82,7 @@ namespace TaleEngine.Data.Repositories
         public List<ActivityEntity> GetLastThreeActivities(int status, int edition, int numberOfActivities)
         {
             return _context.Activities
-                .Where(a => a.EditionId == edition && a.StatusId == status)
+                .Where(a => a.EditionId == edition && a.StatusId == status && !a.IsDeleted)
                 .OrderByDescending(a => a.CreateDateTime)
                 .Take(numberOfActivities)
                 .ToList();
@@ -92,6 +97,7 @@ namespace TaleEngine.Data.Repositories
         {
             return _context.Activities
                 .Include(a => a.UsersFav)
+                .Where(a => !a.IsDeleted)
                 .ToList();
         }
     }
