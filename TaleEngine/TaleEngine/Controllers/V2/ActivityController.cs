@@ -6,6 +6,7 @@ using TaleEngine.CQRS.Contracts;
 
 namespace TaleEngine.API.Controllers.V2
 {
+    [Obsolete("This API version is deprecated. Please use V1 instead.")]
     [ApiController]
     [Route("api/v2/[controller]")]
     public class ActivityController : Controller
