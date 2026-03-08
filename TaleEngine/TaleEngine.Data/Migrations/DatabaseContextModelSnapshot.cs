@@ -67,6 +67,21 @@ namespace TaleEngine.Data.Migrations
                     b.ToTable("ActivityEnrollments", (string)null);
                 });
 
+            modelBuilder.Entity("ActivityEntityUserEntity3", b =>
+                {
+                    b.Property<int>("ActivitiesWaitingListId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UsersWaitingListId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ActivitiesWaitingListId", "UsersWaitingListId");
+
+                    b.HasIndex("UsersWaitingListId");
+
+                    b.ToTable("ActivityWaitingList", (string)null);
+                });
+
             modelBuilder.Entity("RoleEntityUserEntity", b =>
                 {
                     b.Property<int>("RolesId")
@@ -856,6 +871,21 @@ namespace TaleEngine.Data.Migrations
                     b.HasOne("TaleEngine.Data.Contracts.Entities.UserEntity", null)
                         .WithMany()
                         .HasForeignKey("UsersPlayId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ActivityEntityUserEntity3", b =>
+                {
+                    b.HasOne("TaleEngine.Data.Contracts.Entities.ActivityEntity", null)
+                        .WithMany()
+                        .HasForeignKey("ActivitiesWaitingListId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TaleEngine.Data.Contracts.Entities.UserEntity", null)
+                        .WithMany()
+                        .HasForeignKey("UsersWaitingListId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

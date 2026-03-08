@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Linq;
 using TaleEngine.Aggregates.ActivityAggregate;
 using TaleEngine.API.Contracts.Dtos;
+using TaleEngine.API.Contracts.Dtos.Requests;
+using TaleEngine.API.Contracts.Dtos.Results;
 using TaleEngine.CQRS.Contracts;
 using TaleEngine.CQRS.Mappers;
 using TaleEngine.Cross.Enums;
@@ -82,6 +85,60 @@ namespace TaleEngine.CQRS.Commands
             model.SetStatus(status.Id);
 
             _activityService.UpdateActivity(activityId, model);
+        }
+
+        public ActivityEnrollmentResult EnrollInActivityCommand(ActivityEnrollmentRequest request)
+        {
+            var activity = _activityService.GetById(request.ActivityId);
+            
+            if (activity == null)
+            {
+                return new ActivityEnrollmentResult
+                {
+                    Success = false,
+                    Message = "Activity not found",
+                    ActivityId = request.ActivityId,
+                    UserId = request.UserId
+                };
+            }
+
+            var success = _activityService.EnrollUserInActivity(request.ActivityId, request.UserId);
+            
+            if (!success)
+            {
+                return new ActivityEnrollmentResult
+                {
+                    Success = false,
+                    Message = "Enrollment failed. User may already be enrolled or in waiting list.",
+                    ActivityId = request.ActivityId,
+                    UserId = request.UserId
+                };
+            }
+
+            // Get updated activity to check enrollment status
+            var updatedActivity = _activityService.GetById(request.ActivityId);
+            var enrolledUsers = updatedActivity.UsersPlay?.Count ?? 0;
+            var isWaitingList = enrolledUsers >= activity.Places;
+            var position = isWaitingList ? _activityService.GetUserPositionInWaitingList(request.ActivityId, request.UserId) : null;
+
+            return new ActivityEnrollmentResult
+            {
+                Success = true,
+                ActivityId = request.ActivityId,
+                UserId = request.UserId,
+                IsWaitingList = isWaitingList,
+                PositionInWaitingList = position,
+                AvailablePlaces = activity.Places - enrolledUsers,
+                TotalPlaces = activity.Places,
+                Message = isWaitingList 
+                    ? $"Added to waiting list at position {position}" 
+                    : "Successfully enrolled in activity"
+            };
+        }
+
+        public bool LeaveActivityCommand(ActivityEnrollmentRequest request)
+        {
+            return _activityService.RemoveUserFromActivity(request.ActivityId, request.UserId);
         }
     }
 }

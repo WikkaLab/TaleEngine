@@ -17,5 +17,11 @@ namespace TaleEngine.Services.Contracts
         int CreateActivity(int editionId, Activity activity);
         int UpdateActivity(int id, Activity activity);
 
+        // Waiting List methods
+        bool EnrollUserInActivity(int activityId, int userId);
+        bool RemoveUserFromActivity(int activityId, int userId);
+        List<UserEntity> GetWaitingList(int activityId);
+        int? GetUserPositionInWaitingList(int activityId, int userId);
+        bool PromoteFromWaitingList(int activityId);
     }
 }

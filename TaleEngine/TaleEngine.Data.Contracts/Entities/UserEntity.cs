@@ -19,5 +19,6 @@ namespace TaleEngine.Data.Contracts.Entities
         public List<ActivityEntity> ActivitiesPlay { get; set; }
         public List<ActivityEntity> ActivitiesFav { get; set; }
         public List<ActivityEntity> ActivitiesCreate { get; set; }
+        public List<ActivityEntity> ActivitiesWaitingList { get; set; }
     }
 }

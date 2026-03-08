@@ -11,5 +11,7 @@ namespace TaleEngine.CQRS.Contracts
         List<ActivityDto> PendingActivitiesQuery(int editionId);
         ActivityFilteredResult ActiveActivitiesFilteredQuery(ActivityFilterRequest activityFilterRequest, int userId = default);
         List<ActivityDto> LastThreeActivitiesQuery(int editionId);
+        WaitingListResult GetWaitingListQuery(int activityId);
+        int? GetUserPositionInWaitingListQuery(int activityId, int userId);
     }
 }

@@ -83,5 +83,37 @@ namespace TaleEngine.CQRS.Queries
 
             return result;
         }
+
+        public WaitingListResult GetWaitingListQuery(int activityId)
+        {
+            var activity = _activityService.GetById(activityId);
+            
+            if (activity == null)
+            {
+                return null;
+            }
+
+            var waitingListUsers = _activityService.GetWaitingList(activityId);
+
+            var result = new WaitingListResult
+            {
+                ActivityId = activityId,
+                ActivityTitle = activity.Title,
+                TotalWaiting = waitingListUsers?.Count ?? 0,
+                UsersInWaitingList = waitingListUsers?.Select((user, index) => new WaitingListUserDto
+                {
+                    UserId = user.Id,
+                    Username = user.Username,
+                    Position = index + 1
+                }).ToList() ?? new List<WaitingListUserDto>()
+            };
+
+            return result;
+        }
+
+        public int? GetUserPositionInWaitingListQuery(int activityId, int userId)
+        {
+            return _activityService.GetUserPositionInWaitingList(activityId, userId);
+        }
     }
 }

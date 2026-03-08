@@ -74,7 +74,6 @@ namespace TaleEngine.API.Controllers.V1
         [HttpPut("[action]")]
         public IActionResult GetFavouriteActivitiesFiltered([FromBody] ActivityFilterRequest activityFilterRequest)
         {
-            // Getting user who is calling
             int userId = 1;
 
             var result = _queries.ActiveActivitiesFilteredQuery(activityFilterRequest, userId);
@@ -135,6 +134,58 @@ namespace TaleEngine.API.Controllers.V1
 
             _command.UpdateCommand(activityDto);
             return Ok();
+        }
+
+        [HttpPost("[action]")]
+        public IActionResult EnrollInActivity([FromBody] ActivityEnrollmentRequest request)
+        {
+            var result = _command.EnrollInActivityCommand(request);
+
+            if (!result.Success)
+            {
+                return BadRequest(result);
+            }
+
+            return Ok(result);
+        }
+
+        [HttpPost("[action]")]
+        public IActionResult LeaveActivity([FromBody] ActivityEnrollmentRequest request)
+        {
+            var result = _command.LeaveActivityCommand(request);
+
+            if (!result)
+            {
+                return BadRequest(new { message = "Failed to leave activity" });
+            }
+
+            return Ok(new { message = "Successfully left activity" });
+        }
+
+        [HttpGet("[action]/{activityId}")]
+        public IActionResult GetWaitingList(int activityId)
+        {
+            var result = _queries.GetWaitingListQuery(activityId);
+
+            if (result == null)
+            {
+                return NotFound(new { message = "Activity not found" });
+            }
+
+            return Ok(result);
+        }
+
+        [HttpGet("[action]/{activityId}/{userId}")]
+        public IActionResult GetUserPositionInWaitingList(int activityId, int userId)
+        {
+            var position = _queries.GetUserPositionInWaitingListQuery(activityId, userId);
+
+            if (position == null)
+            {
+                return Ok(new { message = "User not in waiting list", position = (int?)null });
+            }
+
+            return Ok(new { message = $"User is at position {position} in waiting list", position });
         }
     }
 }

@@ -100,5 +100,22 @@ namespace TaleEngine.Data.Repositories
                 .Where(a => !a.IsDeleted)
                 .ToList();
         }
+
+        public List<ActivityEntity> GetAllIncludeEnrollments(int activityId)
+        {
+            return _context.Activities
+                .Include(a => a.UsersPlay)
+                .Include(a => a.UsersWaitingList)
+                .Where(a => !a.IsDeleted)
+                .ToList();
+        }
+
+        public List<ActivityEntity> GetAllIncludeWaitingList(int activityId)
+        {
+            return _context.Activities
+                .Include(a => a.UsersWaitingList)
+                .Where(a => !a.IsDeleted)
+                .ToList();
+        }
     }
 }

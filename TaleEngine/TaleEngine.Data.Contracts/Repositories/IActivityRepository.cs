@@ -11,5 +11,7 @@ namespace TaleEngine.Data.Contracts.Repositories
         List<ActivityEntity> GetActiveActivitiesFiltered(int status, int type, int edition, string title, int skip, int activitiesPerPage);
         List<ActivityEntity> GetLastThreeActivities(int status, int edition, int numberOfActivities);
         int GetTotalActivities(int status, int type, int edition, string title);
+        List<ActivityEntity> GetAllIncludeEnrollments(int activityId);
+        List<ActivityEntity> GetAllIncludeWaitingList(int activityId);
     }
 }

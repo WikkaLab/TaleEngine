@@ -241,6 +241,151 @@ namespace TaleEngine.Services
             return 1;
         }
 
+        public bool EnrollUserInActivity(int activityId, int userId)
+        {
+            try
+            {
+                var activity = _unitOfWork.ActivityRepository.GetAllIncludeEnrollments(activityId)
+                    .FirstOrDefault(a => a.Id == activityId);
+                var user = _unitOfWork.UserRepository.GetById(userId);
+
+                if (activity == null || user == null)
+                    return false;
+
+                // Check if user is already enrolled
+                if (activity.UsersPlay != null && activity.UsersPlay.Any(u => u.Id == userId))
+                    return false;
+
+                // Check if user is already in waiting list
+                if (activity.UsersWaitingList != null && activity.UsersWaitingList.Any(u => u.Id == userId))
+                    return false;
+
+                // Check if there are available places
+                if (activity.UsersPlay == null || activity.UsersPlay.Count < activity.Places)
+                {
+                    // Enroll directly
+                    if (activity.UsersPlay == null)
+                        activity.UsersPlay = new List<UserEntity>();
+                    
+                    activity.UsersPlay.Add(user);
+                }
+                else
+                {
+                    // Add to waiting list
+                    if (activity.UsersWaitingList == null)
+                        activity.UsersWaitingList = new List<UserEntity>();
+                    
+                    activity.UsersWaitingList.Add(user);
+                }
+
+                _unitOfWork.ActivityRepository.Update(activity);
+                _unitOfWork.ActivityRepository.Save();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public bool RemoveUserFromActivity(int activityId, int userId)
+        {
+            try
+            {
+                var activity = _unitOfWork.ActivityRepository.GetAllIncludeEnrollments(activityId)
+                    .FirstOrDefault(a => a.Id == activityId);
+                var user = _unitOfWork.UserRepository.GetById(userId);
+
+                if (activity == null || user == null)
+                    return false;
+
+                bool wasEnrolled = false;
+
+                // Remove from enrolled users
+                if (activity.UsersPlay != null && activity.UsersPlay.Any(u => u.Id == userId))
+                {
+                    activity.UsersPlay.Remove(user);
+                    wasEnrolled = true;
+                }
+
+                // Remove from waiting list
+                if (activity.UsersWaitingList != null && activity.UsersWaitingList.Any(u => u.Id == userId))
+                {
+                    activity.UsersWaitingList.Remove(user);
+                }
+
+                _unitOfWork.ActivityRepository.Update(activity);
+                _unitOfWork.ActivityRepository.Save();
+
+                // If user was enrolled, promote from waiting list
+                if (wasEnrolled)
+                {
+                    PromoteFromWaitingList(activityId);
+                }
+
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public List<UserEntity> GetWaitingList(int activityId)
+        {
+            var activity = _unitOfWork.ActivityRepository.GetAllIncludeWaitingList(activityId)
+                .FirstOrDefault(a => a.Id == activityId);
+
+            return activity?.UsersWaitingList ?? new List<UserEntity>();
+        }
+
+        public int? GetUserPositionInWaitingList(int activityId, int userId)
+        {
+            var activity = _unitOfWork.ActivityRepository.GetAllIncludeWaitingList(activityId)
+                .FirstOrDefault(a => a.Id == activityId);
+
+            if (activity?.UsersWaitingList == null)
+                return null;
+
+            var position = activity.UsersWaitingList.FindIndex(u => u.Id == userId);
+            return position >= 0 ? position + 1 : (int?)null;
+        }
+
+        public bool PromoteFromWaitingList(int activityId)
+        {
+            try
+            {
+                var activity = _unitOfWork.ActivityRepository.GetAllIncludeEnrollments(activityId)
+                    .FirstOrDefault(a => a.Id == activityId);
+
+                if (activity == null)
+                    return false;
+
+                // Check if there are available places and users in waiting list
+                if (activity.UsersWaitingList != null && activity.UsersWaitingList.Any() &&
+                    (activity.UsersPlay == null || activity.UsersPlay.Count < activity.Places))
+                {
+                    var firstWaitingUser = activity.UsersWaitingList.First();
+                    activity.UsersWaitingList.Remove(firstWaitingUser);
+
+                    if (activity.UsersPlay == null)
+                        activity.UsersPlay = new List<UserEntity>();
+                    
+                    activity.UsersPlay.Add(firstWaitingUser);
+
+                    _unitOfWork.ActivityRepository.Update(activity);
+                    _unitOfWork.ActivityRepository.Save();
+                    return true;
+                }
+
+                return false;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
         #endregion
     }
 }

@@ -111,6 +111,10 @@ namespace TaleEngine.Data
                 .HasMany(a => a.UsersPlay)
                 .WithMany(u => u.ActivitiesPlay)
                 .UsingEntity(x => x.ToTable("ActivityEnrollments"));
+            builder.Entity<ActivityEntity>()
+                .HasMany(a => a.UsersWaitingList)
+                .WithMany(u => u.ActivitiesWaitingList)
+                .UsingEntity(x => x.ToTable("ActivityWaitingList"));
 
             builder.Entity<ActivityEntity>()
                 .Property(e => e.Id)

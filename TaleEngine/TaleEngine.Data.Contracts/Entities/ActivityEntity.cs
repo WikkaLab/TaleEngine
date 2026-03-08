@@ -30,6 +30,7 @@ namespace TaleEngine.Data.Contracts.Entities
         public List<UserEntity> UsersPlay { get; set; }
         public List<UserEntity> UsersFav { get; set; }
         public List<UserEntity> UsersCreate { get; set; }
+        public List<UserEntity> UsersWaitingList { get; set; }
 
     }
 }
