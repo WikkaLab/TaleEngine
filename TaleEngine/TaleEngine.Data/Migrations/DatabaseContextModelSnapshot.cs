@@ -374,7 +374,7 @@ namespace TaleEngine.Data.Migrations
                     b.Property<DateTime?>("CreateDateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("CurrentEditionId")
+                    b.Property<int?>("CurrentEditionId")
                         .HasColumnType("int");
 
                     b.Property<bool>("IsDeleted")
@@ -389,7 +389,8 @@ namespace TaleEngine.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CurrentEditionId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[CurrentEditionId] IS NOT NULL");
 
                     b.ToTable("Event", (string)null);
                 });
@@ -983,8 +984,7 @@ namespace TaleEngine.Data.Migrations
                     b.HasOne("TaleEngine.Data.Contracts.Entities.EditionEntity", "CurrentEdition")
                         .WithOne("IsCurrentEditionInEvent")
                         .HasForeignKey("TaleEngine.Data.Contracts.Entities.EventEntity", "CurrentEditionId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("CurrentEdition");
                 });

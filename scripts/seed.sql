@@ -3,9 +3,11 @@ insert into [TaleEngine].[dbo].[Event] (CreateDateTime, Title) values
     (GETDATE(), 'FlutterConf Málaga')
 
 insert into [TaleEngine].[dbo].[Edition] (CreateDateTime, DateInit, DateEnd, EventId) values 
-    (GETDATE(), '2023-01-01', '2023-02-02', 1),
-    (GETDATE(), '2022-01-01', '2022-02-02', 2),
-    (GETDATE(), '2024-01-01', '2024-02-02', 2)
+    (GETDATE(), '2023-01-01', '2023-02-02', (select Id from [TaleEngine].[dbo].[Event] where Title = 'Jornadas dotnet'),
+    (GETDATE(), '2022-01-01', '2022-02-02', (select Id from [TaleEngine].[dbo].[Event] where Title = 'FlutterConf Málaga')),
+    (GETDATE(), '2024-01-01', '2024-02-02', (select Id from [TaleEngine].[dbo].[Event] where Title = 'FlutterConf Málaga')),
+	(GETDATE(), '2026-01-01', '2026-01-06', (select Id from [TaleEngine].[dbo].[Event] where Title = 'Jornadas dotnet'))
+
 
 insert into [TaleEngine].[dbo].[Activity] (CreateDateTime, Title, Places, StatusId, TypeId, EditionId, TimeSlotId) values
 	(GETDATE(), 'Partida 1', 3, 2, 1, 1, 1),
