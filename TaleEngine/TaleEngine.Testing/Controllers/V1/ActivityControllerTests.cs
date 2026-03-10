@@ -366,6 +366,179 @@ namespace TaleEngine.Testing.Controllers.V1
         }
 
         [Fact]
+        public void GetFavouriteActivitiesByUser_Success()
+        {
+            // Arrange
+            int userId = 1;
+            int editionId = 2;
+            Mock<IActivityCommands> commands = new();
+            Mock<IActivityQueries> queries = new();
+            List<ActivityDto> dto = new()
+            {
+                new ActivityDto()
+            };
+
+            queries.Setup(x => x.FavouriteActivitiesByUserQuery(userId, editionId))
+                .Returns(dto);
+
+            ActivityController target = new(commands.Object, queries.Object);
+
+            // Act
+            IActionResult result = target.GetFavouriteActivitiesByUser(userId, editionId);
+
+            // Assert
+            var resultAsObjResult = result as ObjectResult;
+
+            result.Should().NotBeNull();
+            resultAsObjResult.StatusCode.Should().Be(StatusCodes.Status200OK);
+
+            queries.Verify(x => x.FavouriteActivitiesByUserQuery(userId, editionId), Times.Once);
+        }
+
+        [Fact]
+        public void GetFavouriteActivitiesByUser_EmptyResult_Success()
+        {
+            // Arrange
+            int userId = 1;
+            int editionId = 2;
+            Mock<IActivityCommands> commands = new();
+            Mock<IActivityQueries> queries = new();
+            List<ActivityDto> dto = new();
+
+            queries.Setup(x => x.FavouriteActivitiesByUserQuery(userId, editionId))
+                .Returns(dto);
+
+            ActivityController target = new(commands.Object, queries.Object);
+
+            // Act
+            IActionResult result = target.GetFavouriteActivitiesByUser(userId, editionId);
+
+            // Assert
+            var resultAsObjResult = result as StatusCodeResult;
+
+            result.Should().NotBeNull();
+            resultAsObjResult.StatusCode.Should().Be(StatusCodes.Status204NoContent);
+
+            queries.Verify(x => x.FavouriteActivitiesByUserQuery(userId, editionId), Times.Once);
+        }
+
+        [Fact]
+        public void AddFavouriteActivity_Success()
+        {
+            // Arrange
+            Mock<IActivityCommands> commands = new();
+            Mock<IActivityQueries> queries = new();
+            ActivityEnrollmentRequest request = new()
+            {
+                ActivityId = 1,
+                UserId = 1
+            };
+
+            commands.Setup(x => x.AddFavouriteActivityCommand(request))
+                .Returns(true);
+
+            ActivityController target = new(commands.Object, queries.Object);
+
+            // Act
+            IActionResult result = target.AddFavouriteActivity(request);
+
+            // Assert
+            var resultAsObjResult = result as ObjectResult;
+
+            result.Should().NotBeNull();
+            resultAsObjResult.StatusCode.Should().Be(StatusCodes.Status200OK);
+
+            commands.Verify(x => x.AddFavouriteActivityCommand(request), Times.Once);
+        }
+
+        [Fact]
+        public void AddFavouriteActivity_Fail_Success()
+        {
+            // Arrange
+            Mock<IActivityCommands> commands = new();
+            Mock<IActivityQueries> queries = new();
+            ActivityEnrollmentRequest request = new()
+            {
+                ActivityId = 1,
+                UserId = 1
+            };
+
+            commands.Setup(x => x.AddFavouriteActivityCommand(request))
+                .Returns(false);
+
+            ActivityController target = new(commands.Object, queries.Object);
+
+            // Act
+            IActionResult result = target.AddFavouriteActivity(request);
+
+            // Assert
+            var resultAsObjResult = result as ObjectResult;
+
+            result.Should().NotBeNull();
+            resultAsObjResult.StatusCode.Should().Be(StatusCodes.Status400BadRequest);
+
+            commands.Verify(x => x.AddFavouriteActivityCommand(request), Times.Once);
+        }
+
+        [Fact]
+        public void RemoveFavouriteActivity_Success()
+        {
+            // Arrange
+            Mock<IActivityCommands> commands = new();
+            Mock<IActivityQueries> queries = new();
+            ActivityEnrollmentRequest request = new()
+            {
+                ActivityId = 1,
+                UserId = 1
+            };
+
+            commands.Setup(x => x.RemoveFavouriteActivityCommand(request))
+                .Returns(true);
+
+            ActivityController target = new(commands.Object, queries.Object);
+
+            // Act
+            IActionResult result = target.RemoveFavouriteActivity(request);
+
+            // Assert
+            var resultAsObjResult = result as ObjectResult;
+
+            result.Should().NotBeNull();
+            resultAsObjResult.StatusCode.Should().Be(StatusCodes.Status200OK);
+
+            commands.Verify(x => x.RemoveFavouriteActivityCommand(request), Times.Once);
+        }
+
+        [Fact]
+        public void RemoveFavouriteActivity_Fail_Success()
+        {
+            // Arrange
+            Mock<IActivityCommands> commands = new();
+            Mock<IActivityQueries> queries = new();
+            ActivityEnrollmentRequest request = new()
+            {
+                ActivityId = 1,
+                UserId = 1
+            };
+
+            commands.Setup(x => x.RemoveFavouriteActivityCommand(request))
+                .Returns(false);
+
+            ActivityController target = new(commands.Object, queries.Object);
+
+            // Act
+            IActionResult result = target.RemoveFavouriteActivity(request);
+
+            // Assert
+            var resultAsObjResult = result as ObjectResult;
+
+            result.Should().NotBeNull();
+            resultAsObjResult.StatusCode.Should().Be(StatusCodes.Status400BadRequest);
+
+            commands.Verify(x => x.RemoveFavouriteActivityCommand(request), Times.Once);
+        }
+
+        [Fact]
         public void GetActivitiesFiltered_Success()
         {
             //// Arrange

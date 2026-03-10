@@ -67,6 +67,98 @@ namespace TaleEngine.Services
             return query;
         }
 
+        public List<ActivityEntity> GetFavouriteActivitiesByUser(int userId, int editionId)
+        {
+            if (userId == default || editionId == default)
+            {
+                return new List<ActivityEntity>();
+            }
+
+            return GetFavActivitiesFiltered(0, editionId, null, null, userId).ToList();
+        }
+
+        public bool AddFavouriteActivity(int activityId, int userId)
+        {
+            try
+            {
+                var user = _unitOfWork.UserRepository.GetById(userId);
+                var activity = _unitOfWork.ActivityRepository.GetById(activityId);
+
+                if (user == null || activity == null)
+                {
+                    return false;
+                }
+
+                activity = _unitOfWork.ActivityRepository.GetAllIncludeFavs(activity.EditionId)
+                    .FirstOrDefault(a => a.Id == activityId);
+
+                if (activity == null)
+                {
+                    return false;
+                }
+
+                if (activity.UsersFav == null)
+                {
+                    activity.UsersFav = new List<UserEntity>();
+                }
+
+                if (activity.UsersFav.Any(u => u.Id == userId))
+                {
+                    return false;
+                }
+
+                activity.UsersFav.Add(user);
+
+                _unitOfWork.ActivityRepository.Update(activity);
+                _unitOfWork.ActivityRepository.Save();
+
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public bool RemoveFavouriteActivity(int activityId, int userId)
+        {
+            try
+            {
+                var activity = _unitOfWork.ActivityRepository.GetById(activityId);
+
+                if (activity == null)
+                {
+                    return false;
+                }
+
+                activity = _unitOfWork.ActivityRepository.GetAllIncludeFavs(activity.EditionId)
+                    .FirstOrDefault(a => a.Id == activityId);
+
+                if (activity?.UsersFav == null)
+                {
+                    return false;
+                }
+
+                var userToRemove = activity.UsersFav.FirstOrDefault(u => u.Id == userId);
+
+                if (userToRemove == null)
+                {
+                    return false;
+                }
+
+                activity.UsersFav.Remove(userToRemove);
+
+                _unitOfWork.ActivityRepository.Update(activity);
+                _unitOfWork.ActivityRepository.Save();
+
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
         public int DeleteActivity(int activityId)
         {
             try
@@ -195,13 +287,14 @@ namespace TaleEngine.Services
 
         private IEnumerable<ActivityEntity> GetFavActivitiesFiltered(int type, int editionId, List<int> timeframes, string title, int userFav)
         {
-            var user = _unitOfWork.UserRepository.GetById(userFav);
-
             var activeStatus = _activityStatusService
                 .GetById((int)ActivityStatusEnum.ACT);
 
             var query = _unitOfWork.ActivityRepository.GetAllIncludeFavs(editionId)
-                .Where(a => a.UsersFav.Contains(user) && a.StatusId == activeStatus.Id);
+                .Where(a => a.EditionId == editionId
+                    && a.StatusId == activeStatus.Id
+                    && a.UsersFav != null
+                    && a.UsersFav.Any(u => u.Id == userFav));
 
             return ApplyActivityFilters(query, type, timeframes, title);
         }

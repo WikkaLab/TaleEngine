@@ -84,6 +84,15 @@ namespace TaleEngine.CQRS.Queries
             return result;
         }
 
+        public List<ActivityDto> FavouriteActivitiesByUserQuery(int userId, int editionId)
+        {
+            var activities = _activityService.GetFavouriteActivitiesByUser(userId, editionId);
+
+            var models = ActivityMapper.MapEntityToDto(activities);
+
+            return models;
+        }
+
         public WaitingListResult GetWaitingListQuery(int activityId)
         {
             var activity = _activityService.GetById(activityId);
