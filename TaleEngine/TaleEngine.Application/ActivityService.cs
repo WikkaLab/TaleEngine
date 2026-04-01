@@ -51,7 +51,7 @@ namespace TaleEngine.Services
         }
 
         public IEnumerable<ActivityEntity> GetActiveActivitiesFiltered(int typeId, int editionId,
-                List<int> timeFrames, string title, int skipByPagination, int activitiesPerPage, int userFav = default)
+                List<int> timeFrames, string title, int userFav = default)
         {
             IEnumerable<ActivityEntity> query;
 

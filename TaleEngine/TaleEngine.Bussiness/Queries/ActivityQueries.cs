@@ -55,10 +55,15 @@ namespace TaleEngine.CQRS.Queries
             int skipByPagination = request.Page * ACTIVITIESPERPAGE;
 
             var activitiesQueried = _activityService.GetActiveActivitiesFiltered(request.TypeId, currentEdition.Id,
-                request.TimeFrames, request.Title, skipByPagination, ACTIVITIESPERPAGE, userId);
+                request.TimeFrames, request.Title, userId);
 
-            var totalActivities = activitiesQueried.Count();
-            var activities = activitiesQueried.ToList();
+            var filteredActivities = activitiesQueried.ToList();
+            var totalActivities = filteredActivities.Count;
+
+            var activities = filteredActivities
+                .Skip(skipByPagination)
+                .Take(ACTIVITIESPERPAGE)
+                .ToList();
 
             var models = ActivityMapper.MapEntityToDto(activities);
 
