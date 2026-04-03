@@ -93,12 +93,18 @@ namespace TaleEngine.Data.Repositories
             throw new System.NotImplementedException();
         }
 
-        public List<ActivityEntity> GetAllIncludeFavs(int eventId)
+        public List<ActivityEntity> GetAllIncludeFavs(int editionId)
         {
-            return _context.Activities
+            var query = _context.Activities
                 .Include(a => a.UsersFav)
-                .Where(a => !a.IsDeleted)
-                .ToList();
+                .Where(a => !a.IsDeleted);
+
+            if (editionId != default)
+            {
+                query = query.Where(a => a.EditionId == editionId);
+            }
+
+            return query.ToList();
         }
 
         public List<ActivityEntity> GetAllIncludeEnrollments(int activityId)

@@ -71,14 +71,25 @@ namespace TaleEngine.API.Controllers.V1
             return Ok(result);
         }
 
-        [HttpPut("[action]")]
-        public IActionResult GetFavouriteActivitiesFiltered([FromBody] ActivityFilterRequest activityFilterRequest)
+        [HttpPut("[action]/{userId}")]
+        public IActionResult GetFavouriteActivitiesFiltered(int userId, [FromBody] ActivityFilterRequest activityFilterRequest)
         {
-            int userId = 1;
-
             var result = _queries.ActiveActivitiesFilteredQuery(activityFilterRequest, userId);
 
-            if (result == null)
+            if (result == null || result.Activities == null || result.Activities.Count == 0)
+            {
+                return NoContent();
+            }
+
+            return Ok(result);
+        }
+
+        [HttpGet("[action]/{userId}/{editionId}")]
+        public IActionResult GetFavouriteActivitiesByUser(int userId, int editionId)
+        {
+            var result = _queries.FavouriteActivitiesByUserQuery(userId, editionId);
+
+            if (result == null || result.Count == 0)
             {
                 return NoContent();
             }
@@ -160,6 +171,32 @@ namespace TaleEngine.API.Controllers.V1
             }
 
             return Ok(new { message = "Successfully left activity" });
+        }
+
+        [HttpPost("[action]")]
+        public IActionResult AddFavouriteActivity([FromBody] ActivityEnrollmentRequest request)
+        {
+            var result = _command.AddFavouriteActivityCommand(request);
+
+            if (!result)
+            {
+                return BadRequest(new { message = "Failed to add favourite activity" });
+            }
+
+            return Ok(new { message = "Activity added to favourites" });
+        }
+
+        [HttpPost("[action]")]
+        public IActionResult RemoveFavouriteActivity([FromBody] ActivityEnrollmentRequest request)
+        {
+            var result = _command.RemoveFavouriteActivityCommand(request);
+
+            if (!result)
+            {
+                return BadRequest(new { message = "Failed to remove favourite activity" });
+            }
+
+            return Ok(new { message = "Activity removed from favourites" });
         }
 
         [HttpGet("[action]/{activityId}")]

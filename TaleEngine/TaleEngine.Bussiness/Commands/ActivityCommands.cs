@@ -140,5 +140,15 @@ namespace TaleEngine.CQRS.Commands
         {
             return _activityService.RemoveUserFromActivity(request.ActivityId, request.UserId);
         }
+
+        public bool AddFavouriteActivityCommand(ActivityEnrollmentRequest request)
+        {
+            return _activityService.AddFavouriteActivity(request.ActivityId, request.UserId);
+        }
+
+        public bool RemoveFavouriteActivityCommand(ActivityEnrollmentRequest request)
+        {
+            return _activityService.RemoveFavouriteActivity(request.ActivityId, request.UserId);
+        }
     }
 }

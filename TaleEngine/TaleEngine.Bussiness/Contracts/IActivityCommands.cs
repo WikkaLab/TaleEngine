@@ -12,5 +12,7 @@ namespace TaleEngine.CQRS.Contracts
         void ChangeActivityStatusCommand(int activityId, int statusId);
         ActivityEnrollmentResult EnrollInActivityCommand(ActivityEnrollmentRequest request);
         bool LeaveActivityCommand(ActivityEnrollmentRequest request);
+        bool AddFavouriteActivityCommand(ActivityEnrollmentRequest request);
+        bool RemoveFavouriteActivityCommand(ActivityEnrollmentRequest request);
     }
 }

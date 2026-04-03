@@ -10,7 +10,10 @@ namespace TaleEngine.Services.Contracts
         List<ActivityEntity> GetActiveActivities(int editionId);
         List<ActivityEntity> GetPendingActivities(int editionId);
         List<ActivityEntity> GetLastThreeActivities(int editionId);
-        IEnumerable<ActivityEntity> GetActiveActivitiesFiltered(int typeId, int editionId, List<int> timeframes, string title, int skipByPagination, int activitiesPerPage, int userFav = default);
+        IEnumerable<ActivityEntity> GetActiveActivitiesFiltered(int typeId, int editionId, List<int> timeframes, string title, int userFav = default);
+        List<ActivityEntity> GetFavouriteActivitiesByUser(int userId, int editionId);
+        bool AddFavouriteActivity(int activityId, int userId);
+        bool RemoveFavouriteActivity(int activityId, int userId);
 
         int ChangeActivityStatus(int activityId, int statusId);
         int DeleteActivity(int activityId);
