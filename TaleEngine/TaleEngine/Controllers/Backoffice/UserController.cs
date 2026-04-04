@@ -22,6 +22,11 @@ namespace TaleEngine.API.Controllers.Backoffice
         {
             var result = _queries.AllUsersQuery();
 
+            if (result == null || result.Count == 0)
+            {
+                return NoContent();
+            }
+
             return Ok(result);
         }
 

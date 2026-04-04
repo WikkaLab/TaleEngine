@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using Microsoft.AspNetCore.Mvc;
 using TaleEngine.CQRS.Contracts;
 
 namespace TaleEngine.API.Controllers.V1
@@ -11,13 +12,18 @@ namespace TaleEngine.API.Controllers.V1
 
         public EventController(IEventQueries queries)
         {
-            _queries = queries;
+            _queries = queries ?? throw new ArgumentNullException(nameof(queries));
         }
 
         [HttpGet("[action]")]
         public IActionResult GetEvents()
         {
             var result = _queries.EventsNoFilterQuery();
+
+            if (result == null || result.Count == 0)
+            {
+                return NoContent();
+            }
 
             return Ok(result);
         }
@@ -27,12 +33,23 @@ namespace TaleEngine.API.Controllers.V1
         {
             var result = _queries.GetEvent(eventId);
 
+            if (result == null)
+            {
+                return NotFound();
+            }
+
             return Ok(result);
         }
 
         [HttpGet("[action]")]
-        public IActionResult GetCurrentEditionInEvent(int eventId) {
+        public IActionResult GetCurrentEditionInEvent(int eventId)
+        {
             var result = _queries.GetCurrentEdition(eventId);
+
+            if (result == null)
+            {
+                return NotFound();
+            }
 
             return Ok(result);
         }

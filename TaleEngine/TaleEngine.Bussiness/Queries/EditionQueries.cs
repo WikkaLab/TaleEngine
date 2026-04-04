@@ -36,7 +36,7 @@ namespace TaleEngine.CQRS.Queries {
         }
 
         public List<EditionDto> EditionsQuery(int eventId) {
-            if (eventId == 0) throw new ArgumentNullException();
+            if (eventId == 0) return null;
 
             var editionsOfEvent = _service.GetEditions(eventId);
 
@@ -53,7 +53,7 @@ namespace TaleEngine.CQRS.Queries {
 
         public int FutureOrCurrentEditionQuery(int ofEvent)
         {
-            if (ofEvent == 0) throw new ArgumentNullException();
+            if (ofEvent == 0) return 0;
 
             var editionsOfEvent = _service.GetEditions(ofEvent);
 

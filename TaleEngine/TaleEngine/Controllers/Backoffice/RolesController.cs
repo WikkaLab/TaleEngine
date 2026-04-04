@@ -60,6 +60,12 @@ namespace TaleEngine.API.Controllers.Backoffice
         public IActionResult GetRole(int roleId)
         {
             var result = query.GetRoleQuery(roleId);
+
+            if (result == null)
+            {
+                return NoContent();
+            }
+
             return Ok(result);
         }
 
