@@ -18,7 +18,14 @@ namespace TaleEngine.Data.Repositories
 
         public void Delete(int entityId)
         {
-            throw new NotImplementedException();
+            var entity = _context.UserStatuses
+                .FirstOrDefault(us => us.Id == entityId && !us.IsDeleted);
+
+            if (entity != null)
+            {
+                entity.IsDeleted = true;
+                _context.UserStatuses.Update(entity);
+            }
         }
 
         public List<UserStatusEntity> GetAll()
@@ -34,17 +41,17 @@ namespace TaleEngine.Data.Repositories
 
         public void Insert(UserStatusEntity entity)
         {
-            throw new NotImplementedException();
+            _context.UserStatuses.Add(entity);
         }
 
         public void Save()
         {
-            throw new NotImplementedException();
+            _context.SaveChanges();
         }
 
         public void Update(UserStatusEntity entity)
         {
-            throw new NotImplementedException();
+            _context.UserStatuses.Update(entity);
         }
     }
 }

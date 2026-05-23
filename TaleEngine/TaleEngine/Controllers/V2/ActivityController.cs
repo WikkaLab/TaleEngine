@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
 using TaleEngine.API.Contracts.Dtos;
 using TaleEngine.API.Contracts.Dtos.Requests;
 using TaleEngine.CQRS.Contracts;
+using TaleEngine.Cross.Enums;
 
 namespace TaleEngine.API.Controllers.V2
 {
@@ -73,28 +75,28 @@ namespace TaleEngine.API.Controllers.V2
         }
 
         [HttpDelete("[action]/{activityId}")]
-        public IActionResult DeleteActivity(int activityId)
+        public IActionResult DeleteActivity(int activityId, [FromQuery] int roleId = default, [FromServices] IAssignedPermissionQueries permissionQueries = null)
         {
-            //var authorized = false;
+            var authorized = HasAllowPermission(permissionQueries, roleId, "DELACT");
 
-            //if (!authorized)
-            //{
-            //    return Unauthorized();
-            //}
+            if (!authorized)
+            {
+                return Unauthorized();
+            }
 
             _command.DeleteCommand(activityId);
             return Ok();
         }
 
         [HttpPost("[action]/{editionId}")]
-        public IActionResult CreateActivity(int editionId, [FromBody] ActivityDto activityDto)
+        public IActionResult CreateActivity(int editionId, [FromBody] ActivityDto activityDto, [FromQuery] int roleId = default, [FromServices] IAssignedPermissionQueries permissionQueries = null)
         {
-            //var authorized = true;
+            var authorized = HasAllowPermission(permissionQueries, roleId, "PROPACT");
 
-            //if (!authorized)
-            //{
-            //    return NoContent();
-            //}
+            if (!authorized)
+            {
+                return Unauthorized();
+            }
 
             _command.CreateCommand(editionId, activityDto);
             return Ok();
@@ -110,17 +112,37 @@ namespace TaleEngine.API.Controllers.V2
         }
 
         [HttpPut("[action]")]
-        public IActionResult UpdateActivity([FromBody] ActivityDto activityDto)
+        public IActionResult UpdateActivity([FromBody] ActivityDto activityDto, [FromQuery] int roleId = default, [FromServices] IAssignedPermissionQueries permissionQueries = null)
         {
-            //var authorized = false;
+            var authorized = HasAllowPermission(permissionQueries, roleId, "EDITACT");
 
-            //if (!authorized)
-            //{
-            //    return Unauthorized();
-            //}
+            if (!authorized)
+            {
+                return Unauthorized();
+            }
 
             _command.UpdateCommand(activityDto);
             return Ok();
+        }
+
+        private static bool HasAllowPermission(IAssignedPermissionQueries permissionQueries, int roleId, string permissionAbbr)
+        {
+            if (permissionQueries == null || roleId == default || string.IsNullOrWhiteSpace(permissionAbbr))
+            {
+                return false;
+            }
+
+            var rolePermissions = permissionQueries.GetPermissionsByRoleQuery(roleId);
+
+            if (rolePermissions == null || rolePermissions.Count == 0)
+            {
+                return false;
+            }
+
+            return rolePermissions.Any(p =>
+                p.PermissionValueId == (int)PermissionValueEnum.ALLOW
+                && p.Permission != null
+                && string.Equals(p.Permission.Abbr, permissionAbbr, StringComparison.OrdinalIgnoreCase));
         }
     }
 }

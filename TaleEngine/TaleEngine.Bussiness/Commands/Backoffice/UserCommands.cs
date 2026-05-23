@@ -1,6 +1,9 @@
 ﻿using System;
 using TaleEngine.Aggregates.UserAggregate;
+using TaleEngine.API.Contracts.Dtos;
 using TaleEngine.CQRS.Contracts;
+using TaleEngine.CQRS.Mappers;
+using TaleEngine.Cross.Enums;
 using TaleEngine.Services.Contracts;
 
 namespace TaleEngine.CQRS.Commands.Backoffice
@@ -14,6 +17,57 @@ namespace TaleEngine.CQRS.Commands.Backoffice
         {
             _userStatusCommands = userStatusCommands ?? throw new ArgumentNullException(nameof(userStatusCommands));
             _service = service ?? throw new ArgumentNullException(nameof(service));
+        }
+
+        public UserDto RegisterCommand(UserDto user)
+        {
+            if (user == null
+                || string.IsNullOrWhiteSpace(user.Username)
+                || string.IsNullOrWhiteSpace(user.Mail))
+            {
+                return null;
+            }
+
+            var userAggregate = new User
+            {
+                Username = user.Username,
+                Name = user.Name,
+                Mail = user.Mail,
+                Website = user.Website,
+                Blog = user.Blog,
+                Status = (int)UserStatusEnum.PENDING
+            };
+
+            var result = _service.Register(userAggregate);
+
+            return UserMapper.Map(result);
+        }
+
+        public void UpdateProfileCommand(int userId, UserDto user)
+        {
+            if (userId == default || user == null)
+            {
+                return;
+            }
+
+            var currentUser = _service.GetById(userId);
+
+            if (currentUser == null)
+            {
+                return;
+            }
+
+            var userAggregate = new User
+            {
+                Username = currentUser.Username,
+                Name = user.Name,
+                Mail = user.Mail,
+                Website = user.Website,
+                Blog = user.Blog,
+                Status = currentUser.StatusId
+            };
+
+            _service.UpdateProfile(userId, userAggregate);
         }
 
         public void ActivateCommand(int userId)

@@ -8,6 +8,8 @@ namespace TaleEngine.Services.Contracts
     {
         UserEntity GetById(int id);
         List<UserEntity> GetAllUsers();
+        UserEntity Register(User user);
+        void UpdateProfile(int id, User user);
         void ChangeUserStatus(int id, User user);
         void AssignRoleToUser(int id, int roleId);
     }

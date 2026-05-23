@@ -18,7 +18,14 @@ namespace TaleEngine.Data.Repositories
 
         public void Delete(int entityId)
         {
-            throw new NotImplementedException();
+            var entity = _context.Users
+                .FirstOrDefault(u => u.Id == entityId && !u.IsDeleted);
+
+            if (entity != null)
+            {
+                entity.IsDeleted = true;
+                _context.Users.Update(entity);
+            }
         }
 
         public List<UserEntity> GetAll()
@@ -34,7 +41,7 @@ namespace TaleEngine.Data.Repositories
 
         public void Insert(UserEntity entity)
         {
-            throw new NotImplementedException();
+            _context.Users.Add(entity);
         }
 
         public void Save()

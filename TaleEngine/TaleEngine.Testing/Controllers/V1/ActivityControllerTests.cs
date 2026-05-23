@@ -9,6 +9,7 @@ using TaleEngine.API.Contracts.Dtos.Requests;
 using TaleEngine.API.Contracts.Dtos.Results;
 using TaleEngine.API.Controllers.V1;
 using TaleEngine.CQRS.Contracts;
+using TaleEngine.Cross.Enums;
 using TaleEngine.Fakes.Dtos;
 using Xunit;
 
@@ -265,16 +266,29 @@ namespace TaleEngine.Testing.Controllers.V1
         {
             // Arrange
             int editionId = 1;
+            int roleId = 1;
             Mock<IActivityCommands> commands = new();
             Mock<IActivityQueries> queries = new();
+            Mock<IAssignedPermissionQueries> permissionQueries = new();
             ActivityDto dto = new();
+            var permissions = new List<AssignedPermissionDto>
+            {
+                new AssignedPermissionDto
+                {
+                    Permission = new PermissionDto { Abbr = "PROPACT" },
+                    PermissionValueId = (int)PermissionValueEnum.ALLOW
+                }
+            };
+
+            permissionQueries.Setup(x => x.GetPermissionsByRoleQuery(roleId))
+                .Returns(permissions);
 
             commands.Setup(x => x.CreateCommand(editionId, dto)).Verifiable();
 
             ActivityController target = new(commands.Object, queries.Object);
 
             // Act
-            IActionResult result = target.CreateActivity(editionId, dto);
+            IActionResult result = target.CreateActivity(editionId, dto, roleId, permissionQueries.Object);
 
             // Assert
             var resultAsObjResult = result as StatusCodeResult;
@@ -289,17 +303,29 @@ namespace TaleEngine.Testing.Controllers.V1
         public void UpdateActivity_Success()
         {
             // Arrange
-            int updateResult = 1;
+            int roleId = 1;
             Mock<IActivityCommands> commands = new();
             Mock<IActivityQueries> queries = new();
+            Mock<IAssignedPermissionQueries> permissionQueries = new();
             ActivityDto dto = new();
+            var permissions = new List<AssignedPermissionDto>
+            {
+                new AssignedPermissionDto
+                {
+                    Permission = new PermissionDto { Abbr = "EDITACT" },
+                    PermissionValueId = (int)PermissionValueEnum.ALLOW
+                }
+            };
+
+            permissionQueries.Setup(x => x.GetPermissionsByRoleQuery(roleId))
+                .Returns(permissions);
 
             commands.Setup(x => x.UpdateCommand(dto)).Verifiable();
 
             ActivityController target = new(commands.Object, queries.Object);
 
             // Act
-            IActionResult result = target.UpdateActivity(dto);
+            IActionResult result = target.UpdateActivity(dto, roleId, permissionQueries.Object);
 
             // Assert
             var resultAsObjResult = result as StatusCodeResult;
@@ -315,15 +341,28 @@ namespace TaleEngine.Testing.Controllers.V1
         {
             // Arrange
             int activityId = 1;
+            int roleId = 1;
             Mock<IActivityCommands> commands = new();
             Mock<IActivityQueries> queries = new();
+            Mock<IAssignedPermissionQueries> permissionQueries = new();
+            var permissions = new List<AssignedPermissionDto>
+            {
+                new AssignedPermissionDto
+                {
+                    Permission = new PermissionDto { Abbr = "DELACT" },
+                    PermissionValueId = (int)PermissionValueEnum.ALLOW
+                }
+            };
+
+            permissionQueries.Setup(x => x.GetPermissionsByRoleQuery(roleId))
+                .Returns(permissions);
 
             commands.Setup(x => x.DeleteCommand(activityId)).Verifiable();
 
             ActivityController target = new(commands.Object, queries.Object);
 
             // Act
-            IActionResult result = target.DeleteActivity(activityId);
+            IActionResult result = target.DeleteActivity(activityId, roleId, permissionQueries.Object);
 
             // Assert
             var resultAsObjResult = result as StatusCodeResult;
@@ -332,6 +371,41 @@ namespace TaleEngine.Testing.Controllers.V1
             resultAsObjResult.StatusCode.Should().Be(StatusCodes.Status200OK);
 
             commands.Verify(x => x.DeleteCommand(activityId), Times.Once);
+        }
+
+        [Fact]
+        public void DeleteActivity_WithoutPermission_ReturnsUnauthorized()
+        {
+            // Arrange
+            int activityId = 1;
+            int roleId = 1;
+            Mock<IActivityCommands> commands = new();
+            Mock<IActivityQueries> queries = new();
+            Mock<IAssignedPermissionQueries> permissionQueries = new();
+            var permissions = new List<AssignedPermissionDto>
+            {
+                new AssignedPermissionDto
+                {
+                    Permission = new PermissionDto { Abbr = "DELACT" },
+                    PermissionValueId = (int)PermissionValueEnum.DENY
+                }
+            };
+
+            permissionQueries.Setup(x => x.GetPermissionsByRoleQuery(roleId))
+                .Returns(permissions);
+
+            ActivityController target = new(commands.Object, queries.Object);
+
+            // Act
+            IActionResult result = target.DeleteActivity(activityId, roleId, permissionQueries.Object);
+
+            // Assert
+            var resultAsObjResult = result as StatusCodeResult;
+
+            result.Should().NotBeNull();
+            resultAsObjResult.StatusCode.Should().Be(StatusCodes.Status401Unauthorized);
+
+            commands.Verify(x => x.DeleteCommand(It.IsAny<int>()), Times.Never);
         }
 
         [Fact]

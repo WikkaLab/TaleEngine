@@ -90,7 +90,20 @@ namespace TaleEngine.Data.Repositories
 
         public int GetTotalActivities(int status, int type, int edition, string title)
         {
-            throw new System.NotImplementedException();
+            var query = _context.Activities
+                .Where(a => a.EditionId == edition && a.StatusId == status && !a.IsDeleted);
+
+            if (type != default)
+            {
+                query = query.Where(a => a.TypeId == type);
+            }
+
+            if (!string.IsNullOrWhiteSpace(title))
+            {
+                query = query.Where(a => a.Title.Contains(title));
+            }
+
+            return query.Count();
         }
 
         public List<ActivityEntity> GetAllIncludeFavs(int editionId)
