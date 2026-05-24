@@ -136,5 +136,26 @@ namespace TaleEngine.Data.Repositories
                 .Where(a => !a.IsDeleted)
                 .ToList();
         }
+
+        public List<ActivityEntity> GetAllIncludeReportData(int editionId, System.DateTime? startDate = null, System.DateTime? endDate = null)
+        {
+            var query = _context.Activities
+                .Include(a => a.UsersPlay)
+                .Include(a => a.UsersWaitingList)
+                .Include(a => a.UsersFav)
+                .Where(a => !a.IsDeleted && a.EditionId == editionId);
+
+            if (startDate.HasValue)
+            {
+                query = query.Where(a => (a.StartDateTime ?? a.CreateDateTime) >= startDate.Value);
+            }
+
+            if (endDate.HasValue)
+            {
+                query = query.Where(a => (a.EndDateTime ?? a.StartDateTime ?? a.CreateDateTime) <= endDate.Value);
+            }
+
+            return query.ToList();
+        }
     }
 }

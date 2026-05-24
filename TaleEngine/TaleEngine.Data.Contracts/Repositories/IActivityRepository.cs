@@ -13,5 +13,6 @@ namespace TaleEngine.Data.Contracts.Repositories
         int GetTotalActivities(int status, int type, int edition, string title);
         List<ActivityEntity> GetAllIncludeEnrollments(int activityId);
         List<ActivityEntity> GetAllIncludeWaitingList(int activityId);
+        List<ActivityEntity> GetAllIncludeReportData(int editionId, System.DateTime? startDate = null, System.DateTime? endDate = null);
     }
 }
