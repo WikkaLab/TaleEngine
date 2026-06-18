@@ -55,6 +55,7 @@ namespace TaleEngine.CQRS.Commands
                 //.SetDates(activityDto.ActivityStart, activityDto.ActivityEnd)
                 .SetStatus(status.Id)
                 .SetTimeSlot(timeSlot.Id)
+                .SetLocation(activityDto.LocationId)
                 .SetType(type.Id);
 
             _activityService.CreateActivity(editionId, activity);
@@ -70,7 +71,8 @@ namespace TaleEngine.CQRS.Commands
                 .SetPlaces(activityDto.Places)
                 .SetImage(activityDto.Image)
                 //.SetDates(activityDto.ActivityStart, activityDto.ActivityEnd)
-                .SetTimeSlot(timeSlot.Id);
+                .SetTimeSlot(timeSlot.Id)
+                .SetLocation(activityDto.LocationId);
 
             _activityService.UpdateActivity(activityDto.Id, activity);
         }

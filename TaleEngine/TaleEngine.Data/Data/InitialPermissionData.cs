@@ -26,6 +26,9 @@ namespace TaleEngine.Data.Data
                 new PermissionEntity { Id = 15, Name = "Accept activity proposal", Abbr = "ACCACTPROP" },
                 new PermissionEntity { Id = 16, Name = "Delete activity proposal", Abbr = "DELACTPROP" },
                 new PermissionEntity { Id = 17, Name = "Edit user", Abbr = "EDITU" },
+                new PermissionEntity { Id = 18, Name = "Create location", Abbr = "CRELOC" },
+                new PermissionEntity { Id = 19, Name = "Edit location", Abbr = "EDITLOC" },
+                new PermissionEntity { Id = 20, Name = "Delete location", Abbr = "DELLOC" },
             };
         }
     }

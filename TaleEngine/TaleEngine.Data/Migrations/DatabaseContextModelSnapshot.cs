@@ -123,6 +123,9 @@ namespace TaleEngine.Data.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<int?>("LocationId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime?>("ModificationDate")
                         .HasColumnType("datetime2");
 
@@ -150,6 +153,8 @@ namespace TaleEngine.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("EditionId");
+
+                    b.HasIndex("LocationId");
 
                     b.HasIndex("StatusId");
 
@@ -395,6 +400,42 @@ namespace TaleEngine.Data.Migrations
                     b.ToTable("Event", (string)null);
                 });
 
+            modelBuilder.Entity("TaleEngine.Data.Contracts.Entities.LocationEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Capacity")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("CreateDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("EditionId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModificationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EditionId");
+
+                    b.ToTable("Location", (string)null);
+                });
+
             modelBuilder.Entity("TaleEngine.Data.Contracts.Entities.PermissionEntity", b =>
                 {
                     b.Property<int>("Id")
@@ -544,6 +585,27 @@ namespace TaleEngine.Data.Migrations
                             Abbr = "EDITU",
                             IsDeleted = false,
                             Name = "Edit user"
+                        },
+                        new
+                        {
+                            Id = 18,
+                            Abbr = "CRELOC",
+                            IsDeleted = false,
+                            Name = "Create location"
+                        },
+                        new
+                        {
+                            Id = 19,
+                            Abbr = "EDITLOC",
+                            IsDeleted = false,
+                            Name = "Edit location"
+                        },
+                        new
+                        {
+                            Id = 20,
+                            Abbr = "DELLOC",
+                            IsDeleted = false,
+                            Name = "Delete location"
                         });
                 });
 
@@ -914,6 +976,11 @@ namespace TaleEngine.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("TaleEngine.Data.Contracts.Entities.LocationEntity", "Location")
+                        .WithMany("Activities")
+                        .HasForeignKey("LocationId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("TaleEngine.Data.Contracts.Entities.ActivityStatusEntity", "Status")
                         .WithMany("Activities")
                         .HasForeignKey("StatusId")
@@ -933,6 +1000,8 @@ namespace TaleEngine.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Edition");
+
+                    b.Navigation("Location");
 
                     b.Navigation("Status");
 
@@ -989,6 +1058,17 @@ namespace TaleEngine.Data.Migrations
                     b.Navigation("CurrentEdition");
                 });
 
+            modelBuilder.Entity("TaleEngine.Data.Contracts.Entities.LocationEntity", b =>
+                {
+                    b.HasOne("TaleEngine.Data.Contracts.Entities.EditionEntity", "Edition")
+                        .WithMany("Locations")
+                        .HasForeignKey("EditionId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Edition");
+                });
+
             modelBuilder.Entity("TaleEngine.Data.Contracts.Entities.RoleEntity", b =>
                 {
                     b.HasOne("TaleEngine.Data.Contracts.Entities.EventEntity", "Event")
@@ -1024,6 +1104,8 @@ namespace TaleEngine.Data.Migrations
                     b.Navigation("Activities");
 
                     b.Navigation("IsCurrentEditionInEvent");
+
+                    b.Navigation("Locations");
                 });
 
             modelBuilder.Entity("TaleEngine.Data.Contracts.Entities.EventEntity", b =>
@@ -1031,6 +1113,11 @@ namespace TaleEngine.Data.Migrations
                     b.Navigation("Editions");
 
                     b.Navigation("Roles");
+                });
+
+            modelBuilder.Entity("TaleEngine.Data.Contracts.Entities.LocationEntity", b =>
+                {
+                    b.Navigation("Activities");
                 });
 
             modelBuilder.Entity("TaleEngine.Data.Contracts.Entities.TimeSlotEntity", b =>

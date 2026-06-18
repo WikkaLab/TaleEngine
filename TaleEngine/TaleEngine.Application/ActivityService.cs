@@ -179,6 +179,13 @@ namespace TaleEngine.Services
             if (activity == null)
                 return 0;
 
+            var locationId = activity.Location > 0 ? (int?)activity.Location : null;
+
+            if (!IsLocationAssignmentValid(editionId, locationId, activity.Places, activity.TimeSlot))
+            {
+                return 0;
+            }
+
             var activityEntity = new ActivityEntity
             {
                 EditionId = editionId,
@@ -189,6 +196,7 @@ namespace TaleEngine.Services
                 Places = activity.Places,
                 Description = activity.Description,
                 TimeSlotId = activity.TimeSlot,
+                LocationId = locationId,
                 Image = activity.Image
             };
 
@@ -210,12 +218,20 @@ namespace TaleEngine.Services
             var activityEntity = _unitOfWork.ActivityRepository.GetById(id);
             if (activityEntity != null)
             {
+                var locationId = activity.Location > 0 ? (int?)activity.Location : null;
+
+                if (!IsLocationAssignmentValid(activityEntity.EditionId, locationId, activity.Places, activity.TimeSlot, id))
+                {
+                    return 0;
+                }
+
                 activityEntity.Title = activity.Title;
                 activityEntity.TypeId = activity.Type;
                 activityEntity.StatusId = activity.Status;
                 activityEntity.Places = activity.Places;
                 activityEntity.Description = activity.Description;
                 activityEntity.TimeSlotId = activity.TimeSlot;
+                activityEntity.LocationId = locationId;
 
                 return Update(activityEntity);
             }
@@ -332,6 +348,34 @@ namespace TaleEngine.Services
             }
 
             return 1;
+        }
+
+        private bool IsLocationAssignmentValid(int editionId, int? locationId, int places, int timeSlotId, int currentActivityId = default)
+        {
+            if (!locationId.HasValue)
+            {
+                return true;
+            }
+
+            var location = _unitOfWork.LocationRepository.GetById(locationId.Value);
+
+            if (location == null || location.EditionId != editionId)
+            {
+                return false;
+            }
+
+            if (places > location.Capacity)
+            {
+                return false;
+            }
+
+            var hasConflict = _unitOfWork.ActivityRepository.GetAll()
+                .Any(a => a.EditionId == editionId
+                    && a.LocationId == locationId
+                    && a.TimeSlotId == timeSlotId
+                    && a.Id != currentActivityId);
+
+            return !hasConflict;
         }
 
         public bool EnrollUserInActivity(int activityId, int userId)

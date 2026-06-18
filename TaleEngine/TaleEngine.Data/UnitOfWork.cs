@@ -25,6 +25,7 @@ namespace TaleEngine.Data
             PermissionRepository = new PermissionRepository(_context);
             PermissionValueRepository = new PermissionValueRepository(_context);
             AssignedPermissionRepository = new AssignedPermissionRepository(_context);
+            LocationRepository = new LocationRepository(_context);
         }
 
         public IEventRepository EventRepository { get; }
@@ -39,5 +40,6 @@ namespace TaleEngine.Data
         public IPermissionRepository PermissionRepository { get; set; }
         public IPermissionValueRepository PermissionValueRepository { get; set; }
         public IAssignedPermissionRepository AssignedPermissionRepository { get; set; }
+        public ILocationRepository LocationRepository { get; set; }
     }
 }

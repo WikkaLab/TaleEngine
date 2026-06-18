@@ -18,7 +18,8 @@ namespace TaleEngine.DbServices.Mappers
                 .SetImage(entity.Image)
                 .SetStatus(entity.StatusId)
                 .SetType(entity.TypeId)
-                .SetTimeSlot(entity.TimeSlotId);
+                .SetTimeSlot(entity.TimeSlotId)
+                .SetLocation(entity.LocationId ?? default);
 
             return activity;
         }

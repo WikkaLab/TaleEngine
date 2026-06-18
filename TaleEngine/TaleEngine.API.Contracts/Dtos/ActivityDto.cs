@@ -80,5 +80,13 @@
         /// </value>
         public int StatusId { get; set; }
 
+        /// <summary>
+        /// Gets or sets the location identifier.
+        /// </summary>
+        /// <value>
+        /// The location identifier.
+        /// </value>
+        public int LocationId { get; set; }
+
     }
 }

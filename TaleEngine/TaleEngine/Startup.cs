@@ -64,6 +64,7 @@ namespace TaleEngine
                 services.AddTransient<IEventQueries, EventQueries>();
                 services.AddTransient<IRoleQueries, RoleQueries>();
                 services.AddTransient<ITimeSlotQueries, TimeSlotQueries>();
+                services.AddTransient<ILocationQueries, LocationQueries>();
                 services.AddTransient<IUserCommands, UserCommands>();
                 services.AddTransient<IUserQueries, UserQueries>();
                 services.AddTransient<IUserStatusQueries, UserStatusQueries>();
@@ -74,6 +75,7 @@ namespace TaleEngine
                 services.AddTransient<IAssignedPermissionQueries, AssignedPermissionQueries>();
                 services.AddTransient<IAssignedPermissionCommands, AssignedPermissionCommands>();
                 services.AddTransient<IReportingQueries, ReportingQueries>();
+                services.AddTransient<ILocationCommands, LocationCommands>();
 
                 // Services
                 services.AddTransient<IActivityService, ActivityService>();
@@ -83,6 +85,7 @@ namespace TaleEngine
                 services.AddTransient<IEventService, EventService>();
                 services.AddTransient<IRoleService, RoleService>();
                 services.AddTransient<ITimeSlotService, TimeSlotService>();
+                services.AddTransient<ILocationService, LocationService>();
                 services.AddTransient<IUserService, UserService>();
                 services.AddTransient<IUserStatusService, UserStatusService>();
                 services.AddTransient<IPermissionService, PermissionService>();

@@ -23,6 +23,9 @@ namespace TaleEngine.Data.Contracts.Entities
         public int TimeSlotId { get; set; }
         public TimeSlotEntity TimeSlot { get; set; }
 
+        public int? LocationId { get; set; }
+        public LocationEntity Location { get; set; }
+
         public DateTime PublicationDate { get; set; }
         public DateTime? StartDateTime { get; set; }
         public DateTime? EndDateTime { get; set; }

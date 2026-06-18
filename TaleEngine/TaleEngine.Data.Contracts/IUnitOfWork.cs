@@ -16,5 +16,6 @@ namespace TaleEngine.Data.Contracts
         IPermissionRepository PermissionRepository { get; }
         IPermissionValueRepository PermissionValueRepository { get; }
         IAssignedPermissionRepository AssignedPermissionRepository { get; }
+        ILocationRepository LocationRepository { get; }
     }
 }

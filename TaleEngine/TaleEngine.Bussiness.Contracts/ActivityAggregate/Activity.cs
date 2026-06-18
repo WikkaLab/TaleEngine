@@ -10,6 +10,7 @@ namespace TaleEngine.Aggregates.ActivityAggregate
         public string Image { get; private set; }
 
         public int TimeSlot { get; private set; }
+        public int Location { get; private set; }
 
         public int Type { get; private set; }
         public int Status { get; private set; }
@@ -84,6 +85,15 @@ namespace TaleEngine.Aggregates.ActivityAggregate
             if (timeSlot > 0)
             {
                 TimeSlot = timeSlot;
+            }
+            return this;
+        }
+
+        public Activity SetLocation(int location)
+        {
+            if (location > 0)
+            {
+                Location = location;
             }
             return this;
         }

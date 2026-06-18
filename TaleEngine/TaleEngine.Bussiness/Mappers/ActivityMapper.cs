@@ -20,6 +20,7 @@ namespace TaleEngine.CQRS.Mappers
                 //.SetDates(activityDto.ActivityStart, activityDto.ActivityEnd)
                 .SetStatus(dto.StatusId)
                 .SetTimeSlot(dto.TimeSlotId)
+                .SetLocation(dto.LocationId)
                 .SetType(dto.TypeId);
         }
 
@@ -44,7 +45,8 @@ namespace TaleEngine.CQRS.Mappers
                 StatusId = activity.Status,
                 //EndDateTime = activity.EndDateTime,
                 //StartDateTime = activity.StartDateTime,
-                TimeSlotId = activity.TimeSlot
+                TimeSlotId = activity.TimeSlot,
+                LocationId = activity.Location
             };
         }
 
@@ -69,7 +71,8 @@ namespace TaleEngine.CQRS.Mappers
                 Image = activity.Image,
                 TypeId = activity.TypeId,
                 StatusId = activity.StatusId,
-                TimeSlotId = activity.TimeSlotId
+                TimeSlotId = activity.TimeSlotId,
+                LocationId = activity.LocationId ?? default
             };
         }
 
@@ -92,6 +95,7 @@ namespace TaleEngine.CQRS.Mappers
                 //.SetDates(activityDto.ActivityStart, activityDto.ActivityEnd)
                 .SetStatus(entitiy.StatusId)
                 .SetTimeSlot(entitiy.TimeSlotId)
+                .SetLocation(entitiy.LocationId ?? default)
                 .SetType(entitiy.TypeId);
         }
     }

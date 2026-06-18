@@ -56,6 +56,7 @@ namespace TaleEngine.Data
         public DbSet<RoleEntity> Roles { get; set; }
         public DbSet<EditionEntity> Editions { get; set; }
         public DbSet<TimeSlotEntity> TimeSlots { get; set; }
+        public DbSet<LocationEntity> Locations { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -91,6 +92,11 @@ namespace TaleEngine.Data
                 .HasOne(a => a.TimeSlot)
                 .WithMany(tS => tS.Activities)
                 .HasForeignKey(a => a.TimeSlotId);
+            builder.Entity<ActivityEntity>()
+                .HasOne(a => a.Location)
+                .WithMany(l => l.Activities)
+                .HasForeignKey(a => a.LocationId)
+                .OnDelete(DeleteBehavior.Restrict);
             builder.Entity<ActivityEntity>()
                 .HasOne(a => a.Status)
                 .WithMany(aS => aS.Activities)
@@ -173,6 +179,17 @@ namespace TaleEngine.Data
 
             builder.Entity<TimeSlotEntity>()
                 .HasData(InitialTimeSlotData.GetTimeSlotData().ToArray());
+
+            builder.Entity<LocationEntity>()
+                .Property(e => e.Id)
+                .ValueGeneratedOnAdd();
+            builder.Entity<LocationEntity>()
+                .HasOne(l => l.Edition)
+                .WithMany(ed => ed.Locations)
+                .HasForeignKey(l => l.EditionId)
+                .OnDelete(DeleteBehavior.Restrict);
+            builder.Entity<LocationEntity>()
+                .ToTable("Location");
         }
     }
 }
