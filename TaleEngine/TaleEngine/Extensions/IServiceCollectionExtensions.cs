@@ -3,10 +3,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi;
 using System;
+using System.Globalization;
 using TaleEngine.Data;
 using TaleEngine.Helpers;
 using TaleEngine.Infrastructure.Filters;
-using TaleEngine.Infrastructure.Middlewares;
 
 namespace TaleEngine.Extensions
 {
@@ -88,7 +88,9 @@ namespace TaleEngine.Extensions
                     }
                 });
 
-                options.OperationFilter<AuthorizeCheckOperationFilter>();
+                // Use full type names to avoid schema ID collisions across multiple swagger documents.
+                options.CustomSchemaIds(type =>
+                    string.Format(CultureInfo.InvariantCulture, "{0}", type.FullName ?? type.Name));
             });
 
             return services;
